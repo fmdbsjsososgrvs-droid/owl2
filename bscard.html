@@ -374,11 +374,9 @@ window.runVerify = async function() {
   verifiedData = { addr, msg, score, tier, btcBalance, lastTxDays, date: new Date().toISOString() };
 
   setStatus('s-ok',
-    `<span style="color:var(--accent)">✓ Verified</span><br>` +
-    `// 주소: ${addr.slice(0,14)}...${addr.slice(-6)}<br>` +
+    `<span style="color:var(--accent);font-size:18px;">✓ Verified</span><br>` +
     `// 잔액: ${btcBalance.toFixed(6)} BTC<br>` +
-    `// 마지막 이동: ${lastTxDays>=365? Math.floor(lastTxDays/365)+'년 '+Math.floor(lastTxDays%365)+'일 전': Math.floor(lastTxDays)+'일 전'}<br>` +
-    `// 점수: ${score}점 — ${scoreDesc.join(' | ')}`
+    `// 마지막 이동: ${lastTxDays>=365? Math.floor(lastTxDays/365)+'년 '+Math.floor(lastTxDays%365)+'일 전': Math.floor(lastTxDays)+'일 전'}`
   );
 
   document.getElementById('card-img').src = CARD_IMAGES[tier];
