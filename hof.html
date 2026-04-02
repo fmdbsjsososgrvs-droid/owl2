@@ -368,6 +368,70 @@
     .img-remove:hover { color: #e05c5c; border-color: #e05c5c; }
     .img-remove.visible { display: block; }
 
+    /* DELETE UI */
+    .entry-delete-btn {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      background: none;
+      border: 1px solid transparent;
+      padding: 3px 8px;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      margin-top: 12px;
+      display: inline-block;
+    }
+    .entry-delete-btn:hover { color: #e05c5c; border-color: #e05c5c; }
+    .entry-delete-wrap {
+      display: none;
+      margin-top: 10px;
+      gap: 8px;
+      align-items: center;
+    }
+    .entry-delete-wrap.open { display: flex; }
+    .entry-delete-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 7px 10px;
+      outline: none;
+      letter-spacing: 0.04em;
+    }
+    .entry-delete-input:focus { border-color: rgba(247,147,26,0.4); }
+    .entry-delete-confirm {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--bg);
+      background: #e05c5c;
+      border: none;
+      padding: 7px 14px;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .entry-delete-confirm:hover { opacity: 0.85; }
+    .entry-delete-cancel {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .entry-delete-msg {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #e05c5c;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+      min-height: 14px;
+    }
+
     /* ENTRY IMAGE */
     .entry-img {
       width: 100%;
@@ -435,6 +499,10 @@
         <textarea id="inputMsg" maxlength="300" placeholder="메시지를 남겨주세요..."></textarea>
       </div>
       <div class="form-row">
+        <label>PASSWORD <span style="color:var(--text3);font-size:10px;">// 삭제 시 필요</span></label>
+        <input type="password" id="inputPw" maxlength="50" placeholder="비밀번호를 설정하세요" autocomplete="off" />
+      </div>
+      <div class="form-row">
         <label>BS CARD IMAGE</label>
         <div class="img-upload-area" id="uploadArea" onclick="document.getElementById('inputImg').click()">
           <div class="img-upload-label">클릭하여 카드를 등록하세요 &nbsp;·&nbsp; <span>JPG / PNG</span></div>
@@ -468,7 +536,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     const firebaseConfig = {
       apiKey: "AIzaSyDVV1xvAGMvruyGRhSUK7kMRRNVeZs6HVk",
       authDomain: "owlbutler.firebaseapp.com",
@@ -481,7 +549,15 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    const ADMIN_PW = 'techdevice2465@';
+
+    async function sha256(text) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
     const inputName = document.getElementById('inputName');
+    const inputPw = document.getElementById('inputPw');
     const inputMsg = document.getElementById('inputMsg');
     const inputImg = document.getElementById('inputImg');
     const imgPreview = document.getElementById('imgPreview');
@@ -528,6 +604,7 @@
 
     btnSubmit.addEventListener('click', async () => {
       const name = inputName.value.trim() || 'Anonymous';
+      const pw = inputPw.value;
       const msg = inputMsg.value.trim();
 
       if (!msg) {
@@ -535,12 +612,18 @@
         inputMsg.focus();
         return;
       }
+      if (!pw) {
+        showMsg('비밀번호를 입력해주세요.', true);
+        inputPw.focus();
+        return;
+      }
 
       btnSubmit.disabled = true;
       showMsg('');
 
       try {
-        // 이미지가 있으면 Base64로 변환 (이미 preview에 로드된 값 사용)
+        const passwordHash = await sha256(pw);
+
         const imageData = imgPreview.src && imgPreview.classList.contains('visible')
           ? imgPreview.src
           : null;
@@ -548,11 +631,13 @@
         await addDoc(collection(db, 'guestbook'), {
           name,
           message: msg,
+          passwordHash,
           ...(imageData && { imageUrl: imageData }),
           createdAt: serverTimestamp()
         });
 
         inputMsg.value = '';
+        inputPw.value = '';
         charCount.textContent = '0 / 300';
         window.removeImage({ stopPropagation: () => {} });
         showMsg('// MESSAGE SENT.');
@@ -582,8 +667,9 @@
       }
 
       entriesList.innerHTML = '';
-      docs.forEach((doc, i) => {
-        const data = doc.data();
+      docs.forEach((docSnap, i) => {
+        const docId = docSnap.id;
+        const data = docSnap.data();
         const date = data.createdAt?.toDate?.() ?? new Date();
 
         const el = document.createElement('div');
@@ -623,6 +709,67 @@
           el.appendChild(imgEl);
         }
 
+        // 삭제 버튼
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'entry-delete-btn';
+        deleteBtn.textContent = '// DELETE';
+
+        const deleteWrap = document.createElement('div');
+        deleteWrap.className = 'entry-delete-wrap';
+
+        const deleteInput = document.createElement('input');
+        deleteInput.type = 'password';
+        deleteInput.className = 'entry-delete-input';
+        deleteInput.placeholder = '비밀번호 입력';
+
+        const deleteConfirm = document.createElement('button');
+        deleteConfirm.className = 'entry-delete-confirm';
+        deleteConfirm.textContent = '삭제';
+
+        const deleteCancel = document.createElement('button');
+        deleteCancel.className = 'entry-delete-cancel';
+        deleteCancel.textContent = '취소';
+
+        const deleteMsg = document.createElement('div');
+        deleteMsg.className = 'entry-delete-msg';
+
+        deleteWrap.appendChild(deleteInput);
+        deleteWrap.appendChild(deleteConfirm);
+        deleteWrap.appendChild(deleteCancel);
+
+        deleteBtn.addEventListener('click', () => {
+          deleteWrap.classList.toggle('open');
+          if (deleteWrap.classList.contains('open')) deleteInput.focus();
+        });
+
+        deleteCancel.addEventListener('click', () => {
+          deleteWrap.classList.remove('open');
+          deleteInput.value = '';
+          deleteMsg.textContent = '';
+        });
+
+        deleteConfirm.addEventListener('click', async () => {
+          const pw = deleteInput.value;
+          if (!pw) { deleteMsg.textContent = '비밀번호를 입력하세요.'; return; }
+
+          const hash = await sha256(pw);
+          const adminHash = await sha256(ADMIN_PW);
+
+          if (hash === data.passwordHash || hash === adminHash) {
+            try {
+              await deleteDoc(doc(db, 'guestbook', docId));
+            } catch (e) {
+              deleteMsg.textContent = '삭제 실패. 잠시 후 다시 시도하세요.';
+              console.error(e);
+            }
+          } else {
+            deleteMsg.textContent = '비밀번호가 올바르지 않습니다.';
+          }
+        });
+
+        el.appendChild(deleteBtn);
+        el.appendChild(deleteWrap);
+        el.appendChild(deleteMsg);
         el.appendChild(indexEl);
         entriesList.appendChild(el);
       });
