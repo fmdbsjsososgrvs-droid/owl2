@@ -459,6 +459,104 @@
       background: #000;
     }
 
+
+    /* COMMENTS */
+    .comment-toggle-btn {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      background: none;
+      border: none;
+      padding: 3px 0;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    .comment-toggle-btn:hover { color: var(--accent); }
+    .comments-section {
+      display: none;
+      margin-top: 14px;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
+    .comments-section.open { display: block; }
+    .comment-item {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(42,42,42,0.5);
+    }
+    .comment-item:last-of-type { border-bottom: none; }
+    .comment-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+    .comment-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+    .comment-time {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 0.05em;
+    }
+    .comment-msg {
+      font-family: var(--sans);
+      font-size: 12.5px;
+      color: var(--text2);
+      line-height: 1.6;
+      word-break: break-word;
+    }
+    .comment-form {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .comment-form input,
+    .comment-form textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      letter-spacing: 0.04em;
+      width: 100%;
+      resize: none;
+    }
+    .comment-form input:focus,
+    .comment-form textarea:focus { border-color: rgba(247,147,26,0.4); }
+    .comment-form textarea { height: 60px; }
+    .comment-submit {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 7px 16px;
+      cursor: pointer;
+      align-self: flex-end;
+      transition: opacity 0.2s;
+    }
+    .comment-submit:hover { opacity: 0.85; }
+    .comment-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+    .no-comments {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.1em;
+      padding: 6px 0;
+    }
+
     /* FOOTER */
     footer { border-top: 1px solid var(--border); padding: 24px; }
     .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
@@ -483,7 +581,7 @@
         <a href="bscard.html">BS CARD</a>
         <a href="hof.html" class="active">HOF</a>
         <a href="owlbutler.html">OWL BUTLER</a>
-        <a href="#">THE B SOCIETY</a>
+        <a href="bsociety.html">THE B SOCIETY</a>
         <a href="#">COLDCARD Q</a>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="메뉴">
@@ -495,7 +593,7 @@
       <a href="bscard.html">BS CARD</a>
       <a href="hof.html" class="active">HOF</a>
       <a href="owlbutler.html">OWL BUTLER</a>
-      <a href="#">THE B SOCIETY</a>
+      <a href="bsociety.html">THE B SOCIETY</a>
       <a href="#">COLDCARD Q</a>
     </div>
   </header>
@@ -553,7 +651,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     const firebaseConfig = {
       apiKey: "AIzaSyDVV1xvAGMvruyGRhSUK7kMRRNVeZs6HVk",
       authDomain: "owlbutler.firebaseapp.com",
@@ -787,6 +885,120 @@
         el.appendChild(deleteBtn);
         el.appendChild(deleteWrap);
         el.appendChild(deleteMsg);
+
+        // --- COMMENTS ---
+        const commentToggle = document.createElement('button');
+        commentToggle.className = 'comment-toggle-btn';
+        commentToggle.textContent = '// 댓글 보기';
+
+        const commentsSection = document.createElement('div');
+        commentsSection.className = 'comments-section';
+
+        // Comment list area
+        const commentList = document.createElement('div');
+
+        // Comment form
+        const commentForm = document.createElement('div');
+        commentForm.className = 'comment-form';
+
+        const cInputName = document.createElement('input');
+        cInputName.type = 'text';
+        cInputName.placeholder = '이름 (선택)';
+        cInputName.maxLength = 30;
+
+        const cInputMsg = document.createElement('textarea');
+        cInputMsg.placeholder = '댓글을 입력하세요...';
+        cInputMsg.maxLength = 200;
+
+        const cSubmit = document.createElement('button');
+        cSubmit.className = 'comment-submit';
+        cSubmit.textContent = '// REPLY';
+
+        commentForm.appendChild(cInputName);
+        commentForm.appendChild(cInputMsg);
+        commentForm.appendChild(cSubmit);
+
+        commentsSection.appendChild(commentList);
+        commentsSection.appendChild(commentForm);
+
+        let commentsLoaded = false;
+
+        async function loadComments() {
+          const cQuery = query(
+            collection(db, 'guestbook', docId, 'comments'),
+            orderBy('createdAt', 'asc')
+          );
+          const snap = await getDocs(cQuery);
+          commentList.innerHTML = '';
+          if (snap.empty) {
+            const noC = document.createElement('div');
+            noC.className = 'no-comments';
+            noC.textContent = '// 아직 댓글이 없습니다.';
+            commentList.appendChild(noC);
+          } else {
+            snap.forEach(cs => {
+              const cd = cs.data();
+              const cDate = cd.createdAt?.toDate?.() ?? new Date();
+              const cItem = document.createElement('div');
+              cItem.className = 'comment-item';
+              const cMeta = document.createElement('div');
+              cMeta.className = 'comment-meta';
+              const cName = document.createElement('span');
+              cName.className = 'comment-name';
+              cName.textContent = cd.name || 'Anonymous';
+              const cTime = document.createElement('span');
+              cTime.className = 'comment-time';
+              cTime.textContent = formatDate(cDate);
+              cMeta.appendChild(cName);
+              cMeta.appendChild(cTime);
+              const cMsg = document.createElement('div');
+              cMsg.className = 'comment-msg';
+              cMsg.textContent = cd.message;
+              cItem.appendChild(cMeta);
+              cItem.appendChild(cMsg);
+              commentList.appendChild(cItem);
+            });
+          }
+          commentToggle.textContent = commentsSection.classList.contains('open')
+            ? `// 댓글 ${snap.size}개 닫기`
+            : `// 댓글 ${snap.size}개`;
+        }
+
+        commentToggle.addEventListener('click', async () => {
+          commentsSection.classList.toggle('open');
+          if (commentsSection.classList.contains('open')) {
+            if (!commentsLoaded) { commentsLoaded = true; await loadComments(); }
+          }
+        });
+
+        cSubmit.addEventListener('click', async () => {
+          const cMsg = cInputMsg.value.trim();
+          if (!cMsg) return;
+          cSubmit.disabled = true;
+          try {
+            await addDoc(collection(db, 'guestbook', docId, 'comments'), {
+              name: cInputName.value.trim() || 'Anonymous',
+              message: cMsg,
+              createdAt: serverTimestamp()
+            });
+            cInputName.value = '';
+            cInputMsg.value = '';
+            commentsLoaded = true;
+            await loadComments();
+            if (!commentsSection.classList.contains('open')) {
+              commentsSection.classList.add('open');
+            }
+          } catch(e) {
+            console.error(e);
+          } finally {
+            cSubmit.disabled = false;
+          }
+        });
+
+        el.appendChild(commentToggle);
+        el.appendChild(commentsSection);
+        // --- END COMMENTS ---
+
         el.appendChild(indexEl);
         entriesList.appendChild(el);
       });
