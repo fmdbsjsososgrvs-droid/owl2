@@ -16,8 +16,8 @@
     .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;position:absolute;left:0;}
     .logo-img{width:42px;height:42px;object-fit:contain;opacity:0.9;}
     .logo-text{display:flex;flex-direction:column;line-height:1.1;}
-    .logo-top{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);letter-spacing:0.08em;}
-    .logo-bot{font-family:var(--mono);font-weight:700;font-size:11px;color:var(--accent);letter-spacing:0.1em;}
+    .logo-top{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);letter-spacing:0.1em;line-height:1.3;}
+    .logo-bot{font-family:var(--mono);font-weight:700;font-size:11px;color:var(--accent);letter-spacing:0.1em;line-height:1.3;}
     nav{display:flex;align-items:center;gap:2px;}
     nav a{font-family:var(--mono);font-size:12.5px;color:var(--text2);text-decoration:none;padding:6px 10px;letter-spacing:0.06em;border:1px solid transparent;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;}
     nav a:hover,nav a.active{color:var(--accent);border-color:transparent;border-bottom-color:var(--accent);background:rgba(247,147,26,0.05);}
@@ -57,6 +57,50 @@
     .card-message{font-family:var(--mono);font-size:13px;color:#ffffff;margin:0 auto 24px;max-width:320px;word-break:break-all;line-height:1.7;white-space:pre-wrap;}
     .dl-btn{padding:12px 28px;background:transparent;border:1px solid rgba(255,255,255,0.3);color:#ffffff;font-family:var(--mono);font-size:12px;cursor:pointer;transition:all 0.2s;letter-spacing:0.1em;margin-bottom:16px;}
     .dl-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.6);}
+    .hof-header {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 24px 0;
+    }
+    .hof-header .page-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #e8e8e8;
+      letter-spacing: 0.25em;
+      margin-bottom: 10px;
+    }
+    .hof-header .page-title {
+      font-family: var(--mono);
+      font-size: clamp(22px, 4vw, 32px);
+      color: var(--text);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .hof-header .page-title span { color: var(--accent); }
+    .hof-header .page-desc {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+    }
+    .hof-header .card-badge {
+      display: inline-block;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      padding: 3px 10px;
+      font-family: var(--mono);
+      font-size: inherit;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      vertical-align: middle;
+    }
+    .hof-header .divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin: 20px 0 48px;
+    }
   </style>
 </head>
 <body>
@@ -89,6 +133,11 @@
     </div>
   </header>
 <div class="page-wrap">
+  <div class="hof-header">
+    <h1 class="page-title"><span>BITCOIN</span> SOCIETY CARD</h1>
+    <p class="page-desc">콜드카드큐로 자신의 <span style="color:var(--accent);">비트코인에 서명</span>하세요.<br>그리고 선물로 <span class="card-badge">BITCOIN SOCIETY CARD</span> 를 받으세요.</p>
+    <div class="divider"></div>
+  </div>
   <p class="section-badge">// BS CARD · BIP-322 MESSAGE SIGNING VERIFICATION</p>
 
   <div class="guide-box">
