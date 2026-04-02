@@ -502,7 +502,7 @@ window.runVerify = async function() {
   document.getElementById('card-result').classList.add('show');
   document.getElementById('dl-btn').style.display = 'inline-block';
   document.getElementById('hof-prompt').style.display = 'block';
-  document.getElementById('hof-prompt').scrollIntoView({behavior:'smooth',block:'end'});
+  setTimeout(() => document.getElementById('hof-prompt').scrollIntoView({behavior:'smooth',block:'end'}), 100);
   btn.disabled = false;
 };
 
