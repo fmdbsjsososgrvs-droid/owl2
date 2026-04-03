@@ -32,7 +32,7 @@
     .page-wrap{max-width:780px;margin:0 auto;padding:48px 24px 80px;}
     .section-badge{font-family:var(--mono);font-size:13px;color:var(--text2);letter-spacing:0.2em;margin-bottom:36px;}
     .guide-box{background:#0d0d0d;border:1px solid var(--border);padding:20px 24px;margin-bottom:28px;}
-    .guide-box h3{font-family:var(--mono);font-size:14px;color:var(--accent);letter-spacing:0.15em;margin-bottom:14px;font-weight:bold;}
+    .guide-box h3{font-family:var(--mono);font-size:14px;color:var(--text);letter-spacing:0.15em;margin-bottom:14px;font-weight:bold;}
     .guide-box li{font-family:var(--mono);font-size:13px;color:#ffffff;line-height:2.4;list-style:none;}
     .guide-box li span{color:#ffffff;}
     .form-label{font-family:var(--mono);font-size:14px;color:var(--accent);letter-spacing:0.15em;margin-bottom:10px;display:block;font-weight:bold;}
@@ -205,14 +205,8 @@
   <p class="section-badge">// BS CARD · BIP-322 MESSAGE SIGNING VERIFICATION</p>
 
   <div class="guide-box">
-    <h3>// COLDCARD Q 서명 방법</h3>
-    <ul>
-      <li>① COLDCARD Q → <span>Advanced/Tools → Sign Message</span></li>
-      <li>② 서명할 주소 선택 후 원하는 메시지 입력</li>
-      <li>③ 출력된 <span>Base64 서명값</span>을 아래 SIGNATURE 칸에 붙여넣기</li>
-      <li>④ 서명에 사용한 주소와 메시지를 동일하게 입력 후 검증</li>
-    </ul>
-    <a href="https://louisbit.blogspot.com/2026/03/blog-post.html"
+    <h3>콜드카드큐 메세지서명 사용법</h3>
+    <a href="coldcardq.html#msg-sign"
        target="_blank"
        style="display:inline-block;margin-top:16px;font-family:'Share Tech Mono',monospace;
               font-size:13px;color:#f7931a;border:1px solid rgba(247,147,26,0.5);
@@ -220,7 +214,7 @@
               transition:all 0.2s;box-shadow:0 0 8px rgba(247,147,26,0.1);"
        onmouseover="this.style.background='rgba(247,147,26,0.1)';this.style.boxShadow='0 0 20px rgba(247,147,26,0.45)';"
        onmouseout="this.style.background='transparent';this.style.boxShadow='0 0 8px rgba(247,147,26,0.1)';">
-      ↗ &nbsp;자세한 설명
+      ↗ &nbsp;COLDCARD Q BIP-322
     </a>
   </div>
 
@@ -240,7 +234,7 @@
   </div>
 
   <button class="verify-btn" id="verify-btn" onclick="runVerify()">▶ VERIFY & ISSUE CARD</button>
-  <div class="status-box s-info show" id="status">// 입력 후 검증을 실행하세요.</div>
+  <div class="status-box s-info" id="status"></div>
 
   <div id="card-capture">
   <div class="card-result" id="card-result">
