@@ -467,15 +467,15 @@ window.runVerify = async function() {
 
   // 점수
   let score = 0, scoreDesc = [];
-  if      (btcBalance >= 4)   { score += 8; scoreDesc.push('4 BTC+ (+8pt)'); }
-  else if (btcBalance >= 1)   { score += 6; scoreDesc.push('1~3.999 BTC (+6pt)'); }
-  else if (btcBalance >= 0.5) { score += 4; scoreDesc.push('0.5~0.999 BTC (+4pt)'); }
-  else if (btcBalance >= 0.1) { score += 2; scoreDesc.push('0.1~0.4999 BTC (+2pt)'); }
-  else                          scoreDesc.push('< 0.1 BTC (+0pt)');
+  if      (btcBalance >= 4)    { score += 9; scoreDesc.push('4 BTC+ (+9pt)'); }
+  else if (btcBalance >= 1)    { score += 8; scoreDesc.push('1~3.999 BTC (+8pt)'); }
+  else if (btcBalance >= 0.5)  { score += 3; scoreDesc.push('0.5~0.999 BTC (+3pt)'); }
+  else if (btcBalance >= 0.1)  { score += 2; scoreDesc.push('0.1~0.4999 BTC (+2pt)'); }
+  else                           scoreDesc.push('< 0.1 BTC (+0pt)');
   if      (lastTxDays >= 1460) { score += 2; scoreDesc.push('1460days+ unmoved (+2pt)'); }
-  else if (lastTxDays >= 135)  { score += 1; scoreDesc.push('135~1459days unmoved (+1pt)'); }
+  else if (lastTxDays >= 365)  { score += 1; scoreDesc.push('365~1459days unmoved (+1pt)'); }
 
-  const tier = score>=8?'black': score>=6?'platinum': score>=4?'gold': score>=3?'silver':'bronze';
+  const tier = score>=10?'black': score>=4?'platinum': score>=3?'gold': score>=2?'silver':'bronze';
   verifiedData = { addr, msg, score, tier, btcBalance, lastTxDays, date: new Date().toISOString() };
 
   setStatus('s-ok',
