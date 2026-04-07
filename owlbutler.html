@@ -216,7 +216,7 @@
     .stat-label {
       font-family: var(--mono);
       font-size: 9px;
-      color: var(--text3);
+      color: var(--text);
       letter-spacing: 0.18em;
     }
 
@@ -467,6 +467,34 @@
       margin-left: 1px;
     }
     @keyframes tw-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  
+    /* ── Tab Navigation ── */
+    .ob-tab-nav {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 0;
+      margin-bottom: 0;
+    }
+    .ob-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .ob-tab-btn:not(:last-child)::after { content: '/'; margin-left: 20px; color: var(--text); font-weight: 300; }
+    .ob-tab-btn:hover  { color: var(--accent); }
+    .ob-tab-btn.active { color: var(--accent); font-weight: 700; }
+    .ob-tab-content    { display: none; }
+    .ob-tab-content.active { display: block; }
   </style>
 </head>
 <body>
@@ -498,6 +526,16 @@
     <a href="coldcardq.html">COLDCARD Q</a>
   </div>
 </header>
+
+<!-- Tab Navigation -->
+<div class="ob-tab-nav">
+  <button class="ob-tab-btn active" data-tab="owlbutler" onclick="obSwitchTab('owlbutler')">PORTFOLIO</button>
+  <button class="ob-tab-btn" data-tab="collection" onclick="obSwitchTab('collection')">COLLECTION</button>
+  <button class="ob-tab-btn" data-tab="hobby" onclick="obSwitchTab('hobby')">HOBBY</button>
+</div>
+
+<!-- OWL BUTLER Tab (기존 콘텐츠) -->
+<div class="ob-tab-content active" id="ob-tab-owlbutler">
 
 <section class="hero">
   <div class="hero-badge">// BITCOIN HODLER &amp; EDUCATOR</div>
@@ -633,6 +671,16 @@
   <div class="quote-sig">— WE ARE ALL SATOSHI —</div>
 </div>
 
+</div>
+
+<!-- COLLECTION Tab (빈 페이지) -->
+<div class="ob-tab-content" id="ob-tab-collection">
+</div>
+
+<!-- HOBBY Tab (빈 페이지) -->
+<div class="ob-tab-content" id="ob-tab-hobby">
+</div>
+
 <footer>
   <div class="footer-inner">
     <span class="footer-logo">OWL BUTLER &nbsp;/&nbsp; <span>THE B SOCIETY</span></span>
@@ -663,5 +711,12 @@
       window.addEventListener('DOMContentLoaded', type);
     })();
   </script>
+
+<script>
+  function obSwitchTab(name) {
+    document.querySelectorAll('.ob-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    document.querySelectorAll('.ob-tab-content').forEach(c => c.classList.toggle('active', c.id === 'ob-tab-' + name));
+  }
+</script>
 </body>
 </html>
