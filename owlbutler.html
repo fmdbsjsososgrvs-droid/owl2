@@ -75,12 +75,13 @@
     .logo-bot { font-family: var(--mono); font-weight: 700; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; line-height: 1.3; }
     nav { display: flex; align-items: center; gap: 2px; }
     nav a {
-      font-family: var(--mono);
-      font-size: 12.5px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
       color: var(--text);
       text-decoration: none;
       padding: 6px 10px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.02em;
       border: 1px solid transparent;
       border-bottom: 2px solid transparent;
       transition: all 0.2s;
@@ -105,12 +106,13 @@
     .mobile-nav { display: none; background: var(--bg2); border-top: 1px solid var(--border); padding: 12px 0; }
     .mobile-nav a {
       display: block;
-      font-family: var(--mono);
-      font-size: 12px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
       color: var(--text2);
       text-decoration: none;
       padding: 10px 24px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.02em;
       border-left: 2px solid transparent;
       transition: all 0.2s;
     }
@@ -508,22 +510,22 @@
       </div>
     </a>
     <nav>
-      <a href="bscard.html">BS CARD</a>
-      <a href="hof.html">HOF</a>
-      <a href="owlbutler.html" class="active">OWL BUTLER</a>
-      <a href="bsociety.html">THE B SOCIETY</a>
-      <a href="coldcardq.html">COLDCARD Q</a>
+      <a href="bscard.html">BS카드</a>
+      <a href="hof.html">명예의전당</a>
+      <a href="owlbutler.html" class="active">부엉집사</a>
+      <a href="bsociety.html">비소사이에티</a>
+      <a href="coldcardq.html">콜드카드큐</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="menu">
       <span></span><span></span><span></span>
     </button>
   </div>
   <div class="mobile-nav" id="mobileNav">
-    <a href="bscard.html">BS CARD</a>
-    <a href="hof.html">HOF</a>
-    <a href="owlbutler.html" class="active">OWL BUTLER</a>
-    <a href="bsociety.html">THE B SOCIETY</a>
-    <a href="coldcardq.html">COLDCARD Q</a>
+    <a href="bscard.html">BS카드</a>
+    <a href="hof.html">명예의전당</a>
+    <a href="owlbutler.html" class="active">부엉집사</a>
+    <a href="bsociety.html">비소사이에티</a>
+    <a href="coldcardq.html">콜드카드큐</a>
   </div>
 </header>
 
@@ -547,8 +549,13 @@
   <div class="hero-divider"></div>
   <p class="hero-bio">
     비트코인 생태계를 탐구하고 기록하는 <em>인디펜던트 리서처</em>.<br />
-    신뢰기반 조직 <em>THE B SOCIETY</em>의 창설자이며,<br />
+    신뢰기반 조직 <em>비소사이에티</em>의 창설자이며,<br />
     콜드월렛 직접 검증을 통해 <em>자기 수탁(Self-custody)</em> 문화를 전파합니다.
+  </p>
+  <p class="hero-bio" style="margin-top:18px; line-height:2;">
+    <span style="color:var(--accent)">HomePage</span> : https://owl2-three.vercel.app/<br />
+    <span style="color:var(--accent)">Blog</span> : https://louisbit.blogspot.com/<br />
+    <span style="color:var(--accent)">Lightning Network</span> : bitsexer@oksu.su
   </p>
 </section>
 
@@ -639,7 +646,7 @@
   <div class="wallets-grid">
     <div class="wallet-item">
       <div class="wallet-icon">&#9632;</div>
-      <div class="wallet-name">COLDCARD Q</div>
+      <div class="wallet-name">콜드카드큐</div>
       <div class="wallet-status">AIR-GAPPED</div>
     </div>
     <div class="wallet-item">
@@ -683,7 +690,7 @@
 
 <footer>
   <div class="footer-inner">
-    <span class="footer-logo">OWL BUTLER &nbsp;/&nbsp; <span>THE B SOCIETY</span></span>
+    <span class="footer-logo">OWL BUTLER &nbsp;/&nbsp; <span>비소사이에티</span></span>
     <span class="footer-note">NOT YOUR KEYS, NOT YOUR COINS.</span>
   </div>
 </footer>
