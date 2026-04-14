@@ -186,7 +186,7 @@ nav a:hover,nav a.active{color:var(--accent);border-color:transparent;border-bot
 
 <!-- 1. TITLE -->
 <div class="screen active" id="screen-title">
-  <img src="game/AA.PNG" style="width:120px;height:120px;object-fit:contain;animation:floatY 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(247,147,26,.5));" />
+  <img src="game/AA.png" style="width:120px;height:120px;object-fit:contain;animation:floatY 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(247,147,26,.5));" />
   <div class="title-main">부엉퀴즈 게임!</div>
   <div class="title-sub">비트코인 퀴즈로 몬스터를 물리쳐라!<br>정답 → 공격 &nbsp;|&nbsp; 오답 → 피해</div>
 
@@ -266,7 +266,7 @@ nav a:hover,nav a.active{color:var(--accent);border-color:transparent;border-bot
 
 <!-- GAMEOVER -->
 <div class="screen" id="screen-gameover">
-  <div class="go-icon"><img src="game/END.PNG" style="width:80px;height:80px;object-fit:contain;" /></div>
+  <div class="go-icon"><img src="game/END.png" style="width:80px;height:80px;object-fit:contain;" /></div>
   <div class="go-title">GAME OVER</div>
   <div style="font-size:14px;color:#fff;font-family:var(--sans);">공부해라 게이야</div>
   <div class="go-sub" id="go-sub">비트코인 지식이 부족하다...</div>
@@ -279,12 +279,12 @@ nav a:hover,nav a.active{color:var(--accent);border-color:transparent;border-bot
 <!-- VICTORY -->
 <div class="screen" id="screen-victory">
   <div class="vic-title">BITCOIN VICTORY!</div>
-  <img src="game/GEND.PNG" id="gend-img" style="width:220px;object-fit:contain;margin:8px 0;" />
+  <img src="game/GEND.png" id="gend-img" style="width:220px;object-fit:contain;margin:8px 0;" />
   <div class="vic-sub">사토시의 모든 적을 물리쳤다!<br>진정한 비트코이너가 되었습니다.</div>
   <div class="vic-stats" id="vic-stats"></div>
   <div style="font-size:13px;color:#fff;font-family:var(--sans);letter-spacing:1px;">당신의 위대한 승리를 기록하세요</div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-    <a id="gend-dl" href="game/GEND.PNG" download="GEND.PNG" class="btn">⬇ 다운로드</a>
+    <a id="gend-dl" href="game/GEND.png" download="GEND.png" class="btn">⬇ 다운로드</a>
     <button class="btn" onclick="">🏆 명예의 전당</button>
   </div>
 </div>
@@ -559,7 +559,7 @@ function answer(picked,btn){
   }else{
     php=Math.max(0,php-1);
     const pc=document.getElementById('battle-player-sprite');
-    pc.src='game/T.PNG';
+    pc.src='game/T.png';
     pc.classList.remove('anim-shake-player');void pc.offsetWidth;pc.classList.add('anim-shake-player');
     setTimeout(()=>{if(pc)pc.src='game/1.png';},400);
     document.body.classList.remove('anim-bg-green','anim-bg-red');void document.body.offsetWidth;document.body.classList.add('anim-bg-red');
