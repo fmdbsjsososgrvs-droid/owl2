@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비트코이너 키우기</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0a0a0a;--accent:#f7931a;--text:#e0e0e0;--mono:'Share Tech Mono',monospace;--sans:'Noto Sans KR',sans-serif;--red:#e74c3c;--green:#2ecc71;}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+header{width:100%;}
+.screen{display:none;width:100%;max-width:640px;padding:16px;flex-direction:column;align-items:center;}
+.screen.active{display:flex;}
+.back-link{position:fixed;top:14px;left:16px;font-size:11px;color:#333;text-decoration:none;letter-spacing:2px;transition:color .2s;z-index:300;}
+.back-link:hover{color:var(--accent);}
+.btn{background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:13px;padding:11px 30px;cursor:pointer;letter-spacing:2px;transition:all .15s;text-transform:uppercase;text-decoration:none;display:inline-block;}
+.btn:hover{background:var(--accent);color:#000;}
+.btn-sm{padding:8px 18px;font-size:11px;}
+/* 1. TITLE */
+#screen-title{text-align:center;gap:16px;padding-top:120px;}
+.title-btc{font-size:88px;display:block;animation:floatY 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(247,147,26,.5));}
+.title-main{font-size:30px;color:var(--accent);font-family:var(--sans);font-weight:700;letter-spacing:3px;}
+.title-sub{font-size:12px;color:#666;line-height:2;font-family:var(--sans);}
+.title-monsters{font-size:30px;letter-spacing:10px;opacity:.6;}
+.title-hint{font-size:10px;color:#2a2a2a;letter-spacing:2px;}
+/* 2. MOVING */
+#screen-moving{min-height:100vh;justify-content:center;gap:28px;background:radial-gradient(ellipse at center,#0e0e0e 0%,#000 100%);}
+.moving-lines{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+.moving-line{position:absolute;height:1px;background:linear-gradient(to right,transparent,rgba(247,147,26,.2),transparent);animation:lineSweep 1s linear infinite;width:100%;}
+.moving-owl-wrap{position:relative;z-index:1;}
+.moving-owl-img{width:130px;height:130px;object-fit:contain;animation:runBounce .35s ease-in-out infinite alternate;}
+.moving-stage-txt{font-size:18px;color:var(--accent);letter-spacing:4px;font-family:var(--sans);font-weight:700;z-index:1;animation:blink 1s step-end infinite;}
+.moving-sub{font-size:11px;color:#333;letter-spacing:3px;z-index:1;}
+/* 3. DIALOGUE */
+#screen-dialogue{padding:0;gap:0;}
+.dia-stage-bar{width:100%;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;}
+.dia-stage-lbl{font-size:10px;color:#444;letter-spacing:3px;}
+.dia-stage-lbl span{color:var(--accent);}
+/* ARENA */
+.arena-wrap{width:100%;height:280px;position:relative;overflow:hidden;background-size:cover;background-position:center bottom;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
+.arena-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,rgba(0,0,0,.6),transparent);pointer-events:none;}
+.arena-chars{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end;padding:0 28px;z-index:2;}
+.arena-player-img{width:110px;height:110px;object-fit:contain;}
+.arena-enemy-char{font-size:88px;line-height:1;filter:drop-shadow(2px 4px 8px rgba(0,0,0,.8));}
+.arena-enemy-char.boss-glow{filter:drop-shadow(0 0 18px rgba(231,76,60,.9));animation:bossFloat 2s ease-in-out infinite;}
+/* 말풍선 */
+.speech-bubble{position:absolute;top:14px;left:148px;right:14px;background:rgba(8,8,8,.93);border:1px solid #3a3a3a;border-radius:4px;padding:14px 16px 10px;z-index:10;}
+.speech-bubble::before{content:'';position:absolute;left:-9px;top:22px;border:5px solid transparent;border-right-color:#3a3a3a;}
+.speech-spk{font-size:15px;letter-spacing:2px;color:var(--red);font-family:var(--mono);margin-bottom:8px;font-weight:700;}
+.speech-txt{font-size:13px;color:#e0e0e0;font-family:var(--sans);line-height:1.8;min-height:44px;}
+.speech-next{display:block;margin-left:auto;margin-top:10px;background:transparent;border:1px solid #383838;color:#666;font-family:var(--mono);font-size:11px;padding:4px 14px;cursor:pointer;letter-spacing:1px;transition:all .15s;}
+.speech-next:hover{border-color:var(--accent);color:var(--accent);}
+/* 4. BATTLE */
+#screen-battle{padding:10px 16px;gap:0;}
+.battle-arena{height:230px;}
+.stage-bar{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.stage-lbl{font-size:10px;color:#444;letter-spacing:3px;}
+.stage-lbl span{color:var(--accent);}
+.stage-dots{display:flex;gap:5px;}
+.stage-dot{width:7px;height:7px;border-radius:50%;border:1px solid #2a2a2a;background:transparent;transition:all .3s;}
+.stage-dot.done{background:var(--accent);border-color:var(--accent);}
+.stage-dot.current{border-color:var(--accent);box-shadow:0 0 5px var(--accent);}
+.stage-dot.boss-dot{border-color:#3a1a1a;}
+.stage-dot.boss-dot.current{border-color:var(--red);box-shadow:0 0 8px var(--red);}
+.hp-row{display:flex;justify-content:space-between;gap:16px;width:100%;margin-bottom:8px;}
+.hp-block{flex:1;}
+.hp-lbl{font-size:9px;letter-spacing:2px;color:#555;margin-bottom:3px;}
+.hp-lbl.r{text-align:right;}
+.hp-track{height:8px;background:#1a1a1a;border:1px solid #222;overflow:hidden;}
+.hp-fill{height:100%;background:var(--accent);transition:width .4s ease;}
+.hp-fill.r{float:right;}
+.hp-fill.danger{background:var(--red);}
+.hearts{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;}
+.hearts.r{justify-content:flex-end;}
+.heart{font-size:11px;transition:opacity .3s;}
+.heart.dead{opacity:.12;}
+.blog{width:100%;min-height:32px;padding:7px 12px;background:#080808;border:1px solid #191919;font-size:12px;line-height:1.5;margin:8px 0;font-family:var(--sans);color:#aaa;}
+.blog .ok{color:var(--accent);font-weight:700;}
+.blog .bad{color:var(--red);font-weight:700;}
+.blog .info{color:#555;}
+.quiz-wrap{width:100%;}
+.quiz-q{font-size:13px;line-height:1.7;color:var(--text);font-family:var(--sans);background:#0c0c0c;border:1px solid #1e1e1e;border-left:3px solid var(--accent);padding:10px 14px;margin-bottom:8px;}
+.quiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.choice{background:#0e0e0e;border:1px solid #222;color:#ccc;font-family:var(--sans);font-size:12px;padding:10px 12px;cursor:pointer;text-align:left;line-height:1.4;transition:border-color .12s,color .12s,background .12s;}
+.choice:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:#141414;}
+.choice.ok{border-color:var(--green)!important;color:var(--green)!important;background:rgba(46,204,113,.07)!important;}
+.choice.bad{border-color:var(--red)!important;color:var(--red)!important;background:rgba(231,76,60,.07)!important;}
+.choice:disabled{cursor:default;opacity:.65;}
+/* EVENT */
+#event-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.94);align-items:center;justify-content:center;}
+.ev-inner{text-align:center;animation:fadeUp .4s ease;}
+.ev-alert{font-size:13px;letter-spacing:4px;color:var(--red);border:1px solid var(--red);padding:6px 20px;margin-bottom:22px;animation:blinkRed .6s step-end infinite;}
+.ev-emoji{font-size:88px;display:block;margin-bottom:18px;animation:shakeXloop .5s ease infinite;}
+.ev-msg{font-size:20px;color:#fff;font-family:var(--sans);font-weight:700;margin-bottom:8px;}
+.ev-sub{font-size:11px;color:#555;letter-spacing:2px;}
+/* GAMEOVER / VICTORY */
+#screen-gameover{text-align:center;gap:18px;}
+.go-icon{font-size:80px;}
+.go-title{font-size:36px;color:var(--red);letter-spacing:5px;}
+.go-sub{font-size:13px;color:#666;font-family:var(--sans);}
+.go-score{font-size:13px;color:var(--accent);border:1px solid #222;padding:12px 24px;letter-spacing:1px;}
+#screen-victory{text-align:center;gap:18px;}
+.vic-icon{font-size:80px;animation:floatY 2s ease-in-out infinite;}
+.vic-title{font-size:26px;color:var(--accent);letter-spacing:4px;font-weight:700;}
+.vic-sub{font-size:13px;color:#bbb;font-family:var(--sans);line-height:2;}
+.vic-stats{font-size:11px;color:#555;font-family:var(--sans);line-height:2.2;border-top:1px solid #1a1a1a;padding-top:14px;}
+/* ANIMATIONS */
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+@keyframes bossFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-8px) scale(1.06);}}
+@keyframes runBounce{from{transform:translateY(0);}to{transform:translateY(-8px);}}
+@keyframes lineSweep{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes blinkRed{0%,100%{opacity:1;}50%{opacity:.2;}}
+@keyframes shakeXloop{0%,100%{transform:translateX(0) rotate(0);}25%{transform:translateX(-6px) rotate(-4deg);}75%{transform:translateX(6px) rotate(4deg);}}
+@keyframes shakeEnemy{0%,100%{transform:translateX(0);}20%{transform:translateX(-10px);}40%{transform:translateX(10px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
+@keyframes shakePlayer{0%,100%{transform:translateX(0);}20%{transform:translateX(10px);}40%{transform:translateX(-10px);}60%{transform:translateX(6px);}80%{transform:translateX(-6px);}}
+@keyframes vanish{0%{opacity:1;transform:scale(1) rotate(0);}60%{opacity:.4;transform:scale(.7) rotate(15deg);}100%{opacity:0;transform:scale(.2) rotate(25deg) translateY(15px);}}
+@keyframes bgGreen{0%,100%{background:var(--bg);}50%{background:#0a1a0a;}}
+@keyframes bgRed{0%,100%{background:var(--bg);}50%{background:#1a0808;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.anim-shake-enemy{animation:shakeEnemy .4s ease;}
+.anim-shake-player{animation:shakePlayer .4s ease;}
+.anim-vanish{animation:vanish .6s ease forwards;}
+.anim-bg-green{animation:bgGreen .5s ease;}
+.anim-bg-red{animation:bgRed .5s ease;}
+.anim-fade-up{animation:fadeUp .3s ease;}
+@media(max-width:480px){
+  .arena-enemy-char{font-size:64px;}
+  .arena-player-img,.moving-owl-img{width:90px;height:90px;}
+  .quiz-grid{grid-template-columns:1fr;}
+  .title-main{font-size:22px;}
+  .arena-wrap{height:220px;}
+  .battle-arena{height:185px;}
+  .speech-bubble{left:104px;}
+}
+</style>
+</head>
+<body>
+<a href="owlbutler.html" class="back-link">← BACK</a>
+
+<!-- 1. TITLE -->
+<div class="screen active" id="screen-title">
+  <img src="game/AA.PNG" style="width:120px;height:120px;object-fit:contain;animation:floatY 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(247,147,26,.5));" />
+  <div class="title-main">부엉퀴즈 게임!</div>
+  <div class="title-sub">비트코인 퀴즈로 몬스터를 물리쳐라!<br>정답 → 공격 &nbsp;|&nbsp; 오답 → 피해</div>
+
+  <button class="btn" onclick="startGame()">▶ 게임 시작</button>
+  <div class="title-hint">PLAYER HP ❤️❤️❤️❤️❤️ · 7 STAGES</div>
+</div>
+
+<!-- 2. MOVING -->
+<div class="screen" id="screen-moving">
+  <div class="moving-lines" id="moving-lines"></div>
+  <div class="moving-owl-wrap">
+    <img id="moving-sprite" class="moving-owl-img" src="" alt="" />
+  </div>
+  <div class="moving-stage-txt" id="moving-txt">1 스테이지로 이동 중</div>
+  <div class="moving-sub">- - -</div>
+</div>
+
+<!-- 3. DIALOGUE -->
+<div class="screen" id="screen-dialogue">
+  <div class="dia-stage-bar">
+    <div class="dia-stage-lbl">STAGE <span id="dia-stage-num">1</span> / 7</div>
+    <div class="dia-stage-lbl" id="dia-enemy-lbl">???</div>
+  </div>
+  <div class="arena-wrap" id="dia-arena">
+    <div class="arena-chars">
+      <img id="dia-player-sprite" class="arena-player-img" src="" alt="" />
+      <div class="arena-enemy-char" id="dia-enemy-char">🐺</div>
+    </div>
+    <div class="speech-bubble">
+      <div class="speech-spk" id="speech-spk">???</div>
+      <div class="speech-txt" id="speech-txt">...</div>
+      <button class="speech-next" onclick="advanceDialogue()">▶ 계속</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. BATTLE -->
+<div class="screen" id="screen-battle">
+  <div class="stage-bar">
+    <div class="stage-lbl">STAGE <span id="stage-num">1</span> / 7</div>
+    <div class="stage-dots" id="stage-dots"></div>
+  </div>
+  <div class="hp-row">
+    <div class="hp-block">
+      <div class="hp-lbl">⚡ 비트코이너</div>
+      <div class="hp-track"><div class="hp-fill" id="php-bar"></div></div>
+      <div class="hearts" id="php-hearts"></div>
+    </div>
+    <div class="hp-block">
+      <div class="hp-lbl r" id="ehp-lbl">👹 몬스터</div>
+      <div class="hp-track"><div class="hp-fill r" id="ehp-bar"></div></div>
+      <div class="hearts r" id="ehp-hearts"></div>
+    </div>
+  </div>
+  <div class="arena-wrap battle-arena" id="battle-arena">
+    <div class="arena-chars">
+      <img id="battle-player-sprite" class="arena-player-img" src="" alt="" />
+      <div class="arena-enemy-char" id="battle-enemy-char">🐺</div>
+    </div>
+  </div>
+  <div class="blog" id="battle-log"><span class="info">퀴즈에 답해 적을 물리쳐라!</span></div>
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q">Q. ...</div>
+    <div class="quiz-grid" id="quiz-grid"></div>
+  </div>
+</div>
+
+<!-- EVENT -->
+<div id="event-overlay">
+  <div class="ev-inner">
+    <div class="ev-alert">⚠ 이벤트 발생!</div>
+    <div class="ev-emoji">💩</div>
+    <div class="ev-msg">쉿코이너가 난입해왔다!</div>
+    <div class="ev-sub">전용 퀴즈로 격파하라</div>
+  </div>
+</div>
+
+<!-- GAMEOVER -->
+<div class="screen" id="screen-gameover">
+  <div class="go-icon"><img src="game/END.PNG" style="width:80px;height:80px;object-fit:contain;" /></div>
+  <div class="go-title">GAME OVER</div>
+  <div style="font-size:14px;color:#fff;font-family:var(--sans);">공부해라 게이야</div>
+  <div class="go-sub" id="go-sub">비트코인 지식이 부족하다...</div>
+  <div class="go-score" id="go-score">점수: 0</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+    <button class="btn" onclick="startGame()">↺ 다시 도전</button>
+  </div>
+</div>
+
+<!-- VICTORY -->
+<div class="screen" id="screen-victory">
+  <div class="vic-title">BITCOIN VICTORY!</div>
+  <img src="game/GEND.PNG" id="gend-img" style="width:220px;object-fit:contain;margin:8px 0;" />
+  <div class="vic-sub">사토시의 모든 적을 물리쳤다!<br>진정한 비트코이너가 되었습니다.</div>
+  <div class="vic-stats" id="vic-stats"></div>
+  <div style="font-size:13px;color:#fff;font-family:var(--sans);letter-spacing:1px;">당신의 위대한 승리를 기록하세요</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+    <a id="gend-dl" href="game/GEND.PNG" download="GEND.PNG" class="btn">⬇ 다운로드</a>
+    <button class="btn" onclick="">🏆 명예의 전당</button>
+  </div>
+</div>
+
+<script>
