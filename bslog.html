@@ -15,7 +15,7 @@
     header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;}
     .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;height:64px;gap:16px;position:relative;}
     .logo{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:0;}
-    .logo-img{width:36px;height:36px;border-radius:50%;object-fit:cover;}
+    .logo-img{width:42px;height:42px;object-fit:contain;opacity:0.9;}
     .logo-text{display:flex;flex-direction:column;}
     .logo-top{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);letter-spacing:0.1em;line-height:1.3;}
     .logo-bot{font-family:var(--mono);font-weight:700;font-size:11px;color:var(--accent);letter-spacing:0.1em;line-height:1.3;}
@@ -103,6 +103,48 @@
     @media(max-width:768px) { .bscard-showcase { flex-direction: column; } .bscard-img-wrap { width: 100%; max-width: 280px; margin: 0 auto; } }
     /* Empty notice */
     .empty-notice { font-family: var(--mono); font-size: 13px; color: var(--text3); letter-spacing: 0.15em; padding: 40px 0; }
+    /* Inline detail panel */
+    .inline-panel {
+      display: none;
+      margin-top: 16px;
+      background: linear-gradient(135deg, #ffffff08, #ffffff03);
+      border: 1px solid rgba(247,147,26,0.2);
+      border-radius: 0.75rem;
+      padding: 1px;
+      animation: fadeIn 0.3s ease;
+    }
+    .inline-panel.open { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .inline-panel-inner { background: #0d0d0deb; border-radius: calc(0.75rem - 1px); padding: 28px 32px; }
+    .panel-close {
+      float: right; font-family: var(--mono); font-size: 10px; color: var(--text3);
+      background: none; border: 1px solid var(--border); padding: 4px 10px;
+      cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s;
+    }
+    .panel-close:hover { color: var(--accent); border-color: var(--accent); }
+    .panel-category {
+      font-family: var(--mono); font-size: 9px; color: var(--accent);
+      letter-spacing: 0.22em; border: 1px solid rgba(247,147,26,0.25);
+      display: inline-block; padding: 3px 10px; margin-bottom: 14px;
+    }
+    .panel-title {
+      font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--text);
+      letter-spacing: 0.08em; margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-body { font-family: var(--sans); font-size: 13.5px; color: var(--text2); line-height: 2; }
+    .panel-body h3 { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.2em; margin: 24px 0 10px; }
+    .panel-body p { margin-bottom: 12px; }
+    .panel-body ul, .panel-body ol { padding-left: 20px; margin-bottom: 12px; }
+    .panel-body li { margin-bottom: 4px; }
+    .panel-body strong { color: var(--text); font-weight: 700; }
+    .panel-body .highlight { color: var(--accent); }
+    .bscard-toggle-btn {
+      display: inline-block; font-family: var(--mono); font-size: 11px; color: var(--accent);
+      border: 1px solid var(--accent); padding: 8px 20px; letter-spacing: 0.1em;
+      background: transparent; cursor: pointer; transition: all 0.2s;
+    }
+    .bscard-toggle-btn:hover { background: var(--accent); color: #000; }
   </style>
 </head>
 <body>
@@ -294,7 +336,46 @@
               <em>X, Google, Apple, Discord, Binance, ProtonMail</em> 등 주요 서비스 지원.<br />
               개당 약 100,000원. Apple 등록 시 2개 필수 — 최소 200,000원 투자.
             </p>
-            <a class="bscard-btn" href="https://louisbit.blogspot.com/2026/03/security-key.html" target="_blank" rel="noopener">사용기 읽어보기 &nbsp;&#8599;</a>
+            <button class="bscard-toggle-btn" onclick="togglePanel('yubikey')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-yubikey">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('yubikey')">// CLOSE ✕</button>
+            <span class="panel-category">SECURITY KEY</span>
+            <div class="panel-title">YUBIKEY — 유비키 사용기</div>
+            <div class="panel-body">
+              <h3>// 핵심 원리</h3>
+              <p>"내 비밀번호를 알아도 너는 내 계정에 접근할 수 없다."</p>
+              <p>특정 사이트에 유비키를 등록하면, 새로운 기기에서 로그인할 때마다 실물 유비키가 필요합니다. 개인정보가 유출되어도 <strong>유비키 없이는 계정 접근이 불가능</strong>합니다.</p>
+
+              <h3>// 지원 플랫폼</h3>
+              <ul>
+                <li>엑스 (트위터)</li>
+                <li>구글</li>
+                <li>애플 (iCloud)</li>
+                <li>디스코드</li>
+                <li>바이낸스 (해외거래소)</li>
+                <li>프로톤메일</li>
+              </ul>
+
+              <h3>// 로그인 절차</h3>
+              <ol>
+                <li>유비키 삽입</li>
+                <li>Y 버튼으로 활성화</li>
+                <li>미리 지정한 비밀번호 입력</li>
+                <li>다시 한 번 Y 버튼 눌러 확인</li>
+                <li>로그인 완료</li>
+              </ol>
+
+              <h3>// 보안 등급</h3>
+              <p>최상급 수준. <strong>펜타곤, 미국 육군, 국무부, 영국 정부</strong>에서 사용 중입니다.</p>
+              <p>제조사 Yubico는 2019년 홍콩 민주화 운동 당시 활동가들에게 유비키 500개를 무상 제공하여 <span class="highlight">"미 국무부급 암호화"</span>를 지원했습니다.</p>
+
+              <h3>// 단점</h3>
+              <p><strong>가격</strong> — 개당 약 10만원. 분실 대비 2개 구매 권장 (애플은 필수) → 초기 투자 최소 20만원.</p>
+              <p><strong>불편함</strong> — 로그인할 때마다 물리적 기기가 필요합니다. 아이패드에서 유튜브 로그인을 포기하게 되는 경험도 있습니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -319,7 +400,38 @@
               <em>Coconut, Nunchuk</em> 등 Watch-Only 앱 + 익명 이메일만 운영.<br />
               사용하지 않는 구형 폰으로 시작 가능 — 비트코인 전용 모니터링 기기.
             </p>
-            <a class="bscard-btn" href="https://louisbit.blogspot.com/2026/03/security-phone-watch-only.html" target="_blank" rel="noopener">사용기 읽어보기 &nbsp;&#8599;</a>
+            <button class="bscard-toggle-btn" onclick="togglePanel('watchonly')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-watchonly">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('watchonly')">// CLOSE ✕</button>
+            <span class="panel-category">SECURITY</span>
+            <div class="panel-title">WATCH-ONLY PHONE — 보안폰 제작기</div>
+            <div class="panel-body">
+              <h3>// 핵심 개념</h3>
+              <p>일반 스마트폰에 비트코인 앱을 설치하면 자신이 비트코이너임을 드러낼 수 있습니다. 이를 방지하기 위해 <strong>개인정보를 일절 담지 않은 전용 보안폰</strong>을 구성했습니다.</p>
+
+              <h3>// 보안 구성</h3>
+              <ul>
+                <li>전화번호 미등록</li>
+                <li>이름, 주소 정보 미입력</li>
+                <li>생체인식 데이터 (지문, 얼굴) 미저장</li>
+                <li>YubiKey로 iCloud 추가 보호</li>
+              </ul>
+
+              <h3>// 설치 앱</h3>
+              <ul>
+                <li>익명 iCloud 이메일</li>
+                <li>암호화된 메모장</li>
+                <li><strong>Coconut Wallet</strong> (Watch-Only)</li>
+                <li><strong>Nunchuk</strong> (Watch-Only)</li>
+              </ul>
+
+              <h3>// 운용 방식</h3>
+              <p>보안폰에는 <strong>4개 지갑</strong>이 설정되어 있으며, 각각 메인 지갑 / 신뢰 호들링용 / 잔금 지갑 등으로 분류해 운영 중입니다.</p>
+              <p>분실해도 개인정보가 없어 <span class="highlight">해커가 소유자를 특정할 수 없습니다.</span> 사용하지 않는 구형 폰 하나면 충분히 시작할 수 있습니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -342,7 +454,30 @@
               손잡이 등을 눌러 안전하게 접히며, 펼치면 칼날이 단단히 고정되는 구조.<br />
               칼날에 각인된 디테일까지 — 실용성과 <em>디자인 완성도</em>를 동시에 갖춘 EDC.
             </p>
-            <a class="bscard-btn" href="https://louisbit.blogspot.com/2026/03/security-phone-watch-only.html" target="_blank" rel="noopener">사용기 읽어보기 &nbsp;&#8599;</a>
+            <button class="bscard-toggle-btn" onclick="togglePanel('victorinox')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-victorinox">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('victorinox')">// CLOSE ✕</button>
+            <span class="panel-category">EDC</span>
+            <div class="panel-title">VICTORINOX EVOKE ALOX — 스위스 폴딩 나이프</div>
+            <div class="panel-body">
+              <h3>// 제품 소개</h3>
+              <p>빅토리녹스 밀리터리 라인 중 가장 아름다운 디자인으로 선택한 <strong>스위스 군납품 폴딩 나이프</strong>입니다. Evoke Alox는 알루미늄 합금 손잡이가 특징으로, 가볍고 내구성이 뛰어납니다.</p>
+
+              <h3>// 구조 & 사용성</h3>
+              <ul>
+                <li>손잡이 등을 눌러 <strong>안전하게 접히는 구조</strong></li>
+                <li>펼치면 칼날이 단단히 고정 — 사용 중 접힘 방지</li>
+                <li>칼날에 새겨진 각인 디테일</li>
+                <li>실용성과 디자인 완성도를 동시에 갖춘 EDC</li>
+              </ul>
+
+              <h3>// 일상 휴대</h3>
+              <p>EDC(Everyday Carry) 아이템으로 매일 지니고 다닐 수 있는 실용적인 도구입니다. 캠핑, 야외 활동은 물론 일상에서도 유용하게 활용할 수 있습니다.</p>
+              <p><span class="highlight">실용성과 아름다움을 모두 갖춘</span> 빅토리녹스의 정수. 한 번 손에 쥐면 놓기 어려운 EDC입니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -366,7 +501,32 @@
               캠핑용으로도 활용 가능하지만, 사실상 <em>로망을 실현한 수집품</em>.<br />
               어릴 때부터 품어온 칼에 대한 로망을 현실로.
             </p>
-            <a class="bscard-btn" href="https://louisbit.blogspot.com/2026/03/collection.html" target="_blank" rel="noopener">사용기 읽어보기 &nbsp;&#8599;</a>
+            <button class="bscard-toggle-btn" onclick="togglePanel('boker')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-boker">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('boker')">// CLOSE ✕</button>
+            <span class="panel-category">COLLECTION</span>
+            <div class="panel-title">BOKER SK8 — 보커 택티컬 나이프</div>
+            <div class="panel-body">
+              <h3>// 구매 계기</h3>
+              <p>두 가지 이유로 구매했습니다. 위급시 자신과 가족을 지킬 수 있는 <strong>호신용</strong>, 그리고 전신 블랙의 멋진 외형을 갖춘 <strong>진열용 컬렉션</strong>.</p>
+              <p>"내 안에 남아있는 중2병에게 구매를 강요당한 것." — 어린 시절부터 품어온 남자의 로망을 현실로.</p>
+
+              <h3>// 사용 현황</h3>
+              <ul>
+                <li>위급상황 대비 칼날을 바짝 세워 보관 중 (쓸 일은 없을 것)</li>
+                <li>캠핑용으로도 활용 가능 — 실제 사용 기회는 제한적</li>
+                <li>호신용으로는 가스총이 더 실용적이라는 개인 평가</li>
+              </ul>
+
+              <h3>// 보관 & 전시</h3>
+              <p>진열장에 <span class="highlight">전신 블랙으로 멋지게 진열</span> 중. 존재감만으로도 충분히 값어치를 합니다.</p>
+
+              <h3>// 다음 목표</h3>
+              <p>해외 여행 시 위탁수하물로 추가 나이프 구매 고려 중. 다음 소장품은 <strong>다마스커스강 (물결 무늬 디자인)</strong>을 계획하고 있습니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -390,7 +550,33 @@
               다년간의 열망 끝에 백화점에서 직접 구매한 <em>소중한 소장품</em>.<br />
               앞으로도 계속 보유할 계획인 인생 시계.
             </p>
-            <a class="bscard-btn" href="https://louisbit.blogspot.com/2026/03/blog-post_23.html" target="_blank" rel="noopener">사용기 읽어보기 &nbsp;&#8599;</a>
+            <button class="bscard-toggle-btn" onclick="togglePanel('tagheuer')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-tagheuer">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('tagheuer')">// CLOSE ✕</button>
+            <span class="panel-category">LUXURY WATCH</span>
+            <div class="panel-title">TAGHEUER CARRERA — 태그호이어 까레라</div>
+            <div class="panel-body">
+              <h3>// 어린 시절의 로망</h3>
+              <p>어린 시절부터 이 시계는 로망이었습니다. <strong>블랙 & 로즈골드</strong>의 기품 있는 조합 — 심플하면서도 고급진 디자인이 마음을 사로잡았습니다.</p>
+              <p>배우 <strong>공유</strong>가 드라마 '도깨비'에서 착용해 더욱 유명해진 바로 그 모델입니다.</p>
+
+              <h3>// 구매 배경</h3>
+              <p>"몇 년을 노려봤었다. 그러다 일이 좀 잘 풀리고 여유가 생겼을 때 여친과 함께 백화점을 찾았다. <span class="highlight">현금으로 구매!</span>"</p>
+              <p>남자다움, 품격, 기품, 로얄 — 이 단어들이 떠오르는 시계. 정장에 가장 잘 어울리지만, 평소 캐주얼한 옷을 선호하는 필자에게는 다소 아깝게 느껴지기도 합니다.</p>
+
+              <h3>// 특징</h3>
+              <ul>
+                <li>블랙 & 로즈골드 조합의 Day-Date 모델</li>
+                <li>구형 버전이 신형보다 더 아름답다는 평가</li>
+                <li>가죽 스트랩 (필자는 메탈 스트랩 선호)</li>
+              </ul>
+
+              <h3>// 결론</h3>
+              <p>"팔 생각은 없고, <strong>계속 소장할 예정이다.</strong> 내 소중한 컬렉션 중 하나."</p>
+            </div>
           </div>
         </div>
       </section>
@@ -413,7 +599,38 @@
               티타늄 케이스와 NATO 스트랩 — 견고함과 <em>스파이 감성</em>을 동시에.<br />
               오메가 씨마스터 라인의 정점이자, 컬렉터라면 반드시 탐내는 <em>한정 소장품</em>.
             </p>
-            <a class="bscard-btn" href="https://louisbit.blogspot.com/2026/04/collection-omega-007-nttd.html" target="_blank" rel="noopener">사용기 읽어보기 &nbsp;&#8599;</a>
+            <button class="bscard-toggle-btn" onclick="togglePanel('omega')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-omega">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('omega')">// CLOSE ✕</button>
+            <span class="panel-category">LUXURY WATCH</span>
+            <div class="panel-title">OMEGA 007 NTTD — 마지막 시계질</div>
+            <div class="panel-body">
+              <h3>// 소개</h3>
+              <p>오메가 씨마스터 <strong>007 노 타임 투 다이(No Time To Die)</strong> 에디션. 제임스 본드 영화에 등장한 바로 그 시계로, 주연배우 다니엘 크레이그가 직접 제작에 참여했습니다.</p>
+
+              <h3>// 일반인 vs 시계 덕후</h3>
+              <ul>
+                <li>일반인: "응~ 그돈씨~", "응~ 롤렉스 미만잡~"</li>
+                <li>시계 덕후: 상당한 인지도와 탐나는 모델</li>
+              </ul>
+
+              <h3>// 특징</h3>
+              <ul>
+                <li>블랙 & 초콜릿 갈색 계열의 색상</li>
+                <li>갈색/검은색 옷에 완벽히 어울리는 조합</li>
+                <li>정장에 가장 잘 어울리는 액세서리</li>
+                <li>007 영화 속 상징적인 장면과 함께하는 시네마틱 감성</li>
+              </ul>
+
+              <h3>// 가격</h3>
+              <p>구매 당시 약 <strong>1,400만원대</strong>. 현재는 환율 상승으로 약 <span class="highlight">1,600만원대</span>로 올랐습니다.</p>
+
+              <h3>// 결론</h3>
+              <p>이 시계 구매를 <strong>"마지막 시계질"</strong>로 선언. 이후 추가 시계 구매 없이 이 시계만 영원히 소장하기로 결정했습니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -421,7 +638,415 @@
     </div>
 
     <div class="tab-content" id="tab-review">
-      <p class="empty-notice">// 준비 중입니다.</p>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <span class="sec-title">LIGHTNING WALLET</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A111.jpg" alt="AQUA WALLET" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">LIQUID NETWORK</span>
+            <div class="bscard-title">AQUA WALLET</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">리퀴드 비트코인 특화 L2 지갑.</span> 빠르고 저렴한 <em>비트코인 거래</em> 지원.<br />
+              온체인 BTC를 리퀴드 BTC로 스왑 — 거래소 추적을 일시적으로 회피 가능.<br />
+              라이트닝 &amp; 리퀴드 자산 보관, <em>자동 변환 기능</em> 내장.<br />
+              깔끔한 디자인과 실용성을 갖춘 비트코인 프라이버시 도구.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('aqua')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-aqua">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('aqua')">// CLOSE ✕</button>
+            <span class="panel-category">LIGHTNING WALLET</span>
+            <div class="panel-title">AQUA WALLET — 아쿠아 월렛 사용기</div>
+            <div class="panel-body">
+              <h3>// 핵심 기능</h3>
+              <ul>
+                <li><strong>리퀴드 위의 라이트닝</strong> — 빠르고 저렴한 송금</li>
+                <li><strong>테더(USDT) 송금</strong> — 전 세계 누구에게나</li>
+                <li><strong>리퀴드 기반 비트코인</strong> — 더 빠르고 비밀이 보장되는 거래</li>
+              </ul>
+              <h3>// 비트코인 프라이버시 기능</h3>
+              <p>온체인 BTC → 리퀴드 BTC 스왑 → 다시 온체인으로 전환. 거래 내역이 <span class="highlight">"기밀"</span>로 처리되어 거래소 추적을 일시적으로 회피할 수 있습니다.</p>
+              <h3>// 디자인</h3>
+              <p>시원하고 깔끔한 인터페이스. 비트코인 차트나 가격 정보는 표시되지 않고 지갑 기능에만 집중합니다.</p>
+              <h3>// 주의사항</h3>
+              <ul>
+                <li>스왑 과정에서 최대 40분 소요 가능</li>
+                <li>대량 스왑 불가 — 2천만 사토시 단위로 분할 추천</li>
+                <li>아쿠아 월렛 회사는 스왑 내역을 보유 중 — 정부 압박 시 공개 가능성 있음</li>
+              </ul>
+              <h3>// 결론</h3>
+              <p>완전한 프라이버시 도구는 아니지만, <strong>거래 추적을 일시적으로 회피</strong>하는 실용적인 도구. 아쿠아 카드(실물카드) 한국 지원을 기다리는 중.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">02</span>
+          <span class="sec-title">LIGHTNING WALLET</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A112.jpg" alt="CORN WALLET" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">LIGHTNING NETWORK</span>
+            <div class="bscard-title">CORN WALLET</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">한국 비트코이너 팀이 만든 라이트닝 지갑.</span> 레트로 아이콘과 <em>팝콘 애니메이션</em>의 귀여운 디자인.<br />
+              직관적인 메뉴 구성 — 필요한 기능만 담은 <em>깔끔한 UX</em>.<br />
+              단 0.49%의 경쟁력 있는 온체인 수수료.<br />
+              저렴하고 편리한 라이트닝 결제 지갑.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('corn')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-corn">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('corn')">// CLOSE ✕</button>
+            <span class="panel-category">LIGHTNING WALLET</span>
+            <div class="panel-title">CORN WALLET — 콘 월렛 사용기</div>
+            <div class="panel-body">
+              <h3>// 개발팀</h3>
+              <p><strong>한국의 비트코이너들로 구성된 'team corn'</strong>이 개발한 라이트닝 지갑입니다. "겉은 심플하게, 속은 단단하게"를 콘셉트로 핵심 기능만 담았습니다.</p>
+              <h3>// 디자인</h3>
+              <p>레트로한 아이콘과 귀여운 <span class="highlight">팝콘 터지는 애니메이션</span>이 특징. 입금 시 팝콘이 터지는 시각적 효과가 있습니다.</p>
+              <h3>// 기능</h3>
+              <ul>
+                <li>인보이스, 온체인 수신, 라이트닝 수신 모두 지원</li>
+                <li>직관적이고 일관된 메뉴 구성</li>
+                <li>필요한 기능만 담은 깔끔한 UX</li>
+              </ul>
+              <h3>// 핵심 장점</h3>
+              <p>단 <strong>0.49%의 온체인 수수료</strong> — 라이트닝 지갑 중 경쟁력 있는 수준입니다.</p>
+              <h3>// 결론</h3>
+              <p>디자인, 사용성, 낮은 수수료 모두 만족. <strong>한국 비트코이너가 만든 라이트닝 지갑</strong>을 응원합니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">03</span>
+          <span class="sec-title">LIGHTNING WALLET</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A114.jpg" alt="BIT FLOWER" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">TELEGRAM BOT</span>
+            <div class="bscard-title">BIT FLOWER</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">텔레그램 기반의 라이트닝 스왑 도구.</span> 온체인 BTC를 <em>라이트닝으로 이동</em>시켜주는 간편한 서비스.<br />
+              텔레그램 봇으로 주문서 생성 — 와치온리 앱 &amp; 콜드월렛으로 서명 후 실행.<br />
+              QR 코드 방식으로 <em>안전하고 간단한</em> 자산 이동 과정.<br />
+              비트코인 라이트닝 네트워크 진입을 위한 실용적인 도구.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('bitflower')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-bitflower">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('bitflower')">// CLOSE ✕</button>
+            <span class="panel-category">TELEGRAM BOT</span>
+            <div class="panel-title">BIT FLOWER — 비트플라워 사용법</div>
+            <div class="panel-body">
+              <h3>// 개념</h3>
+              <p>텔레그램에서 작동하는 봇. <strong>온체인 비트코인을 라이트닝 네트워크로 이동</strong>시켜주는 스왑 도구입니다.</p>
+              <h3>// 진행 순서</h3>
+              <ol>
+                <li>비트플라워에서 주문서 생성</li>
+                <li>주문서를 와치온리 앱에서 읽음</li>
+                <li>서명 기기(콜드월렛)로 주문서에 서명</li>
+                <li>와치온리 앱에서 서명한 주문서 실행</li>
+                <li>완료 — 라이트닝 월렛으로 수신</li>
+              </ol>
+              <h3>// 시작하기</h3>
+              <p>엑스(X)에서 <strong>@bitflow_er</strong> 검색 → 링크 클릭 → @비트플라워_봇 시작</p>
+              <h3>// 주요 명령어</h3>
+              <ul>
+                <li><strong>/help</strong> — 사용법</li>
+                <li><strong>/status</strong> — 현재 상태 (수량, 수수료)</li>
+                <li><strong>/receive 100000 주소@라이트닝주소</strong> — 주문서 생성</li>
+              </ul>
+              <h3>// 준비물</h3>
+              <p>텔레그램 앱, 와치온리 앱, 콜드월렛(서명용)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">04</span>
+          <span class="sec-title">LIGHTNING WALLET</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A116.jpg" alt="LIGHTNING WALLET" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">BEGINNER GUIDE</span>
+            <div class="bscard-title">LIGHTNING WALLET</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">초보자를 위한 라이트닝 네트워크 입문.</span> 신원인증 없이 <em>익명으로 사용</em> 가능.<br />
+              온체인은 거액 보관, 라이트닝은 <em>소액 빠른 거래</em> — 용도에 맞는 선택.<br />
+              수수료가 엄청 저렴한 콘월렛으로 실습.<br />
+              받기·보내기부터 실제 결제 매장 이용까지 단계별 안내.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('lightning-guide')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-lightning-guide">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('lightning-guide')">// CLOSE ✕</button>
+            <span class="panel-category">BEGINNER GUIDE</span>
+            <div class="panel-title">LIGHTNING WALLET — 뉴비를 위한 입문 가이드</div>
+            <div class="panel-body">
+              <h3>// 온체인 vs 라이트닝</h3>
+              <ul>
+                <li><strong>온체인</strong> — 모든 거래가 블록체인에 기록. 거액 보관에 적합</li>
+                <li><strong>라이트닝</strong> — 온체인 위의 빠른 결제 레이어. 소액 빠른 거래에 적합</li>
+              </ul>
+              <h3>// 추천 월렛: 콘월렛</h3>
+              <p>신원인증 불필요, 수수료 매우 저렴. 초보자에게 가장 추천하는 라이트닝 지갑입니다.</p>
+              <h3>// 초기 설정</h3>
+              <ol>
+                <li>앱스토어에서 콘월렛 다운로드</li>
+                <li>알람 허용 설정</li>
+                <li>새로운 지갑 생성</li>
+                <li>복구문구 확인 및 별도 안전 보관 <span class="highlight">(필수!)</span></li>
+              </ol>
+              <h3>// 활용</h3>
+              <ul>
+                <li>온라인 결제 — BTC Map 한국 스토어</li>
+                <li>오프라인 결제 — 네이버 지도에서 비트코인 결제처 검색</li>
+                <li>받기 / 보내기 모두 QR 코드로 간단 처리</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">05</span>
+          <span class="sec-title">HOME APPLIANCE</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A117.jpg" alt="XIAOMI C66S" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">SMART CLEANER</span>
+            <div class="bscard-title">XIAOMI C66S</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">샤오미 스마트 유리창 로보청소기.</span> 혼자 창문 위까지 올라가 <em>뽀득뽀득</em> 닦는 자동화 청소.<br />
+              강력한 흡착력으로 떨어질 걱정 없이 안전하게 작동.<br />
+              소음 수준 적당 — <em>2년 사용</em>에도 만족스러운 내구성.<br />
+              깨끗한 집을 유지하는 뿌듯함. 쓸만하다.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('xiaomi')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-xiaomi">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('xiaomi')">// CLOSE ✕</button>
+            <span class="panel-category">HOME APPLIANCE</span>
+            <div class="panel-title">XIAOMI C66S — 유리창 청소기 2년 사용기</div>
+            <div class="panel-body">
+              <h3>// 제품 선택 기준</h3>
+              <p>중국산 전자기기 구매 시 두 가지 조건을 반드시 충족해야 합니다:</p>
+              <ol>
+                <li>인터넷에 연결되지 않을 것</li>
+                <li>카메라가 없을 것</li>
+              </ol>
+              <p>샤오미 C66S는 두 조건을 모두 충족하며, <strong>리모콘으로 작동</strong>합니다.</p>
+              <h3>// 2년 사용 후기</h3>
+              <p><strong>장점</strong></p>
+              <ul>
+                <li>창문 위까지 스스로 올라가 청소</li>
+                <li>우수한 흡착력 — 떨어질 위험 없음</li>
+                <li>적절한 소음 수준</li>
+              </ul>
+              <p><strong>단점</strong></p>
+              <ul>
+                <li>카페 수준의 완벽한 투명도는 기대 어려움</li>
+                <li>이중창 사이 곰팡이 제거 불가</li>
+                <li>사용 과정이 다소 번거로움</li>
+              </ul>
+              <h3>// 결론</h3>
+              <p>평타 이상의 성능. <span class="highlight">"청소한 깨끗한 집안을 보는 것만큼 뿌듯한 것이 또 있으랴."</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <span class="sec-title">HOME APPLIANCE</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A118.jpg" alt="VACUUM CLEANER" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">LG CORDLESS</span>
+            <div class="bscard-title">VACUUM CLEANER</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">9년차 LG 코드제로.</span> 고장 한 번 없이 <em>흡입력과 저소음</em>을 유지 중.<br />
+              삼성 로보청소기와 함께 — 공간 인식 후 지정 구역을 <em>자동 청소</em>.<br />
+              가끔 걸린 것만 빼주면 끝. 완벽한 청소 듀오.<br />
+              청소 후 깨끗해진 환경에서 얻는 심신안정.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('vacuum')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-vacuum">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('vacuum')">// CLOSE ✕</button>
+            <span class="panel-category">HOME APPLIANCE</span>
+            <div class="panel-title">VACUUM CLEANER — LG 코드제로 + 삼성 로보청소기</div>
+            <div class="panel-body">
+              <h3>// LG 코드제로 — 9년차 사용기</h3>
+              <ul>
+                <li>9년 사용 중 <strong>고장 한 번 없음</strong></li>
+                <li>오랜 사용에도 <strong>흡입력 그대로</strong></li>
+                <li>소음 여전히 적음</li>
+              </ul>
+              <p><span class="highlight">"이거 물건이다."</span> — 이 세 가지만으로 충분합니다.</p>
+              <h3>// 삼성 로보청소기</h3>
+              <ul>
+                <li>심플한 디자인</li>
+                <li>공간 인식 후 지정 구역 자동 청소</li>
+                <li>가끔 걸린 것만 빼주면 끝</li>
+              </ul>
+              <h3>// 청소 듀오</h3>
+              <p>LG 코드제로 + 삼성 로보청소기의 조합. 청소 후 정돈된 깨끗한 환경이 기분을 좋게 만드는 <strong>심신안정 최고의 취미</strong>입니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">07</span>
+          <span class="sec-title">HOME THEATER</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A119.jpg" alt="SAMSUNG M4" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">MONITOR + SPEAKER</span>
+            <div class="bscard-title">SAMSUNG M4</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">TV 대신 삼성 43인치 모니터.</span> 디즈니플러스 &amp; 넷플릭스로 <em>거실 홈시어터</em> 구성.<br />
+              BOSS TV 스피커 추가 — "돈값한다. 성능 아주 짱짱혀." <em>대만족</em>.<br />
+              닌텐도 스위치2와 연결해 젤다 게임 플레이.<br />
+              취미방과 거실을 오가며 활용 가능한 멀티 디스플레이.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('samsung')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-samsung">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('samsung')">// CLOSE ✕</button>
+            <span class="panel-category">HOME THEATER</span>
+            <div class="panel-title">SAMSUNG M4 — 삼텐바이미 + BOSS 스피커 후기</div>
+            <div class="panel-body">
+              <h3>// 구매 배경</h3>
+              <p>거실에 TV 설치를 원하지 않았지만, 영화와 애니메이션 감상을 위해 <strong>삼성 43인치 모니터</strong>로 타협점을 찾았습니다.</p>
+              <h3>// 사용 경험</h3>
+              <p><span class="highlight">"넷플릭스가 최고시다."</span> 디즈니플러스와 넷플릭스를 번갈아 구독 중. 삼성 자체 제공 방송 서비스는 광고가 많아 이용하지 않습니다.</p>
+              <h3>// BOSS TV 스피커</h3>
+              <p>기본 모니터 사운드의 부족함을 보완하기 위해 추가 구입. <strong>"돈값한다. 성능 아주 짱짱혀."</strong> 영화 감상에 필수적인 음향을 제공합니다.</p>
+              <h3>// 닌텐도 스위치2</h3>
+              <p>젤다 플레이 전용으로 활용 중. 100% 클리어 달성.</p>
+              <h3>// 활용 방식</h3>
+              <ul>
+                <li>취미방 TV로 평상시 사용</li>
+                <li>혼자 식사할 때 거실로 이동</li>
+                <li>자녀의 게임 · 영상 시청 시 공용 기기로 활용</li>
+              </ul>
+              <h3>// 결론</h3>
+              <p><strong>"대만족!!"</strong> — 단, 모니터로는 눈이 피로할 수 있어 TV 용도로만 권장합니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <span class="section-num">08</span>
+          <span class="sec-title">GAME</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="bscard-showcase">
+          <div class="bscard-img-wrap">
+            <img class="bscard-img" src="A120.jpg" alt="ZELDA" style="box-shadow: 0 0 30px rgba(247,147,26,0.45), 0 0 60px rgba(247,147,26,0.2);" />
+          </div>
+          <div class="bscard-info">
+            <span class="bscard-tag">NINTENDO</span>
+            <div class="bscard-title">ZELDA</div>
+            <p class="bscard-desc">
+              <span style="color:#ffffff">인생게임.</span> 거의 모든 오브젝트와 상호작용하는 <em>완전한 오픈월드</em>.<br />
+              왕눈의 눈물 — 만들고 싶은 모든 걸 만들 수 있는 <em>무한한 창작의 자유</em>.<br />
+              플레이타임 천 시간 돌파. 100% 클리어 달성.<br />
+              젤다 굿즈까지 수집 중인 진정한 팬.
+            </p>
+            <button class="bscard-toggle-btn" onclick="togglePanel('zelda')">펼쳐보기 &#9660;</button>
+          </div>
+        </div>
+        <div class="inline-panel" id="panel-zelda">
+          <div class="inline-panel-inner">
+            <button class="panel-close" onclick="togglePanel('zelda')">// CLOSE ✕</button>
+            <span class="panel-category">GAME</span>
+            <div class="panel-title">ZELDA — 인생게임 후기</div>
+            <div class="panel-body">
+              <h3>// 소개</h3>
+              <p>가족과 함께 즐기기 위해 닌텐도를 구매했다가 <span class="highlight">"젤다가 나의 인생게임이 될 줄은"</span> 몰랐습니다.</p>
+              <h3>// 게임의 특징</h3>
+              <ul>
+                <li><strong>완전한 오픈월드</strong> — 거의 모든 오브젝트와 상호작용 가능</li>
+                <li><strong>무한한 자유도</strong> — 어디를 어떻게 가든 플레이어 마음대로</li>
+                <li><strong>왕눈 모드</strong> — 만들고 싶은 모든 걸 만들 수 있는 창작의 자유</li>
+              </ul>
+              <h3>// 플레이 성과</h3>
+              <ul>
+                <li>플레이타임 <strong>1,000시간 이상</strong></li>
+                <li>닌텐도 앱의 도움으로 <strong>100% 클리어 달성</strong></li>
+                <li>"지혜의 투영"도 플레이 완료 (젤다가 주인공인 게임)</li>
+              </ul>
+              <h3>// 컬렉션</h3>
+              <p>젤다 관련 장난감, 퍼즐 구매 중. 진열장에 컬렉션 전시.</p>
+              <h3>// 결론</h3>
+              <p><strong>"젤다 많이 합시다. 링크는 사랑입니다 💚"</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
     </div>
   </div>
 
@@ -436,6 +1061,16 @@
     document.getElementById('hamburger').addEventListener('click', () => {
       document.getElementById('mobileNav').classList.toggle('open');
     });
+
+    function togglePanel(id) {
+      const panel = document.getElementById('panel-' + id);
+      if (!panel) return;
+      const isOpen = panel.classList.contains('open');
+      panel.classList.toggle('open');
+      if (!isOpen) {
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }
+    }
 
     function switchTab(name) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
