@@ -681,14 +681,8 @@
         </div>
       <a href="coldcardq.html">콜드카드큐</a>
       <a href="btcgame.html">부엉게임</a>
-      <div class="dropdown">
         <a href="bslog.html">부엉로그</a>
-        <div class="dropdown-menu">
-          <a href="bslog.html#manhwa">부엉만화</a>
-          <a href="bslog.html#collection">부엉콜렉션</a>
-          <a href="bslog.html#review">부엉리뷰</a>
-        </div>
-      </div>
+      
       <a href="owlbutler.html" class="active">부엉집사</a>
       <a href="hof.html">명예의전당</a>
     </nav>
@@ -702,10 +696,8 @@
     <a href="bscard.html#advanced" class="mobile-sub">∟ Advanced (Verify)</a>
     <a href="coldcardq.html">콜드카드큐</a>
     <a href="btcgame.html">부엉게임</a>
+        <a href="bslog.html">부엉로그</a>
     <a href="bslog.html">부엉로그</a>
-    <a href="bslog.html#manhwa" class="mobile-sub">∟ 부엉만화</a>
-    <a href="bslog.html#collection" class="mobile-sub">∟ 부엉콜렉션</a>
-    <a href="bslog.html#review" class="mobile-sub">∟ 부엉리뷰</a>
     <a href="owlbutler.html" class="active">부엉집사</a>
     <a href="hof.html">명예의전당</a>
     </div>
@@ -861,6 +853,11 @@
 <script>
   document.getElementById('hamburger').addEventListener('click', function() {
     document.getElementById('mobileNav').classList.toggle('open');
+  });
+  document.getElementById('mobileNav').addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    document.getElementById('mobileNav').classList.remove('open');
   });
 </script>
   <script>
