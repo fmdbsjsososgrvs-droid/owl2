@@ -10,9 +10,9 @@
   <style>
     :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#2a2a2a;--accent:#f7931a;--text:#e8e8e8;--text2:#999;--text3:#555;--mono:'Share Tech Mono',monospace;--sans:'Noto Sans KR',sans-serif;}
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
+    body{padding-top:64px;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
     a{text-decoration:none;}
-    header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;}
+    header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;position:fixed;top:0;z-index:1000;left:0;right:0;}
     .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:flex-end;height:64px;gap:16px;position:relative;}
     .logo{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:0;}
     .logo-img{width:42px;height:42px;object-fit:contain;opacity:0.9;}
@@ -83,7 +83,6 @@
       <a href="bscard.html#advanced" class="mobile-sub">∟ Advanced (Verify)</a>
       <a href="coldcardq.html">콜드카드큐</a>
       <a href="btcgame.html">부엉게임</a>
-        <a href="bslog.html" class="active">부엉로그</a>
       <a href="bslog.html" class="active">부엉로그</a>
       <a href="owlbutler.html">부엉집사</a>
       <a href="hof.html">명예의전당</a>

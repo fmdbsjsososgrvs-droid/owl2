@@ -24,6 +24,7 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
+      padding-top: 64px;
       background: var(--bg);
       color: var(--text);
       font-family: var(--mono);
@@ -52,9 +53,11 @@
       background: rgba(5,5,5,0.95);
       border-bottom: 1px solid #1a1a1a;
       padding: 0 24px;
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      left: 0;
+      right: 0;
       backdrop-filter: blur(8px);
     }
     .header-inner {
@@ -572,7 +575,6 @@
     <a href="bscard.html#advanced" class="mobile-sub">∟ Advanced (Verify)</a>
     <a href="coldcardq.html">콜드카드큐</a>
     <a href="btcgame.html">부엉게임</a>
-        <a href="bslog.html">부엉로그</a>
     <a href="bslog.html">부엉로그</a>
     <a href="owlbutler.html">부엉집사</a>
     <a href="hof.html">명예의전당</a>

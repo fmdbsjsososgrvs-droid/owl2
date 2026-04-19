@@ -9,8 +9,8 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
 --bg2:#111;--border:#2a2a2a;--text2:#999;--bg:#0a0a0a;--accent:#f7931a;--text:#e0e0e0;--mono:'Share Tech Mono',monospace;--sans:'Noto Sans KR',sans-serif;--red:#e74c3c;--green:#2ecc71;}
-body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
-header{width:100%;}
+body{padding-top:64px;background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+header{width:100%;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;position:fixed;top:0;z-index:1000;left:0;right:0;}
 .screen{display:none;width:100%;max-width:640px;padding:16px;flex-direction:column;align-items:center;}
 .screen.active{display:flex;}
 .back-link{position:fixed;top:14px;left:16px;font-size:11px;color:#333;text-decoration:none;letter-spacing:2px;transition:color .2s;z-index:300;}
@@ -135,7 +135,7 @@ header{width:100%;}
   .battle-arena{height:185px;}
   .speech-bubble{left:104px;}
 }
-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;}
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;position:fixed;top:0;z-index:1000;left:0;right:0;}
 .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:flex-end;height:64px;gap:16px;position:relative;}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;position:absolute;left:0;}
 .logo-img{width:42px;height:42px;object-fit:contain;opacity:0.9;}
