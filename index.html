@@ -166,64 +166,83 @@
       opacity: 0.6;
     }
 
-    /* 버튼 그룹 */
-    .btn-group {
+    /* ── CARD GRID ── */
+    @property --ba1 { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+    @property --ba2 { syntax: '<angle>'; initial-value: 120deg; inherits: false; }
+    @property --ba3 { syntax: '<angle>'; initial-value: 240deg; inherits: false; }
+    @keyframes spin1 { to { --ba1: 360deg; } }
+    @keyframes spin2 { to { --ba2: 480deg; } }
+    @keyframes spin3 { to { --ba3: 600deg; } }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      width: 100%;
+      max-width: 560px;
+    }
+    .nav-card {
+      border-radius: 6px;
+      padding: 22px 18px 24px;
       display: flex;
       flex-direction: column;
       gap: 0;
-      width: 100%;
-      max-width: 420px;
-    }
-    .lang-btn {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.25em;
-      color: var(--text2);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
+      min-height: 200px;
       position: relative;
-      transition: color 0.2s;
-      overflow: hidden;
+      border: 1.5px solid transparent;
     }
-    .lang-btn:first-child { border-top: 1px solid var(--border); }
-    .lang-btn .btn-num {
-      font-size: 10px;
-      color: var(--text3);
-      letter-spacing: 0.15em;
-      margin-right: 20px;
-      min-width: 24px;
-      transition: color 0.2s;
+    .nav-card:nth-child(1) {
+      background:
+        linear-gradient(#111111, #111111) padding-box,
+        conic-gradient(from var(--ba1), transparent 65%, rgba(247,147,26,0.5) 74%, #f7931a 80%, rgba(247,147,26,0.5) 86%, transparent 95%) border-box;
+      animation: spin1 4s linear infinite;
     }
-    .lang-btn .btn-label {
-      flex: 1;
-      transition: color 0.2s, letter-spacing 0.2s;
+    .nav-card:nth-child(2) {
+      background:
+        linear-gradient(#111111, #111111) padding-box,
+        conic-gradient(from var(--ba2), transparent 65%, rgba(247,147,26,0.5) 74%, #f7931a 80%, rgba(247,147,26,0.5) 86%, transparent 95%) border-box;
+      animation: spin2 4s linear infinite;
     }
-    .lang-btn .btn-arrow {
+    .nav-card:nth-child(3) {
+      background:
+        linear-gradient(#111111, #111111) padding-box,
+        conic-gradient(from var(--ba3), transparent 65%, rgba(247,147,26,0.5) 74%, #f7931a 80%, rgba(247,147,26,0.5) 86%, transparent 95%) border-box;
+      animation: spin3 4s linear infinite;
+    }
+    .nav-card-link {
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .nav-card-link:hover { transform: translateY(-3px); }
+    .nav-card-title {
+      font-family: var(--mono);
       font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0;
+      line-height: 1.4;
+      margin-bottom: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .nav-card-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .nav-card-items span {
+      font-family: var(--sans);
+      font-size: 11px;
       color: var(--text3);
-      opacity: 0;
-      transform: translate(-6px, 6px);
-      transition: all 0.2s ease;
+      letter-spacing: 0.03em;
+      padding-left: 10px;
+      border-left: 1px solid rgba(255,255,255,0.1);
     }
-    .lang-btn::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: var(--accent);
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform 0.2s ease;
+    @media (max-width: 480px) {
+      .card-grid { grid-template-columns: 1fr; max-width: 320px; }
     }
-    .lang-btn:hover { color: var(--accent); }
-    .lang-btn:hover .btn-num { color: var(--accent); }
-    .lang-btn:hover .btn-label { letter-spacing: 0.32em; }
-    .lang-btn:hover .btn-arrow { color: var(--accent); opacity: 1; transform: translate(0,0); }
-    .lang-btn:hover::before { transform: scaleY(1); }
-    /* 하단 */
+        /* 하단 */
     .bottom-label {
       font-family: var(--mono);
       font-size: 15px;
@@ -292,22 +311,41 @@
       <span class="divider-icon">◆</span>
     </div>
 
-    <div class="btn-group">
-      <a class="lang-btn" href="https://owl2-three.vercel.app/coldcardq.html">
-        <span class="btn-num">01</span>
-        <span class="btn-label">OWL BUTLER</span>
-        <span class="btn-arrow">&#8599;</span>
+    <div class="card-grid">
+
+      <!-- 카드 01 -->
+      <a class="nav-card nav-card-link" href="https://owl2-three.vercel.app/Node1.html">
+        <div class="nav-card-title">비트코인</div>
+        <div class="nav-card-items">
+          <span>Coldcard Q Manual</span>
+          <span>Bitcoin Node Globe</span>
+          <span>Signature Verification</span>
+          <span>Bitcoin Game</span>
+        </div>
       </a>
-      <a class="lang-btn" href="https://bsosa.netlify.app/">
-        <span class="btn-num">02</span>
-        <span class="btn-label">THE B SOCIETY</span>
-        <span class="btn-arrow">&#8599;</span>
+
+      <!-- 카드 02 -->
+      <a class="nav-card nav-card-link" href="https://louisbit.blogspot.com/">
+        <div class="nav-card-title">부엉 블로그</div>
+        <div class="nav-card-items">
+          <span>OwlButler's hobby</span>
+          <span>OwlButler's Travel</span>
+          <span>OwlButler's Collection</span>
+          <span>OwlButler's Reviews</span>
+        </div>
       </a>
-      <a class="lang-btn" href="https://louisbit.blogspot.com/">
-        <span class="btn-num">03</span>
-        <span class="btn-label">OWL BLOG</span>
-        <span class="btn-arrow">&#8599;</span>
+
+      <!-- 카드 03 -->
+      <a class="nav-card nav-card-link" href="https://bsosa.netlify.app/">
+        <div class="nav-card-title">THE B<br>SOCIETY</div>
+        <div class="nav-card-items">
+          <span>The B Society</span>
+          <span>P2p Helper</span>
+          <span>Signature Verification</span>
+          <span>join</span>
+        </div>
       </a>
+
     </div>
 
     <div class="bottom-label">NOT YOUR KEYS, NOT YOUR BITCOIN.</div>
