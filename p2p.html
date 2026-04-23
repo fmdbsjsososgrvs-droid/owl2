@@ -6,7 +6,7 @@
 <title>OWL BUTLER | P2P HELPER</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0a0a0a; --bg2:#111; --bg3:#161616;
@@ -14,8 +14,8 @@
     --text:#e0e0e0; --text2:#888; --muted:#555;
     --accent:#f7931a; --accent-dim:#c97810;
     --green:#3a9a3a; --red:#c03030;
-    --mono:'Share Tech Mono',monospace;
-    --sans:'Noto Sans KR',sans-serif;
+    --mono:'Share Tech Mono','IBM Plex Sans KR',monospace;
+    --sans:'IBM Plex Sans KR',sans-serif;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
@@ -29,34 +29,34 @@
   .left-col,.right-col{display:flex;flex-direction:column;gap:18px;}
 
   .card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);padding:22px 24px;}
-  .card-title{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+  .card-title{font-family:var(--mono);font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
 
   .calc-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-  .calc-label{font-family:var(--mono);font-size:12px;color:var(--text2);width:56px;flex-shrink:0;}
+  .calc-label{font-family:var(--mono);font-size:15px;color:var(--text);width:64px;flex-shrink:0;}
   .calc-input{flex:1;background:#000;border:1px solid var(--border2);color:var(--text);font-family:'Courier New',monospace;font-size:14px;padding:9px 12px;outline:none;text-align:right;transition:border-color .2s,box-shadow .2s;-moz-appearance:textfield;}
   .calc-input::-webkit-outer-spin-button,.calc-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
   .calc-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(247,147,26,.15);}
 
   .calc-result{display:flex;align-items:baseline;gap:8px;margin-top:8px;padding:10px 12px;background:var(--bg3);border-left:3px solid var(--accent);}
-  .calc-result-arrow{font-family:var(--mono);font-size:12px;color:var(--muted);}
-  .calc-result-value{font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:var(--text);}
-  .calc-result-unit{font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .calc-result-arrow{font-family:var(--mono);font-size:16px;color:var(--text);}
+  .calc-result-value{font-family:'Courier New',monospace;font-size:22px;font-weight:700;color:var(--text);}
+  .calc-result-unit{font-family:var(--mono);font-size:16px;color:var(--accent);}
 
-  .price-time{font-family:var(--mono);font-size:12px;color:var(--text2);letter-spacing:.06em;margin-bottom:8px;}
+  .price-time{font-family:var(--mono);font-size:12px;color:var(--text);letter-spacing:.06em;margin-bottom:8px;}
   .price-value{font-family:'Courier New',monospace;font-size:20px;font-weight:700;color:var(--text);letter-spacing:.04em;}
   .price-value span{color:var(--accent);}
 
   .fee-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:4px;}
   .fee-item{background:var(--bg);padding:12px 8px;text-align:center;}
-  .fee-label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--text2);margin-bottom:6px;line-height:1.4;}
+  .fee-label{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--text);margin-bottom:6px;line-height:1.4;}
   .fee-val{font-family:'Courier New',monospace;font-size:16px;font-weight:700;color:var(--accent);}
-  .fee-unit{font-size:10px;color:var(--muted);}
+  .fee-unit{font-size:12px;color:var(--text);}
 
   .status-row{display:flex;align-items:center;gap:8px;margin-top:14px;}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;}
   .dot.ok{background:var(--green);box-shadow:0 0 6px rgba(58,154,58,.6);}
   .dot.err{background:var(--red);}
-  .status-text{font-family:var(--mono);font-size:11px;color:var(--text2);}
+  .status-text{font-family:var(--mono);font-size:11px;color:var(--text);}
 
   .refresh-btn{width:100%;font-family:var(--mono);font-size:15px;letter-spacing:.2em;text-transform:uppercase;background:transparent;color:var(--accent);border:1px solid var(--accent);padding:18px;cursor:pointer;transition:all .2s;}
   .refresh-btn:hover{background:var(--accent);color:#000;}
@@ -65,7 +65,7 @@
 
   footer.p2p-foot{border-top:1px solid var(--border);max-width:1200px;margin:60px auto 0;padding:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
   .footer-logo{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--accent);}
-  .footer-note{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted);}
+  .footer-note{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--text);}
 
   @media (max-width:700px){
     main.p2p-main{padding:32px 16px 60px;}
@@ -85,7 +85,7 @@
 .site-header .nav-bar{background:#000;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
 .site-header .main-nav{max-width:1200px;margin:0 auto;display:flex;justify-content:flex-start;position:relative;padding:0 12px;gap:0;flex-wrap:wrap;overflow-x:visible;scrollbar-width:none;-ms-overflow-style:none;}
 .site-header .main-nav::-webkit-scrollbar{display:none;}
-.site-header .nav-indicator{position:absolute;top:0;left:0;width:0;height:0;background:transparent !important;border:2px solid #f7931a !important;box-sizing:border-box;transition:transform .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1),opacity .2s;z-index:1;pointer-events:none;opacity:0;}
+.site-header .nav-indicator{position:absolute;top:0;left:0;width:0;height:0;background:transparent !important;border:2px solid #f7931a !important;box-sizing:border-box;transition:none;z-index:1;pointer-events:none;opacity:0;}
 .site-header .main-nav a{position:relative;z-index:2;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#f7931a !important;text-decoration:none;padding:16px 22px !important;letter-spacing:.04em;white-space:nowrap;border:none !important;background:none !important;display:inline-block;}
 .site-header .main-nav a:hover,.site-header .main-nav a.active{color:#f7931a !important;background:none !important;border:none !important;}
 .site-header .main-nav a.nav-white,.site-header .main-nav a.nav-white:hover,.site-header .main-nav a.nav-white.active{color:#e0e0e0 !important;font-weight:400 !important;}
@@ -104,31 +104,29 @@ body > footer.unified-footer{
   margin:60px auto 0;
   padding:22px 24px;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:12px;
+  justify-content:center;
+  gap:8px;
   background:transparent;
   box-sizing:border-box;
+  text-align:center;
 }
 body > footer.unified-footer .uf-email{
   font-family:'Share Tech Mono',monospace;
   font-size:12px;
   color:#f7931a;
   letter-spacing:.15em;
-  text-align:left;
+  text-align:center;
+  width:100%;
 }
 body > footer.unified-footer .uf-note{
   font-family:'Share Tech Mono',monospace;
   font-size:11px;
   color:#888;
   letter-spacing:.12em;
-  text-align:right;
-}
-@media (max-width:600px){
-  body > footer.unified-footer{justify-content:center;text-align:center;}
-  body > footer.unified-footer .uf-email,
-  body > footer.unified-footer .uf-note{text-align:center;width:100%;}
+  text-align:center;
+  width:100%;
 }
 </style>
 </head>
@@ -213,7 +211,7 @@ body > footer.unified-footer .uf-note{
         <div class="card-title">Upbit BTC Price</div>
         <div class="price-time" id="priceTime">&#8212;</div>
         <div class="price-value" id="priceValue">
-          <span style="font-size:14px;color:var(--muted);">불러오는 중...</span>
+          <span style="font-size:14px;color:var(--text);">불러오는 중...</span>
         </div>
         <div class="status-row">
           <div class="dot" id="priceDot"></div>
@@ -350,55 +348,27 @@ body > footer.unified-footer .uf-note{
   var ind=document.getElementById('navIndicator');
   var links=nav.querySelectorAll('a');
   var active=nav.querySelector('a.active');
-  var KEY='owlbutler.navPrev';
 
-  function setPos(el,animate){
+  function setPos(el){
     if(!el){ind.style.opacity='0';return;}
     var inset=window.matchMedia('(max-width:768px)').matches?4:8;
     var x=el.offsetLeft+inset;
     var y=el.offsetTop+inset;
     var w=Math.max(el.offsetWidth-inset*2,0);
     var h=Math.max(el.offsetHeight-inset*2,0);
-    if(!animate){
-      var keep=ind.style.transition;
-      ind.style.transition='none';
-      ind.style.opacity='1';
-      ind.style.width=w+'px';
-      ind.style.height=h+'px';
-      ind.style.transform='translate('+x+'px,'+y+'px)';
-      void ind.offsetWidth;
-      ind.style.transition=keep||'';
-    }else{
-      ind.style.opacity='1';
-      ind.style.width=w+'px';
-      ind.style.height=h+'px';
-      ind.style.transform='translate('+x+'px,'+y+'px)';
-    }
+    ind.style.opacity='1';
+    ind.style.width=w+'px';
+    ind.style.height=h+'px';
+    ind.style.transform='translate('+x+'px,'+y+'px)';
   }
 
-  function init(){
-    if(!active){ind.style.opacity='0';return;}
-    var prevHref=sessionStorage.getItem(KEY);
-    var prevLink=prevHref?nav.querySelector('a[href="'+prevHref+'"]'):null;
-    if(prevLink && prevLink!==active){
-      setPos(prevLink,false);
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){setPos(active,true);});
-      });
-    }else{
-      setPos(active,false);
-    }
-  }
+  function init(){if(active)setPos(active);else ind.style.opacity='0';}
   if(document.readyState==='complete')init();else window.addEventListener('load',init);
 
   links.forEach(function(l){
-    l.addEventListener('click',function(){
-      if(active)sessionStorage.setItem(KEY,active.getAttribute('href'));
-      else sessionStorage.removeItem(KEY);
-      setPos(l,true);
-    });
+    l.addEventListener('click',function(){setPos(l);});
   });
-  window.addEventListener('resize',function(){if(active)setPos(active,false);});
+  window.addEventListener('resize',function(){if(active)setPos(active);});
 })();
 </script>
 <footer class="unified-footer">

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>OWL BUTLER | REVIEWS</title>
 <style>
-  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#2a2a2a;--accent:#f7931a;--text:#e8e8e8;--text2:#999;--text3:#555;--mono:'Share Tech Mono',monospace;--sans:'Noto Sans KR',sans-serif;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#2a2a2a;--accent:#f7931a;--text:#e8e8e8;--text2:#e0e0e0;--text3:#e0e0e0;--mono:'Share Tech Mono',monospace;--sans:'Noto Sans KR',sans-serif;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
   a{text-decoration:none;}
@@ -46,8 +46,9 @@
   .inline-panel.open{display:block;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
   .inline-panel-inner{background:#0d0d0deb;border-radius:calc(.75rem - 1px);padding:28px 32px;}
-  .panel-close{float:right;font-family:var(--mono);font-size:10px;color:var(--text3);background:none;border:1px solid var(--border);padding:4px 10px;cursor:pointer;letter-spacing:.1em;transition:all .2s;}
+  .panel-close{float:right;font-family:var(--mono);font-size:14px;color:#e0e0e0;background:none;border:1px solid var(--border);padding:6px 14px;cursor:pointer;letter-spacing:.1em;transition:all .2s;}
   .panel-close:hover{color:var(--accent);border-color:var(--accent);}
+  .panel-close-bottom{float:none;display:block;margin:28px auto 0;padding:10px 24px;font-size:14px;color:#e0e0e0;}
   .panel-category{font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:.22em;border:1px solid rgba(247,147,26,.25);display:inline-block;padding:3px 10px;margin-bottom:14px;}
   .panel-title{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);letter-spacing:.08em;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
   .panel-body{font-family:var(--sans);font-size:13.5px;color:var(--text2);line-height:2;}
@@ -81,7 +82,7 @@
 .site-header .nav-bar{background:#000;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
 .site-header .main-nav{max-width:1200px;margin:0 auto;display:flex;justify-content:flex-start;position:relative;padding:0 12px;gap:0;flex-wrap:wrap;overflow-x:visible;scrollbar-width:none;-ms-overflow-style:none;}
 .site-header .main-nav::-webkit-scrollbar{display:none;}
-.site-header .nav-indicator{position:absolute;top:0;left:0;width:0;height:0;background:transparent !important;border:2px solid #f7931a !important;box-sizing:border-box;transition:transform .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1),opacity .2s;z-index:1;pointer-events:none;opacity:0;}
+.site-header .nav-indicator{position:absolute;top:0;left:0;width:0;height:0;background:transparent !important;border:2px solid #f7931a !important;box-sizing:border-box;transition:none;z-index:1;pointer-events:none;opacity:0;}
 .site-header .main-nav a{position:relative;z-index:2;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#f7931a !important;text-decoration:none;padding:16px 22px !important;letter-spacing:.04em;white-space:nowrap;border:none !important;background:none !important;display:inline-block;}
 .site-header .main-nav a:hover,.site-header .main-nav a.active{color:#f7931a !important;background:none !important;border:none !important;}
 .site-header .main-nav a.nav-white,.site-header .main-nav a.nav-white:hover,.site-header .main-nav a.nav-white.active{color:#e0e0e0 !important;font-weight:400 !important;}
@@ -100,31 +101,29 @@ body > footer.unified-footer{
   margin:60px auto 0;
   padding:22px 24px;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:12px;
+  justify-content:center;
+  gap:8px;
   background:transparent;
   box-sizing:border-box;
+  text-align:center;
 }
 body > footer.unified-footer .uf-email{
   font-family:'Share Tech Mono',monospace;
   font-size:12px;
   color:#f7931a;
   letter-spacing:.15em;
-  text-align:left;
+  text-align:center;
+  width:100%;
 }
 body > footer.unified-footer .uf-note{
   font-family:'Share Tech Mono',monospace;
   font-size:11px;
   color:#888;
   letter-spacing:.12em;
-  text-align:right;
-}
-@media (max-width:600px){
-  body > footer.unified-footer{justify-content:center;text-align:center;}
-  body > footer.unified-footer .uf-email,
-  body > footer.unified-footer .uf-note{text-align:center;width:100%;}
+  text-align:center;
+  width:100%;
 }
 </style>
 </head>
@@ -210,7 +209,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 결론</h3>
           <p>완전한 프라이버시 도구는 아니지만, <strong>거래 추적을 일시적으로 회피</strong>하는 실용적인 도구. 아쿠아 카드(실물카드) 한국 지원을 기다리는 중.</p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('aqua')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -257,7 +257,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 결론</h3>
           <p>디자인, 사용성, 낮은 수수료 모두 만족. <strong>한국 비트코이너가 만든 라이트닝 지갑</strong>을 응원합니다.</p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('corn')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -310,7 +311,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 준비물</h3>
           <p>텔레그램 앱, 와치온리 앱, 콜드월렛(서명용)</p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('bitflower')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -363,7 +365,8 @@ body > footer.unified-footer .uf-note{
             <li>받기 / 보내기 모두 QR 코드로 간단 처리</li>
           </ul>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('lightning-guide')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -418,7 +421,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 결론</h3>
           <p>평타 이상의 성능. <span class="highlight">"청소한 깨끗한 집안을 보는 것만큼 뿌듯한 것이 또 있으랴."</span></p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('xiaomi')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -466,7 +470,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 청소 듀오</h3>
           <p>LG 코드제로 + 삼성 로보청소기의 조합. 청소 후 정돈된 깨끗한 환경이 기분을 좋게 만드는 <strong>심신안정 최고의 취미</strong>입니다.</p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('vacuum')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -515,7 +520,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 결론</h3>
           <p><strong>"대만족!!"</strong> — 단, 모니터로는 눈이 피로할 수 있어 TV 용도로만 권장합니다.</p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('samsung')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -566,7 +572,8 @@ body > footer.unified-footer .uf-note{
           <h3>// 결론</h3>
           <p><strong>"젤다 많이 합시다. 링크는 사랑입니다 💚"</strong></p>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('zelda')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -629,7 +636,8 @@ body > footer.unified-footer .uf-note{
             <li>상태비저장(stateless) 설계</li>
           </ul>
         </div>
-      </div>
+        <button class="panel-close panel-close-bottom" onclick="togglePanel('selfcustody')">// CLOSE ✕</button>
+            </div>
     </div>
   </section>
 
@@ -659,55 +667,27 @@ body > footer.unified-footer .uf-note{
   var ind=document.getElementById('navIndicator');
   var links=nav.querySelectorAll('a');
   var active=nav.querySelector('a.active');
-  var KEY='owlbutler.navPrev';
 
-  function setPos(el,animate){
+  function setPos(el){
     if(!el){ind.style.opacity='0';return;}
     var inset=window.matchMedia('(max-width:768px)').matches?4:8;
     var x=el.offsetLeft+inset;
     var y=el.offsetTop+inset;
     var w=Math.max(el.offsetWidth-inset*2,0);
     var h=Math.max(el.offsetHeight-inset*2,0);
-    if(!animate){
-      var keep=ind.style.transition;
-      ind.style.transition='none';
-      ind.style.opacity='1';
-      ind.style.width=w+'px';
-      ind.style.height=h+'px';
-      ind.style.transform='translate('+x+'px,'+y+'px)';
-      void ind.offsetWidth;
-      ind.style.transition=keep||'';
-    }else{
-      ind.style.opacity='1';
-      ind.style.width=w+'px';
-      ind.style.height=h+'px';
-      ind.style.transform='translate('+x+'px,'+y+'px)';
-    }
+    ind.style.opacity='1';
+    ind.style.width=w+'px';
+    ind.style.height=h+'px';
+    ind.style.transform='translate('+x+'px,'+y+'px)';
   }
 
-  function init(){
-    if(!active){ind.style.opacity='0';return;}
-    var prevHref=sessionStorage.getItem(KEY);
-    var prevLink=prevHref?nav.querySelector('a[href="'+prevHref+'"]'):null;
-    if(prevLink && prevLink!==active){
-      setPos(prevLink,false);
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){setPos(active,true);});
-      });
-    }else{
-      setPos(active,false);
-    }
-  }
+  function init(){if(active)setPos(active);else ind.style.opacity='0';}
   if(document.readyState==='complete')init();else window.addEventListener('load',init);
 
   links.forEach(function(l){
-    l.addEventListener('click',function(){
-      if(active)sessionStorage.setItem(KEY,active.getAttribute('href'));
-      else sessionStorage.removeItem(KEY);
-      setPos(l,true);
-    });
+    l.addEventListener('click',function(){setPos(l);});
   });
-  window.addEventListener('resize',function(){if(active)setPos(active,false);});
+  window.addEventListener('resize',function(){if(active)setPos(active);});
 })();
 </script>
 <footer class="unified-footer">
