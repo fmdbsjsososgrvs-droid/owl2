@@ -286,10 +286,43 @@
       .lang-btn { padding: 11px 26px; }
     }
   </style>
+<style id="unified-footer-style">
+body > footer.unified-footer{
+  border-top:1px solid #1f1f1f;
+  max-width:1200px;
+  margin:60px auto 0;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  background:transparent;
+  box-sizing:border-box;
+}
+body > footer.unified-footer .uf-email{
+  font-family:'Share Tech Mono',monospace;
+  font-size:12px;
+  color:#f7931a;
+  letter-spacing:.15em;
+  text-align:left;
+}
+body > footer.unified-footer .uf-note{
+  font-family:'Share Tech Mono',monospace;
+  font-size:11px;
+  color:#888;
+  letter-spacing:.12em;
+  text-align:right;
+}
+@media (max-width:600px){
+  body > footer.unified-footer{justify-content:center;text-align:center;}
+  body > footer.unified-footer .uf-email,
+  body > footer.unified-footer .uf-note{text-align:center;width:100%;}
+}
+</style>
 </head>
 <body>
-
-  <div class="container">
+<div class="container">
     <div class="top-label">// EST. 2024 · BITCOIN · COLD STORAGE</div>
 
     <div class="card-wrap">
@@ -348,13 +381,11 @@
 
     </div>
 
-    <div class="bottom-label">NOT YOUR KEYS, NOT YOUR BITCOIN.</div>
-  </div>
+</div>
 
-  <footer>
-    <div class="footer-logo">OWL BUTLER <span>| THE B SOCIETY</span></div>
-    <div class="footer-note">// CONTENT COMING SOON</div>
-  </footer>
-
+<footer class="unified-footer">
+  <span class="uf-email">⚡bitsexer@oksu.su</span>
+  <span class="uf-note">NOT YOUR KEYS, NOT YOUR BITCOIN.</span>
+</footer>
 </body>
 </html>
