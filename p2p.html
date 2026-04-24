@@ -129,6 +129,7 @@ body{padding-top:124px;}
   body{padding-top:200px;}
 }
 </style>
+<script src="btc-price.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -267,17 +268,17 @@ body{padding-top:124px;}
 
   async function fetchPrice(){
     try {
-      const r = await fetch('https://api.upbit.com/v1/ticker?markets=KRW-BTC');
-      const d = await r.json();
-      btcPrice = d[0].trade_price;
+      const result = await BtcPrice.fetchKrw();
+      btcPrice = result.price;
       document.getElementById('priceTime').textContent = fmtTime(new Date());
       document.getElementById('priceValue').innerHTML  = '<span>\u20A9'+fmt(btcPrice)+'</span>';
       document.getElementById('priceDot').className    = 'dot ok';
-      document.getElementById('priceStatus').textContent = '실시간 데이터';
+      const tag = result.cached ? ' · 캐시' : '';
+      document.getElementById('priceStatus').textContent = result.source + ' · 실시간 데이터' + tag;
       recalc();
     } catch(e){
       document.getElementById('priceDot').className    = 'dot err';
-      document.getElementById('priceStatus').textContent = '불러오기 실패';
+      document.getElementById('priceStatus').textContent = '모든 소스 연결 실패';
       document.getElementById('priceValue').innerHTML  = '<span style="color:#c03030;font-size:13px;">연결 오류</span>';
     }
   }

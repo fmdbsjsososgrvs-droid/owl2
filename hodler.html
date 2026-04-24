@@ -155,6 +155,7 @@ body{padding-top:124px;}
   body{padding-top:200px;}
 }
 </style>
+<script src="btc-price.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -292,39 +293,32 @@ body{padding-top:124px;}
     return n.toFixed(2) + 'x';
   }
 
-  async function fetchKrw(){
-    try {
-      const r = await fetch('https://api.upbit.com/v1/ticker?markets=KRW-BTC');
-      const d = await r.json();
-      btcKrw = d[0].trade_price;
-      document.getElementById('priceKrw').innerHTML = '<span>' + fmtKrw(btcKrw) + '</span>';
-      return true;
-    } catch(e){ return false; }
-  }
-
-  async function fetchUsd(){
-    try {
-      const r = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
-      const d = await r.json();
-      btcUsd = parseFloat(d.data.amount);
-      document.getElementById('priceUsd').innerHTML = '<span>' + fmtUsd(btcUsd) + '</span>';
-      return true;
-    } catch(e){ return false; }
-  }
-
   async function fetchPrices(){
-    const [kOk, uOk] = await Promise.all([fetchKrw(), fetchUsd()]);
+    const {krw, usd} = await BtcPrice.fetchBoth();
     const dot = document.getElementById('priceDot');
     const txt = document.getElementById('priceStatus');
-    if (kOk && uOk){
+
+    if (krw){
+      btcKrw = krw.price;
+      document.getElementById('priceKrw').innerHTML = '<span>' + fmtKrw(btcKrw) + '</span>';
+    }
+    if (usd){
+      btcUsd = usd.price;
+      document.getElementById('priceUsd').innerHTML = '<span>' + fmtUsd(btcUsd) + '</span>';
+    }
+
+    const parts = [];
+    if (krw) parts.push(krw.source + (krw.cached ? '(캐시)' : ''));
+    if (usd) parts.push(usd.source + (usd.cached ? '(캐시)' : ''));
+    if (krw && usd){
       dot.className = 'dot ok';
-      txt.textContent = '실시간 데이터 · Upbit + Coinbase';
-    } else if (kOk || uOk){
+      txt.textContent = '실시간 데이터 · ' + parts.join(' + ');
+    } else if (krw || usd){
       dot.className = 'dot ok';
-      txt.textContent = (kOk?'Upbit':'Coinbase') + ' 데이터만 사용 가능';
+      txt.textContent = parts.join(' + ') + ' · 부분 데이터';
     } else {
       dot.className = 'dot err';
-      txt.textContent = '불러오기 실패';
+      txt.textContent = '모든 소스 연결 실패';
     }
   }
 

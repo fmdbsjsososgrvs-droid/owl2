@@ -162,6 +162,7 @@ body{padding-top:124px;}
   body{padding-top:200px;}
 }
 </style>
+<script src="btc-price.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -379,9 +380,10 @@ body{padding-top:124px;}
 
   // -------- Price + History --------
   async function fetchCurrentKrw(){
-    const r = await fetch('https://api.upbit.com/v1/ticker?markets=KRW-BTC');
-    const d = await r.json();
-    currentBtcKrw = d[0].trade_price;
+    // Upbit → Bithumb 폴백 + 30s 캐시 (btc-price.js)
+    const r = await BtcPrice.fetchKrw();
+    currentBtcKrw = r.price;
+    return r;
   }
 
   async function fetchMonthlyCandles(){
