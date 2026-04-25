@@ -173,7 +173,7 @@ body{padding-top:124px;}
         <div class="card-title">krw to sats</div>
         <div class="calc-row">
           <span class="calc-label">&#8361; :</span>
-          <input class="calc-input" id="krwInput" type="number" min="0" placeholder="0">
+          <input class="calc-input" id="krwInput" type="text" inputmode="numeric" placeholder="0">
         </div>
         <div class="calc-row">
           <span class="calc-label">p(%) :</span>
@@ -190,7 +190,7 @@ body{padding-top:124px;}
         <div class="card-title">sats to krw</div>
         <div class="calc-row">
           <span class="calc-label">sats :</span>
-          <input class="calc-input" id="satsInput" type="number" min="0" placeholder="0">
+          <input class="calc-input" id="satsInput" type="text" inputmode="numeric" placeholder="0">
         </div>
         <div class="calc-row">
           <span class="calc-label">p(%) :</span>
@@ -299,10 +299,16 @@ body{padding-top:124px;}
     }
   }
 
+  // Strip commas / non-digits then parse number
+  function parseNum(id){
+    const v = (document.getElementById(id).value || '').replace(/,/g, '');
+    return parseFloat(v);
+  }
+
   function recalc(){
     if (!btcPrice) return;
 
-    const krw = parseFloat(document.getElementById('krwInput').value);
+    const krw = parseNum('krwInput');
     const krwPrem = parseFloat(document.getElementById('krwPremium').value) || 0;
     if (!isNaN(krw) && krw > 0){
       const sats = Math.round((krw / (btcPrice * (1 + krwPrem/100))) * 1e8);
@@ -311,7 +317,7 @@ body{padding-top:124px;}
       document.getElementById('krwResult').textContent = '\u2014';
     }
 
-    const sats = parseFloat(document.getElementById('satsInput').value);
+    const sats = parseNum('satsInput');
     const satsPrem = parseFloat(document.getElementById('satsPremium').value) || 0;
     if (!isNaN(sats) && sats > 0){
       const krwVal = Math.round((sats / 1e8) * (btcPrice * (1 + satsPrem/100)));
@@ -330,7 +336,34 @@ body{padding-top:124px;}
     btn.textContent = '새로고침';
   }
 
-  ['krwInput','krwPremium','satsInput','satsPremium'].forEach(id => {
+  // Format integer-only amount inputs with thousand separators while preserving cursor.
+  function formatThousands(e){
+    const input = e.target;
+    const oldVal = input.value;
+    const cursor = input.selectionStart || 0;
+    const digitsBefore = oldVal.slice(0, cursor).replace(/\D/g, '').length;
+    const digits = oldVal.replace(/\D/g, '');
+    if (!digits){
+      input.value = '';
+      recalc();
+      return;
+    }
+    const formatted = parseInt(digits, 10).toLocaleString('ko-KR');
+    input.value = formatted;
+    let newPos = 0, count = 0;
+    while (count < digitsBefore && newPos < formatted.length){
+      if (/\d/.test(formatted[newPos])) count++;
+      newPos++;
+    }
+    try { input.setSelectionRange(newPos, newPos); } catch(e) {}
+    recalc();
+  }
+
+  // Amount fields → comma format. Premium fields → raw percent.
+  ['krwInput','satsInput'].forEach(id => {
+    document.getElementById(id).addEventListener('input', formatThousands);
+  });
+  ['krwPremium','satsPremium'].forEach(id => {
     document.getElementById(id).addEventListener('input', recalc);
   });
 
