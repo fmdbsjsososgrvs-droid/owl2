@@ -28,7 +28,7 @@
   .page-sub em{color:var(--accent);font-style:normal;}
 
   /* Context grid */
-  .ctx-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+  .ctx-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:48px;}
   .ctx-card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);padding:18px 20px;}
   .ctx-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
   .ctx-title{font-family:var(--mono);font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
@@ -49,7 +49,8 @@
   .stat-hint{font-family:var(--mono);font-size:12px;color:var(--text);opacity:.7;margin-top:8px;letter-spacing:.05em;}
 
   /* Main cards */
-  .card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);padding:24px 26px;margin-bottom:22px;}
+  .card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);padding:24px 26px;margin-bottom:48px;}
+  .card:last-of-type{margin-bottom:22px;}
   .card-title{font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
   .card-sub{font-family:var(--sans);font-size:15px;color:var(--text);margin-bottom:20px;line-height:1.7;}
 
@@ -107,6 +108,7 @@
     .rl-value{font-size:18px;}
   }
 </style>
+<script src="btc-price.js"></script>
 <style id="unified-footer-style">
 body > footer.unified-footer{
   border-top:1px solid #1f1f1f;
@@ -162,7 +164,6 @@ body{padding-top:124px;}
   body{padding-top:200px;}
 }
 </style>
-<script src="btc-price.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -179,7 +180,6 @@ body{padding-top:124px;}
     <nav class="main-nav" id="mainNav">
       <span class="nav-indicator" id="navIndicator"></span>
       <a href="node.html">NODE</a>
-      <a href="ocean_view.html">OCEAN</a>
       <a href="p2p.html">P2P</a>
       <a href="coldcardq.html">COLDCARDQ</a>
       <a href="bscard.html">VERIFY</a>
@@ -189,6 +189,7 @@ body{padding-top:124px;}
       <a href="manga.html" class="nav-white">MANGA</a>
       <a href="reviews.html" class="nav-white">REVIEWS</a>
       <a href="collection.html" class="nav-white">COLLECTION</a>
+      <a href="download.html" class="nav-white">DOWNLOAD</a>
       <a href="hof.html" class="nav-white">HOF</a>
     </nav>
   </div>
