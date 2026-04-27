@@ -30,8 +30,9 @@
   .dl-card:last-child{margin-bottom:22px;}
 
   /* Thumbnail (inline, clickable to enlarge) */
-  .dl-thumbs-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+  .dl-thumbs-row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-bottom:22px;}
   .dl-thumbs-row .dl-thumb-wrap{margin-bottom:0;max-width:200px;flex:0 0 auto;}
+  .dl-thumbs-row .dl-thumb-wrap.is-wide{max-width:620px;width:auto;flex:0 1 620px;}
   .dl-thumb-wrap{display:inline-block;max-width:280px;width:100%;margin-bottom:22px;border:1px solid var(--border);background:#000;cursor:zoom-in;transition:border-color .2s,transform .2s;}
   .dl-thumb-wrap:hover{border-color:var(--accent);transform:translateY(-2px);}
   .dl-thumb{display:block;width:100%;height:auto;}
@@ -224,30 +225,33 @@ body{padding-top:124px;}
     </div>
   </article>
 
-  <!-- Item 2: iPhone Wallpaper -->
+  <!-- Item 2: iPhone / iPad Wallpaper -->
   <article class="dl-card">
     <div class="dl-card-body">
       <span class="dl-tag">iOS · WALLPAPER</span>
-      <h2 class="dl-title">아이폰 <span>배경화면</span></h2>
-      <p class="dl-meta">556.jpeg · iPhone Lock / Home Screen</p>
+      <h2 class="dl-title">아이폰 아이패드 <span>배경화면</span></h2>
+      <p class="dl-meta">iPhone ver. + iPad ver.</p>
       <p class="dl-desc">
-        <em>비트코인 풀노드 글로브</em>를 아이폰 잠금·홈 화면 배경으로.
+        <em>비트코인 풀노드 글로브</em>를 아이폰·아이패드 잠금·홈 화면 배경으로.
       </p>
 
       <div class="dl-thumbs-row">
-        <div class="dl-thumb-wrap" data-fullsize="557.jpg">
-          <img class="dl-thumb" src="557.jpg" alt="아이폰 잠금화면 미리보기">
-          <span class="dl-thumb-hint">⤢ ver. white</span>
+        <div class="dl-thumb-wrap" data-fullsize="ver11.jpg">
+          <img class="dl-thumb" src="ver11.jpg" alt="iPhone wallpaper preview">
+          <span class="dl-thumb-hint">⤢ iPhone</span>
         </div>
-        <div class="dl-thumb-wrap" data-fullsize="558.jpg">
-          <img class="dl-thumb" src="558.jpg" alt="아이폰 홈화면 미리보기">
-          <span class="dl-thumb-hint">⤢ ver. orange</span>
+        <div class="dl-thumb-wrap is-wide" data-fullsize="ver33.jpeg">
+          <img class="dl-thumb" src="ver33.jpeg" alt="iPad wallpaper preview">
+          <span class="dl-thumb-hint">⤢ iPad</span>
         </div>
       </div>
 
       <div class="dl-actions">
-        <a class="dl-btn" href="556.jpeg" download="556.jpeg">
-          ⬇ 다운로드 <span class="arr">↗</span>
+        <a class="dl-btn" href="ver1.jpeg" download="ver1.jpeg">
+          ⬇ iPhone <span class="arr">↗</span>
+        </a>
+        <a class="dl-btn" href="ver3.jpeg" download="ver3.jpeg">
+          ⬇ iPad <span class="arr">↗</span>
         </a>
         <button type="button" class="dl-btn secondary" onclick="toggleGuide('iphone')">
           📖 설명
@@ -258,18 +262,20 @@ body{padding-top:124px;}
         <div class="dl-guide-inner">
           <button class="dl-guide-close" onclick="toggleGuide('iphone')">// CLOSE ✕</button>
           <pre><span class="sep">================================================</span>
-<span class="h">비트코인 풀노드 글로브 — 아이폰 배경화면</span>
+<span class="h">비트코인 풀노드 글로브 — 아이폰 / 아이패드 배경화면</span>
 <span class="sep">================================================</span>
 
 <span class="h">준비물</span>
 <span class="sep">------</span>
-1) iPhone (iOS 16 이상 권장)
-2) 다운로드한 이미지 파일 (556.jpeg)
+1) iPhone 또는 iPad (iOS / iPadOS 16 이상 권장)
+2) 다운로드한 이미지 파일
+   - iPhone : ver1.jpeg
+   - iPad   : ver3.jpeg
 
 
 <span class="h">설치 방법</span>
 <span class="sep">---------</span>
-1) [⬇ 다운로드] 버튼을 눌러 이미지를 저장
+1) [⬇ iPhone / iPad] 중 사용 기기에 맞는 버튼을 눌러 이미지 저장
    - Safari에서 이미지가 열리면 길게 눌러 → "이미지 저장"
    - 사진 앱에 저장됨
 2) 설정 → 배경화면 → 새로운 배경화면 추가
