@@ -110,6 +110,38 @@
     .dl-guide pre{font-size:12.5px;}
   }
 </style>
+<style id="unified-footer-style">
+body > footer.unified-footer{
+  border-top:1px solid #1f1f1f;
+  max-width:1200px;
+  margin:60px auto 0;
+  padding:22px 24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:transparent;
+  box-sizing:border-box;
+  text-align:center;
+}
+body > footer.unified-footer .uf-email{
+  font-family:'Share Tech Mono',monospace;
+  font-size:12px;
+  color:#f7931a;
+  letter-spacing:.15em;
+  text-align:center;
+  width:100%;
+}
+body > footer.unified-footer .uf-note{
+  font-family:'Share Tech Mono',monospace;
+  font-size:11px;
+  color:#888;
+  letter-spacing:.12em;
+  text-align:center;
+  width:100%;
+}
+</style>
 <style id="unified-nav-style">
 .site-header{position:fixed !important;top:0;left:0;right:0;z-index:1000;background:#0a0a0a;border-bottom:none !important;padding:0 !important;height:auto !important;}
 .site-header .brand-row{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;justify-content:flex-start;align-items:center;position:relative;height:auto;}
@@ -149,21 +181,19 @@ body{padding-top:124px;}
     <nav class="main-nav" id="mainNav">
       <span class="nav-indicator" id="navIndicator"></span>
       <a href="node.html">NODE</a>
-      <a href="p2p.html">P2P</a>
       <a href="coldcardq.html">COLDCARDQ</a>
+      <a href="edc.html">EDC</a>
       <a href="bscard.html">VERIFY</a>
       <a href="hodler.html">HODLER</a>
       <a href="dca.html">DCA</a>
       <a href="btcgame.html" class="nav-white">GAME</a>
       <a href="manga.html" class="nav-white">MANGA</a>
-      <a href="reviews.html" class="nav-white">REVIEWS</a>
       <a href="collection.html" class="nav-white">COLLECTION</a>
       <a href="download.html" class="nav-white active">DOWNLOAD</a>
       <a href="hof.html" class="nav-white">HOF</a>
     </nav>
   </div>
 </header>
-
 
 <main class="dl-main">
   <p class="page-label">// DOWNLOAD</p>
@@ -334,6 +364,10 @@ body{padding-top:124px;}
     if (e.key === 'Escape' && _lb.classList.contains('open')) closeLightbox();
   });
 </script>
+<footer class="unified-footer">
+  <span class="uf-email">⚡bitsexer@oksu.su</span>
+  <span class="uf-note">NOT YOUR KEYS, NOT YOUR BITCOIN.</span>
+</footer>
 <script id="unified-nav-script">
 (function(){
   var hdr=document.querySelector('.site-header');
