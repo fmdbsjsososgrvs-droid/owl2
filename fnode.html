@@ -88,8 +88,7 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-<script type="text/babel" data-presets="react">
-(function(){
+<script type="text/babel" data-presets="env,react">
 // 한글 도시명 + 위경도 — 노드 시드
 // 실제 비트코인 풀노드 분포 비슷한 가중치
 const CITIES = [
@@ -203,10 +202,8 @@ function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>1
 window.CITIES = CITIES;
 window.makeFillerNodes = makeFillerNodes;
 
-})();
 </script>
-<script type="text/babel" data-presets="react">
-(function(){
+<script type="text/babel" data-presets="env,react">
 // 3D 지구본 — Three.js
 // 검은 구체 + 대륙 외곽선 (procedural) + 노드 점 + 베지어 연결 호
 
@@ -1099,10 +1096,8 @@ function makeGlowTexture(){
 window.Globe3D = Globe3D;
 window.llToVec3 = llToVec3;
 
-})();
 </script>
-<script type="text/babel" data-presets="react">
-(function(){
+<script type="text/babel" data-presets="env,react">
 
 // tweaks-panel.jsx
 // Reusable Tweaks shell + form-control helpers.
@@ -1529,42 +1524,86 @@ Object.assign(window, {
   TweakText, TweakNumber, TweakColor, TweakButton,
 });
 
-})();
 </script>
-<script type="text/babel" data-presets="react">
-(function(){
+<script type="text/babel" data-presets="env,react">
 // UI 오버레이 컴포넌트들
 const { useState, useEffect, useRef, useMemo } = React;
+
+// 접기 버튼 — 패널 우상단에 [-]/[+] 토글
+function CollapseBtn({ collapsed, onToggle }){
+  return (
+    <button
+      onClick={onToggle}
+      title={collapsed?'펼치기':'접기'}
+      style={{
+        position:'absolute', top:8, right:8, zIndex:2,
+        width:22, height:22, padding:0,
+        background:'transparent',
+        border:'1px solid var(--panel-line)',
+        color:'var(--ink-dim)',
+        fontFamily:'"IBM Plex Mono",monospace',
+        fontSize:14, lineHeight:'18px', fontWeight:600,
+        cursor:'pointer',
+        display:'flex', alignItems:'center', justifyContent:'center',
+      }}
+      onMouseEnter={e=>{ e.currentTarget.style.color='var(--orange-bright)'; e.currentTarget.style.borderColor='var(--orange-bright)'; }}
+      onMouseLeave={e=>{ e.currentTarget.style.color='var(--ink-dim)'; e.currentTarget.style.borderColor='var(--panel-line)'; }}
+    >{collapsed?'+':'−'}</button>
+  );
+}
+
+// 패널 collapse 상태 (localStorage에 저장)
+function usePanelCollapse(key, defaultCollapsed=false){
+  const [collapsed, setCollapsed] = useState(()=>{
+    try {
+      const v = localStorage.getItem('panel-'+key);
+      if(v===null) return defaultCollapsed;
+      return v==='1';
+    } catch(e){ return defaultCollapsed; }
+  });
+  const toggle = () => {
+    setCollapsed(c=>{
+      const next = !c;
+      try { localStorage.setItem('panel-'+key, next?'1':'0'); } catch(e){}
+      return next;
+    });
+  };
+  return [collapsed, toggle];
+}
 
 // ─────────── 좌상단: 헤더 ───────────
 function Header({ stats }){
   const time = useTickClock();
+  const [collapsed, toggle] = usePanelCollapse('header');
   return (
     <div style={{position:'absolute',top:24,left:24,zIndex:10,display:'flex',gap:14,alignItems:'flex-start'}}>
       <div className="panel" style={{padding:'14px 18px',position:'relative',minWidth:340,whiteSpace:'nowrap'}}>
         <span className="corner-tl"></span><span className="corner-tr"></span>
         <span className="corner-bl"></span><span className="corner-br"></span>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
+        <CollapseBtn collapsed={collapsed} onToggle={toggle} />
+        <div style={{display:'flex',alignItems:'center',gap:10,paddingRight:28}}>
           <BtcMark />
           <div>
             <div className="label" style={{color:'var(--orange-bright)'}}>BITCOIN MAINNET</div>
             <div style={{fontSize:18,fontWeight:600,letterSpacing:'-0.01em',marginTop:2}}>풀노드 글로벌 네트워크</div>
           </div>
         </div>
-        <div className="hairline" style={{margin:'12px 0 10px'}}></div>
-        <div style={{display:'flex',gap:18,alignItems:'baseline'}}>
-          <div>
-            <div className="label">현재 시각 (UTC)</div>
-            <div className="mono" style={{fontSize:13,marginTop:2,color:'var(--ink)'}}>{time}</div>
-          </div>
-          <div>
-            <div className="label">상태</div>
-            <div style={{fontSize:13,marginTop:2,display:'flex',alignItems:'center',gap:6}}>
-              <span style={{width:8,height:8,borderRadius:'50%',background:'#5ee07e',boxShadow:'0 0 8px #5ee07e'}} className="blink"></span>
-              <span>동기화 중</span>
+        {!collapsed && <>
+          <div className="hairline" style={{margin:'12px 0 10px'}}></div>
+          <div style={{display:'flex',gap:18,alignItems:'baseline'}}>
+            <div>
+              <div className="label">현재 시각 (UTC)</div>
+              <div className="mono" style={{fontSize:13,marginTop:2,color:'var(--ink)'}}>{time}</div>
+            </div>
+            <div>
+              <div className="label">상태</div>
+              <div style={{fontSize:13,marginTop:2,display:'flex',alignItems:'center',gap:6}}>
+                <span style={{width:8,height:8,borderRadius:'50%',background:'#5ee07e',boxShadow:'0 0 8px #5ee07e'}} className="blink"></span>
+                <span>동기화 중</span>
+              </div>
             </div>
           </div>
-        </div>
+        </>}
       </div>
     </div>
   );
@@ -1591,19 +1630,27 @@ function useTickClock(){
 
 // ─────────── 우상단: 핵심 통계 ───────────
 function StatsBlock({ totalNodes, activeNodes, blockHeight, hashrate, mempool }){
+  const [collapsed, toggle] = usePanelCollapse('stats', true);
+  // 닫힌 상태: 좌측 상단 헤더 아래에 세로로 쌓임. 열린 상태: 우측 상단.
+  const pos = collapsed
+    ? { top: 178, left: 24, right:'auto' }
+    : { top: 24, right: 24, left:'auto' };
   return (
-    <div style={{position:'absolute',top:24,right:24,zIndex:10,width:340}}>
+    <div style={{position:'absolute', zIndex:10, width:340, ...pos}}>
       <div className="panel" style={{padding:'16px 18px',position:'relative'}}>
         <span className="corner-tl"></span><span className="corner-tr"></span>
         <span className="corner-bl"></span><span className="corner-br"></span>
-        <div className="label" style={{marginBottom:12}}>NETWORK · 실시간</div>
+        <CollapseBtn collapsed={collapsed} onToggle={toggle} />
+        <div className="label" style={{marginBottom: collapsed?0:12, paddingRight:28}}>NETWORK · 실시간</div>
 
-        <StatRow label="전체 노드" value={totalNodes.toLocaleString('ko-KR')} sub="reachable" />
-        <StatRow label="활성 노드" value={activeNodes.toLocaleString('ko-KR')} sub="last 10m" highlight />
-        <div className="hairline" style={{margin:'10px 0'}}></div>
-        <StatRow label="블록 높이" value={blockHeight.toLocaleString('ko-KR')} sub="block" mono />
-        <StatRow label="해시레이트" value={hashrate} sub="EH/s" />
-        <StatRow label="멤풀" value={`${mempool.toFixed(1)} MB`} sub={`${Math.round(mempool*120)} tx`} />
+        {!collapsed && <>
+          <StatRow label="전체 노드" value={totalNodes.toLocaleString('ko-KR')} sub="reachable" />
+          <StatRow label="활성 노드" value={activeNodes.toLocaleString('ko-KR')} sub="last 10m" highlight />
+          <div className="hairline" style={{margin:'10px 0'}}></div>
+          <StatRow label="블록 높이" value={blockHeight.toLocaleString('ko-KR')} sub="block" mono />
+          <StatRow label="해시레이트" value={hashrate} sub="EH/s" />
+          <StatRow label="멤풀" value={`${mempool.toFixed(1)} MB`} sub={`${Math.round(mempool*120)} tx`} />
+        </>}
       </div>
     </div>
   );
@@ -1627,16 +1674,23 @@ function StatRow({ label, value, sub, highlight, mono }){
 
 // ─────────── 좌하단: 지역 분포 차트 ───────────
 function RegionChart({ regions }){
+  const [collapsed, toggle] = usePanelCollapse('regions', true);
   const total = regions.reduce((s,r)=>s+r.count,0) || 1;
+  // 닫힌 상태: stats 아래에 쌓임. 열린 상태: 우측 중앙.
+  const pos = collapsed
+    ? { top: 230, left: 24, right:'auto', bottom:'auto', transform:'none' }
+    : { top:'50%', right: 24, left:'auto', bottom:'auto', transform:'translateY(-50%)' };
   return (
-    <div style={{position:'absolute',bottom:24,left:24,zIndex:10,width:340}}>
+    <div style={{position:'absolute', zIndex:10, width:340, ...pos}}>
       <div className="panel" style={{padding:'16px 18px',position:'relative'}}>
         <span className="corner-tl"></span><span className="corner-tr"></span>
         <span className="corner-bl"></span><span className="corner-br"></span>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+        <CollapseBtn collapsed={collapsed} onToggle={toggle} />
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom: collapsed?0:12, paddingRight:28}}>
           <div className="label">대륙별 노드 분포</div>
           <div className="num" style={{fontSize:12,fontWeight:600,color:'var(--ink-dim)'}}>{total.toLocaleString('ko-KR')} nodes</div>
         </div>
+        {!collapsed && <>
         {regions.map(r=>{
           const pct = (r.count/total)*100;
           return (
@@ -1652,6 +1706,7 @@ function RegionChart({ regions }){
             </div>
           );
         })}
+        </>}
       </div>
     </div>
   );
@@ -1659,15 +1714,22 @@ function RegionChart({ regions }){
 
 // ─────────── 우하단: 블록 / 트랜잭션 피드 ───────────
 function FeedBlock({ blocks, txs }){
+  const [collapsed, toggle] = usePanelCollapse('feed', true);
+  // 닫힌 상태: regions 아래에 쌓임. 열린 상태: 우하단.
+  const pos = collapsed
+    ? { top: 282, left: 24, right:'auto', bottom:'auto' }
+    : { bottom: 24, right: 24, left:'auto', top:'auto' };
   return (
-    <div style={{position:'absolute',bottom:24,right:24,zIndex:10,width:340}}>
+    <div style={{position:'absolute', zIndex:10, width:340, ...pos}}>
       <div className="panel" style={{padding:'14px 16px',position:'relative'}}>
         <span className="corner-tl"></span><span className="corner-tr"></span>
         <span className="corner-bl"></span><span className="corner-br"></span>
-        <div style={{display:'flex',gap:24,marginBottom:10,borderBottom:'1px solid var(--panel-line)',paddingBottom:8}}>
+        <CollapseBtn collapsed={collapsed} onToggle={toggle} />
+        <div style={{display:'flex',gap:24,marginBottom: collapsed?0:10, borderBottom: collapsed?'none':'1px solid var(--panel-line)', paddingBottom: collapsed?0:8, paddingRight:28}}>
           <div className="label" style={{color:'var(--orange-bright)'}}>최근 블록</div>
           <div className="label">최근 트랜잭션</div>
         </div>
+        {!collapsed && <>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
           <div className="scrollbar" style={{maxHeight:170,overflow:'auto'}}>
             {blocks.map(b=>(
@@ -1694,6 +1756,7 @@ function FeedBlock({ blocks, txs }){
             ))}
           </div>
         </div>
+        </>}
       </div>
     </div>
   );
@@ -1801,10 +1864,8 @@ function Compass(){
 
 window.UI = { Header, StatsBlock, RegionChart, FeedBlock, NodePopup, HoverTooltip, Compass };
 
-})();
 </script>
-<script type="text/babel" data-presets="react">
-(function(){
+<script type="text/babel" data-presets="env,react">
 // 실시간 비트코인 네트워크 데이터 fetcher
 // - mempool.space: 블록 높이, 해시레이트, 멤풀, 최근 블록/트랜잭션
 // - bitnodes.io: 전체 reachable 노드 수 + 국가별 분포 (다이제스트)
@@ -1870,10 +1931,8 @@ window.LiveData = {
   },
 };
 
-})();
 </script>
-<script type="text/babel" data-presets="react">
-(function(){
+<script type="text/babel" data-presets="env,react">
 // 메인 앱 — 시뮬레이션 상태 + Globe + UI 조합
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 const { Header, StatsBlock, RegionChart, FeedBlock, NodePopup, HoverTooltip, Compass } = window.UI;
@@ -2163,7 +2222,6 @@ function ageFromTs(secAgo){
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
-})();
 </script>
 </body>
 </html>
