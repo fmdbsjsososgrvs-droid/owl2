@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>비트코인 풀노드 — 글로벌 네트워크</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Pretendard:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#000;
+    --ink:#ffffff;
+    --ink-dim:#e5dccb;
+    --ink-faint:#9a917f;
+    --orange:#ff7a18;
+    --orange-bright:#ffa346;
+    --orange-deep:#c25410;
+    --line:rgba(255,140,40,.55);
+    --grid:rgba(255,140,40,.10);
+    --panel:#0a0807;
+    --panel-line:rgba(255,170,80,.4);
+    --panel-line-strong:rgba(255,170,80,.34);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%;background:#000;color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;font-weight:500;overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;word-break:keep-all}
+  #root{position:fixed;inset:0}
+  canvas{display:block}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-feature-settings:"tnum" 1}
+  .num{font-family:"Space Grotesk","IBM Plex Mono",monospace;font-feature-settings:"tnum" 1}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:2px;
+    color:var(--ink);
+    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 24px 60px -20px rgba(0,0,0,.7);
+  }
+  .label{
+    font-family:"IBM Plex Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink-dim);
+  }
+  .panel{font-size:13px;font-weight:500}
+  .hairline{height:1px;background:linear-gradient(90deg,transparent,var(--panel-line) 20%,var(--panel-line) 80%,transparent)}
+  .scrollbar::-webkit-scrollbar{width:4px}
+  .scrollbar::-webkit-scrollbar-track{background:transparent}
+  .scrollbar::-webkit-scrollbar-thumb{background:rgba(255,140,40,.18);border-radius:2px}
+  .scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,140,40,.4)}
+  .blink{animation:blink 1.2s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+  .scanline{
+    position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,140,40,.025) 3px,rgba(255,140,40,.025) 4px);
+    opacity:.18;mix-blend-mode:screen;z-index:2;
+  }
+  .vignette{
+    position:absolute;inset:0;pointer-events:none;z-index:3;
+    background:radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.55) 90%, rgba(0,0,0,.85) 100%);
+  }
+  /* shared bar */
+  .bar{height:3px;background:rgba(255,140,40,.12);overflow:hidden;position:relative}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--orange-deep),var(--orange-bright));box-shadow:0 0 6px var(--orange)}
+  /* node tooltip */
+  .tooltip-arrow:after{
+    content:"";position:absolute;left:-8px;top:14px;
+    width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:8px solid var(--panel-line-strong);
+  }
+  .corner-tl,.corner-tr,.corner-bl,.corner-br{position:absolute;width:10px;height:10px;border-color:var(--orange);border-style:solid;border-width:0;pointer-events:none}
+  .corner-tl{top:-1px;left:-1px;border-top-width:1px;border-left-width:1px}
+  .corner-tr{top:-1px;right:-1px;border-top-width:1px;border-right-width:1px}
+  .corner-bl{bottom:-1px;left:-1px;border-bottom-width:1px;border-left-width:1px}
+  .corner-br{bottom:-1px;right:-1px;border-bottom-width:1px;border-right-width:1px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Three.js -->
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<!-- TopoJSON client (for converting world-atlas topojson → geojson) -->
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<!-- React -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="cities.jsx"></script>
+<script type="text/babel" src="globe-3d.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="live-data.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+</body>
+</html>
