@@ -296,41 +296,67 @@
       gap: 0.5rem;
     }
 
-    /* CARD */
-    @property --border-angle {
-      syntax: '<angle>';
-      inherits: false;
-      initial-value: 0deg;
-    }
+    /* CARD - 모서리 강조 스타일 (corner brackets) */
     .rm-card {
       display: block;
       -webkit-tap-highlight-color: transparent;
-      border-radius: 0.75rem;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      border-radius: 4px;
+      border: 1px solid rgba(247,147,26,0.4);
+      background: #0a0a0a;
       cursor: pointer;
       text-decoration: none;
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.2s, box-shadow 0.2s;
       position: relative;
     }
+    /* 4 모서리 ㄱ자 브래킷 */
+    .rm-card::before,
+    .rm-card::after,
+    .rm-card-inner::before,
+    .rm-card-inner::after {
+      content: '';
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      pointer-events: none;
+    }
+    .rm-card::before {
+      top: -1px;
+      left: -1px;
+      border-top: 1px solid var(--accent);
+      border-left: 1px solid var(--accent);
+      border-top-left-radius: 4px;
+    }
+    .rm-card::after {
+      top: -1px;
+      right: -1px;
+      border-top: 1px solid var(--accent);
+      border-right: 1px solid var(--accent);
+      border-top-right-radius: 4px;
+    }
+    .rm-card-inner::before {
+      bottom: -1px;
+      left: -1px;
+      border-bottom: 1px solid var(--accent);
+      border-left: 1px solid var(--accent);
+      border-bottom-left-radius: 4px;
+    }
+    .rm-card-inner::after {
+      bottom: -1px;
+      right: -1px;
+      border-bottom: 1px solid var(--accent);
+      border-right: 1px solid var(--accent);
+      border-bottom-right-radius: 4px;
+    }
     .rm-card:hover {
-      transform: translateY(-3px) translateX(3px);
-      background: linear-gradient(var(--border-angle), #f7931a, #f7931a33, #f7931a);
-      animation: rm-border-spin 2.5s linear infinite;
-      box-shadow: 0 12px 40px #f7931a1f, 0 0 0 1px #f7931a4d;
+      transform: translateY(-2px);
+      background: rgba(247,147,26,0.04);
+      box-shadow: 0 6px 18px rgba(247,147,26,0.15);
     }
     .rm-card.active-card {
-      background: linear-gradient(135deg, #f7931a80, #f7931a20);
-      box-shadow: 0 0 0 1px #f7931a4d, 0 8px 24px #f7931a1f;
-    }
-    @keyframes rm-border-spin {
-      to { --border-angle: 360deg; }
+      background: rgba(247,147,26,0.08);
     }
     .rm-card-inner {
-      background: rgba(13,13,13,0.92);
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-      border-radius: calc(0.75rem - 1px);
+      background: transparent;
       padding: 0.75rem 1rem;
       display: flex;
       align-items: center;
