@@ -26,7 +26,13 @@
   .page-title span{color:var(--accent);}
 
   /* Item card */
-  .dl-card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);padding:0;margin-bottom:48px;overflow:hidden;}
+  .dl-card{background:#0a0a0a;border:1px solid rgba(247,147,26,0.4);border-radius:4px;padding:0;margin-bottom:48px;position:relative;}
+  /* A-box style: 모서리 강조 (corner brackets) */
+  .dl-card::before,.dl-card::after,.dl-card .dl-card-body::before,.dl-card .dl-card-body::after{content:'';position:absolute;width:11px;height:11px;pointer-events:none;}
+  .dl-card::before{top:-1px;left:-1px;border-top:1px solid var(--accent);border-left:1px solid var(--accent);border-top-left-radius:4px;}
+  .dl-card::after{top:-1px;right:-1px;border-top:1px solid var(--accent);border-right:1px solid var(--accent);border-top-right-radius:4px;}
+  .dl-card .dl-card-body::before{bottom:-1px;left:-1px;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent);border-bottom-left-radius:4px;}
+  .dl-card .dl-card-body::after{bottom:-1px;right:-1px;border-bottom:1px solid var(--accent);border-right:1px solid var(--accent);border-bottom-right-radius:4px;}
   .dl-card:last-child{margin-bottom:22px;}
 
   /* Thumbnail (inline, clickable to enlarge) */

@@ -26,6 +26,13 @@
   .page-sub{font-family:var(--sans);font-size:16px;color:var(--text);line-height:1.8;margin-bottom:32px;}
 
   .card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);padding:22px 24px;margin-bottom:18px;}
+  /* A-box style: 모서리 강조 (corner brackets) */
+  .card.a-box{background:#0a0a0a;border:1px solid rgba(247,147,26,0.4);border-radius:4px;position:relative;}
+  .card.a-box::before,.card.a-box::after,.card.a-box .status-row::before,.card.a-box .status-row::after{content:'';position:absolute;width:11px;height:11px;pointer-events:none;}
+  .card.a-box::before{top:-1px;left:-1px;border-top:1px solid var(--accent);border-left:1px solid var(--accent);border-top-left-radius:4px;}
+  .card.a-box::after{top:-1px;right:-1px;border-top:1px solid var(--accent);border-right:1px solid var(--accent);border-top-right-radius:4px;}
+  .card.a-box .status-row::before{bottom:-1px;left:-1px;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent);border-bottom-left-radius:4px;}
+  .card.a-box .status-row::after{bottom:-1px;right:-1px;border-bottom:1px solid var(--accent);border-right:1px solid var(--accent);border-bottom-right-radius:4px;}
   .card-title{font-family:var(--mono);font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
   .card-desc{font-family:var(--mono);font-size:11px;color:var(--text2);letter-spacing:.08em;margin-top:6px;}
 
@@ -195,7 +202,7 @@ body{padding-top:124px;}
   </p>
 
   <!-- Current price -->
-  <div class="card">
+  <div class="card a-box">
     <div class="card-title">현재 BTC 시세</div>
     <div class="current-grid">
       <div class="current-item">
