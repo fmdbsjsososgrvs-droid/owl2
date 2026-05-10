@@ -33,8 +33,9 @@
   .site-header .brand-row .logo-top{font-family:var(--mono);font-weight:700;font-size:13px;color:#e0e0e0;letter-spacing:.1em;line-height:1.3;}
   .site-header .brand-row .logo-bot{font-family:var(--mono);font-weight:700;font-size:11px;color:#f7931a;letter-spacing:.1em;line-height:1.3;}
   .site-header .nav-bar{background:#000;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
-  .site-header .main-nav{max-width:1200px;margin:0 auto;display:flex;justify-content:flex-start;padding:0 12px;flex-wrap:wrap;}
-  .site-header .main-nav a{font-family:var(--sans);font-size:13px;font-weight:700;color:#f7931a;text-decoration:none;padding:16px 22px;letter-spacing:.04em;white-space:nowrap;}
+  .site-header .main-nav{max-width:1200px;margin:0 auto;display:flex;justify-content:flex-start;padding:0 12px;flex-wrap:wrap;position:relative;}
+  .site-header .nav-indicator{position:absolute;top:0;left:0;width:0;height:0;background:transparent;border:2px solid #f7931a;box-sizing:border-box;transition:none;z-index:1;pointer-events:none;opacity:0;}
+  .site-header .main-nav a{position:relative;z-index:2;font-family:var(--sans);font-size:13px;font-weight:700;color:#f7931a;text-decoration:none;padding:16px 22px;letter-spacing:.04em;white-space:nowrap;display:inline-block;line-height:1.2;}
   .site-header .main-nav a:hover,.site-header .main-nav a.active{color:#f7931a;}
   .site-header .main-nav a.nav-white{color:#e0e0e0;font-weight:400;}
   .site-header .main-nav a.nav-white.active{color:#f7931a;font-weight:700;}
@@ -118,6 +119,7 @@
   </div>
   <div class="nav-bar">
     <nav class="main-nav" id="mainNav">
+      <span class="nav-indicator" id="navIndicator"></span>
       <a href="node.html">NODE</a>
       <a href="coldcardq.html">COLDCARDQ</a>
       <a href="edc.html">EDC</a>
@@ -2480,6 +2482,36 @@
     ro.observe(header);
     if (azBar) ro.observe(azBar);
   }
+})();
+(function(){
+  // Active-link indicator (orange rectangle) — same behavior as other pages.
+  var nav  = document.getElementById('mainNav');
+  if (!nav) return;
+  var ind  = document.getElementById('navIndicator');
+  var links= nav.querySelectorAll('a');
+  var active = nav.querySelector('a.active');
+
+  function setPos(el){
+    if (!el){ ind.style.opacity='0'; return; }
+    var inset = window.matchMedia('(max-width:768px)').matches ? 4 : 8;
+    var x = el.offsetLeft + inset;
+    var y = el.offsetTop  + inset;
+    var w = Math.max(el.offsetWidth  - inset*2, 0);
+    var h = Math.max(el.offsetHeight - inset*2, 0);
+    ind.style.opacity   = '1';
+    ind.style.width     = w + 'px';
+    ind.style.height    = h + 'px';
+    ind.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+
+  function init(){ if (active) setPos(active); else ind.style.opacity='0'; }
+  if (document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+
+  links.forEach(function(l){
+    l.addEventListener('click', function(){ setPos(l); });
+  });
+  window.addEventListener('resize', function(){ if (active) setPos(active); });
 })();
 </script>
 </body>
