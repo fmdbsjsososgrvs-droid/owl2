@@ -57,7 +57,9 @@
     transition:border-color .18s,transform .18s;display:flex;flex-direction:column;
   }
   .yt-card:hover{border-color:var(--accent);transform:translateY(-3px);}
-  .yt-thumb-wrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;}
+  .yt-thumb-wrap{position:relative;overflow:hidden;background:#000;}
+  .yt-thumb-wrap.ratio-16x9{aspect-ratio:16/9;}
+  .yt-thumb-wrap.ratio-9x16{aspect-ratio:9/16;max-width:180px;margin:0 auto;}
   .yt-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .18s;}
   .yt-card:hover .yt-thumb{opacity:.78;}
   .yt-play{
@@ -167,12 +169,14 @@
   {
     "id": "DKml0sgyNg0",
     "title": "TAPSIGNER",
-    "meta": "NFC 카드형 하드웨어 월렛"
+    "meta": "NFC 카드형 하드웨어 월렛",
+    "shorts": false
   },
   {
     "id": "r9k14cP6cHQ",
-    "title": "NEW VIDEO",
-    "meta": ""
+    "title": "M-DISC",
+    "meta": "",
+    "shorts": true
   }
 ];
 </script>
@@ -225,7 +229,7 @@
       var card = document.createElement('div');
       card.className = 'yt-card';
       card.innerHTML =
-        '<div class="yt-thumb-wrap">' +
+        '<div class="yt-thumb-wrap ' + (v.shorts ? 'ratio-9x16' : 'ratio-16x9') + '">' +
           '<img class="yt-thumb" loading="lazy" alt="' + esc(v.title) + '" ' +
                'src="https://i.ytimg.com/vi/' + esc(v.id) + '/hqdefault.jpg" ' +
                'onerror="this.src=\'https://i.ytimg.com/vi/' + esc(v.id) + '/mqdefault.jpg\'">' +
