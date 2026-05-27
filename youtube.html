@@ -81,6 +81,14 @@
   .yt-card-idx{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.2em;}
 
   .yt-empty{text-align:center;padding:60px 16px;font-family:var(--mono);color:var(--muted);letter-spacing:.15em;border:1px dashed var(--border2);}
+  .yt-section{margin-bottom:52px;}
+  .yt-section-label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.35em;color:var(--accent);
+    text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;
+    border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:10px;
+  }
+  .yt-section-label::before{content:'//';color:var(--dim);}
+  .yt-grid.shorts-grid{grid-template-columns:repeat(auto-fill,minmax(180px,220px));}
 
   /* ===== Lightbox ===== */
   .yt-lightbox{
@@ -165,18 +173,21 @@
 </div>
 
 <script>
-  var VIDEOS = [
+  var SECTIONS = [
   {
-    "id": "DKml0sgyNg0",
-    "title": "TAPSIGNER",
-    "meta": "NFC 카드형 하드웨어 월렛",
-    "shorts": false
+    "label": "YOUTUBE",
+    "shorts": false,
+    "videos": [
+      { "id": "DKml0sgyNg0", "title": "TAPSIGNER", "meta": "NFC 카드형 하드웨어 월렛" },
+      { "id": "DPe9wdLIhvM", "title": "SATSCARD", "meta": "" }
+    ]
   },
   {
-    "id": "r9k14cP6cHQ",
-    "title": "M-DISC",
-    "meta": "",
-    "shorts": true
+    "label": "SHORTS",
+    "shorts": true,
+    "videos": [
+      { "id": "r9k14cP6cHQ", "title": "M-DISC", "meta": "" }
+    ]
   }
 ];
 </script>
@@ -245,10 +256,15 @@
     });
   }
 
-  function openVideo(v){
+  function openVideo(v, isShorts){
+    frameWrap.style.aspectRatio = isShorts ? '9/16' : '16/9';
+    frameWrap.style.maxWidth    = isShorts ? '360px' : '';
+    frameWrap.style.margin      = isShorts ? '0 auto' : '';
+    var src = isShorts
+      ? 'https://www.youtube.com/embed/' + encodeURIComponent(v.id) + '?autoplay=1&rel=0'
+      : 'https://www.youtube.com/embed/' + encodeURIComponent(v.id) + '?autoplay=1&rel=0';
     frameWrap.innerHTML =
-      '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(v.id) +
-      '?autoplay=1&rel=0" title="' + esc(v.title) + '" ' +
+      '<iframe src="' + src + '" title="' + esc(v.title) + '" ' +
       'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
       'allowfullscreen></iframe>';
     lbTitle.textContent = v.title;
