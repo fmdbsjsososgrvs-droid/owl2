@@ -223,7 +223,7 @@
 })();
 (function(){
   // Render video cards + lightbox player
-  var grid     = document.getElementById('ytGrid');
+  var container= document.getElementById('ytGrid');
   var lightbox = document.getElementById('ytLightbox');
   var frameWrap= document.getElementById('ytFrameWrap');
   var lbTitle  = document.getElementById('ytLbTitle');
@@ -233,38 +233,51 @@
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
   }); }
 
-  if (!VIDEOS.length){
-    grid.outerHTML = '<div class="yt-empty">// NO VIDEOS YET</div>';
-  } else {
-    VIDEOS.forEach(function(v, i){
+  var totalCount = 0;
+  SECTIONS.forEach(function(sec){
+    var section = document.createElement('div');
+    section.className = 'yt-section';
+
+    var label = document.createElement('div');
+    label.className = 'yt-section-label';
+    label.textContent = sec.label;
+    section.appendChild(label);
+
+    var grid = document.createElement('div');
+    grid.className = 'yt-grid' + (sec.shorts ? ' shorts-grid' : '');
+    section.appendChild(grid);
+
+    sec.videos.forEach(function(v){
+      totalCount++;
+      var idx = totalCount;
       var card = document.createElement('div');
       card.className = 'yt-card';
       card.innerHTML =
-        '<div class="yt-thumb-wrap ' + (v.shorts ? 'ratio-9x16' : 'ratio-16x9') + '">' +
+        '<div class="yt-thumb-wrap ' + (sec.shorts ? 'ratio-9x16' : 'ratio-16x9') + '">' +
           '<img class="yt-thumb" loading="lazy" alt="' + esc(v.title) + '" ' +
                'src="https://i.ytimg.com/vi/' + esc(v.id) + '/hqdefault.jpg" ' +
                'onerror="this.src=\'https://i.ytimg.com/vi/' + esc(v.id) + '/mqdefault.jpg\'">' +
           '<div class="yt-play"></div>' +
         '</div>' +
         '<div class="yt-card-body">' +
-          '<div class="yt-card-idx">// ' + String(i+1).padStart(3,'0') + '</div>' +
+          '<div class="yt-card-idx">// ' + String(idx).padStart(3,'0') + '</div>' +
           '<div class="yt-card-title">' + esc(v.title) + '</div>' +
           '<div class="yt-card-meta">' + esc(v.meta || '') + '</div>' +
         '</div>';
-      card.addEventListener('click', function(){ openVideo(v); });
+      card.addEventListener('click', (function(vv,isS){ return function(){ openVideo(vv,isS); }; })(v, sec.shorts));
       grid.appendChild(card);
     });
-  }
+
+    container.appendChild(section);
+  });
 
   function openVideo(v, isShorts){
     frameWrap.style.aspectRatio = isShorts ? '9/16' : '16/9';
     frameWrap.style.maxWidth    = isShorts ? '360px' : '';
     frameWrap.style.margin      = isShorts ? '0 auto' : '';
-    var src = isShorts
-      ? 'https://www.youtube.com/embed/' + encodeURIComponent(v.id) + '?autoplay=1&rel=0'
-      : 'https://www.youtube.com/embed/' + encodeURIComponent(v.id) + '?autoplay=1&rel=0';
     frameWrap.innerHTML =
-      '<iframe src="' + src + '" title="' + esc(v.title) + '" ' +
+      '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(v.id) +
+      '?autoplay=1&rel=0" title="' + esc(v.title) + '" ' +
       'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
       'allowfullscreen></iframe>';
     lbTitle.textContent = v.title;
@@ -273,7 +286,7 @@
   }
   function closeVideo(){
     lightbox.classList.remove('open');
-    frameWrap.innerHTML = '';   // stop playback
+    frameWrap.innerHTML = '';
     document.body.style.overflow = '';
   }
 
