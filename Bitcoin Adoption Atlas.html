@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitcoin Adoption Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+.site-nav{position:sticky;top:0;z-index:100;background:#fdf4e7;border-bottom:1px solid rgba(224,123,10,.32);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.8rem;letter-spacing:.22em;color:#1a1208;text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:#7a6040;padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu a:hover{color:#c96c00;border-color:rgba(224,123,10,.32);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:#e07b0a;border-color:#e07b0a;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid rgba(224,123,10,.18);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+</style>
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: #FBEDDD;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  color: #1C1A17;
+  font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  background: #FBEDDD;
+}
+
+/* ---- Header ---- */
+
+.header {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 46px 36px 0;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #C05F12;
+}
+
+.title {
+  font-family: 'Newsreader', serif;
+  font-weight: 500;
+  font-size: 46px;
+  line-height: 1.08;
+  margin: 10px 0 8px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14.5px;
+  color: #6B665D;
+}
+
+.header-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #9A948A;
+  text-align: right;
+  line-height: 1.8;
+}
+
+.layer-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.layer-toggle-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  padding: 9px 15px;
+  border-radius: 999px;
+  border: 1px solid #DDD8CD;
+  background: #FFFFFF;
+  color: #57524A;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.layer-toggle-btn.active {
+  border-color: #1C1A17;
+  background: #1C1A17;
+  color: #FAF9F6;
+}
+
+/* ---- Map ---- */
+
+.map-section {
+  max-width: 1240px;
+  margin: 20px auto 0;
+  padding: 0 36px;
+}
+
+.map-box {
+  position: relative;
+  border: 1px solid #E5E1D8;
+  border-radius: 3px;
+  background: #FDFCFA;
+  overflow: hidden;
+}
+
+.map-overlay-title {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.layer-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #1C1A17;
+}
+
+.layer-desc {
+  font-size: 12px;
+  color: #8A8478;
+  margin-top: 3px;
+}
+
+.map-container {
+  padding: 34px 10px 10px;
+  min-height: 420px;
+}
+
+.map-container svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.legend {
+  position: absolute;
+  left: 20px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(28,26,23,0.12);
+}
+
+.legend-label {
+  font-size: 12px;
+  color: #57524A;
+}
+
+.tooltip {
+  position: absolute;
+  display: none;
+  z-index: 5;
+  pointer-events: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  background: #1C1A17;
+  color: #FAF9F6;
+  padding: 5px 9px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 342px;
+  background: #FFFFFF;
+  border-left: 1px solid #E5E1D8;
+  box-shadow: -12px 0 32px rgba(28,26,23,0.06);
+  z-index: 4;
+  overflow-y: auto;
+  padding: 26px 26px 32px;
+  box-sizing: border-box;
+  transform: translateX(105%);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.panel.open {
+  transform: translateX(0);
+}
+
+.panel-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #E5E1D8;
+  border-radius: 999px;
+  background: #FAF9F6;
+  color: #57524A;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.panel-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: #C05F12;
+}
+
+.panel-name {
+  font-family: 'Newsreader', serif;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.1;
+  margin: 8px 0 2px;
+}
+
+.panel-kr {
+  font-size: 14px;
+  color: #8A8478;
+  margin-bottom: 14px;
+}
+
+.panel-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.panel-rows {
+  margin-top: 20px;
+}
+
+.panel-row {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-top: 1px solid #EEEBE4;
+}
+
+.panel-row-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #9A948A;
+}
+
+.panel-row-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1C1A17;
+  text-align: right;
+}
+
+.panel-note {
+  margin: 18px 0 0;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #57524A;
+  border-top: 1px solid #EEEBE4;
+  padding-top: 16px;
+}
+
+.map-caption {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: #B0AA9F;
+  margin-top: 10px;
+}
+
+/* ---- Timeline ---- */
+
+.timeline {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 64px 36px 80px;
+}
+
+.timeline h2 {
+  font-family: 'Newsreader', serif;
+  font-weight: 500;
+  font-size: 30px;
+  margin: 0 0 4px;
+}
+
+.timeline-sub {
+  margin: 0 0 22px;
+  font-size: 13.5px;
+  color: #8A8478;
+}
+
+.timeline-list {
+  max-width: 820px;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 20px;
+  padding: 14px 0;
+  border-top: 1px solid #E5E1D8;
+}
+
+.timeline-row-last {
+  border-bottom: 1px solid #E5E1D8;
+}
+
+.timeline-year {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13.5px;
+  color: #C05F12;
+}
+
+.timeline-event {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  color: #8A8478;
+  margin-top: 2px;
+}
+
+.timeline-footnote {
+  margin: 36px 0 0;
+  font-size: 12px;
+  color: #B0AA9F;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="bitcoin.html">BITCOIN</a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html" class="active">ATLAS</a></li>
+    <li><a href="health.html">HEALTH</a></li>
+    <li><a href="coldcardq.html">COLDCARDQ</a></li>
+    <li><a href="bscard.html">VERIFY</a></li>
+    <li><a href="btcgame.html">GAME</a></li>
+    <li><a href="hof.html">HOF</a></li>
+  </ul>
+</nav>
+
+  <div class="page">
+
+    <header class="header">
+      <div class="header-top">
+        <div>
+          <div class="eyebrow">GLOBAL BITCOIN ADOPTION · AS OF JUL 2026</div>
+          <h1 class="title">Bitcoin Adoption Atlas</h1>
+          <p class="subtitle">국가별 비트코인 채택 현황 — 합법성 · 법정화폐 · ETF · 정부/기업 보유량 · 채굴 · 라이트닝</p>
+        </div>
+        <div class="header-meta">PUBLIC SOURCES · APPROXIMATE<br>대표 사례 기준 근사치</div>
+      </div>
+
+      <div class="layer-toggles" id="layerToggles"></div>
+    </header>
+
+    <div class="map-section">
+      <div class="map-box">
+        <div class="map-overlay-title">
+          <div class="layer-title" id="layerTitle"></div>
+          <div class="layer-desc" id="layerDesc"></div>
+        </div>
+
+        <div class="map-container" id="mapContainer"></div>
+
+        <div class="legend" id="legend"></div>
+
+        <div class="tooltip" id="tooltip"></div>
+
+        <aside class="panel" id="panel">
+          <button class="panel-close" id="panelClose" aria-label="Close">×</button>
+          <div class="panel-eyebrow">COUNTRY PROFILE</div>
+          <h2 class="panel-name" id="panelName"></h2>
+          <div class="panel-kr" id="panelKr"></div>
+          <span class="panel-badge" id="panelBadge"></span>
+
+          <div class="panel-rows" id="panelRows"></div>
+
+          <p class="panel-note" id="panelNote"></p>
+        </aside>
+      </div>
+      <div class="map-caption">CLICK A COUNTRY FOR DETAILS · 색칠된 국가를 클릭하면 상세정보가 열립니다</div>
+    </div>
+
+    <section class="timeline">
+      <h2>Adoption Timeline</h2>
+      <p class="timeline-sub">주요 채택 연혁</p>
+      <div class="timeline-list">
+        <div class="timeline-row">
+          <div class="timeline-year">2009</div>
+          <div><div class="timeline-event">Genesis block mined</div><div class="timeline-desc">비트코인 네트워크 가동 시작.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2013</div>
+          <div><div class="timeline-event">Germany recognizes Bitcoin as private money</div><div class="timeline-desc">독일, 주요국 최초로 비트코인을 공식 인정.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2017</div>
+          <div><div class="timeline-event">Japan legalizes crypto payments</div><div class="timeline-desc">일본, 비트코인을 합법 결제수단으로 법제화.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2021</div>
+          <div><div class="timeline-event">Canada launches first spot Bitcoin ETF</div><div class="timeline-desc">캐나다, 세계 최초 현물 ETF 승인.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2021</div>
+          <div><div class="timeline-event">El Salvador adopts Bitcoin as legal tender · China bans all activity</div><div class="timeline-desc">엘살바도르 법정화폐 채택, 같은 해 중국은 거래·채굴 전면 금지.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2022</div>
+          <div><div class="timeline-event">Central African Republic adopts, then repeals, legal tender</div><div class="timeline-desc">중앙아프리카공화국, 채택 1년 만인 2023년 철회.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2024</div>
+          <div><div class="timeline-event">US approves spot Bitcoin ETFs</div><div class="timeline-desc">미국 SEC 현물 ETF 승인 — 홍콩·호주가 뒤이어 승인.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2024</div>
+          <div><div class="timeline-event">Germany sells its seized 50,000 BTC</div><div class="timeline-desc">독일, 압수 보유 물량 전량 매각.</div></div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-year">2025</div>
+          <div><div class="timeline-event">US establishes Strategic Bitcoin Reserve</div><div class="timeline-desc">미국, 행정명령으로 전략 비트코인 준비금 설립.</div></div>
+        </div>
+        <div class="timeline-row timeline-row-last">
+          <div class="timeline-year">2025</div>
+          <div><div class="timeline-event">El Salvador–IMF agreement scales back mandates</div><div class="timeline-desc">IMF 협약으로 민간 부문 비트코인 수용 의무 완화.</div></div>
+        </div>
+      </div>
+      <p class="timeline-footnote">본 페이지의 수치는 공개 자료 기반의 대략적 추정치이며, 투자 조언이 아닙니다.</p>
+    </section>
+
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ---- palette ----
+  const C = {
+    nodata: '#ECE9E2', light: '#F3DEC0', mid: '#E9A75B', dark: '#C05F12',
+    legal: '#86AC8F', restricted: '#DCBE6F', banned: '#C98376',
+  };
+
+  const DATA = {
+    '840': { name: 'United States', kr: '미국', status: 'legal', tender: null, etf: 'spot', gov: 207000, corp: 640000, mining: 38, ln: 'high',
+      note: '2024년 현물 ETF 승인, 2025년 전략 비트코인 준비금 설립. 채굴 해시레이트·기관 보유 모두 세계 1위.' },
+    '124': { name: 'Canada', kr: '캐나다', status: 'legal', tender: null, etf: 'spot', gov: null, corp: 12000, mining: 7, ln: 'med',
+      note: '2021년 세계 최초로 현물 비트코인 ETF를 승인한 국가.' },
+    '222': { name: 'El Salvador', kr: '엘살바도르', status: 'legal', tender: 'current', etf: null, gov: 6240, corp: null, mining: 1, ln: 'high',
+      note: '2021년 세계 최초 법정화폐 채택. 화산 지열 채굴 운영, 2025년 IMF 협약으로 민간 수용 의무는 완화.' },
+    '156': { name: 'China', kr: '중국', status: 'banned', tender: null, etf: null, gov: 194000, corp: null, mining: 16, ln: 'low',
+      note: '2021년 거래·채굴 전면 금지. 압수 물량 약 19만 BTC 보유 추정, 음성 채굴은 여전히 상당 규모.' },
+    '276': { name: 'Germany', kr: '독일', status: 'legal', tender: null, etf: 'etp', gov: null, corp: null, mining: null, ln: 'med',
+      note: '2013년 주요국 최초 공식 인정. 2024년 압수 물량 약 5만 BTC를 전량 매각.' },
+    '826': { name: 'United Kingdom', kr: '영국', status: 'legal', tender: null, etf: 'etp', gov: 61000, corp: null, mining: null, ln: 'med',
+      note: '범죄 압수 물량 약 6.1만 BTC 보유. 2024년부터 전문투자자 대상 ETN 상장 허용.' },
+    '392': { name: 'Japan', kr: '일본', status: 'legal', tender: null, etf: null, gov: null, corp: 20000, mining: null, ln: 'med',
+      note: '2017년 결제수단으로 법제화. 메타플래닛 등 상장사의 비트코인 매입이 확산.' },
+    '410': { name: 'South Korea', kr: '대한민국', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'low',
+      note: '거래 합법, 이용자 보호법 시행. 현물 ETF는 승인 논의 단계.' },
+    '643': { name: 'Russia', kr: '러시아', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: 11, ln: 'low',
+      note: '국내 결제 사용은 금지, 2024년 채굴은 합법화. 국제 결제 활용을 실험 중.' },
+    '398': { name: 'Kazakhstan', kr: '카자흐스탄', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: 6, ln: 'low',
+      note: '2021년 중국발 채굴 이전으로 급성장 후 전력 규제로 축소. 면허제 채굴 운영.' },
+    '076': { name: 'Brazil', kr: '브라질', status: 'legal', tender: null, etf: 'spot', gov: null, corp: null, mining: null, ln: 'med',
+      note: '2021년 현물 ETF 승인, 2023년 결제·규제 프레임워크 법제화.' },
+    '032': { name: 'Argentina', kr: '아르헨티나', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: 1, ln: 'high',
+      note: '고인플레이션 헤지 수요로 풀뿌리 채택률 세계 최상위권.' },
+    '036': { name: 'Australia', kr: '호주', status: 'legal', tender: null, etf: 'spot', gov: null, corp: null, mining: null, ln: 'med',
+      note: '2024년 현물 ETF 상장. 명확한 과세·규제 체계 운영.' },
+    '756': { name: 'Switzerland', kr: '스위스', status: 'legal', tender: null, etf: 'etp', gov: null, corp: null, mining: null, ln: 'med',
+      note: '크립토밸리(추크) 중심지. 2018년부터 ETP 거래, 일부 칸톤은 세금 납부 허용.' },
+    '784': { name: 'United Arab Emirates', kr: '아랍에미리트', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: 4, ln: 'med',
+      note: '두바이 VARA 등 전담 규제기관 운영. 중동 최대 채굴·거래 허브로 성장.' },
+    '702': { name: 'Singapore', kr: '싱가포르', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '라이선스 기반 허용. 기관 친화적이나 개인 대상 마케팅은 규제.' },
+    '344': { name: 'Hong Kong', kr: '홍콩', status: 'legal', tender: null, etf: 'spot', gov: null, corp: null, mining: null, ln: 'med',
+      note: '2024년 아시아 최초 현물 ETF 승인. 중국 본토와 달리 개방 정책.' },
+    '566': { name: 'Nigeria', kr: '나이지리아', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'high',
+      note: '은행 제한에도 P2P 거래량 세계 최상위. 2023년부터 제도권 편입 추진.' },
+    '818': { name: 'Egypt', kr: '이집트', status: 'banned', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'low',
+      note: '종교적 금지령과 중앙은행 규제로 사실상 전면 금지.' },
+    '068': { name: 'Bolivia', kr: '볼리비아', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'low',
+      note: '2024년, 10년 만에 전면 금지를 해제.' },
+    '704': { name: 'Vietnam', kr: '베트남', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '보유·거래는 허용, 결제수단 사용은 금지. 풀뿌리 채택률 상위권.' },
+    '356': { name: 'India', kr: '인도', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'low',
+      note: '거래는 합법이나 30% 과세 + 1% 원천징수 등 고강도 규제.' },
+    '250': { name: 'France', kr: '프랑스', status: 'legal', tender: null, etf: 'etp', gov: null, corp: null, mining: null, ln: 'med',
+      note: 'EU MiCA 체계 아래 등록제 운영. ETP 거래 활발.' },
+    '752': { name: 'Sweden', kr: '스웨덴', status: 'legal', tender: null, etf: 'etp', gov: null, corp: null, mining: null, ln: 'med',
+      note: '2015년 세계 최초 비트코인 ETP(XBT Provider) 상장국.' },
+    '064': { name: 'Bhutan', kr: '부탄', status: 'legal', tender: null, etf: null, gov: 12500, corp: null, mining: 1, ln: 'low',
+      note: '수력 발전 기반 국영 채굴로 축적. GDP 대비 보유 비중 세계 최고 수준.' },
+    '804': { name: 'Ukraine', kr: '우크라이나', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '2022년 합법화. 전시 암호화폐 기부를 공식 수령한 최초 사례.' },
+    '140': { name: 'Central African Rep.', kr: '중앙아프리카공화국', status: 'legal', tender: 'former', etf: null, gov: null, corp: null, mining: null, ln: 'low',
+      note: '2022년 세계 두 번째로 법정화폐 채택했으나 2023년 철회.' },
+    '600': { name: 'Paraguay', kr: '파라과이', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: 3, ln: 'low',
+      note: '이타이푸 수력댐의 저가 전력 기반 채굴 허브.' },
+    '862': { name: 'Venezuela', kr: '베네수엘라', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '2024년 국영 채굴장 폐쇄·페트로 폐기. 개인 보유는 인플레 헤지로 활발.' },
+    '364': { name: 'Iran', kr: '이란', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: 3, ln: 'low',
+      note: '면허제 채굴은 합법(수출 결제 활용), 국내 거래는 제한.' },
+    '792': { name: 'Turkey', kr: '튀르키예', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '2021년 결제 사용 금지. 리라 약세로 개인 보유율은 세계 최상위권.' },
+    '231': { name: 'Ethiopia', kr: '에티오피아', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: 3, ln: 'low',
+      note: '거래는 금지하되 2024년부터 수력 기반 채굴을 허용한 독특한 사례.' },
+    '484': { name: 'Mexico', kr: '멕시코', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '핀테크법으로 규율. 송금 시장 중심으로 채택 확대.' },
+    '764': { name: 'Thailand', kr: '태국', status: 'restricted', tender: null, etf: null, gov: null, corp: null, mining: null, ln: 'med',
+      note: '거래는 합법·활발하나 결제수단 사용은 금지.' },
+    '578': { name: 'Norway', kr: '노르웨이', status: 'legal', tender: null, etf: null, gov: null, corp: null, mining: 2, ln: 'low',
+      note: '수력 잉여 전력 기반 채굴. 국부펀드는 기업 지분 통해 간접 노출.' },
+  };
+
+  const LAYERS = [
+    { key: 'status', label: 'LEGAL STATUS', desc: '합법 여부 · 국가별 규제 상태' },
+    { key: 'tender', label: 'LEGAL TENDER', desc: '법정화폐 채택 여부' },
+    { key: 'etf', label: 'ETF', desc: '현물 ETF / ETP 승인 여부' },
+    { key: 'gov', label: 'GOV HOLDINGS', desc: '정부 보유량 (BTC, 추정)' },
+    { key: 'corp', label: 'CORP HOLDINGS', desc: '기업 보유량 (BTC, 추정)' },
+    { key: 'mining', label: 'MINING', desc: '해시레이트 점유율 (추정)' },
+    { key: 'ln', label: 'LIGHTNING', desc: '라이트닝 네트워크 보급 수준' },
+  ];
+
+  const MARKERS = [
+    { id: '222', c: [-88.9, 13.7] },
+    { id: '702', c: [103.82, 1.35] },
+    { id: '344', c: [114.15, 22.3] },
+    { id: '064', c: [90.43, 27.5] },
+  ];
+
+  const LEGENDS = {
+    status: [
+      { c: '#86AC8F', l: 'Legal · 합법' },
+      { c: '#DCBE6F', l: 'Restricted · 부분 규제' },
+      { c: '#C98376', l: 'Banned · 금지' },
+      { c: '#ECE9E2', l: 'No data · 자료 없음' },
+    ],
+    tender: [
+      { c: '#C05F12', l: 'Current · 법정화폐' },
+      { c: '#E9A75B', l: 'Former · 채택 후 철회' },
+      { c: '#ECE9E2', l: 'None · 해당 없음' },
+    ],
+    etf: [
+      { c: '#C05F12', l: 'Spot ETF · 현물 승인' },
+      { c: '#E9A75B', l: 'ETP / ETN · 유사상품' },
+      { c: '#ECE9E2', l: 'None · 미승인' },
+    ],
+    gov: [
+      { c: '#C05F12', l: '100,000+ BTC' },
+      { c: '#E9A75B', l: '10,000–100,000 BTC' },
+      { c: '#F3DEC0', l: '< 10,000 BTC' },
+      { c: '#ECE9E2', l: 'None · 미공개' },
+    ],
+    corp: [
+      { c: '#C05F12', l: '100,000+ BTC' },
+      { c: '#E9A75B', l: '10,000–100,000 BTC' },
+      { c: '#F3DEC0', l: '< 10,000 BTC' },
+      { c: '#ECE9E2', l: 'None · 미공개' },
+    ],
+    mining: [
+      { c: '#C05F12', l: '15%+ of hashrate' },
+      { c: '#E9A75B', l: '5–15%' },
+      { c: '#F3DEC0', l: '< 5%' },
+      { c: '#ECE9E2', l: 'Negligible · 미미' },
+    ],
+    ln: [
+      { c: '#C05F12', l: 'High · 높음' },
+      { c: '#E9A75B', l: 'Medium · 보통' },
+      { c: '#F3DEC0', l: 'Low · 낮음' },
+      { c: '#ECE9E2', l: 'No data' },
+    ],
+  };
+
+  const statusMap = {
+    legal: { label: 'LEGAL · 합법', bg: '#E7EFE9', fg: '#3E6B4C' },
+    restricted: { label: 'RESTRICTED · 부분 규제', bg: '#F5EDD6', fg: '#8A6D1F' },
+    banned: { label: 'BANNED · 금지', bg: '#F5E2DD', fg: '#94402F' },
+  };
+  const lnMap = { high: '높음 · High', med: '보통 · Medium', low: '낮음 · Low' };
+
+  function fmtBTC(n) { return n == null ? null : '~' + n.toLocaleString('en-US') + ' BTC'; }
+
+  function fillFor(id, layer) {
+    const d = DATA[id];
+    if (!d) return C.nodata;
+    if (layer === 'status') return { legal: C.legal, restricted: C.restricted, banned: C.banned }[d.status] || C.nodata;
+    if (layer === 'tender') return d.tender === 'current' ? C.dark : d.tender === 'former' ? C.mid : C.nodata;
+    if (layer === 'etf') return d.etf === 'spot' ? C.dark : d.etf === 'etp' ? C.mid : C.nodata;
+    if (layer === 'gov') return d.gov >= 100000 ? C.dark : d.gov >= 10000 ? C.mid : d.gov > 0 ? C.light : C.nodata;
+    if (layer === 'corp') return d.corp >= 100000 ? C.dark : d.corp >= 10000 ? C.mid : d.corp > 0 ? C.light : C.nodata;
+    if (layer === 'mining') return d.mining >= 15 ? C.dark : d.mining >= 5 ? C.mid : d.mining > 0 ? C.light : C.nodata;
+    if (layer === 'ln') return d.ln === 'high' ? C.dark : d.ln === 'med' ? C.mid : d.ln === 'low' ? C.light : C.nodata;
+    return C.nodata;
+  }
+
+  // ---- state ----
+  const state = { layer: 'status', selected: null };
+
+  // ---- DOM refs ----
+  const layerTogglesEl = document.getElementById('layerToggles');
+  const legendEl = document.getElementById('legend');
+  const layerTitleEl = document.getElementById('layerTitle');
+  const layerDescEl = document.getElementById('layerDesc');
+  const mapContainerEl = document.getElementById('mapContainer');
+  const tooltipEl = document.getElementById('tooltip');
+  const panelEl = document.getElementById('panel');
+  const panelCloseEl = document.getElementById('panelClose');
+  const panelNameEl = document.getElementById('panelName');
+  const panelKrEl = document.getElementById('panelKr');
+  const panelBadgeEl = document.getElementById('panelBadge');
+  const panelRowsEl = document.getElementById('panelRows');
+  const panelNoteEl = document.getElementById('panelNote');
+
+  let world = null;
+  let paths = null;
+  let circles = null;
+  let proj = null;
+
+  function setLayer(key) {
+    if (state.layer === key) return;
+    state.layer = key;
+    renderToggles();
+    renderLegend();
+    renderLayerHeader();
+    refreshColors(true);
+  }
+
+  function setSelected(id) {
+    state.selected = id;
+    renderPanel();
+    refreshColors(true);
+  }
+
+  function renderToggles() {
+    layerTogglesEl.innerHTML = '';
+    LAYERS.forEach((item) => {
+      const btn = document.createElement('button');
+      btn.className = 'layer-toggle-btn' + (item.key === state.layer ? ' active' : '');
+      btn.textContent = item.label;
+      btn.addEventListener('click', () => setLayer(item.key));
+      layerTogglesEl.appendChild(btn);
+    });
+  }
+
+  function renderLegend() {
+    legendEl.innerHTML = '';
+    LEGENDS[state.layer].forEach((lg) => {
+      const row = document.createElement('div');
+      row.className = 'legend-item';
+      const swatch = document.createElement('span');
+      swatch.className = 'legend-swatch';
+      swatch.style.background = lg.c;
+      const label = document.createElement('span');
+      label.className = 'legend-label';
+      label.textContent = lg.l;
+      row.appendChild(swatch);
+      row.appendChild(label);
+      legendEl.appendChild(row);
+    });
+  }
+
+  function renderLayerHeader() {
+    const def = LAYERS.find((x) => x.key === state.layer);
+    layerTitleEl.textContent = def.label;
+    layerDescEl.textContent = def.desc;
+  }
+
+  function renderPanel() {
+    const id = state.selected;
+    const d = id ? DATA[id] : null;
+
+    if (!d) {
+      panelEl.classList.remove('open');
+      return;
+    }
+    panelEl.classList.add('open');
+
+    const st = statusMap[d.status];
+    panelNameEl.textContent = d.name;
+    panelKrEl.textContent = d.kr;
+    panelBadgeEl.textContent = st.label;
+    panelBadgeEl.style.background = st.bg;
+    panelBadgeEl.style.color = st.fg;
+    panelNoteEl.textContent = d.note;
+
+    const rows = [
+      { label: 'LEGAL TENDER', value: d.tender === 'current' ? '채택 (Current)' : d.tender === 'former' ? '철회 (Former)' : '해당 없음' },
+      { label: 'SPOT ETF', value: d.etf === 'spot' ? '승인 (Spot)' : d.etf === 'etp' ? 'ETP / ETN 허용' : '미승인' },
+      { label: 'GOV HOLDINGS', value: fmtBTC(d.gov) || '없음 / 미공개' },
+      { label: 'CORP HOLDINGS', value: fmtBTC(d.corp) || '없음 / 미공개' },
+      { label: 'MINING SHARE', value: d.mining ? '~' + d.mining + '% of hashrate' : '—' },
+      { label: 'LIGHTNING', value: lnMap[d.ln] || '—' },
+    ];
+    panelRowsEl.innerHTML = '';
+    rows.forEach((row) => {
+      const r = document.createElement('div');
+      r.className = 'panel-row';
+      const l = document.createElement('div');
+      l.className = 'panel-row-label';
+      l.textContent = row.label;
+      const v = document.createElement('div');
+      v.className = 'panel-row-value';
+      v.textContent = row.value;
+      r.appendChild(l);
+      r.appendChild(v);
+      panelRowsEl.appendChild(r);
+    });
+  }
+
+  function showTip(event, f) {
+    const d = DATA[f.id];
+    tooltipEl.textContent = d ? `${f.properties.name} · ${d.kr}` : f.properties.name;
+    tooltipEl.style.display = 'block';
+    const box = mapContainerEl.parentElement.getBoundingClientRect();
+    tooltipEl.style.left = (event.clientX - box.left + 14) + 'px';
+    tooltipEl.style.top = (event.clientY - box.top - 8) + 'px';
+  }
+  function hideTip() { tooltipEl.style.display = 'none'; }
+
+  function drawMap() {
+    mapContainerEl.innerHTML = '';
+    const width = 980, height = 500;
+    const countries = topojson.feature(world, world.objects.countries).features
+      .filter((f) => f.id !== '010');
+    proj = d3.geoNaturalEarth1();
+    proj.fitSize([width, height], { type: 'FeatureCollection', features: countries });
+    const path = d3.geoPath(proj);
+
+    const svg = d3.select(mapContainerEl).append('svg')
+      .attr('viewBox', `0 0 ${width} ${height}`);
+
+    svg.append('path')
+      .attr('d', path(d3.geoGraticule10()))
+      .attr('fill', 'none').attr('stroke', '#E5E1D8').attr('stroke-width', 0.4);
+
+    paths = svg.append('g').selectAll('path')
+      .data(countries).join('path')
+      .attr('d', path)
+      .attr('fill', (f) => fillFor(f.id, state.layer))
+      .attr('stroke', '#FAF9F6').attr('stroke-width', 0.6)
+      .style('cursor', (f) => DATA[f.id] ? 'pointer' : 'default')
+      .on('click', (e, f) => setSelected(DATA[f.id] ? f.id : null))
+      .on('mousemove', showTip)
+      .on('mouseleave', hideTip);
+
+    circles = svg.append('g').selectAll('circle')
+      .data(MARKERS).join('circle')
+      .attr('cx', (m) => proj(m.c)[0])
+      .attr('cy', (m) => proj(m.c)[1])
+      .attr('r', 4.5)
+      .attr('fill', (m) => fillFor(m.id, state.layer))
+      .attr('stroke', '#1C1A17').attr('stroke-width', 0.8)
+      .style('cursor', 'pointer')
+      .on('click', (e, m) => setSelected(m.id))
+      .on('mousemove', (e, m) => showTip(e, { id: m.id, properties: { name: DATA[m.id].name } }))
+      .on('mouseleave', hideTip);
+
+    refreshColors(false);
+  }
+
+  function refreshColors(animate) {
+    if (!paths) return;
+    const sel = state.selected;
+    const layer = state.layer;
+    const p = animate ? paths.transition().duration(380) : paths;
+    p.attr('fill', (f) => fillFor(f.id, layer))
+      .attr('stroke', (f) => f.id === sel ? '#1C1A17' : '#FAF9F6')
+      .attr('stroke-width', (f) => f.id === sel ? 1.4 : 0.6);
+    paths.filter((f) => f.id === sel).raise();
+    if (circles) {
+      const c = animate ? circles.transition().duration(380) : circles;
+      c.attr('fill', (m) => fillFor(m.id, layer))
+        .attr('stroke-width', (m) => m.id === sel ? 2 : 0.8);
+    }
+  }
+
+  panelCloseEl.addEventListener('click', () => setSelected(null));
+
+  async function init() {
+    renderToggles();
+    renderLegend();
+    renderLayerHeader();
+    renderPanel();
+    try {
+      const resp = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+      world = await resp.json();
+    } catch (e) {
+      console.warn('map data load failed', e);
+      return;
+    }
+    drawMap();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

@@ -1,43 +1,37 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko" data-theme="light">
 <head>
   <link rel="icon" type="image/jpeg" href="cq_imgs/cq_001.jpg" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0a0a" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="theme-color" content="#fdf4e7" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>COLDCARD Q | OWL BUTLER</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #09090b;
-      --bg2: #111111;
-      --bg3: #181818;
-      --border: #2a2a2a;
-      --accent: #f7931a;
-      --text: #e8e8e8;
-      --text2: #999;
-      --text3: #555;
+      --bg: #fdf4e7;
+      --bg2: #faebd4;
+      --bg3: #f5ddb8;
+      --border: rgba(224,123,10,.18);
+      --border2: rgba(224,123,10,.32);
+      --accent: #e07b0a;
+      --accent2: #c96c00;
+      --accent-lt: #f5a623;
+      --text: #1a1208;
+      --text2: #7a6040;
+      --text3: #a08060;
       --mono: 'Share Tech Mono', monospace;
-      --sans: 'Noto Sans KR', sans-serif;
+      --sans: 'Inter', 'Noto Sans KR', sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      padding-top: 64px;
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
       min-height: 100vh;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
-      pointer-events: none;
-      z-index: 9999;
     }
 
     /* HEADER */
@@ -92,7 +86,7 @@
       color: var(--accent);
       border-color: transparent;
       border-bottom-color: transparent;
-      background: rgba(247,147,26,0.05);
+      background: rgba(224,123,10,0.05);
     }
     .hamburger {
       display: none;
@@ -117,7 +111,7 @@
       border-left: 2px solid transparent;
       transition: all 0.2s;
     }
-    .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent); border-left-color: var(--accent); background: rgba(247,147,26,0.06); }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent); border-left-color: var(--accent); background: rgba(224,123,10,0.06); }
     .mobile-nav.open { display: block; }
     /* DROPDOWN */
     nav .dropdown { position: relative; display: flex; align-items: center; }
@@ -157,7 +151,7 @@
     nav .dropdown-menu a:hover {
       color: var(--accent);
       border-left-color: var(--accent);
-      background: rgba(247,147,26,0.06);
+      background: rgba(224,123,10,0.06);
     }
     /* Mobile sub-items */
     .mobile-nav .mobile-sub {
@@ -175,7 +169,7 @@
     .mobile-nav .mobile-sub:hover, .mobile-nav .mobile-sub.active {
       color: var(--accent);
       border-left-color: var(--accent);
-      background: rgba(247,147,26,0.06);
+      background: rgba(224,123,10,0.06);
     }
     @media (max-width: 768px) {
       nav { display: none; }
@@ -230,7 +224,7 @@
       width: 2.75rem;
       height: 2.75rem;
       border-radius: 50%;
-      background: linear-gradient(135deg, #f7931a, #d4740f);
+      background: linear-gradient(135deg, #e07b0a, #c96c00);
       color: #000;
       font-family: var(--mono);
       font-size: 0.8rem;
@@ -239,18 +233,18 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 0 20px #f7931a59, 0 0 60px #f7931a14;
+      box-shadow: 0 0 20px #e07b0a59, 0 0 60px #e07b0a14;
       animation: rm-glow 3s ease-in-out infinite;
     }
     @keyframes rm-glow {
-      0%,100% { box-shadow: 0 0 20px #f7931a59, 0 0 60px #f7931a14; }
-      50%      { box-shadow: 0 0 30px #f7931a80, 0 0 80px #f7931a28; }
+      0%,100% { box-shadow: 0 0 20px #e07b0a59, 0 0 60px #e07b0a14; }
+      50%      { box-shadow: 0 0 30px #e07b0a80, 0 0 80px #e07b0a28; }
     }
     .rm-line {
       width: 2px;
       flex: 1;
       min-height: 1.5rem;
-      background: linear-gradient(#f7931a73, #f7931a00);
+      background: linear-gradient(#e07b0a73, #e07b0a00);
       margin-top: 6px;
     }
 
@@ -270,14 +264,14 @@
       font-family: var(--mono);
       font-size: 1.4rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
       letter-spacing: 0.06em;
     }
     .rm-section-count {
       font-size: 0.6rem;
       font-weight: 700;
       color: var(--accent);
-      background: #f7931a1f;
+      background: #e07b0a1f;
       padding: 0.15rem 0.45rem;
       border-radius: 9999px;
     }
@@ -301,8 +295,8 @@
       display: block;
       -webkit-tap-highlight-color: transparent;
       border-radius: 4px;
-      border: 1px solid rgba(247,147,26,0.4);
-      background: #0a0a0a;
+      border: 1px solid rgba(224,123,10,0.4);
+      background: var(--bg2);
       cursor: pointer;
       text-decoration: none;
       transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.2s, box-shadow 0.2s;
@@ -349,11 +343,11 @@
     }
     .rm-card:hover {
       transform: translateY(-2px);
-      background: rgba(247,147,26,0.04);
-      box-shadow: 0 6px 18px rgba(247,147,26,0.15);
+      background: rgba(224,123,10,0.04);
+      box-shadow: 0 6px 18px rgba(224,123,10,0.15);
     }
     .rm-card.active-card {
-      background: rgba(247,147,26,0.08);
+      background: rgba(224,123,10,0.08);
     }
     .rm-card-inner {
       background: transparent;
@@ -366,7 +360,7 @@
       width: 2.25rem;
       height: 2.25rem;
       border-radius: 0.5rem;
-      background: #f7931a14;
+      background: #e07b0a14;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -377,7 +371,7 @@
     }
     .rm-card-icon img { filter: brightness(0) saturate(100%) invert(60%) sepia(90%) saturate(500%) hue-rotate(5deg) brightness(105%); }
     .rm-card:hover .rm-card-icon {
-      background: #f7931a2e;
+      background: #e07b0a2e;
       transform: scale(1.1);
     }
     .rm-card-text { flex: 1; min-width: 0; }
@@ -385,13 +379,13 @@
       display: block;
       font-size: 0.875rem;
       font-weight: 500;
-      color: #ddd;
+      color: var(--text2);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       transition: color 0.25s;
     }
-    .rm-card:hover .rm-card-title { color: #fff; }
+    .rm-card:hover .rm-card-title { color: var(--text); }
     .rm-card.active-card .rm-card-title { color: var(--accent); }
     .rm-card-meta {
       display: block;
@@ -402,7 +396,7 @@
     .rm-card-arrow {
       width: 1rem;
       height: 1rem;
-      color: #444;
+      color: var(--text3);
       flex-shrink: 0;
       transition: color 0.25s, transform 0.25s;
     }
@@ -412,8 +406,8 @@
     .detail-panel {
       display: none;
       margin-top: 32px;
-      background: linear-gradient(135deg, #ffffff08, #ffffff03);
-      border: 1px solid rgba(247,147,26,0.2);
+      background: linear-gradient(135deg, rgba(224,123,10,.06), rgba(224,123,10,.02));
+      border: 1px solid rgba(224,123,10,0.2);
       border-radius: 0.75rem;
       padding: 1px;
       animation: fadeIn 0.3s ease;
@@ -421,7 +415,7 @@
     .detail-panel.open { display: block; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     .detail-panel-inner {
-      background: rgba(13,13,13,0.92);
+      background: rgba(253,244,231,0.92);
       -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       border-radius: calc(0.75rem - 1px);
@@ -432,7 +426,7 @@
       font-size: 9px;
       color: var(--accent);
       letter-spacing: 0.22em;
-      border: 1px solid rgba(247,147,26,0.25);
+      border: 1px solid rgba(224,123,10,0.25);
       display: inline-block;
       padding: 3px 10px;
       margin-bottom: 14px;
@@ -496,8 +490,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(247,147,26,0.06);
-      border: 1px solid rgba(247,147,26,0.2);
+      background: rgba(224,123,10,0.06);
+      border: 1px solid rgba(224,123,10,0.2);
       border-radius: 8px;
       padding: 8px 14px;
       font-family: var(--mono);
@@ -517,15 +511,15 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(247,147,26,0.06);
-      border: 1px solid rgba(247,147,26,0.5);
+      background: rgba(224,123,10,0.06);
+      border: 1px solid rgba(224,123,10,0.5);
       border-radius: 6px;
       padding: 7px 14px;
       font-family: var(--mono);
       font-size: 11px;
       color: var(--text);
       letter-spacing: 0.06em;
-      box-shadow: 0 0 8px rgba(247,147,26,0.12);
+      box-shadow: 0 0 8px rgba(224,123,10,0.12);
     }
     .mn-btn-badge b {
       color: var(--accent);
@@ -547,13 +541,13 @@
       width: 170px;
       height: auto;
       border-radius: 8px;
-      border: 1px solid rgba(247,147,26,0.3);
+      border: 1px solid rgba(224,123,10,0.3);
     }
     .mn-prep-img-mm {
       width: 140px;
       height: auto;
       border-radius: 8px;
-      border: 1px solid rgba(247,147,26,0.3);
+      border: 1px solid rgba(224,123,10,0.3);
     }
         .mn-section-title {
       font-family: var(--mono);
@@ -563,11 +557,11 @@
       margin-bottom: 20px;
       margin-top: 32px;
       padding: 13px 18px;
-      background: rgba(247,147,26,0.07);
+      background: rgba(224,123,10,0.07);
       border-left: 3px solid var(--accent);
-      border-top: 1px solid rgba(247,147,26,0.5);
+      border-top: 1px solid rgba(224,123,10,0.5);
       border-radius: 0 8px 8px 0;
-      box-shadow: inset 0 0 30px rgba(247,147,26,0.04), 0 0 12px rgba(247,147,26,0.06);
+      box-shadow: inset 0 0 30px rgba(224,123,10,0.04), 0 0 12px rgba(224,123,10,0.06);
     }
     .mn-section-title:first-child {
       margin-top: 0;
@@ -618,7 +612,7 @@
       width: 100%;
       margin: 20px auto;
       border-radius: 10px;
-      border: 1px solid rgba(247,147,26,0.25);
+      border: 1px solid rgba(224,123,10,0.25);
     }
     .mn-img {
       width: 100%;
@@ -639,7 +633,7 @@
       margin-top: 0;
     }
     .mn-notice {
-      background: rgba(247,147,26,0.06);
+      background: rgba(224,123,10,0.06);
       border-left: 3px solid var(--accent);
       border-radius: 0 6px 6px 0;
       padding: 12px 16px;
@@ -662,8 +656,8 @@
 
     /* MSG SIGN CONCEPT BOX */
     .mn-concept-box {
-      background: rgba(247,147,26,0.05);
-      border: 1px solid rgba(247,147,26,0.2);
+      background: rgba(224,123,10,0.05);
+      border: 1px solid rgba(224,123,10,0.2);
       border-radius: 10px;
       padding: 20px 22px;
       margin-bottom: 8px;
@@ -676,8 +670,8 @@
       margin-bottom: 16px;
     }
     .mn-tag-badge {
-      background: rgba(247,147,26,0.15);
-      border: 1px solid rgba(247,147,26,0.4);
+      background: rgba(224,123,10,0.15);
+      border: 1px solid rgba(224,123,10,0.4);
       border-radius: 4px;
       padding: 2px 8px;
       font-size: 10px;
@@ -708,8 +702,8 @@
       display: inline-block;
       margin-top: 18px;
       padding: 11px 24px;
-      background: rgba(247,147,26,0.1);
-      border: 1px solid rgba(247,147,26,0.55);
+      background: rgba(224,123,10,0.1);
+      border: 1px solid rgba(224,123,10,0.55);
       border-radius: 8px;
       color: var(--accent);
       font-family: var(--mono);
@@ -719,8 +713,8 @@
       transition: background 0.2s, box-shadow 0.2s;
     }
     .mn-goto-btn:hover {
-      background: rgba(247,147,26,0.2);
-      box-shadow: 0 0 14px rgba(247,147,26,0.2);
+      background: rgba(224,123,10,0.2);
+      box-shadow: 0 0 14px rgba(224,123,10,0.2);
     }
     .mn-warn {
       font-family: var(--mono);
@@ -738,18 +732,18 @@
       display: inline-block;
       margin: 12px 0;
       padding: 10px 24px;
-      border: 1px solid rgba(247,147,26,0.6);
+      border: 1px solid rgba(224,123,10,0.6);
       border-radius: 8px;
       color: var(--text);
       font-family: var(--mono);
       font-size: 14px;
       letter-spacing: 0.12em;
-      background: rgba(247,147,26,0.05);
+      background: rgba(224,123,10,0.05);
     }
       </style>
 <style id="unified-footer-style">
 body > footer.unified-footer{
-  border-top:1px solid #1f1f1f;
+  border-top:1px solid rgba(224,123,10,.18);
   max-width:1200px;
   margin:60px auto 0;
   padding:22px 24px;
@@ -765,7 +759,7 @@ body > footer.unified-footer{
 body > footer.unified-footer .uf-email{
   font-family:'Share Tech Mono',monospace;
   font-size:12px;
-  color:#f7931a;
+  color:#e07b0a;
   letter-spacing:.15em;
   text-align:center;
   width:100%;
@@ -773,67 +767,43 @@ body > footer.unified-footer .uf-email{
 body > footer.unified-footer .uf-note{
   font-family:'Share Tech Mono',monospace;
   font-size:11px;
-  color:#888;
+  color:var(--text2);
   letter-spacing:.12em;
   text-align:center;
   width:100%;
 }
 </style>
 <style id="unified-nav-style">
-html{background:#0a0a0a;}
-.site-header{position:fixed !important;top:0;left:0;right:0;z-index:1000;background:#0a0a0a;border-bottom:none !important;padding:0 !important;height:auto !important;}
-.site-header .brand-row{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;justify-content:flex-start;align-items:center;position:relative;height:auto;}
-.site-header .brand-row .logo{position:static !important;left:auto !important;display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
-.site-header .brand-row .logo-img{width:42px !important;height:42px !important;object-fit:contain;opacity:.9;}
-.site-header .brand-row .logo-text{display:flex !important;flex-direction:column !important;line-height:1.1 !important;}
-.site-header .brand-row .logo-top{font-family:'Share Tech Mono',monospace !important;font-weight:700 !important;font-size:13px !important;color:#e0e0e0 !important;letter-spacing:.1em !important;line-height:1.3 !important;}
-.site-header .brand-row .logo-bot{font-family:'Share Tech Mono',monospace !important;font-weight:700 !important;font-size:11px !important;color:#f7931a !important;letter-spacing:.1em !important;line-height:1.3 !important;}
-.site-header .nav-bar{background:#000;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
-.site-header .main-nav{max-width:1200px;margin:0 auto;display:flex;justify-content:flex-start;position:relative;padding:0 12px;gap:0;flex-wrap:wrap;overflow-x:visible;scrollbar-width:none;-ms-overflow-style:none;}
-.site-header .main-nav::-webkit-scrollbar{display:none;}
-.site-header .nav-indicator{position:absolute;top:0;left:0;width:0;height:0;background:transparent !important;border:2px solid #f7931a !important;box-sizing:border-box;transition:none;z-index:1;pointer-events:none;opacity:0;}
-.site-header .main-nav a{position:relative;z-index:2;font-family:'Noto Sans KR',sans-serif !important;font-size:13px !important;font-weight:700 !important;color:#f7931a !important;text-decoration:none !important;padding:16px 22px !important;letter-spacing:.04em !important;white-space:nowrap !important;border:none !important;background:none !important;display:inline-block !important;line-height:1.2 !important;}
-.site-header .main-nav a:hover,.site-header .main-nav a.active{color:#f7931a !important;background:none !important;border:none !important;}
-.site-header .main-nav a.nav-white,.site-header .main-nav a.nav-white:hover,.site-header .main-nav a.nav-white.active{color:#e0e0e0 !important;font-weight:400 !important;}
-body{padding-top:124px;}
-@media (max-width:768px){
-  .site-header .brand-row{padding:10px 14px !important;}
-  .site-header .main-nav{justify-content:flex-start !important;flex-wrap:wrap !important;overflow-x:visible !important;padding:4px 8px !important;}
-  .site-header .main-nav a{padding:9px 10px !important;font-size:11px !important;letter-spacing:.03em !important;}
-  body{padding-top:200px;}
+html{background:#fdf4e7;}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
 }
 </style>
 </head>
 <body>
-<header class="site-header">
-  <div class="brand-row">
-    <a class="logo" href="node.html">
-      <img loading="lazy" decoding="async" class="logo-img" src="cq_imgs/cq_001.jpg" alt="OWL BUTLER" />
-      <div class="logo-text">
-        <span class="logo-top">OWL BUTLER</span>
-        <span class="logo-bot">COLDCARD Q MANUAL</span>
-      </div>
-    </a>
-  </div>
-  <div class="nav-bar">
-    <nav class="main-nav" id="mainNav">
-      <span class="nav-indicator" id="navIndicator"></span>
-      <a href="node.html">NODE</a>
-      <a href="coldcardq.html" class="active">COLDCARDQ</a>
-      <a href="edc.html">EDC</a>
-      <a href="bscard.html">VERIFY</a>
-      <a href="hodler.html">HODLER</a>
-      <a href="dca.html">DCA</a>
-      <a href="bip39.html">BIP39</a>
-      <a href="btcgame.html" class="nav-white">GAME</a>
-      <a href="manga.html" class="nav-white">MANGA</a>
-      <a href="download.html" class="nav-white">DOWNLOAD</a>
-      <a href="owlbutler.html" class="nav-white">OWLBUTLER</a>
-      <a href="youtube.html" class="nav-white">YOUTUBE</a>
-      <a href="hof.html" class="nav-white">HOF</a>
-    </nav>
-  </div>
-</header>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="bitcoin.html">BITCOIN</a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html">ATLAS</a></li>
+    <li><a href="health.html">HEALTH</a></li>
+    <li><a href="coldcardq.html" class="active">COLDCARDQ</a></li>
+    <li><a href="bscard.html">VERIFY</a></li>
+    <li><a href="btcgame.html">GAME</a></li>
+    <li><a href="hof.html">HOF</a></li>
+  </ul>
+</nav>
 
 <main class="rm">
 
@@ -1144,7 +1114,7 @@ body{padding-top:124px;}
       <div class="detail-content" id="dc-init">
         <span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">초기설정</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">초기설정</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">COLDCARD Q SET UP</span>
         </div>
         <div class="detail-body">
@@ -1350,7 +1320,7 @@ body{padding-top:124px;}
       <!-- 기타 토픽 (COMING SOON) -->
       <div class="detail-content" id="dc-firmware"><span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">펌웨어 업그레이드</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">펌웨어 업그레이드</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">COLDCARD Q FIRMWARE UPGRADE</span>
         </div>
         <div class="detail-body">
@@ -1439,7 +1409,7 @@ body{padding-top:124px;}
           </div></div>
       <div class="detail-content" id="dc-mnemonic-create"><span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">니모닉 만들기</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">니모닉 만들기</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">COLDCARD Q PRIVATE KEY SETTING</span>
         </div>
         <div class="detail-body">
@@ -1579,7 +1549,7 @@ body{padding-top:124px;}
             </li>
           </ol>
 
-          <div class="mn-notice" style="margin-top:20px; text-align:center; border-left: none; border: 1px solid rgba(247,147,26,0.4); border-radius: 8px;">
+          <div class="mn-notice" style="margin-top:20px; text-align:center; border-left: none; border: 1px solid rgba(224,123,10,0.4); border-radius: 8px;">
             <p style="font-family:var(--mono); font-size:13px; letter-spacing:0.1em; color:var(--accent); font-weight:700;">
               NOT YOUR KEY, NOT YOUR BITCOIN.
             </p>
@@ -1592,7 +1562,7 @@ body{padding-top:124px;}
         </div></div>
       <div class="detail-content" id="dc-mnemonic-import"><span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">기존 니모닉 등록하기</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">기존 니모닉 등록하기</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">IMPORT EXISTING SEED</span>
         </div>
         <div class="detail-body">
@@ -1725,7 +1695,7 @@ body{padding-top:124px;}
         </div></div>
       <div class="detail-content" id="dc-watchonly"><span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">와치온리앱 등록</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">와치온리앱 등록</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">COLDCARD Q EXPORT WALLET</span>
         </div>
         <div class="detail-body">
@@ -1887,13 +1857,13 @@ body{padding-top:124px;}
       <!-- 주소 검증 Address Verify -->
       <div class="detail-content" id="dc-address-verify"><span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">주소 검증</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">주소 검증</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">ADDRESS VERIFY</span>
         </div>
         <div class="detail-body">
 
           <div style="margin:8px 0 28px;text-align:center;">
-            <img loading="lazy" decoding="async" src="x13.png" alt="Address Verify" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="x13.png" alt="Address Verify" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <!-- 개요 -->
@@ -2037,7 +2007,7 @@ body{padding-top:124px;}
 
       <div class="detail-content" id="dc-passphrase"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">패스프레이즈</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">패스프레이즈</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">PASSPHRASE</span>
         </div>
         <div class="detail-body">
@@ -2168,7 +2138,7 @@ body{padding-top:124px;}
         </div></div>
       <div class="detail-content" id="dc-msg-sign"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">메시지서명</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">메시지서명</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">소유증명</span>
         </div>
         <div class="detail-body">
@@ -2321,25 +2291,25 @@ body{padding-top:124px;}
 
         </div></div>
       <div class="detail-content" id="dc-secure-note"><span class="detail-category">FUNCTION</span><div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">오프라인 보안노트</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">오프라인 보안노트</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">SECURE NOTES</span>
         </div>
-        <div class="detail-body" style="color:#ffffff;">
+        <div class="detail-body" style="color:#1a1208;">
 
           <!-- 개념 -->
           <div class="mn-section-title">개념</div>
           <div class="mn-concept-box">
             <p class="mn-concept-text">
-              콜드카드 Q 는 콜드월렛. 즉, <span style="color:#ffffff;font-style:normal;">인터넷이 차단된 기기</span>
+              콜드카드 Q 는 콜드월렛. 즉, <span style="color:#1a1208;font-style:normal;">인터넷이 차단된 기기</span>
             </p>
             <p class="mn-concept-text" style="margin-top:10px;">
-              이를 이용하여 보안 노트를 제작해 <span style="color:#ffffff;font-style:normal;">마이크로SD 카드에 저장</span>이 가능합니다.
+              이를 이용하여 보안 노트를 제작해 <span style="color:#1a1208;font-style:normal;">마이크로SD 카드에 저장</span>이 가능합니다.
             </p>
           </div>
 
           <!-- FAC 이미지 -->
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_024.jpg" alt="Secure Notes" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_024.jpg" alt="Secure Notes" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <div class="mn-divider"></div>
@@ -2350,19 +2320,19 @@ body{padding-top:124px;}
             <li class="mn-step">
               <div class="mn-step-num">I</div>
               <div class="mn-step-body">
-                <div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">보안노트 작성</span></div>
+                <div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">보안노트 작성</span></div>
               </div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">II</div>
               <div class="mn-step-body">
-                <div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">SD카드에 저장</span></div>
+                <div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">SD카드에 저장</span></div>
               </div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">III</div>
               <div class="mn-step-body">
-                <div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">SD카드에 저장된 노트 불러오기</span></div>
+                <div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">SD카드에 저장된 노트 불러오기</span></div>
               </div>
             </li>
           </ul>
@@ -2378,57 +2348,57 @@ body{padding-top:124px;}
 
           <!-- AAE 이미지 -->
           <div style="margin:0 0 24px;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_010.jpg" alt="SD카드 삽입" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_010.jpg" alt="SD카드 삽입" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <ul class="mn-steps">
             <li class="mn-step">
               <div class="mn-step-num">I</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">로그인</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">로그인</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">II</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">Advanced/Tools</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">Advanced/Tools</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">III</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">File Management</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">File Management</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">IV</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">Secure Notes &amp; Passwords</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">Secure Notes &amp; Passwords</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">V</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">New Note</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">New Note</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">VI</div>
-              <div class="mn-step-body"><div class="mn-step-text">제목 입력 칸에 <span style="color:#ffffff;font-style:normal;">제목</span>을 입력</div></div>
+              <div class="mn-step-body"><div class="mn-step-text">제목 입력 칸에 <span style="color:#1a1208;font-style:normal;">제목</span>을 입력</div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">VII</div>
-              <div class="mn-step-body"><div class="mn-step-text">내용 입력칸에 <span style="color:#ffffff;font-style:normal;">내용</span> 입력</div></div>
+              <div class="mn-step-body"><div class="mn-step-text">내용 입력칸에 <span style="color:#1a1208;font-style:normal;">내용</span> 입력</div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">VIII</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">확인 버튼</span>을 누름 (↦)</div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">확인 버튼</span>을 누름 (↦)</div></div>
             </li>
           </ul>
 
           <!-- bbd 이미지 -->
           <div style="margin:4px 0 24px;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_025.jpg" alt="보안노트 작성" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_025.jpg" alt="보안노트 작성" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <ul class="mn-steps">
             <li class="mn-step">
               <div class="mn-step-num">IX</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">Export</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">Export</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">X</div>
-              <div class="mn-step-body"><div class="mn-step-text">옵션에서 <span style="color:#ffffff;font-style:normal;">'마이크로 SD 카드에 저장'</span>에 해당하는 번호를 누름</div></div>
+              <div class="mn-step-body"><div class="mn-step-text">옵션에서 <span style="color:#1a1208;font-style:normal;">'마이크로 SD 카드에 저장'</span>에 해당하는 번호를 누름</div></div>
             </li>
           </ul>
 
@@ -2442,7 +2412,7 @@ body{padding-top:124px;}
           <ul class="mn-steps">
             <li class="mn-step">
               <div class="mn-step-num">XI</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">ENTER</span> — 완료</div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">ENTER</span> — 완료</div></div>
             </li>
           </ul>
 
@@ -2464,26 +2434,26 @@ body{padding-top:124px;}
           <ul class="mn-steps">
             <li class="mn-step">
               <div class="mn-step-num">I</div>
-              <div class="mn-step-body"><div class="mn-step-text">콜드카드 Q에서 <span style="color:#ffffff;font-style:normal;">SD카드를 뽑는다</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text">콜드카드 Q에서 <span style="color:#1a1208;font-style:normal;">SD카드를 뽑는다</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">II</div>
-              <div class="mn-step-body"><div class="mn-step-text">콜드카드 Q <span style="color:#ffffff;font-style:normal;">재부팅</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text">콜드카드 Q <span style="color:#1a1208;font-style:normal;">재부팅</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">III</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">로그인</span> → Advanced/Tools → Secure Notes &amp; Passwords</div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">로그인</span> → Advanced/Tools → Secure Notes &amp; Passwords</div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">IV</div>
               <div class="mn-step-body">
-                <div class="mn-step-text">아까 작성한 노트가 보인다면 <span style="color:#ffffff;font-style:normal;">삭제</span>한다.</div>
+                <div class="mn-step-text">아까 작성한 노트가 보인다면 <span style="color:#1a1208;font-style:normal;">삭제</span>한다.</div>
               </div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">V</div>
               <div class="mn-step-body">
-                <div class="mn-step-text" style="color:#ffffff;">저장한 문서 선택 → Delete → are you sure? → ENTER</div>
+                <div class="mn-step-text" style="color:#1a1208;">저장한 문서 선택 → Delete → are you sure? → ENTER</div>
               </div>
             </li>
           </ul>
@@ -2496,11 +2466,11 @@ body{padding-top:124px;}
           <ul class="mn-steps">
             <li class="mn-step">
               <div class="mn-step-num">I</div>
-              <div class="mn-step-body"><div class="mn-step-text">마이크로 SD 카드 <span style="color:#ffffff;font-style:normal;">다시 삽입</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text">마이크로 SD 카드 <span style="color:#1a1208;font-style:normal;">다시 삽입</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">II</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">로그인</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">로그인</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">III</div>
@@ -2518,31 +2488,31 @@ body{padding-top:124px;}
           <ul class="mn-steps">
             <li class="mn-step">
               <div class="mn-step-num">I</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">로그인</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">로그인</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">II</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">Advanced/Tools</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">Advanced/Tools</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">III</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">Secure Notes &amp; Passwords</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">Secure Notes &amp; Passwords</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">IV</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">Import</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">Import</span></div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">V</div>
-              <div class="mn-step-body"><div class="mn-step-text">옵션에서 <span style="color:#ffffff;font-style:normal;">SD카드 읽기</span>에 해당하는 번호 누름</div></div>
+              <div class="mn-step-body"><div class="mn-step-text">옵션에서 <span style="color:#1a1208;font-style:normal;">SD카드 읽기</span>에 해당하는 번호 누름</div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">VI</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">json 파일</span> 선택</div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">json 파일</span> 선택</div></div>
             </li>
             <li class="mn-step">
               <div class="mn-step-num">VII</div>
-              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#ffffff;font-style:normal;">ENTER</span></div></div>
+              <div class="mn-step-body"><div class="mn-step-text"><span style="color:#1a1208;font-style:normal;">ENTER</span></div></div>
             </li>
           </ul>
 
@@ -2564,7 +2534,7 @@ body{padding-top:124px;}
       </div>
       <div class="detail-content" id="dc-login-pin"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">로그인 PIN 설정</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">로그인 PIN 설정</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">LOGIN SETTINGS</span>
         </div>
         <div class="detail-body">
@@ -2739,13 +2709,13 @@ body{padding-top:124px;}
       <!-- Duress PIN -->
       <div class="detail-content" id="dc-duress-pin"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">Duress PIN</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">Duress PIN</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">DURESS / TRICK PIN</span>
         </div>
         <div class="detail-body">
 
           <div style="margin:8px 0 28px;text-align:center;">
-            <img loading="lazy" decoding="async" src="x23.png" alt="Duress PIN" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="x23.png" alt="Duress PIN" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <!-- 개요 -->
@@ -2940,7 +2910,7 @@ body{padding-top:124px;}
         </div></div>
 
       <div class="detail-content" id="dc-address-explorer"><span class="detail-category">BEGINNER</span><div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">주소탐색기</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">주소탐색기</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">Address Explorer</span>
         </div>
         <div class="detail-body">
@@ -2964,7 +2934,7 @@ body{padding-top:124px;}
 
           <!-- FAA 이미지 -->
           <div style="margin:28px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_026.png" alt="Address Explorer FAA" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_026.png" alt="Address Explorer FAA" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <div class="mn-divider"></div>
@@ -3019,7 +2989,7 @@ body{padding-top:124px;}
             </p>
           </div>
 
-          <div class="mn-concept-box" style="margin-top:14px;border-color:rgba(247,147,26,0.15);">
+          <div class="mn-concept-box" style="margin-top:14px;border-color:rgba(224,123,10,0.15);">
             <p class="mn-concept-text" style="color:var(--accent);">
               ※ 와치온리 앱을 두 개 사용해서 교차검증하는 방법도 있으니 참고하십시오.
             </p>
@@ -3033,7 +3003,7 @@ body{padding-top:124px;}
       </div>
       <div class="detail-content" id="dc-mnemonic-delete"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">니모닉 지우기</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">니모닉 지우기</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">WIPE SEED</span>
         </div>
         <div class="detail-body">
@@ -3179,7 +3149,7 @@ body{padding-top:124px;}
 
       <div class="detail-content" id="dc-child-seed"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">자식 시드</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">자식 시드</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">DERIVE SEED</span>
         </div>
         <div class="detail-body">
@@ -3195,7 +3165,7 @@ body{padding-top:124px;}
             </p>
             <p class="mn-warn">△ &nbsp;인덱스 넘버를 잃어버리면 해당 지갑의 자산에 접근할 수 없습니다. 별도로 안전하게 보관하십시오.</p>
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_028.jpg" alt="DC" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_028.jpg" alt="DC" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
           </div>
 
@@ -3285,13 +3255,13 @@ body{padding-top:124px;}
       <!-- 시드 보관소 Seed Vault -->
       <div class="detail-content" id="dc-seed-vault"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">시드 보관소</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">시드 보관소</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">SEED VAULT</span>
         </div>
         <div class="detail-body">
 
           <div style="margin:8px 0 28px;text-align:center;">
-            <img loading="lazy" decoding="async" src="x12.png" alt="Seed Vault" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="x12.png" alt="Seed Vault" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <!-- 개요 -->
@@ -3548,17 +3518,17 @@ body{padding-top:124px;}
       <!-- 암호화 백업 Encrypted Backup -->
       <div class="detail-content" id="dc-encrypted-backup"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">암호화 백업</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">암호화 백업</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">ENCRYPTED BACKUP</span>
         </div>
         <div class="detail-body">
 
           <div style="margin:8px 0 28px;text-align:center;">
-            <img loading="lazy" decoding="async" src="x22.png" alt="Encrypted Backup" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="x22.png" alt="Encrypted Backup" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <!-- 처음 경고 -->
-          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(247,147,26,0.06);">
+          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(224,123,10,0.06);">
             <p class="mn-concept-text" style="text-align:center;">
               <strong style="color:var(--accent);font-size:18px;letter-spacing:.04em;">⚠ &nbsp;개인키도 저장되므로 권하진 않습니다</strong><br>
               <span style="color:var(--text2);font-size:13px;">암호화 백업 파일에는 <em>마스터 시드(개인키 전체)</em>가 함께 들어 있습니다.
@@ -3773,7 +3743,7 @@ body{padding-top:124px;}
           <div class="mn-divider"></div>
 
           <!-- 끝 경고 -->
-          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(247,147,26,0.06);">
+          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(224,123,10,0.06);">
             <p class="mn-concept-text" style="text-align:center;">
               <strong style="color:var(--accent);font-size:18px;letter-spacing:.04em;">⚠ &nbsp;개인키도 저장되므로 권하진 않습니다</strong><br>
               <span style="color:var(--text2);font-size:13px;">암호화 백업 파일은 <em>마스터 시드(개인키 전체)</em>를 담고 있어,
@@ -3793,17 +3763,17 @@ body{padding-top:124px;}
       <!-- 멀티시그 Multisig -->
       <div class="detail-content" id="dc-multisig"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">멀티시그</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">멀티시그</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">MULTISIG</span>
         </div>
         <div class="detail-body">
 
           <div style="margin:8px 0 28px;text-align:center;">
-            <img loading="lazy" decoding="async" src="x11.png" alt="Multisig" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="x11.png" alt="Multisig" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <!-- 처음 경고 -->
-          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(247,147,26,0.06);">
+          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(224,123,10,0.06);">
             <p class="mn-concept-text" style="text-align:center;">
               <strong style="color:var(--accent);font-size:18px;letter-spacing:.04em;">⚠ &nbsp;멀티시그를 추천하지 않습니다</strong><br>
               <span style="color:var(--text2);font-size:13px;">아래 내용은 멀티시그의 동작 원리와 리스크를 이해하기 위한 <em>설명용</em> 문서입니다. 단독 시드 + 패스프레이즈만으로도 충분히 안전한 자가관리(self-custody)가 가능합니다.</span>
@@ -3943,7 +3913,7 @@ body{padding-top:124px;}
           <div class="mn-divider"></div>
 
           <!-- 끝 경고 -->
-          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(247,147,26,0.06);">
+          <div class="mn-concept-box" style="border-color:var(--accent);background:rgba(224,123,10,0.06);">
             <p class="mn-concept-text" style="text-align:center;">
               <strong style="color:var(--accent);font-size:18px;letter-spacing:.04em;">⚠ &nbsp;멀티시그를 추천하지 않습니다</strong><br>
               <span style="color:var(--text2);font-size:13px;">대다수 사용자에게 더 안전하고 더 단순한 선택은
@@ -3962,13 +3932,13 @@ body{padding-top:124px;}
       <!-- SeedXOR -->
       <div class="detail-content" id="dc-seedxor"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">SeedXOR</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">SeedXOR</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">SEED SPLIT BY XOR</span>
         </div>
         <div class="detail-body">
 
           <div style="margin:8px 0 28px;text-align:center;">
-            <img loading="lazy" decoding="async" src="x24.png" alt="SeedXOR" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="x24.png" alt="SeedXOR" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <!-- 개요 -->
@@ -4183,7 +4153,7 @@ body{padding-top:124px;}
       <!-- 상속·비상 계획 -->
       <div class="detail-content" id="dc-inheritance"><span class="detail-category">FUNCTION</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">상속·비상 계획</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">상속·비상 계획</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">INHERITANCE PLAN</span>
         </div>
         <div class="detail-body">
@@ -4390,7 +4360,7 @@ body{padding-top:124px;}
 
       <div class="detail-content" id="dc-deposit-withdraw"><span class="detail-category">BEGINNER</span>
         <div class="detail-title">
-          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#ffffff;letter-spacing:0.04em;">보내기 &amp; 받기</span>
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">보내기 &amp; 받기</span>
           <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">TRANSACTION</span>
         </div>
         <div class="detail-body">
@@ -4407,7 +4377,7 @@ body{padding-top:124px;}
             <p class="mn-warn">△ &nbsp;콜드카드는 서명기기며 인터넷에 연결되지 않습니다.</p>
           </div>
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_029.jpg" alt="IO" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_029.jpg" alt="IO" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <div class="mn-divider"></div>
@@ -4429,7 +4399,7 @@ body{padding-top:124px;}
               <div class="mn-step-body">
                 <div class="mn-step-text">
                   콜드카드 Q의 <span class="mn-orange">주소탐색기</span>로 동일한 주소인지 반드시 대조 확인<br>
-                  <span style="color:#ffffff;font-size:12px;">(와치온리앱을 2개 이상 설치하여 교차검증도 가능)</span>
+                  <span style="color:#1a1208;font-size:12px;">(와치온리앱을 2개 이상 설치하여 교차검증도 가능)</span>
                 </div>
               </div>
             </li>
@@ -4445,7 +4415,7 @@ body{padding-top:124px;}
 
           <p class="mn-warn" style="margin-top:14px;">※ &nbsp;비트코인 주소는 매번 달라집니다. 항상 새 주소를 사용하는 것이 프라이버시에 유리합니다.</p>
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_030.jpg" alt="F11" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_030.jpg" alt="F11" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <div class="mn-divider"></div>
@@ -4490,7 +4460,7 @@ body{padding-top:124px;}
           </ol>
 
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_031.jpg" alt="F12" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_031.jpg" alt="F12" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <div class="mn-divider"></div>
@@ -4511,7 +4481,7 @@ body{padding-top:124px;}
           </ol>
 
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_032.jpg" alt="F13" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_032.jpg" alt="F13" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <ol class="mn-steps">
@@ -4524,7 +4494,7 @@ body{padding-top:124px;}
           </ol>
 
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_033.jpg" alt="F14" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_033.jpg" alt="F14" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <ol class="mn-steps">
@@ -4563,7 +4533,7 @@ body{padding-top:124px;}
           </ol>
 
           <div style="margin:24px 0;text-align:center;">
-            <img loading="lazy" decoding="async" src="cq_imgs/cq_034.jpg" alt="F15" style="max-width:100%;border-radius:10px;border:1px solid rgba(247,147,26,0.2);">
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_034.jpg" alt="F15" style="max-width:100%;border-radius:10px;border:1px solid rgba(224,123,10,0.2);">
           </div>
 
           <div class="mn-concept-box" style="margin-top:16px;">
@@ -4614,7 +4584,7 @@ body{padding-top:124px;}
 
   // Smooth scroll to panel top with offset compensating for fixed unified nav
   function scrollToPanel(){
-    const hdr = document.querySelector('.site-header');
+    const hdr = document.querySelector('.site-nav');
     const headerH = hdr ? hdr.offsetHeight : 0;
     const top = panel.getBoundingClientRect().top + window.scrollY - headerH - 12;
     window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
@@ -4663,41 +4633,5 @@ body{padding-top:124px;}
   <span class="uf-email">⚡bitsexer@oksu.su</span>
   <span class="uf-note">NOT YOUR KEYS, NOT YOUR BITCOIN.</span>
 </footer>
-<script id="unified-nav-script">
-(function(){
-  var hdr=document.querySelector('.site-header');
-  function syncPad(){if(hdr)document.body.style.paddingTop=hdr.offsetHeight+'px';}
-  syncPad();
-  window.addEventListener('load',syncPad);
-  window.addEventListener('resize',syncPad);
-
-  var nav=document.getElementById('mainNav');
-  if(!nav)return;
-  var ind=document.getElementById('navIndicator');
-  var links=nav.querySelectorAll('a');
-  var active=nav.querySelector('a.active');
-
-  function setPos(el){
-    if(!el){ind.style.opacity='0';return;}
-    var inset=window.matchMedia('(max-width:768px)').matches?4:8;
-    var x=el.offsetLeft+inset;
-    var y=el.offsetTop+inset;
-    var w=Math.max(el.offsetWidth-inset*2,0);
-    var h=Math.max(el.offsetHeight-inset*2,0);
-    ind.style.opacity='1';
-    ind.style.width=w+'px';
-    ind.style.height=h+'px';
-    ind.style.transform='translate('+x+'px,'+y+'px)';
-  }
-
-  function init(){if(active)setPos(active);else ind.style.opacity='0';}
-  if(document.readyState==='complete')init();else window.addEventListener('load',init);
-
-  links.forEach(function(l){
-    l.addEventListener('click',function(){setPos(l);});
-  });
-  window.addEventListener('resize',function(){if(active)setPos(active);});
-})();
-</script>
 </body>
 </html>

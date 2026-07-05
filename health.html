@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitcoin Network Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.site-nav{position:sticky;top:0;z-index:100;background:#fdf4e7;border-bottom:1px solid rgba(224,123,10,.32);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.8rem;letter-spacing:.22em;color:#1a1208;text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:#7a6040;padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu a:hover{color:#c96c00;border-color:rgba(224,123,10,.32);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:#e07b0a;border-color:#e07b0a;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid rgba(224,123,10,.18);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+</style>
+<style>
+body {
+  margin: 0;
+  background: #fdf4e7;
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+  color: #1c1b1a;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes hbpulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 20px;
+}
+
+.header-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.header-subtitle {
+  font-size: 13px;
+  color: #8a8680;
+}
+
+.header-meta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  color: #8a8680;
+}
+
+.header-meta button {
+  border: 1px solid rgba(0, 0, 0, .12);
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #1c1b1a;
+  cursor: pointer;
+}
+
+.header-meta button:hover {
+  background: #f2f0ec;
+}
+
+/* Hero */
+.hero {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .07);
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px 44px;
+}
+
+.score-ring-wrap {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  flex: none;
+}
+
+.score-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+#score-ring {
+  transition: stroke-dasharray .8s ease, stroke .4s;
+}
+
+.score-ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.score-max {
+  font-size: 11px;
+  color: #8a8680;
+  margin-top: 4px;
+}
+
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.hero-verdict-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #b3aea6;
+  animation: hbpulse 2.4s ease-in-out infinite;
+}
+
+.score-verdict {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.score-summary {
+  margin: 0;
+  font-size: 13.5px;
+  color: #5c5852;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.count-pills {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.pill {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-weight: 600;
+}
+
+.pill-green {
+  background: rgba(46, 158, 91, .1);
+  color: #2e7d4a;
+}
+
+.pill-yellow {
+  background: rgba(201, 146, 10, .12);
+  color: #96700e;
+}
+
+.pill-red {
+  background: rgba(209, 75, 60, .1);
+  color: #b0392c;
+}
+
+/* Metric grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.metric-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .07);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 118px;
+}
+
+.metric-card.is-placeholder {
+  opacity: .45;
+}
+
+.metric-row-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.metric-name {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.metric-sub {
+  font-size: 11px;
+  color: #b3aea6;
+}
+
+.metric-tag {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.metric-row-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.metric-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.metric-unit {
+  font-size: 12.5px;
+  color: #8a8680;
+}
+
+.metric-row-bottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.metric-detail {
+  font-size: 12px;
+  color: #8a8680;
+}
+
+.metric-status {
+  font-size: 12px;
+  font-weight: 600;
+  flex: none;
+}
+
+.footnote {
+  margin: 0;
+  font-size: 11.5px;
+  color: #b3aea6;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="bitcoin.html">BITCOIN</a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html">ATLAS</a></li>
+    <li><a href="health.html" class="active">HEALTH</a></li>
+    <li><a href="coldcardq.html">COLDCARDQ</a></li>
+    <li><a href="bscard.html">VERIFY</a></li>
+    <li><a href="btcgame.html">GAME</a></li>
+    <li><a href="hof.html">HOF</a></li>
+  </ul>
+</nav>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-title">
+      <h1>Bitcoin Network Health</h1>
+      <span class="header-subtitle">비트코인 네트워크 건강 대시보드</span>
+    </div>
+    <div class="header-meta">
+      <span title="블록 높이">⛓ <span id="block-height">—</span></span>
+      <span id="updated-label">불러오는 중…</span>
+      <button id="refresh-btn" type="button">↻ 새로고침</button>
+    </div>
+  </header>
+
+  <!-- Hero: overall score -->
+  <section class="hero">
+    <div class="score-ring-wrap">
+      <svg viewBox="0 0 120 120" class="score-ring-svg">
+        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(0,0,0,.07)" stroke-width="9"></circle>
+        <circle id="score-ring" cx="60" cy="60" r="54" fill="none" stroke="#b3aea6" stroke-width="9" stroke-linecap="round" style="stroke-dasharray:0 339.3"></circle>
+      </svg>
+      <div class="score-ring-label">
+        <div id="score-value" class="score-value">—</div>
+        <div class="score-max">/ 100</div>
+      </div>
+    </div>
+    <div class="hero-info">
+      <div class="hero-verdict-row">
+        <span id="score-dot" class="score-dot"></span>
+        <span id="score-verdict" class="score-verdict">측정 중…</span>
+      </div>
+      <p id="score-summary" class="score-summary">네트워크 지표를 불러오는 중입니다.</p>
+      <div class="count-pills">
+        <span class="pill pill-green">🟢 <span id="count-green">0</span></span>
+        <span class="pill pill-yellow">🟡 <span id="count-yellow">0</span></span>
+        <span class="pill pill-red">🔴 <span id="count-red">0</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metric grid -->
+  <section id="metrics-grid" class="metrics-grid"></section>
+
+  <p class="footnote">
+    데이터: mempool.space · bitnodes.io · GitHub (bitcoin/bitcoin) — ETF 자금 흐름은 무료 실시간 API가 없어 샘플 값입니다. 연결 실패 시 각 카드에 "샘플" 태그가 표시됩니다.
+  </p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const SHOW_ENGLISH = true;
+  const REFRESH_MINUTES = 5;
+
+  const GREEN = '#2e9e5b';
+  const YELLOW = '#c9920a';
+  const RED = '#d14b3c';
+  const GREY = '#b3aea6';
+
+  const blockHeightEl = document.getElementById('block-height');
+  const updatedLabelEl = document.getElementById('updated-label');
+  const refreshBtn = document.getElementById('refresh-btn');
+  const scoreRingEl = document.getElementById('score-ring');
+  const scoreValueEl = document.getElementById('score-value');
+  const scoreDotEl = document.getElementById('score-dot');
+  const scoreVerdictEl = document.getElementById('score-verdict');
+  const scoreSummaryEl = document.getElementById('score-summary');
+  const countGreenEl = document.getElementById('count-green');
+  const countYellowEl = document.getElementById('count-yellow');
+  const countRedEl = document.getElementById('count-red');
+  const metricsGridEl = document.getElementById('metrics-grid');
+
+  let timer = null;
+  let loading = true;
+
+  async function fetchJson(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(url + ' ' + r.status);
+    return r.json();
+  }
+
+  function m(id, name, sub, value, unit, detail, level, statusLabel, live) {
+    const color = level === 'g' ? GREEN : level === 'y' ? YELLOW : RED;
+    return {
+      id, name, sub, value, unit, detail, level, statusLabel, color,
+      tag: live ? 'LIVE' : '샘플',
+      tagBg: live ? 'rgba(46,158,91,.1)' : 'rgba(0,0,0,.06)',
+      tagColor: live ? '#2e7d4a' : '#8a8680',
+    };
+  }
+
+  function buildMetrics(r) {
+    const out = [];
+
+    // Hashrate
+    {
+      const live = !!r.hash;
+      const cur = live ? r.hash.currentHashrate : 780e18;
+      const arr = live && Array.isArray(r.hash.hashrates) && r.hash.hashrates.length ? r.hash.hashrates : null;
+      const avg = arr ? arr.reduce((a, b) => a + Number(b.avgHashrate || 0), 0) / arr.length : cur;
+      const chg = avg ? (cur - avg) / avg * 100 : 0;
+      const lvl = chg > -5 ? 'g' : chg > -15 ? 'y' : 'r';
+      out.push(m('hash', '해시레이트', 'Hashrate', (cur / 1e18).toFixed(0), 'EH/s',
+        '3일 평균 대비 ' + (chg >= 0 ? '+' : '') + chg.toFixed(1) + '%',
+        lvl, lvl === 'g' ? '강함' : lvl === 'y' ? '하락 중' : '급락', live));
+    }
+    // Difficulty
+    {
+      const live = !!r.diff;
+      const chg = live ? r.diff.difficultyChange : 1.8;
+      const prog = live ? r.diff.progressPercent : 42;
+      const lvl = chg >= 0 ? 'g' : chg > -10 ? 'y' : 'r';
+      out.push(m('diff', '난이도', 'Difficulty', (chg >= 0 ? '+' : '') + chg.toFixed(1), '%',
+        '다음 조정 예상 · 주기 ' + prog.toFixed(0) + '% 진행',
+        lvl, chg >= 0 ? '상승' : '하락 예상', live));
+    }
+    // Mempool
+    {
+      const live = !!r.pool;
+      const vmb = live ? r.pool.vsize / 1e6 : 62;
+      const cnt = live ? r.pool.count : 41000;
+      const lvl = vmb < 5 ? 'g' : vmb < 100 ? 'y' : 'r';
+      out.push(m('pool', '멤풀', 'Mempool', vmb.toFixed(1), 'vMB',
+        '대기 트랜잭션 ' + Number(cnt).toLocaleString() + '건',
+        lvl, lvl === 'g' ? '원활' : lvl === 'y' ? '혼잡' : '과부하', live));
+    }
+    // Fees
+    {
+      const live = !!r.fees;
+      const fast = live ? r.fees.fastestFee : 18;
+      const hour = live ? r.fees.hourFee : 9;
+      const lvl = fast < 10 ? 'g' : fast < 50 ? 'y' : 'r';
+      out.push(m('fees', '수수료', 'Fees', String(fast), 'sat/vB',
+        '1시간 내 확인 기준 ' + hour + ' sat/vB',
+        lvl, lvl === 'g' ? '낮음' : lvl === 'y' ? '보통' : '높음', live));
+    }
+    // Nodes
+    {
+      const live = !!(r.nodes && r.nodes.total_nodes);
+      const n = live ? r.nodes.total_nodes : 21500;
+      const lvl = n > 18000 ? 'g' : n > 12000 ? 'y' : 'r';
+      out.push(m('nodes', '노드 수', 'Reachable Nodes', Number(n).toLocaleString(), '개',
+        '접속 가능한 풀노드 (bitnodes)',
+        lvl, lvl === 'g' ? '안정' : lvl === 'y' ? '감소' : '위험', live));
+    }
+    // Lightning
+    {
+      const live = !!(r.ln && r.ln.latest);
+      const cap = live ? r.ln.latest.total_capacity / 1e8 : 5300;
+      const ch = live ? r.ln.latest.channel_count : 52000;
+      out.push(m('ln', '라이트닝', 'Lightning', Math.round(cap).toLocaleString(), 'BTC',
+        '공개 채널 ' + Number(ch).toLocaleString() + '개 용량',
+        'g', '성장', live));
+    }
+    // Miner revenue (fee share)
+    {
+      const live = !!(r.rew && r.rew.totalReward);
+      const tot = live ? Number(r.rew.totalReward) : 47500e6;
+      const fee = live ? Number(r.rew.totalFee) : 620e6;
+      const pct = tot ? fee / tot * 100 : 0;
+      const lvl = pct > 2 ? 'g' : pct > 0.5 ? 'y' : 'r';
+      out.push(m('rew', '채굴자 수익', 'Miner Revenue', pct.toFixed(1), '%',
+        '최근 144블록 보상 중 수수료 비중',
+        lvl, lvl === 'g' ? '건강' : lvl === 'y' ? '수수료 낮음' : '보조금 의존', live));
+    }
+    // ETF flow — no free realtime API
+    {
+      out.push(m('etf', 'ETF 자금', 'ETF Flow', '+214', 'M USD',
+        '미국 현물 ETF 일간 순유입 (샘플)',
+        'g', '유입', false));
+    }
+    // Developer activity
+    {
+      const live = Array.isArray(r.gh);
+      const n = live ? r.gh.length : 45;
+      const lvl = n > 30 ? 'g' : n > 10 ? 'y' : 'r';
+      out.push(m('gh', '개발 활동', 'Dev Activity', live && n >= 100 ? '100+' : String(n), '커밋/주',
+        'bitcoin/bitcoin 최근 7일',
+        lvl, lvl === 'g' ? '활발' : lvl === 'y' ? '보통' : '저조', live));
+    }
+    return out;
+  }
+
+  function renderPlaceholders() {
+    metricsGridEl.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const card = document.createElement('div');
+      card.className = 'metric-card is-placeholder';
+      metricsGridEl.appendChild(card);
+    }
+  }
+
+  function renderMetrics(metrics) {
+    metricsGridEl.innerHTML = '';
+    metrics.forEach((mc) => {
+      const sub = SHOW_ENGLISH ? mc.sub : '';
+      const card = document.createElement('div');
+      card.className = 'metric-card';
+      card.innerHTML =
+        '<div class="metric-row-top">' +
+          '<span class="metric-dot" style="background:' + mc.color + '"></span>' +
+          '<span class="metric-name"></span>' +
+          '<span class="metric-sub"></span>' +
+          '<span class="metric-tag" style="background:' + mc.tagBg + ';color:' + mc.tagColor + '"></span>' +
+        '</div>' +
+        '<div class="metric-row-value">' +
+          '<span class="metric-value"></span>' +
+          '<span class="metric-unit"></span>' +
+        '</div>' +
+        '<div class="metric-row-bottom">' +
+          '<span class="metric-detail"></span>' +
+          '<span class="metric-status" style="color:' + mc.color + '"></span>' +
+        '</div>';
+      card.querySelector('.metric-name').textContent = mc.name;
+      card.querySelector('.metric-sub').textContent = sub;
+      card.querySelector('.metric-tag').textContent = mc.tag;
+      card.querySelector('.metric-value').textContent = mc.value;
+      card.querySelector('.metric-unit').textContent = mc.unit;
+      card.querySelector('.metric-detail').textContent = mc.detail;
+      card.querySelector('.metric-status').textContent = mc.statusLabel;
+      metricsGridEl.appendChild(card);
+    });
+  }
+
+  function renderHero(metrics) {
+    const pts = { g: 100, y: 65, r: 25 };
+    const score = metrics.length
+      ? Math.round(metrics.reduce((a, mc) => a + pts[mc.level], 0) / metrics.length)
+      : 0;
+    const scoreColor = !metrics.length ? GREY : score >= 80 ? GREEN : score >= 55 ? YELLOW : RED;
+    const g = metrics.filter((mc) => mc.level === 'g').length;
+    const y = metrics.filter((mc) => mc.level === 'y').length;
+    const rd = metrics.filter((mc) => mc.level === 'r').length;
+    const verdict = !metrics.length ? '측정 중…' : score >= 90 ? '매우 건강' : score >= 80 ? '건강' : score >= 55 ? '주의' : '경고';
+    const warn = metrics.filter((mc) => mc.level !== 'g').map((mc) => mc.name);
+    const summary = !metrics.length
+      ? '네트워크 지표를 불러오는 중입니다.'
+      : warn.length === 0
+        ? '9개 지표 모두 정상 범위입니다. 네트워크는 견고하게 작동하고 있습니다.'
+        : warn.join(', ') + ' 지표가 정상 범위를 벗어났습니다. 나머지는 모두 양호합니다.';
+
+    const scoreDash = (score / 100 * 339.3).toFixed(1);
+
+    scoreValueEl.textContent = metrics.length ? String(score) : '—';
+    scoreRingEl.style.stroke = scoreColor;
+    scoreRingEl.style.strokeDasharray = scoreDash + ' 339.3';
+    scoreDotEl.style.background = scoreColor;
+    scoreVerdictEl.textContent = verdict;
+    scoreSummaryEl.textContent = summary;
+    countGreenEl.textContent = String(g);
+    countYellowEl.textContent = String(y);
+    countRedEl.textContent = String(rd);
+  }
+
+  function updateHeader(blockHeight, updatedAt) {
+    blockHeightEl.textContent = blockHeight != null ? Number(blockHeight).toLocaleString() : '—';
+    updatedLabelEl.textContent = updatedAt
+      ? updatedAt.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }) + ' 업데이트'
+      : '불러오는 중…';
+    refreshBtn.textContent = loading ? '갱신 중…' : '↻ 새로고침';
+  }
+
+  async function load() {
+    loading = true;
+    updateHeader(blockHeightEl.textContent === '—' ? null : blockHeightEl.textContent, null);
+    updatedLabelEl.textContent = '불러오는 중…';
+    refreshBtn.textContent = '갱신 중…';
+
+    const since = new Date(Date.now() - 7 * 864e5).toISOString();
+    const jobs = {
+      hash: fetchJson('https://mempool.space/api/v1/mining/hashrate/3d'),
+      diff: fetchJson('https://mempool.space/api/v1/difficulty-adjustment'),
+      pool: fetchJson('https://mempool.space/api/mempool'),
+      fees: fetchJson('https://mempool.space/api/v1/fees/recommended'),
+      ln: fetchJson('https://mempool.space/api/v1/lightning/statistics/latest'),
+      rew: fetchJson('https://mempool.space/api/v1/mining/reward-stats/144'),
+      tip: fetchJson('https://mempool.space/api/blocks/tip/height'),
+      nodes: fetchJson('https://bitnodes.io/api/v1/snapshots/latest/'),
+      gh: fetchJson('https://api.github.com/repos/bitcoin/bitcoin/commits?since=' + since + '&per_page=100'),
+    };
+    const keys = Object.keys(jobs);
+    const settled = await Promise.allSettled(keys.map((k) => jobs[k]));
+    const r = {};
+    keys.forEach((k, i) => { r[k] = settled[i].status === 'fulfilled' ? settled[i].value : null; });
+
+    const metrics = buildMetrics(r);
+    const blockHeight = r.tip != null ? r.tip : null;
+    const updatedAt = new Date();
+
+    loading = false;
+    renderMetrics(metrics);
+    renderHero(metrics);
+    updateHeader(blockHeight, updatedAt);
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(load, Math.max(1, REFRESH_MINUTES) * 60000);
+  }
+
+  refreshBtn.addEventListener('click', () => {
+    load();
+    startTimer();
+  });
+
+  renderPlaceholders();
+  renderHero([]);
+  load();
+  startTimer();
+})();
+</script>
+</body>
+</html>
