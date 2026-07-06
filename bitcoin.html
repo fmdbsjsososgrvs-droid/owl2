@@ -119,7 +119,8 @@
 .site-nav .nav-logo{font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.8rem;letter-spacing:.22em;color:#1a1208;text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
 .site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
 .site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
-.site-nav .nav-menu a{font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:#7a6040;padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:'Share Tech Mono',monospace;font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:#7a6040;padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
 .site-nav .nav-menu a:hover{color:#c96c00;border-color:rgba(224,123,10,.32);background:rgba(224,123,10,.06);}
 .site-nav .nav-menu a.active{color:#fff;background:#e07b0a;border-color:#e07b0a;}
 @media (max-width:700px){
@@ -135,13 +136,13 @@
     <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
   </a>
   <ul class="nav-menu">
-    <li><a href="bitcoin.html" class="active">BITCOIN</a></li>
-    <li><a href="Bitcoin%20Adoption%20Atlas.html">ATLAS</a></li>
-    <li><a href="health.html">HEALTH</a></li>
-    <li><a href="coldcardq.html">COLDCARDQ</a></li>
-    <li><a href="bscard.html">VERIFY</a></li>
-    <li><a href="btcgame.html">GAME</a></li>
-    <li><a href="hof.html">HOF</a></li>
+    <li><a href="bitcoin.html" class="active"><img src="bitcoin.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="health.html"><img src="activity.png" alt="HEALTH" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="calculator.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="bscard.html"><img src="message.png" alt="VERIFY" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+    <li><a href="hof.html"><img src="user.png" alt="HOF" class="nav-icon" /></a></li>
   </ul>
 </nav>
 <div class="wrap">
@@ -377,6 +378,15 @@
   }
   function fetchJSON(url, timeoutMs) { return fetchWithTimeout(url, timeoutMs).then(function (r) { return r.json(); }); }
   function fetchText(url, timeoutMs) { return fetchWithTimeout(url, timeoutMs).then(function (r) { return r.text(); }).then(function (t) { return t.trim(); }); }
+  // one retry after a short delay before giving up â€” smooths over transient
+  // failures / slow mobile connections instead of waiting for the next interval
+  function withRetry(fn, retries, delayMs) {
+    return fn().catch(function (err) {
+      if (retries <= 0) throw err;
+      return new Promise(function (resolve) { setTimeout(resolve, delayMs || 1500); })
+        .then(function () { return withRetry(fn, retries - 1, delayMs); });
+    });
+  }
 
   // ───────── header chips ─────────
   var chipsDefault = [
@@ -915,10 +925,10 @@
   // ───────── live data orchestration ─────────
   function refreshLiveNumbers() {
     Promise.allSettled([
-      fetchJSON(API.price),
-      fetchText(API.tipHeight),
-      fetchJSON(API.hashrateCurrent),
-      fetchJSON(API.difficulty)
+      withRetry(function () { return fetchJSON(API.price); }, 1),
+      withRetry(function () { return fetchText(API.tipHeight); }, 1),
+      withRetry(function () { return fetchJSON(API.hashrateCurrent); }, 1),
+      withRetry(function () { return fetchJSON(API.difficulty); }, 1)
     ]).then(function (results) {
       var anyOk = false;
       if (results[0].status === "fulfilled" && results[0].value && typeof results[0].value.USD === "number") {
@@ -946,10 +956,12 @@
   }
 
   function refreshCharts() {
-    fetchJSON(API.hashrateHistory).then(function (data) {
+    // these two payloads are much larger (full price/hashrate history), so they
+    // get a longer timeout plus a retry before giving up
+    withRetry(function () { return fetchJSON(API.hashrateHistory, 15000); }, 1, 2000).then(function (data) {
       if (data && Array.isArray(data.hashrates)) renderHashrateChart(data.hashrates);
     }).catch(function () { });
-    fetchJSON(API.priceHistory).then(function (data) {
+    withRetry(function () { return fetchJSON(API.priceHistory, 15000); }, 1, 2000).then(function (data) {
       if (data && Array.isArray(data.values)) {
         priceHistoryCache = data.values;
         renderPriceChart(data.values);

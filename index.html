@@ -733,7 +733,8 @@ body > footer.unified-footer .uf-note{
 .site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
 .site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
 .site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
-.site-nav .nav-menu a{font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
 .site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
 .site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
 @media (max-width:700px){
@@ -749,13 +750,13 @@ body > footer.unified-footer .uf-note{
     <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
   </a>
   <ul class="nav-menu">
-    <li><a href="bitcoin.html">BITCOIN</a></li>
-    <li><a href="Bitcoin%20Adoption%20Atlas.html">ATLAS</a></li>
-    <li><a href="health.html">HEALTH</a></li>
-    <li><a href="coldcardq.html">COLDCARDQ</a></li>
-    <li><a href="bscard.html">VERIFY</a></li>
-    <li><a href="btcgame.html">GAME</a></li>
-    <li><a href="hof.html">HOF</a></li>
+    <li><a href="bitcoin.html"><img src="bitcoin.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="health.html"><img src="activity.png" alt="HEALTH" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="calculator.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="bscard.html"><img src="message.png" alt="VERIFY" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+    <li><a href="hof.html"><img src="user.png" alt="HOF" class="nav-icon" /></a></li>
   </ul>
 </nav>
 
