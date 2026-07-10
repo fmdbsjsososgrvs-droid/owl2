@@ -789,6 +789,14 @@ html{background:#fdf4e7;}
   .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
 }
 </style>
+<style id="unified-lightbox-style">
+.detail-body img{cursor:zoom-in;}
+.mn-lightbox-overlay{position:fixed;inset:0;background:#0d0906;z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .2s ease;}
+.mn-lightbox-overlay.open{display:flex;opacity:1;}
+.mn-lightbox-overlay img{max-width:100%;max-height:100%;border-radius:6px;object-fit:contain;cursor:default;}
+.mn-lightbox-close{position:fixed;top:16px;right:16px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10000;}
+.mn-lightbox-close:hover{background:rgba(255,255,255,.18);}
+</style>
 </head>
 <body>
 <nav class="site-nav">
@@ -800,6 +808,7 @@ html{background:#fdf4e7;}
     <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
     <li><a href="health.html"><img src="activity.png" alt="HEALTH" class="nav-icon" /></a></li>
     <li><a href="coldcardq.html" class="active"><img src="calculator.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="nunchuk.html"><img src="scan.png" alt="NUNCHUK" class="nav-icon" /></a></li>
     <li><a href="bscard.html"><img src="message.png" alt="VERIFY" class="nav-icon" /></a></li>
     <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
     <li><a href="hof.html"><img src="user.png" alt="HOF" class="nav-icon" /></a></li>
@@ -4629,6 +4638,43 @@ html{background:#fdf4e7;}
     document.querySelectorAll('.rm-card').forEach(c => c.classList.remove('active-card'));
     document.querySelectorAll('.detail-content').forEach(d => d.classList.remove('active'));
   });
+</script>
+<script id="unified-lightbox-script">
+(function(){
+  const overlay = document.createElement('div');
+  overlay.className = 'mn-lightbox-overlay';
+  const img = document.createElement('img');
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'mn-lightbox-close';
+  closeBtn.setAttribute('aria-label', '닫기');
+  closeBtn.textContent = '✕';
+  overlay.appendChild(img);
+  overlay.appendChild(closeBtn);
+  document.body.appendChild(overlay);
+
+  function openLightbox(src, alt){
+    img.src = src;
+    img.alt = alt || '';
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('.detail-body img');
+    if (target) { openLightbox(target.src, target.alt); return; }
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeLightbox();
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+})();
 </script>
 <footer class="unified-footer">
   <span class="uf-email">⚡bitsexer@oksu.su</span>

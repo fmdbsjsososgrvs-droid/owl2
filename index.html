@@ -299,21 +299,21 @@
     }
     .stat-item {
       background: var(--bg2);
-      padding: 28px 20px;
+      padding: 9px 8px;
       text-align: center;
     }
     .stat-num {
       font-family: var(--mono);
-      font-size: 28px;
+      font-size: 17px;
       color: var(--accent);
       letter-spacing: 0.05em;
-      margin-bottom: 6px;
+      margin-bottom: 2px;
     }
     .stat-label {
       font-family: var(--mono);
-      font-size: 9px;
+      font-size: 7px;
       color: var(--text);
-      letter-spacing: 0.18em;
+      letter-spacing: 0.12em;
     }
 
     /* CONTENT SECTIONS */
@@ -356,7 +356,7 @@
     }
     .portfolio-card {
       background: var(--bg2);
-      padding: 32px 28px 48px;
+      padding: 10px 12px 16px;
       position: relative;
       overflow: hidden;
       transition: background 0.2s;
@@ -377,38 +377,39 @@
     .portfolio-card:hover::after { transform: scaleX(1); }
     .p-card-tag {
       font-family: var(--mono);
-      font-size: 9px;
+      font-size: 7px;
       color: var(--accent);
-      letter-spacing: 0.2em;
-      margin-bottom: 14px;
+      letter-spacing: 0.14em;
+      margin-bottom: 5px;
       border: 1px solid rgba(224,123,10,0.25);
       display: inline-block;
-      padding: 2px 10px;
+      padding: 1px 6px;
     }
     .p-card-title {
       font-family: var(--mono);
-      font-size: 16px;
+      font-size: 12px;
       color: var(--text);
-      letter-spacing: 0.1em;
-      margin-bottom: 10px;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
       transition: color 0.2s;
     }
     .portfolio-card:hover .p-card-title { color: var(--accent); }
     .p-card-desc {
-      font-size: 12px;
+      font-size: 10px;
       color: var(--text3);
-      line-height: 1.9;
+      line-height: 1.3;
     }
     .p-card-desc em { color: var(--text2); font-style: normal; }
     .p-card-arrow {
       position: absolute;
-      bottom: 18px; right: 20px;
+      bottom: 8px; right: 10px;
       font-family: var(--mono);
-      font-size: 16px;
+      font-size: 12px;
       color: var(--text3);
       transition: all 0.2s;
     }
     .portfolio-card:hover .p-card-arrow { color: var(--accent); transform: translate(3px, -3px); }
+    .portfolio-card.p-card-wide { grid-column: 1 / -1; }
 
     /* BS CARD SHOWCASE */
     .bscard-showcase {
@@ -485,29 +486,29 @@
     }
     .wallet-item {
       background: var(--bg2);
-      padding: 24px 16px;
+      padding: 7px 6px;
       text-align: center;
       transition: background 0.2s;
     }
     .wallet-item:hover { background: var(--bg3); }
     .wallet-icon {
       font-family: var(--mono);
-      font-size: 22px;
+      font-size: 14px;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin-bottom: 3px;
     }
     .wallet-name {
       font-family: var(--mono);
-      font-size: 9px;
+      font-size: 7px;
       color: var(--text2);
-      letter-spacing: 0.12em;
-      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      margin-bottom: 1px;
     }
     .wallet-status {
       font-family: var(--mono);
-      font-size: 8px;
+      font-size: 7px;
       color: var(--text3);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.06em;
     }
 
     /* QUOTE */
@@ -743,6 +744,40 @@ body > footer.unified-footer .uf-note{
   .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
 }
 </style>
+<style id="hub-dashboard-style">
+.hub-wrap{position:relative;max-width:960px;margin:0 auto;padding:20px 24px 44px;}
+.hub-grid{display:grid;grid-template-columns:1fr 200px 1fr;align-items:center;gap:0;}
+.hub-col{display:flex;flex-direction:column;gap:14px;}
+.hub-col.right{align-items:flex-end;}
+.hub-kpi{position:relative;display:flex;align-items:center;gap:10px;max-width:230px;}
+.hub-col.right .hub-kpi{flex-direction:row-reverse;text-align:right;}
+.hub-kpi-icon{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 32% 28%,var(--bg3),var(--bg2) 70%);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;}
+.hub-kpi-num{font-family:var(--mono);font-size:19px;color:var(--accent);letter-spacing:.02em;line-height:1;}
+.hub-kpi-label{font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:.12em;margin-top:3px;text-transform:uppercase;}
+.hub-kpi-line{position:absolute;top:50%;height:1px;background:linear-gradient(90deg,var(--border2),transparent);width:28px;}
+.hub-col.left .hub-kpi-line{right:-28px;}
+.hub-col.right .hub-kpi-line{left:-28px;background:linear-gradient(270deg,var(--border2),transparent);}
+.hub-core{position:relative;width:160px;height:160px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.hub-ring{position:absolute;border-radius:50%;border:1px solid var(--border);}
+.hub-ring.r1{inset:0;}
+.hub-ring.r2{inset:14px;border-color:var(--border2);}
+.hub-core-fill{position:absolute;inset:28px;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--bg3),var(--bg2) 65%,var(--bg) 100%);border:1px solid var(--border2);box-shadow:0 0 36px rgba(224,123,10,.14),inset 0 0 26px rgba(224,123,10,.06);}
+.hub-mark{position:relative;text-align:center;}
+.hub-btc-mark{width:84px;height:84px;display:block;}
+@media (max-width:720px){
+  .hub-grid{grid-template-columns:1fr;gap:22px;}
+  .hub-col,.hub-col.right{align-items:flex-start;flex-direction:row;flex-wrap:wrap;}
+  .hub-col.right .hub-kpi{flex-direction:row;text-align:left;}
+  .hub-kpi-line{display:none;}
+  .hub-core{order:-1;}
+}
+.section-tick{width:7px;height:7px;border:1.5px solid var(--accent);border-radius:2px;transform:rotate(45deg);flex-shrink:0;}
+.portfolio-card::before{content:'';position:absolute;top:0;left:0;width:12px;height:12px;border-top:1.5px solid var(--accent2);border-left:1.5px solid var(--accent2);opacity:.55;}
+.portfolio-card:hover{box-shadow:0 0 0 1px var(--border2),0 6px 20px rgba(224,123,10,.12);}
+.wallet-item{position:relative;}
+.wallet-item::before{content:'';position:absolute;top:0;right:0;width:10px;height:10px;border-top:1.5px solid var(--accent2);border-right:1.5px solid var(--accent2);opacity:.55;}
+.wallet-item:hover{box-shadow:0 0 0 1px var(--border2),0 6px 16px rgba(224,123,10,.1);}
+</style>
 </head>
 <body>
 <nav class="site-nav">
@@ -754,6 +789,7 @@ body > footer.unified-footer .uf-note{
     <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
     <li><a href="health.html"><img src="activity.png" alt="HEALTH" class="nav-icon" /></a></li>
     <li><a href="coldcardq.html"><img src="calculator.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="nunchuk.html"><img src="scan.png" alt="NUNCHUK" class="nav-icon" /></a></li>
     <li><a href="bscard.html"><img src="message.png" alt="VERIFY" class="nav-icon" /></a></li>
     <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
     <li><a href="hof.html"><img src="user.png" alt="HOF" class="nav-icon" /></a></li>
@@ -780,73 +816,93 @@ body > footer.unified-footer .uf-note{
   </p>
 </section>
 
-<style id="simple-box-style">
-.simple-list{display:flex;flex-direction:column;gap:8px;margin:0 0 24px;}
-.simple-box{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 20px;background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);font-family:var(--mono);text-decoration:none;color:var(--text);transition:all .2s;}
-a.simple-box{cursor:pointer;}
-a.simple-box:hover{background:var(--bg3);transform:translateX(2px);}
-a.simple-box:hover .sb-name{color:var(--accent);}
-.simple-box .sb-name{font-size:14px;font-weight:700;letter-spacing:.06em;color:var(--text);}
-.simple-box .sb-meta{font-family:var(--sans);font-size:15px;font-weight:300;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;white-space:nowrap;}
-@media(max-width:520px){
-  .simple-box{padding:12px 14px;gap:10px;}
-  .simple-box .sb-name{font-size:13px;}
-  .simple-box .sb-meta{font-size:13px;letter-spacing:.08em;}
-}
-</style>
+<div class="hub-wrap">
+  <div class="hub-grid">
+    <div class="hub-col left">
+      <div class="hub-kpi"><span class="hub-kpi-line"></span>
+        <div class="hub-kpi-icon">⧗</div>
+        <div><div class="hub-kpi-num">5YR+</div><div class="hub-kpi-label">Hodler</div></div>
+      </div>
+      <div class="hub-kpi"><span class="hub-kpi-line"></span>
+        <div class="hub-kpi-icon">⇄</div>
+        <div><div class="hub-kpi-num">100+</div><div class="hub-kpi-label">Transactions</div></div>
+      </div>
+    </div>
+
+    <div class="hub-core">
+      <div class="hub-ring r1"></div>
+      <div class="hub-ring r2"></div>
+      <div class="hub-core-fill"></div>
+      <div class="hub-mark">
+        <img loading="lazy" decoding="async" src="BBB.png" alt="Bitcoin" class="hub-btc-mark" />
+      </div>
+    </div>
+
+    <div class="hub-col right">
+      <div class="hub-kpi"><span class="hub-kpi-line"></span>
+        <div class="hub-kpi-icon">◈</div>
+        <div><div class="hub-kpi-num">15+</div><div class="hub-kpi-label">Offline Events</div></div>
+      </div>
+      <div class="hub-kpi"><span class="hub-kpi-line"></span>
+        <div class="hub-kpi-icon">▣</div>
+        <div><div class="hub-kpi-num">5</div><div class="hub-kpi-label">Cold Wallets</div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="content-section">
   <div class="section-header">
-    <span class="section-num">01</span>
-    <span class="section-title">STATS</span>
-    <div class="section-line"></div>
-  </div>
-  <div class="simple-list">
-    <div class="simple-box"><span class="sb-name">HODLER</span><span class="sb-meta">5YR+</span></div>
-    <div class="simple-box"><span class="sb-name">TRANSACTIONS</span><span class="sb-meta">100+</span></div>
-    <div class="simple-box"><span class="sb-name">OFFLINE EVENTS</span><span class="sb-meta">15+</span></div>
-    <div class="simple-box"><span class="sb-name">COLD WALLETS</span><span class="sb-meta">5</span></div>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="section-header">
+    <span class="section-tick"></span>
     <span class="section-num">02</span>
     <span class="section-title">PORTFOLIO</span>
     <div class="section-line"></div>
   </div>
-  <div class="simple-list">
-    <a class="simple-box" href="https://bsosa.netlify.app/" target="_blank" rel="noopener"><span class="sb-name">THE BITCOIN SOCIETY</span><span class="sb-meta">커뮤니티 창설자</span></a>
-    <div class="simple-box"><span class="sb-name">COLLECTOR</span><span class="sb-meta">비트코인 용품 수집</span></div>
-    <div class="simple-box"><span class="sb-name">BITCOIN MEETUP</span><span class="sb-meta">15+회 밋업 기획·진행</span></div>
-    <a class="simple-box" href="coldcardq.html"><span class="sb-name">TXID ACADEMY</span><span class="sb-meta">콜드월렛 가이드</span></a>
+  <div class="portfolio-grid">
+    <a class="portfolio-card" href="https://bsosa.netlify.app/" target="_blank" rel="noopener">
+      <span class="p-card-tag">COMMUNITY</span>
+      <div class="p-card-title">THE BITCOIN SOCIETY</div>
+      <p class="p-card-desc">커뮤니티 창설자</p>
+      <span class="p-card-arrow">→</span>
+    </a>
+    <div class="portfolio-card">
+      <span class="p-card-tag">COLLECTION</span>
+      <div class="p-card-title">COLLECTOR</div>
+      <p class="p-card-desc">비트코인 용품 수집</p>
+    </div>
+    <div class="portfolio-card">
+      <span class="p-card-tag">OFFLINE</span>
+      <div class="p-card-title">BITCOIN MEETUP</div>
+      <p class="p-card-desc">15+회 밋업 기획·진행</p>
+    </div>
+    <a class="portfolio-card" href="coldcardq.html">
+      <span class="p-card-tag">GUIDE</span>
+      <div class="p-card-title">TXID ACADEMY</div>
+      <p class="p-card-desc">콜드월렛 가이드</p>
+      <span class="p-card-arrow">→</span>
+    </a>
+    <a class="portfolio-card p-card-wide" href="bscard.html">
+      <span class="p-card-tag">SHOWCASE</span>
+      <div class="p-card-title">THE B SOCIETY CARD</div>
+      <p class="p-card-desc">BIP-322 보유증명 카드</p>
+      <span class="p-card-arrow">→</span>
+    </a>
   </div>
 </section>
 
 <section class="content-section">
   <div class="section-header">
+    <span class="section-tick"></span>
     <span class="section-num">03</span>
-    <span class="section-title">BITCOIN SOCIETY CARD</span>
-    <div class="section-line"></div>
-  </div>
-  <div class="simple-list">
-    <a class="simple-box" href="bscard.html"><span class="sb-name">THE B SOCIETY CARD</span><span class="sb-meta">BIP-322 보유증명 카드</span></a>
-  </div>
-</section>
-
-
-<section class="content-section">
-  <div class="section-header">
-    <span class="section-num">04</span>
     <span class="section-title">COLD WALLETS</span>
     <div class="section-line"></div>
   </div>
-  <div class="simple-list">
-    <div class="simple-box"><span class="sb-name">COLDCARD Q</span><span class="sb-meta">AIR-GAPPED</span></div>
-    <div class="simple-box"><span class="sb-name">KEYSTONE 2 PRO</span><span class="sb-meta">QR-BASED</span></div>
-    <div class="simple-box"><span class="sb-name">KEYSTONE 3</span><span class="sb-meta">QR-BASED</span></div>
-    <div class="simple-box"><span class="sb-name">TAPSIGNER</span><span class="sb-meta">NFC-CARD</span></div>
-    <div class="simple-box"><span class="sb-name">COCONUT VAULT</span><span class="sb-meta">CUSTOM</span></div>
+  <div class="wallets-grid">
+    <div class="wallet-item"><div class="wallet-icon">Q</div><div class="wallet-name">COLDCARD Q</div><div class="wallet-status">AIR-GAPPED</div></div>
+    <div class="wallet-item"><div class="wallet-icon">K2</div><div class="wallet-name">KEYSTONE 2 PRO</div><div class="wallet-status">QR-BASED</div></div>
+    <div class="wallet-item"><div class="wallet-icon">K3</div><div class="wallet-name">KEYSTONE 3</div><div class="wallet-status">QR-BASED</div></div>
+    <div class="wallet-item"><div class="wallet-icon">NFC</div><div class="wallet-name">TAPSIGNER</div><div class="wallet-status">NFC-CARD</div></div>
+    <div class="wallet-item"><div class="wallet-icon">CV</div><div class="wallet-name">COCONUT VAULT</div><div class="wallet-status">CUSTOM</div></div>
   </div>
 </section>
 
