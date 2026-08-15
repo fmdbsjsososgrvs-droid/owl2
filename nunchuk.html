@@ -804,11 +804,11 @@ html{background:#fdf4e7;}
     <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
   </a>
   <ul class="nav-menu">
-    <li><a href="bitcoin.html"><img src="bitcoin.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
     <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
     <li><a href="health.html"><img src="activity.png" alt="HEALTH" class="nav-icon" /></a></li>
-    <li><a href="coldcardq.html"><img src="calculator.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
-    <li><a href="nunchuk.html" class="active"><img src="scan.png" alt="NUNCHUK" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="nunchuk.html" class="active"><img src="wallet.png" alt="NUNCHUK" class="nav-icon" /></a></li>
     <li><a href="bscard.html"><img src="message.png" alt="VERIFY" class="nav-icon" /></a></li>
     <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
     <li><a href="bitcoinergame.html"><img src="pickaxe.png" alt="BITCOINER" class="nav-icon" /></a></li>
@@ -828,7 +828,7 @@ html{background:#fdf4e7;}
     <div class="rm-section-body">
       <div class="rm-section-head">
         <span class="rm-section-name">넌척 설정 가이드</span>
-        <span class="rm-section-count">8 TOPICS</span>
+        <span class="rm-section-count">9 TOPICS</span>
       </div>
       <p class="rm-section-desc">Watch-only app, Nunchuk의 설정 가이드</p>
       <div class="rm-card-grid">
@@ -922,6 +922,18 @@ html{background:#fdf4e7;}
             <div class="rm-card-text">
               <span class="rm-card-title">멀티시그 · 디스크립터 복원</span>
               <span class="rm-card-meta">MULTISIG RESTORE</span>
+            </div>
+            <svg class="rm-card-arrow" viewBox="0 0 16 16" fill="none">
+              <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+        <button class="rm-card" data-id="passphrase" data-cat="NUNCHUK" data-title="패스프레이즈">
+          <div class="rm-card-inner">
+            <div class="rm-card-icon">₯</div>
+            <div class="rm-card-text">
+              <span class="rm-card-title">패스프레이즈</span>
+              <span class="rm-card-meta">PASSPHRASE</span>
             </div>
             <svg class="rm-card-arrow" viewBox="0 0 16 16" fill="none">
               <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1892,6 +1904,139 @@ html{background:#fdf4e7;}
               <span class="mn-orange">◆</span> 디스크립터 분실에 대비해 지갑 생성 직후 여러 곳(클라우드·프린트 등)에 백업해 두십시오.<br>
               <span class="mn-orange">◆</span> 디스크립터만으로 잔액 조회는 가능하지만, 서명에는 반드시 원래 니모닉을 가진 하드웨어(콜드카드 등)가 필요합니다.<br>
               <span class="mn-orange">◆</span> 서명 단계까지 정상 동작하려면 각 콜드카드에도 <em>멀티시그 · 처음부터 만들기</em> 항목의 02번처럼 지갑이 등록되어 있어야 합니다.
+            </p>
+          </div>
+
+          <div style="margin-top:32px; text-align:center;">
+            <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="mn-goto-btn">↑ 처음으로</button>
+          </div>
+
+        </div></div>
+
+      <!-- 패스프레이즈 -->
+      <div class="detail-content" id="dc-passphrase"><span class="detail-category">NUNCHUK</span>
+        <div class="detail-title">
+          <span style="font-family:'Noto Sans KR',sans-serif;font-weight:900;color:#1a1208;letter-spacing:0.04em;">패스프레이즈</span>
+          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.1em;margin-left:12px;">PASSPHRASE</span>
+        </div>
+        <div class="detail-body">
+
+          <!-- 개념 -->
+          <div class="mn-section-title">개념</div>
+
+          <div class="mn-concept-box">
+            <p class="mn-concept-text">
+              기본 니모닉 (12글자 or 24글자) 에 나만의 비밀 문장을 추가하여 <em>새로운 지갑</em>을 만듭니다.<br>
+              기존 지갑에 비밀번호를 추가하는 게 아닙니다.<br>
+              기존과 다른 <em>새로운 지갑</em>을 만드는 겁니다.
+            </p>
+            <p class="mn-warn">△ &nbsp;패프를 설정하면, 지갑이 새롭게 만들어진다.</p>
+          </div>
+
+          <img loading="lazy" decoding="async" class="mn-img-full" src="cq_imgs/cq_022.jpg" alt="패스프레이즈" />
+
+          <div class="mn-divider"></div>
+
+          <!-- 설명 -->
+          <div class="mn-section-title">설명</div>
+
+          <div class="mn-concept-box">
+            <p class="mn-concept-text">
+              당신이 니모닉을 생성했습니다. 지갑이 만들어졌죠.<br>
+              이 지갑 이름을 <span class="mn-orange">철수</span> 라고 지었습니다.
+            </p>
+            <p class="mn-concept-text">
+              당신은 만든 지갑에 패스프레이즈로 <span class="mn-orange">abc</span> 라고 적었습니다.<br>
+              그럼 새로운 지갑 <span class="mn-orange">영희</span>가 만들어집니다.
+            </p>
+            <p class="mn-concept-text">
+              이번엔 패스프레이즈에 <span class="mn-orange">aaaaa</span> 라고 적었네요.<br>
+              그러면 또 새로운 지갑 <span class="mn-orange">광수</span>가 만들어집니다.
+            </p>
+            <p class="mn-warn">△ &nbsp;패스프레이즈로 지갑을 무수히 많이 만들 수가 있습니다.</p>
+          </div>
+
+          <div class="mn-concept-box" style="margin-top:14px;">
+            <p class="mn-concept-text">
+              패스프레이즈에게 <span class="mn-orange">틀렸다</span> 는 개념은 없습니다.<br>
+              타이핑을 잘못 쳤다면 새로운 지갑이 또 하나 만들어질 뿐입니다.
+            </p>
+            <p class="mn-concept-text">
+              또한 대다수의 콜드월렛은 한번 전원을 껐다 키면,<br>
+              패스프레이즈를 입력하기 전의 <span class="mn-orange">기본 니모닉 지갑으로 돌아옵니다.</span>
+            </p>
+          </div>
+
+          <div class="mn-divider"></div>
+
+          <!-- 지갑 구분 -->
+          <div class="mn-section-title">지갑 구분</div>
+
+          <div class="mn-concept-box">
+            <p class="mn-concept-text">
+              그럼 다수개의 지갑을 만들었다면 어떻게 구분할 수 있을까요?
+            </p>
+            <p class="mn-concept-tag" style="margin-top:12px;">MFP &nbsp;—&nbsp; Master Fingerprint &nbsp;<span style="color:var(--text3);font-size:11px;letter-spacing:0.05em;">지갑의 고유식별값</span></p>
+            <p class="mn-concept-text">
+              MFP 는 지갑을 구분하기 위해 사용됩니다.
+            </p>
+            <p class="mn-concept-text" style="margin-top:8px;">
+              이해하기 쉽게 말하자면,
+              <div class="mn-highlight-box">MFP = 지갑 이름</div>
+            </p>
+            <p class="mn-concept-text">
+              라고 생각하면 됩니다.<br>
+              위에서 언급한 <span class="mn-orange">철수</span> <span class="mn-orange">영희</span> <span class="mn-orange">광수</span> 라고 언급한 지갑 이름 말이죠.<br>
+              MFP 는 콜드월렛과 와치온리앱 두 군데서 모두 표시됩니다.
+            </p>
+            <p class="mn-warn">△ &nbsp;양쪽의 MFP 가 일치한다면, 같은 지갑이 등록된 것.</p>
+            <img loading="lazy" decoding="async" src="cq_imgs/cq_021.jpg" style="width:100%;margin-top:16px;border-radius:4px;" alt="MFP 일치 확인" />
+          </div>
+
+          <div class="mn-divider"></div>
+
+          <!-- POINT -->
+          <div class="mn-section-title">POINT</div>
+
+          <ol class="mn-steps">
+            <li class="mn-step">
+              <div class="mn-step-num">I</div>
+              <div class="mn-step-body">
+                <div class="mn-step-text">패스프레이즈는 <em>틀렸다는 개념이 없다.</em> 계속 새로 만들어질 뿐이다.</div>
+              </div>
+            </li>
+            <li class="mn-step">
+              <div class="mn-step-num">II</div>
+              <div class="mn-step-body">
+                <div class="mn-step-text">패스프레이즈는 <em>콜드월렛에 저장 안된다.</em> (재부팅 후 매번 새로 쳐야한다.)</div>
+              </div>
+            </li>
+            <li class="mn-step">
+              <div class="mn-step-num">III</div>
+              <div class="mn-step-body">
+                <div class="mn-step-text"><em>패스프레이즈를 잊어먹으면 끝장이다.</em></div>
+              </div>
+            </li>
+          </ol>
+
+          <div class="mn-divider"></div>
+
+          <!-- 활용 -->
+          <div class="mn-section-title">활용</div>
+
+          <div class="mn-concept-box">
+            <p class="mn-concept-text">
+              <span class="mn-orange">◆</span> THE B SOCIETY 의 멤버는 모두 '팔지 않겠다' 고 약속한 호들 전용 지갑을 따로 두고 있습니다.
+            </p>
+            <p class="mn-concept-text">
+              <span class="mn-orange">◆</span> 혹은 가족 구성원의 지갑을 각각 만들고 싶을 때, 니모닉을 공유하고 패스프레이즈만 서로 다르게 하여
+              각자 지갑을 관리하는 것도 방법입니다.
+            </p>
+            <p class="mn-concept-text">
+              <span class="mn-orange">◆</span> 정수로 맞춘 메인 지갑, 호들 지갑, 잔돈 지갑으로 구분할 수도 있습니다.
+            </p>
+            <p class="mn-concept-text">
+              <span class="mn-orange">◆</span> 패스프레이즈를 이용해 추가 지갑을 만들었다면, 기본 니모닉 지갑과 패스프레이즈로 생성한 지갑 두 개를 모두 <span class="mn-orange">watch-only app</span> 에 등록해 두길 추천합니다. <span style="color:var(--text3);font-size:12px;">(혼동 방지를 위해)</span>
             </p>
           </div>
 
