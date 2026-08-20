@@ -436,7 +436,6 @@ body > footer.unified-footer .uf-note{
     <li><a href="nunchuk.html"><img src="wallet.png" alt="NUNCHUK" class="nav-icon" /></a></li>
     <li><a href="bscard.html" class="active"><img src="message.png" alt="VERIFY" class="nav-icon" /></a></li>
     <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
-    <li><a href="hof.html"><img src="user.png" alt="HOF" class="nav-icon" /></a></li>
   </ul>
 </nav>
 
@@ -493,12 +492,6 @@ body > footer.unified-footer .uf-note{
   </div>
   <div style="text-align:center;">
     <button class="dl-btn" id="dl-btn" style="display:none;" onclick="downloadCard()">↓ SAVE AS IMAGE</button>
-    <div id="hof-prompt" style="display:none; margin-top:28px; text-align:center;">
-      <p style="font-family:var(--mono); font-size:12px; color:var(--text); letter-spacing:0.08em; line-height:1.8; margin-bottom:16px;">
-        다운 받은 <span style="color:var(--accent);">BITCOIN SOCIETY</span> 카드를<br>명예의 전당에 등록해보세요.
-      </p>
-      <a href="hof.html" style="display:inline-block; font-family:var(--mono); font-size:12px; letter-spacing:0.15em; color:#000; background:var(--accent); padding:10px 28px; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">→ HALL OF FAME</a>
-    </div>
   </div>
 
   </div>
@@ -751,8 +744,6 @@ window.runVerify = async function() {
   document.getElementById('card-message').textContent = msg;
   document.getElementById('card-result').classList.add('show');
   document.getElementById('dl-btn').style.display = 'inline-block';
-  document.getElementById('hof-prompt').style.display = 'block';
-  setTimeout(() => document.getElementById('hof-prompt').scrollIntoView({behavior:'smooth',block:'end'}), 100);
   btn.disabled = false;
 };
 
@@ -814,8 +805,7 @@ R6XPHBuZHFue95uTEdESAiCeYjaJsRMkW4M23v1IKG5J2gwIudN534IMXIEARJ6VgZjcyExxOoAyANMb
         + '<div class="std-rank-label">당신은</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">상위 25% ~ 35%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">피앗의 노예</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">금 50g ~ 100g</div><div class="std-rank-label">입니다.</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ 다운로드</button>'
-        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>'
-        + '<a href="hof.html" class="std-action-btn">→ HOF로 이동</a>';
+        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>';
 
     } else if (amt < 0.5) {
       // 0.1 ~ 0.499 BTC
@@ -824,8 +814,7 @@ R6XPHBuZHFue95uTEdESAiCeYjaJsRMkW4M23v1IKG5J2gwIudN534IMXIEARJ6VgZjcyExxOoAyANMb
         + '<div class="std-rank-label">당신은</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">상위 10% ~ 15%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">비트코인 개척자</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">금 300g ~ 1kg</div><div class="std-rank-label">입니다.</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ 다운로드</button>'
-        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>'
-        + '<a href="hof.html" class="std-action-btn">→ HOF로 이동</a>';
+        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>';
 
     } else if (amt < 1) {
       // 0.5 ~ 0.999 BTC
@@ -834,8 +823,7 @@ R6XPHBuZHFue95uTEdESAiCeYjaJsRMkW4M23v1IKG5J2gwIudN534IMXIEARJ6VgZjcyExxOoAyANMb
         + '<div class="std-rank-label">당신은</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">상위 5% ~ 8%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">비트코인 시민</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">금 1kg ~ 3kg</div><div class="std-rank-label">입니다.</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ 다운로드</button>'
-        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>'
-        + '<a href="hof.html" class="std-action-btn">→ HOF로 이동</a>';
+        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>';
 
     } else if (amt < 5) {
       // 1 ~ 4.999 BTC
@@ -844,8 +832,7 @@ R6XPHBuZHFue95uTEdESAiCeYjaJsRMkW4M23v1IKG5J2gwIudN534IMXIEARJ6VgZjcyExxOoAyANMb
         + '<div class="std-rank-label">당신은</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">상위 2% ~ 4%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">비트코인 기사</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">금 3kg ~ 10kg</div><div class="std-rank-label">입니다.</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ 다운로드</button>'
-        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>'
-        + '<a href="hof.html" class="std-action-btn">→ HOF로 이동</a>';
+        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>';
 
     } else if (amt < 10) {
       // 5 ~ 9.99 BTC
@@ -854,8 +841,7 @@ R6XPHBuZHFue95uTEdESAiCeYjaJsRMkW4M23v1IKG5J2gwIudN534IMXIEARJ6VgZjcyExxOoAyANMb
         + '<div class="std-rank-label">당신은</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">상위 1%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">비트코인 영주</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">금 10kg ~ 30kg</div><div class="std-rank-label">입니다.</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ 다운로드</button>'
-        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>'
-        + '<a href="hof.html" class="std-action-btn">→ HOF로 이동</a>';
+        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>';
 
     } else {
       // 10 BTC 이상
@@ -864,8 +850,7 @@ R6XPHBuZHFue95uTEdESAiCeYjaJsRMkW4M23v1IKG5J2gwIudN534IMXIEARJ6VgZjcyExxOoAyANMb
         + '<div class="std-rank-label">당신은</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">상위 0.1%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">세계 정복자</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">금 30K ~ 100K</div><div class="std-rank-label">입니다.</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ 다운로드</button>'
-        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>'
-        + '<a href="hof.html" class="std-action-btn">→ HOF로 이동</a>';
+        + '<div class="std-msg">받은 카드를 <span style="color:var(--accent);">명예의 전당 HOF</span>에 등록하세요.</div>';
     }
 
     result.style.display = 'block';

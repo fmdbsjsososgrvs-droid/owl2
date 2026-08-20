@@ -327,7 +327,6 @@
       </a>
       <nav>
           <a href="bscarde.html" class="active">BS CARD</a>
-        <a href="hofe.html">HOF</a>
         <a href="owlbutlere.html">OWL BUTLER</a>
         <a href="bsocietye.html">THE B SOCIETY</a>
         <a href="coldcardqe.html">COLDCARD Q</a>
@@ -336,7 +335,6 @@
     </div>
     <div class="mobile-nav" id="mobileNav">
       <a href="bscarde.html">BS CARD</a>
-      <a href="hofe.html">HOF</a>
       <a href="owlbutlere.html">OWL BUTLER</a>
       <a href="bsocietye.html">THE B SOCIETY</a>
       <a href="coldcardqe.html">COLDCARD Q</a>
@@ -432,12 +430,6 @@
   </div>
   <div style="text-align:center;">
     <button class="dl-btn" id="dl-btn" style="display:none;" onclick="downloadCard()">↓ SAVE AS IMAGE</button>
-    <div id="hof-prompt" style="display:none; margin-top:28px; text-align:center;">
-      <p style="font-family:var(--mono); font-size:12px; color:#e8e8e8; letter-spacing:0.08em; line-height:1.8; margin-bottom:16px;">
-        Register your downloaded <span style="color:var(--accent);">BITCOIN SOCIETY</span> card<br>to the Hall of Fame.
-      </p>
-      <a href="hofe.html" style="display:inline-block; font-family:var(--mono); font-size:12px; letter-spacing:0.15em; color:#000; background:var(--accent); padding:10px 28px; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">→ HALL OF FAME</a>
-    </div>
   </div>
 
   </div>
@@ -690,8 +682,6 @@ window.runVerify = async function() {
   document.getElementById('card-message').textContent = msg;
   document.getElementById('card-result').classList.add('show');
   document.getElementById('dl-btn').style.display = 'inline-block';
-  document.getElementById('hof-prompt').style.display = 'block';
-  setTimeout(() => document.getElementById('hof-prompt').scrollIntoView({behavior:'smooth',block:'end'}), 100);
   btn.disabled = false;
 };
 
@@ -756,8 +746,7 @@ function downloadCard() {
         + '<div class="std-rank-label">You are</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">Top 25% ~ 35%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">Fiat Slave</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">Gold 50g ~ 100g</div><div class="std-rank-label">..</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ Download</button>'
-        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>'
-        + '<a href="hofe.html" class="std-action-btn">→ Go to HOF</a>';
+        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>';
 
     } else if (amt < 0.5) {
       // 0.1 ~ 0.499 BTC
@@ -766,8 +755,7 @@ function downloadCard() {
         + '<div class="std-rank-label">You are</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">Top 10% ~ 15%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">Bitcoin Pioneer</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">Gold 300g ~ 1kg</div><div class="std-rank-label">..</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ Download</button>'
-        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>'
-        + '<a href="hofe.html" class="std-action-btn">→ Go to HOF</a>';
+        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>';
 
     } else if (amt < 1) {
       // 0.5 ~ 0.999 BTC
@@ -776,8 +764,7 @@ function downloadCard() {
         + '<div class="std-rank-label">You are</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">Top 5% ~ 8%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">Bitcoin Citizen</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">Gold 1kg ~ 3kg</div><div class="std-rank-label">..</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ Download</button>'
-        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>'
-        + '<a href="hofe.html" class="std-action-btn">→ Go to HOF</a>';
+        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>';
 
     } else if (amt < 5) {
       // 1 ~ 4.999 BTC
@@ -786,8 +773,7 @@ function downloadCard() {
         + '<div class="std-rank-label">You are</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">Top 2% ~ 4%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">Bitcoin Knight</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">Gold 3kg ~ 10kg</div><div class="std-rank-label">..</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ Download</button>'
-        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>'
-        + '<a href="hofe.html" class="std-action-btn">→ Go to HOF</a>';
+        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>';
 
     } else if (amt < 10) {
       // 5 ~ 9.99 BTC
@@ -796,8 +782,7 @@ function downloadCard() {
         + '<div class="std-rank-label">You are</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">Top 1%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">Bitcoin Lord</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">Gold 10kg ~ 30kg</div><div class="std-rank-label">..</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ Download</button>'
-        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>'
-        + '<a href="hofe.html" class="std-action-btn">→ Go to HOF</a>';
+        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>';
 
     } else {
       // 10 BTC or more
@@ -806,8 +791,7 @@ function downloadCard() {
         + '<div class="std-rank-label">You are</div><div class="std-rank-label" style="color:var(--accent); font-size:16px; letter-spacing:0.15em; margin:6px 0;">Top 0.1%</div><div class="std-rank-label" style="color:var(--accent); font-size:15px; letter-spacing:0.12em; margin:4px 0;">World Conqueror</div><div class="std-rank-label" style="color:var(--accent); font-size:14px; letter-spacing:0.1em; margin:4px 0 12px;">Gold 30K ~ 100K</div><div class="std-rank-label">..</div>'
         + '<img class="std-card-img" src="' + STD_IMG_1CARD + '" alt="BS CARD"/>'
         + '<button class="std-dl-btn" onclick="stdDownloadCard()">↓ Download</button>'
-        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>'
-        + '<a href="hofe.html" class="std-action-btn">→ Go to HOF</a>';
+        + '<div class="std-msg">Register your card to the <span style="color:var(--accent);">Hall of Fame HOF</span>.</div>';
     }
 
     result.style.display = 'block';
