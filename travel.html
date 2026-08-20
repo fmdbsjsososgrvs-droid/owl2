@@ -15,6 +15,7 @@
   --border2: rgba(224,123,10,.32);
   --accent: #e07b0a;
   --accent2: #c96c00;
+  --accent-lt: #f5a623;
   --text: #1a1208;
   --text2: #7a6040;
   --text3: #a08060;
@@ -40,27 +41,198 @@ body {
   .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
   .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
 }
-.page {
-  min-height: calc(100vh - 60px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 5%;
+.blog-head {
+  padding: 48px 5% 28px;
+  max-width: 860px;
+  margin: 0 auto;
 }
-.blank-title {
+.blog-eyebrow {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.3em;
   color: var(--accent);
   text-transform: uppercase;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
-.blank-msg {
+.blog-title {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px;
+}
+.blog-desc {
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 28px;
+}
+.blog-search {
+  position: relative;
+  max-width: 420px;
+}
+.blog-search input {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 11px 42px 11px 14px;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .18s, box-shadow .18s;
+}
+.blog-search input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(224,123,10,.12);
+}
+.blog-search svg {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
   color: var(--text3);
+  pointer-events: none;
+}
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.blog-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.blog-tag:hover, .blog-tag.active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.blog-list {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 5% 80px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+@media (max-width: 700px) {
+  .blog-list { grid-template-columns: 1fr; }
+}
+.post-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .35s, box-shadow .35s, transform .35s;
+  z-index: 0;
+}
+.post-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 10px 28px rgba(224,123,10,.14);
+  transform: translateY(-3px);
+}
+/* 컬러 워시: hover 시 은은한 오렌지-골드 그라데이션이 카드에 번지듯 퍼짐 */
+.post-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(224,123,10,.14), rgba(245,166,35,.16) 45%, transparent 75%);
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .5s ease, transform .5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.post-card:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.post-main { flex: 1; min-width: 0; }
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+.post-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.post-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+.post-excerpt {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post-thumb {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+}
+.blog-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 90px 20px;
+  color: var(--text3);
+}
+.blog-empty .e-icon {
+  font-size: 26px;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.blog-empty .e-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+.blog-empty .e-sub {
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+@media (max-width: 560px) {
+  .blog-title { font-size: 26px; }
+  .post-thumb { width: 72px; height: 72px; }
+  .post-card { gap: 14px; }
 }
 </style>
 </head>
@@ -81,11 +253,71 @@ body {
     <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
   </ul>
 </nav>
-<div class="page">
-  <div>
-    <div class="blank-title">// Travel</div>
-    <div class="blank-msg">준비 중입니다.</div>
+
+<div class="blog-head">
+  <div class="blog-eyebrow">// Travel</div>
+  <h1 class="blog-title">TRAVEL</h1>
+  <p class="blog-desc">여행에 대한 기록.</p>
+  <div class="blog-search">
+    <input type="text" id="blogSearch" placeholder="검색" autocomplete="off" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+  </div>
+  <div class="blog-tags" id="blogTags"></div>
+</div>
+
+<!--
+  POST CARD TEMPLATE (복사해서 .blog-list 안에 추가, 최신순으로 위에 삽입)
+  data-title / data-tags 는 검색·태그 필터용 (JS가 읽음)
+
+  <a class="post-card" href="travel-post-slug.html" data-title="글 제목" data-tags="태그1,태그2">
+    <div class="post-main">
+      <div class="post-meta"><span>2026-01-01</span></div>
+      <p class="post-title">글 제목</p>
+      <p class="post-excerpt">글 요약 1~2줄.</p>
+    </div>
+    <img class="post-thumb" src="썸네일.jpg" alt="" />
+  </a>
+-->
+<div class="blog-list" id="blogList">
+  <div class="blog-empty" id="blogEmpty">
+    <div class="e-icon">✎</div>
+    <div class="e-title">아직 작성된 글이 없습니다</div>
+    <div class="e-sub">곧 첫 번째 글로 채워질 예정입니다.</div>
   </div>
 </div>
+
+<script>
+  document.getElementById('mobileNav')?.classList.remove('open');
+
+  // 검색: post-card의 data-title / 본문 텍스트 매칭, 카드가 없으면 아무 동작 안 함
+  const searchInput = document.getElementById('blogSearch');
+  const blogList = document.getElementById('blogList');
+  searchInput?.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    const cards = blogList.querySelectorAll('.post-card');
+    cards.forEach(card => {
+      const title = (card.dataset.title || card.querySelector('.post-title')?.textContent || '').toLowerCase();
+      const excerpt = (card.querySelector('.post-excerpt')?.textContent || '').toLowerCase();
+      const match = !q || title.includes(q) || excerpt.includes(q);
+      card.style.display = match ? '' : 'none';
+    });
+  });
+
+  // 태그 필터: #blogTags 안에 .blog-tag 버튼이 채워지면 자동으로 동작
+  const tagWrap = document.getElementById('blogTags');
+  tagWrap?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.blog-tag');
+    if (!btn) return;
+    tagWrap.querySelectorAll('.blog-tag').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const tag = btn.dataset.tag;
+    const cards = blogList.querySelectorAll('.post-card');
+    cards.forEach(card => {
+      const tags = (card.dataset.tags || '').split(',').map(s => s.trim());
+      const match = !tag || tag === 'all' || tags.includes(tag);
+      card.style.display = match ? '' : 'none';
+    });
+  });
+</script>
 </body>
 </html>
