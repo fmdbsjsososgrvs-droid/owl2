@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>물리적 보안키 - YUBIKEY (1) | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="hobby.html"><img src="icon/wrench.png" alt="HOBBY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="health.html"><img src="activity.png" alt="HEALTH" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="nunchuk.html"><img src="wallet.png" alt="NUNCHUK" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-20</div>
+  <h1 class="post-h1">물리적 보안키 - YUBIKEY (1)</h1>
+
+  <div class="post-body">
+    <img src="img/a3.jpeg" alt="키링을 단 유비키 두 개" />
+
+    <p>아는 지인 비트코이너의 소개로 물리적 보안키인 유비키(YubiKey)를 구매했다. 최신 NFC 지원 모델로 구매했는데, 덕분에 구형 아이폰에서도 사용 가능하다.</p>
+
+    <p>블링블링하게 키링을 달아주는 게 매너.</p>
+
+    <h2>1. 기능</h2>
+
+    <p>내 계정을 보호한다. 특정 사이트에 유비키를 등록하면, 그 사이트에 새로운 기기로 로그인할 때마다 이 실물 유비키가 필요하다.</p>
+
+    <p>만약 내 주민번호, 연락처, 평소에 쓰는 비밀번호가 모두 털려 중국인의 손에 넘어갔다고 치자. 이제 내 모든 계정은 탈탈 털리는 일만 남았다.</p>
+
+    <p>하지만 유비키를 등록했다면? '짱'은 내가 가진 유비키가 없다면 내 계정에 접근할 수 없다. 이게 바로 넘사벽인 이유이다.</p>
+
+    <blockquote>"내 비번을 알아도 너는 내 계정에 접근할 수 없다"</blockquote>
+
+    <p>는 것이다. 이는 매우 강력한 보안을 선사한다.</p>
+
+    <p>실제 엑스(트위터), 구글, 애플(iCloud), 디스코드를 모두 유비키로 잠궈놓았다.</p>
+
+    <p>또한, 해외거래소인 바이낸스도 유비키를 지원한다니 해외거래소 이용자는 적극 활용하도록 하자. (거래소를 추천하진 않음)</p>
+
+    <p>난 아이폰 한 개에 내 정보를 일절 담지 않은 보안폰을 만들어 사용하는데, 이 애플 계정을 유비키로 한 번 더 잠궈서 쓰며 iCloud 메일을 평소 쓰고 있다.</p>
+
+    <p>보안폰이 궁금하다면?</p>
+
+    <p>또한 보안성이 좋기로 유명한 프로톤 메일도 유비키로 잠글 수 있으니, 나 같은 보안게이들은 활용해보길 바란다.</p>
+
+    <p>유비키로 잠긴 계정은, 비번을 쳐도 보안키를 요구한다.</p>
+
+    <h2>2. 보안 등급</h2>
+
+    <p>보안 등급은 정말 최상급이다. 펜타곤, 미국 육군, 미국 국무부, 영국 정부 등에서 절찬리에 사용하고 있다고 한다.</p>
+
+    <p>유비키 제작사인 유비코(Yubico)는 사회적 가치를 위해 2019년 홍콩 민주화 운동 당시 활동가들에게 500개의 YubiKey를 제공한 적이 있다. 이를 통해 그들이 주고받는 이메일이 미 국무부급 수준의 암호로 암호화되어 중국 공산당이 사찰할 수 없게 만들었다.</p>
+
+    <h2>3. 단점</h2>
+
+    <p>첫 번째는, 강력하고 우수한 만큼 비싸다는 거. 유비키는 개당 10만 원인데, 분실을 대비해 두 개를 살 것을 권한다. (심지어 애플은 유비키가 두 개여야만 등록이 된다.)</p>
+
+    <p>즉 한 방에 20만 원을 써야 한다.</p>
+
+    <p>하지만 문제는 없겠지, 우리는 보안덕후다. 그까짓 20만 원....!</p>
+
+    <p>두 번째 단점은, 이제 귀찮다는 거. 실제 필자는 누워서 유튜브를 아이패드로 감상하다 감동을 받아 구독·좋아요·댓글을 달고 싶었지만, 구글 로그인을 유비키로 잠가둔 덕분에 "나를 로그인하게 만들다니"의 진입장벽이 올라가 버린 것. 결국 그런 거 없이 그냥 잤다.</p>
+
+    <p>이 글을 쓰는 지금까지도 아이패드로 구글 로그인은 안 하고 있음. 으하하.</p>
+
+    <p>이상으로 물리적 보안키 YubiKey의 사용기를 마친다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#유비키</span>
+    <span class="post-tag">#YubiKey</span>
+    <span class="post-tag">#보안</span>
+  </div>
+</div>
+</body>
+</html>
