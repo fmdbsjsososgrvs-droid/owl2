@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fdf4e7" />
+  <title>PSBT | OWL BUTLER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#fdf4e7; --bg2:#faebd4; --bg3:#f5ddb8;
+      --orange:#e07b0a; --orange2:#c96c00; --orange-lt:#f5a623;
+      --black:#1a1208; --gray:#7a6040; --muted:#a08060;
+      --border:rgba(224,123,10,.18); --border2:rgba(224,123,10,.32);
+      --mono:'Share Tech Mono',monospace;
+      --sans:'Inter','Noto Sans KR',sans-serif;
+    }
+    html,body { height:100%; }
+    body { min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--black); font-family:var(--sans); font-feature-settings:"zero" 0; }
+    * { font-feature-settings:"zero" 0; }
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+    .site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--black);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+    .site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+    .site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+    .site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--gray);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+    .site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+    .site-nav .nav-menu a:hover{color:var(--orange2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+    .site-nav .nav-menu a.active{color:#fff;background:var(--orange);border-color:var(--orange);}
+
+    /* TOOL HUB */
+    .frame-wrap { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:48px 5% 100px; }
+    .tool-block { margin-bottom:3rem; }
+    .tool-block:last-child { margin-bottom:0; }
+    .tool-divider { height:1px; background:var(--border2); margin:0 0 3rem; }
+    .frame-label { font-family:var(--mono); font-size:.7rem; letter-spacing:.3em; color:var(--orange-lt); text-transform:uppercase; margin-bottom:.5rem; }
+    .frame-title { font-family:var(--mono); font-size:clamp(1.6rem,4vw,2.4rem); letter-spacing:.12em; color:var(--black); margin-bottom:2rem; }
+    .go-btn {
+      position:relative; overflow:hidden; isolation:isolate;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-family:var(--mono); font-size:.95rem; letter-spacing:.16em; text-transform:uppercase;
+      text-decoration:none; color:#fff;
+      padding:1rem 2.8rem; border-radius:8px;
+      background:linear-gradient(160deg, var(--orange-lt) 0%, var(--orange) 45%, var(--orange2) 100%);
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow:0 8px 22px rgba(224,123,10,.35), inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 8px rgba(0,0,0,.15);
+      transition:transform .18s, box-shadow .18s;
+    }
+    .go-btn:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(224,123,10,.45), inset 0 1px 0 rgba(255,255,255,.65), inset 0 -3px 8px rgba(0,0,0,.15); }
+    .go-btn:active { transform:translateY(0); }
+    /* glass highlight across the top half */
+    .go-btn::before {
+      content:""; position:absolute; inset:0; border-radius:inherit;
+      background:linear-gradient(to bottom, rgba(255,255,255,.4) 0%, rgba(255,255,255,.1) 42%, rgba(255,255,255,0) 55%);
+      pointer-events:none;
+    }
+    /* sweeping shine */
+    .go-btn::after {
+      content:""; position:absolute; top:-60%; left:-60%; width:35%; height:220%;
+      background:linear-gradient(75deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.85) 50%, rgba(255,255,255,0) 100%);
+      transform:rotate(20deg);
+      animation:btn-shine 3.4s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes btn-shine {
+      0% { left:-60%; }
+      38% { left:135%; }
+      100% { left:135%; }
+    }
+    /* FOOTER */
+    footer { border-top:1px solid var(--border2); padding:1.6rem 5%; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer-logo { font-family:var(--mono); font-size:.72rem; letter-spacing:.22em; color:var(--orange2); }
+    .footer-note { font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; color:var(--muted); }
+
+    @media (max-width:700px) {
+      .site-nav { padding:8px 5%; }
+      .site-nav .nav-menu { display:flex !important; flex-wrap:wrap; width:100%; border-top:1px solid var(--border); padding-top:6px; margin-top:4px; gap:0; }
+      .site-nav .nav-menu a { padding:.4rem .65rem; font-size:.72rem; }
+      footer { flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a class="nav-logo" href="index.html">
+      <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+    </a>
+    <ul class="nav-menu">
+      <li><a href="security.html"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+      <li><a href="hobby.html"><img src="icon/wrench.png" alt="HOBBY" class="nav-icon" /></a></li>
+      <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+      <li><a href="psbt.html" class="active"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+      <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+      <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+      <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+      <li><a href="nunchuk.html"><img src="wallet.png" alt="NUNCHUK" class="nav-icon" /></a></li>
+      <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+    </ul>
+  </nav>
+
+  <div class="frame-wrap">
+    <div class="tool-block">
+      <p class="frame-label">// P2P HELPER</p>
+      <h2 class="frame-title">P2P 수수료 계산기.</h2>
+      <a class="go-btn" href="/P2PHELPER.html" target="_blank" rel="noopener">P2P HELPER</a>
+    </div>
+
+    <div class="tool-divider" aria-hidden="true"></div>
+
+    <div class="tool-block">
+      <p class="frame-label">// PSBT</p>
+      <h2 class="frame-title">PSBT 잔돈(OUTPUT) 검증기</h2>
+      <a class="go-btn" href="https://psbt-verifier.pages.dev" target="_blank" rel="noopener">PSBT VERIFY</a>
+    </div>
+
+    <div class="tool-divider" aria-hidden="true"></div>
+
+    <div class="tool-block">
+      <p class="frame-label">// HODLER CALCULATOR</p>
+      <h2 class="frame-title">HODLER / 구매력 계산기</h2>
+      <a class="go-btn" href="/HODL.html" target="_blank" rel="noopener">HODLER CALCULATOR</a>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-logo">OWL BUTLER</span>
+    <span class="footer-note">NOT YOUR KEYS, NOT YOUR BITCOIN.</span>
+  </footer>
+
+</body>
+</html>
