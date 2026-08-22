@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>애증의 COLDCARD Q | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="hobby.html"><img src="icon/wrench.png" alt="HOBBY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="nunchuk.html"><img src="wallet.png" alt="NUNCHUK" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-22</div>
+  <h1 class="post-h1">애증의 COLDCARD Q</h1>
+
+  <div class="post-body">
+    <p>이 홈페이지에 예전부터 와주셨던 분이라면, 내가 코인카이트(Coinkite)사의 콜드카드 Q에 얼마나 애착을 가지고 썼는지 알 거다.</p>
+
+    <p>거의 애착인형 급이었지. 여기저기 추천도 하고 다녔다니까.</p>
+
+    <img src="img/a7.jpeg" alt="내 하드웨어 지갑 컬렉션, 맨 왼쪽이 콜드카드 Q" />
+
+    <p>그러다 엔트로피 부족 사건이 터지면서, 내가 고생해서 만든 작업물들도 같이 무너지기 시작했다.</p>
+
+    <p>메뉴 하나하나 들어가보고, 사진 찍고, 내용 수정해가며 콜드카드를 알리려 했던 내 노력과 시간이 그대로 날아가버렸다.</p>
+
+    <h2>1. 내가 좋아했던 것들</h2>
+
+    <p>나는 콜드카드 Q의 '보안노트' 기능을 즐겨 썼다. 인터넷이 연결되지 않는 환경에서 문서를 저장할 수 있다는 게, 꽤 매력적이지 않은가.</p>
+
+    <p>시드를 여러 개 저장할 수 있는 부분, 멀티시그 수령 주소가 정말 내 소유의 주소인지 QR 한 번으로 확인할 수 있는 기능도 좋았고, 탭사이너·세츠카드와의 연계도 마음에 들었다.</p>
+
+    <h2>2. 근데 가장 중요한 데서 구멍이 뚫려 있었다</h2>
+
+    <p>문제는, 이런 유용한 기능이 아무리 많으면 뭐 하나. 가장 핵심적인 부분에서 구멍이 뚫려 있었다는 걸 안 순간, 신뢰는 나락으로 떨어졌다.</p>
+
+    <p>바로 시드 생성 부분이었다. 원래 128비트여야 할 엔트로피가, 일부 기기·펌웨어 버전에서는 하드웨어 난수 생성기 대신 예측 가능한 소프트웨어 대체 로직으로 슬쩍 넘어가면서 한참 모자란 수준으로 떨어져 있었다고 한다. 시드 생성에 문제가 있으면, 그 위에 쌓인 다른 기능들이 아무리 잘 만들어졌어도 다 같이 흔들린다.</p>
+
+    <blockquote>암호학에서 가장 무서운 말은 "대부분은 안전하다"이다.</blockquote>
+
+    <h2>3. 오픈소스라서 오히려 더 씁쓸했다</h2>
+
+    <p>오픈소스니까, 그들의 설명을 들어보면 시드 생성 이외엔 괜찮을 거라는 생각도 든다. 하지만 마음이 내키질 않는다. 한 번 잃은 신뢰를 되찾기는 정말 쉽지 않다니까.</p>
+
+    <p>이제는 떠나보내야 할 시간인 것 같다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#콜드카드</span>
+    <span class="post-tag">#COLDCARDQ</span>
+    <span class="post-tag">#엔트로피</span>
+  </div>
+</div>
+</body>
+</html>
