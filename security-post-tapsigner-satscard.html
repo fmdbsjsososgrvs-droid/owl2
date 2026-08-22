@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>탭사이너 & 새츠카드 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="hobby.html"><img src="icon/wrench.png" alt="HOBBY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="nunchuk.html"><img src="wallet.png" alt="NUNCHUK" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-22</div>
+  <h1 class="post-h1">탭사이너 & 새츠카드</h1>
+
+  <div class="post-body">
+    <p>지난 글에서 콜드카드 Q를 떠나보내는 얘기를 했다. 근데 후유증이 그걸로 끝이 아니더라.</p>
+
+    <p>서랍을 열어보니 같은 코인카이트(Coinkite)에서 나온 탭사이너랑 새츠카드가 나란히 누워있었다. 둘 다 개인키가 카드 밖으로 안 나가는, 이론상 완벽한 콜드월렛이다. 근데 이상하게 손이 안 가더라.</p>
+
+    <blockquote>콜드카드 Q, 여러 번 재부팅해도 인터넷 근처도 안 간 콜드월렛인데, 요즘은 그냥 핫월렛보다도 믿음이 안 간다. 이게 무슨 매직인지.</blockquote>
+
+    <p>같은 회사에서 만들었다는 이유 하나만으로, 잘 지내던 카드 두 장까지 덩달아 의심받는 신세가 된 거다. 억울할 만하다.</p>
+
+    <h2>1. 그래서 진짜 안전한 거야, 아니야?</h2>
+
+    <p>정신 차리고 찾아보니, 코인카이트도 이 부분은 명확히 밝혀뒀다. 탭사이너와 새츠카드는 콜드카드와 <span style="color:var(--accent2)">완전히 다른 코드베이스</span>로 동작해서, 이번 엔트로피 사태와는 무관하다고.</p>
+
+    <p>머리로는 이해했다. 근데 마음이 안 따라주는 거, 이게 바로 신뢰가 한 번 깨졌을 때 생기는 부작용이다. 논리랑 상관없이 "코인카이트"라는 글자만 봐도 일단 한 번 의심하고 보는 병에 걸려버린 거지. 나만 이런 거 아니지…?</p>
+
+    <h2>2. 그래도 복습은 하고 가자 — 탭사이너</h2>
+
+    <p>탭사이너는 카드 안에 개인키를 직접 품고 있는 NFC 서명 카드다. 처음 휴대폰에 태그하는 그 순간 카드 내부에서 개인키가 생성되고, 이 키는 죽을 때까지 카드 밖으로 안 나온다. QR 화면도 없이, 그냥 휴대폰 뒤에 톡 갖다 대는 것만으로 서명이 끝난다.</p>
+
+    <img src="img/a8.jpeg" alt="탭사이너 백업 카드와 새츠카드" />
+
+    <p>서명할 때마다 CVC를 입력해야 하고, 카드를 잃어버리면 초기화할 때 받아둔 백업 파일 + CVC가 유일한 복구 수단이다. 이 둘을 같이 보관하면 안 되는 이유도 여기 있다.</p>
+
+    <h2>3. 그리고 새츠카드</h2>
+
+    <p>새츠카드는 성격이 완전히 다르다. "내 지갑의 서명키"가 아니라, <span style="color:var(--accent2)">카드를 쥔 사람이 곧 그 돈의 주인</span>이 되는, 실물 지폐에 가까운 카드다. 카드 하나에 10개의 슬롯이 있고, 슬롯마다 독립된 주소와 개인키가 따로 있다.</p>
+
+    <p>잔액 확인은 CVC 없이도 태그만 하면 되고, 실제로 그 돈을 쓰려면 "언실(Unseal)"이라는 절차로 개인키를 노출시켜서 다른 지갑으로 스윕해야 한다. 언실된 슬롯은 그 순간부터 폐기 취급 — 재입금하면 안 된다. 소액 선물용, 테스트용으로는 이만한 게 없다.</p>
+
+    <h2>4. 그래서 결론은</h2>
+
+    <p>기술적으로는 아무 문제 없다는 걸 안다. 그래도 당분간은 새츠카드 슬롯 하나 열 때마다 손이 살짝 떨릴 것 같다. 신뢰라는 게 참 회복이 더디다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#탭사이너</span>
+    <span class="post-tag">#새츠카드</span>
+    <span class="post-tag">#코인카이트</span>
+    <span class="post-tag">#Satscard</span>
+  </div>
+</div>
+</body>
+</html>
