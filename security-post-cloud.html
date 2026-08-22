@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>클라우드 서비스 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="hobby.html"><img src="icon/wrench.png" alt="HOBBY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-22</div>
+  <h1 class="post-h1">클라우드 서비스</h1>
+
+  <div class="post-body">
+    <img src="img/img.png" alt="클라우드 서비스 개념도" />
+
+    <p>클라우드 서비스는 편리하다. 문서를 저장해두면, 어떤 환경이든 어떤 기기든 인터넷만 되면 바로 꺼내 볼 수 있으니까.</p>
+
+    <p>근데 이 편리함에 경종을 울린 사건이 하나 있었으니, 바로 애플의 제로데이 사태다. 그 이후로 나는 좀 더 안전한 클라우드 서비스를 찾는 데 몰두했다. 핵심은 <span style="color:var(--accent2)">종단간 암호화</span>와 <span style="color:var(--accent2)">분산 저장</span>. 최근에 추가한 건 유비키 암호화다.</p>
+
+    <h2>1. 프로톤 드라이브 — 회사도 못 보는 파일</h2>
+
+    <p>프로톤 드라이브처럼 종단간 암호화를 제공하는 클라우드는, 정부가 자료 공개를 요청해도 프로톤 직원조차 내용을 볼 수 없다. 모든 파일이 애초에 암호화된 채로 저장되기 때문이다. 회사가 안 보여주는 게 아니라, 회사도 볼 방법이 없는 거다.</p>
+
+    <h2>2. 근데 거기서 만족하면 보안 게이의 예의가 아니지</h2>
+
+    <p>맥북에서 암호화된 디스크 이미지를 하나 만들고, 그 안에 유비키로 암호화한 파일을 넣는다. 완성된 파일을 통째로 넣는 게 아니라, 중요 문서를 반으로 쪼개서 절반만 넣는다. 나머지 절반은 또 다른 클라우드에 따로 저장한다.</p>
+
+    <p>이렇게 겹겹이 쌓아 놓은 암호를 전부 뚫고 내 문서를 보려면, 계산상 수 조 원에서 수십 조 원이 든다. 혹은 몇 조 년이 걸리든가. 둘 중 뭐가 됐든, 그 돈이면 그냥 나한테 직접 물어보는 게 훨씬 싸게 먹힐 거다.</p>
+
+    <h2>3. 그럼 애플은 이제 안전한가?</h2>
+
+    <p>애플도 제로데이 사태 이후 정신을 차리고 고급 데이터 보호(Advanced Data Protection)나 FileVault 같은 기능을 내놨다. 근데 애플처럼 큰 대기업일수록 오히려 그게 약점이 된다.</p>
+
+    <p>실제로 영국 정부가 아이클라우드 데이터에 백도어를 열어달라고 요구했을 때, 애플은 굴복하는 대신 영국에서 고급 데이터 보호 기능 자체를 꺼버리는 쪽을 택했다. 정부 요청에 굴해야 하는 순간이, 이번이 마지막이 아닐 수도 있다는 뜻이다. 큰 회사는 큰 만큼 정부 앞에서 협상 카드가 많지 않다.</p>
+
+    <h2>4. 그래서 정리하면</h2>
+
+    <p>구글 드라이브는 쓰지 마라. 그리고 중요하지 않은 파일이나 문서라면, 메가(Mega) 드라이브를 추천한다. 종단간 암호화는 아니지만, 로그인할 때 유비키로 한 번 잠글 수 있기 때문이다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#클라우드</span>
+    <span class="post-tag">#종단간암호화</span>
+    <span class="post-tag">#프로톤드라이브</span>
+    <span class="post-tag">#유비키</span>
+  </div>
+</div>
+</body>
+</html>
