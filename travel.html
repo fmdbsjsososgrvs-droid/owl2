@@ -269,7 +269,7 @@ body {
 
   <a class="post-card" href="travel-post-slug.html" data-title="글 제목" data-tags="태그1,태그2">
     <div class="post-main">
-      <div class="post-meta"><span>2026-01-01</span></div>
+      <div class="post-meta"><span>2026-01-01</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
       <p class="post-title">글 제목</p>
       <p class="post-excerpt">글 요약 1~2줄.</p>
     </div>
@@ -279,7 +279,7 @@ body {
 <div class="blog-list" id="blogList">
   <a class="post-card" href="travel-post-group.html" data-title="GROUP" data-tags="모임,TheBSociety,기록">
     <div class="post-main">
-      <div class="post-meta"><span>2026-08-23</span></div>
+      <div class="post-meta"><span>2026-08-23</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
       <p class="post-title">GROUP</p>
       <p class="post-excerpt">모임을 만든 지 1년, 신뢰와 유대감으로 다져진 시간과 우리의 상징을 새긴 카드에 대한 기록.</p>
     </div>
@@ -320,5 +320,9 @@ body {
     });
   });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/list-engagement.js"></script>
 </body>
 </html>
