@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
 <style>
 :root {
   --bg: #fdf4e7;
@@ -216,6 +217,30 @@ body {
     <span class="post-tag">#age</span>
     <span class="post-tag">#에어갭</span>
   </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
 </body>
 </html>
