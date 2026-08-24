@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에어갭 노트북(2) | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-24</div>
+  <h1 class="post-h1">에어갭 노트북(2)</h1>
+
+  <div class="post-body">
+    <p>에어갭 노트북에 파일을 보내기 위한 페이지를 완성했다. 홈페이지에도 올려뒀다.</p>
+
+    <p>이걸로 작은 파일(문서, 사진 정도)을 옮길 수 있으니, 해보고 싶은 분들은 <a href="psbt.html">PSBT 페이지</a>의 QR SENDER로 한번 해보셔요들. 작동 잘 된다.</p>
+
+    <img src="img/a16.png" alt="QR SENDER 초기 화면" />
+
+    <h2>1. 만든 방식</h2>
+
+    <p>원리는 단순하다. 파일을 base64로 인코딩한 뒤, QR코드 하나가 담을 수 있는 크기만큼 잘게 쪼갠다. 그 조각들을 순서대로 QR코드로 바꿔서 화면에 계속 띄워준다. 에어갭 노트북 쪽 카메라가 그 화면을 계속 찍고 있다가, 조각을 다 모으면 원래 파일로 복원하는 방식이다.</p>
+
+    <p>중간에 조각 하나를 놓쳐도 상관없다. 안내 프레임을 주기적으로 다시 끼워 넣으면서 끝날 때까지 전체를 반복 재생하기 때문에, 놓친 조각도 결국 다시 나온다.</p>
+
+    <img src="img/a17.png" alt="QR코드가 조각을 전송 중인 화면" />
+
+    <h2>2. 여전히 단방향</h2>
+
+    <p>전에도 언급했지만, 이 노트북은 여전히 단방향이다. QR SENDER는 노트북 <em>안으로</em> 파일을 넣어주는 기능이지, 에어갭 노트북에서 <em>밖으로</em> 파일을 빼내는 기능은 만들어 두지 않았다.</p>
+
+    <p>들어오는 문은 넓혔지만, 나가는 문은 여전히 없다.</p>
+
+    <p>재밌다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#에어갭</span>
+    <span class="post-tag">#보안노트북</span>
+    <span class="post-tag">#QRSENDER</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
