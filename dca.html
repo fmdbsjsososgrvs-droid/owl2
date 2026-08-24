@@ -232,21 +232,21 @@ body{padding-top:124px;}
     <div class="ctx-card">
       <div class="ctx-head">
         <span class="ctx-title">BTC 장기 통계</span>
-        <span class="ctx-source" id="statsSource">upbit · loading</span>
+        <span class="ctx-source" id="statsSource">loading</span>
       </div>
       <div class="stat-list">
         <div class="stat-row"><span class="stat-label">최근 1년 변동률</span><span class="stat-value" id="stat1y">—</span></div>
         <div class="stat-row"><span class="stat-label">최근 4년 배율</span><span class="stat-value" id="stat4y">—</span></div>
         <div class="stat-row"><span class="stat-label">상장 이후 연평균 성장률</span><span class="stat-value" id="statCagr">—</span></div>
       </div>
-      <p class="stat-hint">// 업비트 KRW-BTC 월봉 기준. 과거 수익률이 미래를 보장하지 않습니다.</p>
+      <p class="stat-hint">// 바이낸스 BTC-USDT 월봉을 현재 환율로 원화 환산한 기준. 과거 수익률이 미래를 보장하지 않습니다.</p>
     </div>
   </div>
 
   <!-- Main Card #1 — Past DCA simulator -->
   <div class="card">
     <div class="card-title">01 · 과거 DCA 시뮬레이터</div>
-    <p class="card-sub">"만약 그때부터 매월 N원씩 샀다면 지금 얼마?" — 실제 업비트 월봉 시세로 계산합니다.</p>
+    <p class="card-sub">"만약 그때부터 매월 N원씩 샀다면 지금 얼마?" — 바이낸스 월봉 시세를 원화 환산해 계산합니다.</p>
 
     <div class="form-row">
       <span class="form-label">시작 시점</span>
@@ -394,17 +394,27 @@ body{padding-top:124px;}
   }
 
   async function fetchMonthlyCandles(){
-    // Upbit returns newest first; request as many as possible (<=200)
-    const r = await fetch('https://api.upbit.com/v1/candles/months/?market=KRW-BTC&count=200');
+    // Upbit의 월봉(candles/months) API는 브라우저 CORS를 막아둬서(티커만 허용)
+    // 직접 호출이 안 됨. 대신 바이낸스(BTCUSDT) 월봉을 가져온 뒤, 현재 원화가/
+    // 달러가 비율(환율)을 곱해 원화 환산합니다. 과거 시점의 실제 환율이 아니라
+    // "현재 환율 고정" 기준이라 절대 원화 액수는 근사치지만, 등락률·배수·CAGR·
+    // DCA 시뮬레이션은 원화·달러 양쪽에 동일 배율이 곱해져 결과가 그대로 보존됩니다.
+    const usdRes = await BtcPrice.fetchUsd();
+    const fx = currentBtcKrw / usdRes.price;
+
+    const r = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1M&limit=200');
     const d = await r.json();
-    // Keep oldest->newest order
-    monthlyCandles = d.slice().reverse().map(c => ({
-      kst: (c.candle_date_time_kst || '').slice(0, 7),  // YYYY-MM
-      open: c.opening_price,
-      close: c.trade_price,
-      high: c.high_price,
-      low: c.low_price,
-    }));
+    // Binance klines are already oldest->newest
+    monthlyCandles = d.map(c => {
+      const kst = new Date(c[0] + 9 * 3600 * 1000).toISOString().slice(0, 7); // UTC → KST 근사, YYYY-MM
+      return {
+        kst: kst,
+        open: parseFloat(c[1]) * fx,
+        high: parseFloat(c[2]) * fx,
+        low: parseFloat(c[3]) * fx,
+        close: parseFloat(c[4]) * fx,
+      };
+    });
   }
 
   function computeStats(){
@@ -434,7 +444,7 @@ body{padding-top:124px;}
 
     const since = oldest.kst;
     document.getElementById('statsSource').textContent =
-      'upbit · since ' + since;
+      'binance(usd→krw 환산) · since ' + since;
   }
 
   // -------- Main Card #1: Past DCA --------
