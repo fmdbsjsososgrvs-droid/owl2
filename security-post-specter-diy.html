@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스팩터 DIY 터지나? | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-27</div>
+  <h1 class="post-h1">스팩터 DIY 터지나?</h1>
+
+  <div class="post-body">
+    <p>스팩터 DIY(specter-diy)는 비트코인 하드웨어 지갑(오프라인 서명 기기)에 들어가는 오픈소스 펌웨어다.</p>
+
+    <p>비트코인 거래를 만들 때, 보통 내가 보내고 싶은 만큼만 상대방한테 가고 나머지(잔돈)는 다시 내 지갑 주소로 돌아온다. 이걸 "체인지(change) 출력"이라고 부른다. 지갑 소프트웨어는 이 잔돈 출력을 화면에 굳이 안 보여주고, "이건 내 돈이니까 신경 안 써도 돼"라고 자동으로 숨겨버리는 게 보통이다.</p>
+
+    <img src="img/a24.jpeg" alt="cryptoadvance/specter-diy PR #387 화면" />
+
+    <h2>1. 근데 그거, 컴퓨터 말만 믿고 있었다</h2>
+
+    <p>문제는 지금까지 이 기기가 "이게 잔돈이 맞나"를 판단할 때, 연결된 컴퓨터(호스트)가 보내주는 정보를 그대로 믿고 있었다는 거다.</p>
+
+    <p>근데 그 컴퓨터가 악성코드에 감염됐거나 공격자한테 조작당한 상태라면? 사실은 공격자 주소로 돈이 빠져나가는 건데, 기기한테 "이건 잔돈이야, 신경 안 써도 돼"라고 거짓말을 할 수 있었다. 그러면 사용자는 그 출력을 화면에서 보지도 못하고 그냥 서명해버린다.</p>
+
+    <blockquote>내 <a href="security-post-psbt-output-verifier.html">잔돈검증기 글</a>에서 계속 얘기했던 그 시나리오다. 코디네이터(와치온리 앱)를 100% 신뢰하면 안 되는 이유.</blockquote>
+
+    <h2>2. PR #387, 이번엔 기기가 직접 계산한다</h2>
+
+    <p>이번 PR(#387)이 이 부분을 고쳤다. 이제는 호스트가 주는 정보를 무조건 믿지 않고, 기기 스스로 "이 주소가 정말 내 지갑에서 나온 잔돈 주소가 맞는지"를 직접 암호학적으로 재계산해서 확인한다.</p>
+
+    <p>계산 결과가 실제 출력 주소랑 정확히 일치할 때만 잔돈으로 인정하고, 조금이라도 애매하거나 확인이 안 되면 무조건 안전한 쪽 — 잔돈이 아닌 것으로 취급해서 사용자한테 보여주는 쪽 — 으로 처리하도록 바꿨다.</p>
+
+    <p>정리하면, "기기가 스스로 검증 안 하고 컴퓨터 말만 믿다가 돈을 잃을 수 있는 보안 구멍"을 막은 수정이다. 테스트 41개 전부 통과했고, 다른 개발자(al-munazzim) 리뷰도 승인받았다. 다만 아직 최종 병합은 안 되고 Open 상태다.</p>
+
+    <p>이런 일이 진짜 생기다니, 참 요즘 무섭다.</p>
+
+    <p>엑스(X)의 '비미사' 계정은 역시 팔로잉해줘야 한다.</p>
+
+    <p>그리고 이거, 내 홈페이지에 있는 <a href="psbt.html">PSBT 잔돈검증기</a>가 바로 이런 상황 대비하려고 만든 거다. 쓰세요. 날 못 믿겠으면, 직접 만들어 쓰세요.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#SpecterDIY</span>
+    <span class="post-tag">#하드웨어지갑</span>
+    <span class="post-tag">#잔돈검증</span>
+    <span class="post-tag">#PSBT</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
