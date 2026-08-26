@@ -2,7 +2,7 @@
 // 한 번 온라인으로 열면 이 페이지를 저장해두고, 이후엔 네트워크 없이도 그대로 열립니다.
 // 주의: 이 파일의 scope는 등록부(receiver.html)에서 '/receiver.html'로 좁혀서 등록하지만,
 // 구형 브라우저 대비로 fetch 핸들러에서도 이 자산 하나만 명시적으로 가로챈다.
-const CACHE_NAME = "qr-receiver-v3";
+const CACHE_NAME = "qr-receiver-v4";
 const ASSET = "/receiver.html";
 
 self.addEventListener("install", (event) => {
