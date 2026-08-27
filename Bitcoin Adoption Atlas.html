@@ -420,6 +420,67 @@ body {
   font-size: 12px;
   color: #B0AA9F;
 }
+
+/* ---- ported from 실시간 비트코인 (bitcoin.html): holdings / miners / genesis timeline ---- */
+.section-wrap { max-width: 1240px; margin: 44px auto 0; padding: 0 36px; }
+.section-wrap:last-of-type { margin-bottom: 20px; }
+
+.card{background:#FFF8EF;border:1px solid rgba(217,119,6,.22);border-radius:14px;padding:clamp(16px,2.5vw,28px);}
+.card h2{margin:0 0 4px;font-size:15px;font-weight:700;color:#D97706;font-family:'IBM Plex Mono',monospace;}
+.card .sub{margin:0 0 18px;font-size:11px;color:#96714A;font-family:'IBM Plex Mono',monospace;}
+.card .foot{margin:16px 0 0;font-size:11.5px;color:#96714A;line-height:1.6;}
+.card-head-row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 18px;margin-bottom:8px;}
+.card-head-row .titles{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;}
+
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:#96714A;font-family:'IBM Plex Mono',monospace;user-select:none;cursor:pointer;}
+.toggle-track{width:34px;height:19px;border-radius:10px;background:rgba(217,119,6,.25);position:relative;transition:background .15s;flex:none;}
+.toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#FFF8EF;transition:transform .15s;}
+.toggle.on .toggle-track{background:#F7931A;}
+.toggle.on .toggle-track::after{transform:translateX(15px);}
+.toggle:hover .toggle-track{background:rgba(217,119,6,.4);}
+.toggle.on:hover .toggle-track{background:#e28611;}
+
+.holdings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:clamp(14px,1.8vw,24px);}
+.bar-row{display:grid;gap:10px;align-items:center;}
+.bar-row.country{grid-template-columns:26px 92px 1fr auto;}
+.bar-row.corp{grid-template-columns:110px 74px 1fr auto;}
+.bar-row.miner-row{grid-template-columns:26px 100px 1fr auto;}
+.bar-rank{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#96714A;}
+.bar-name{font-size:13px;font-weight:600;}
+.bar-track{height:22px;background:rgba(217,119,6,.14);border-radius:5px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:5px;}
+.bar-amt{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#2E2013;min-width:96px;text-align:right;}
+.corp-name-wrap{display:flex;align-items:center;gap:8px;min-width:0;}
+.corp-chip{width:26px;height:26px;border-radius:7px;color:#100E0A;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex:none;}
+.corp-name{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.corp-first{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#96714A;}
+.list-col{display:flex;flex-direction:column;gap:13px;}
+
+.miner-card .miner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(460px,100%),1fr));gap:20px;align-items:center;}
+.miner-canvas-wrap{position:relative;}
+.miner-canvas-wrap canvas{width:100%;display:block;border-radius:10px;}
+.miner-map-fallback{position:absolute;inset:0;display:none;place-items:center;font-size:12px;color:#96714A;background:repeating-linear-gradient(45deg,#FFF3E0,#FFF3E0 10px,#FFEBD5 10px,#FFEBD5 20px);border-radius:10px;font-family:'IBM Plex Mono',monospace;text-align:center;padding:12px;}
+.miner-map-fallback.show{display:grid;}
+
+/* genesis + adoption timeline (S-curve / boustrophedon layout) */
+.tl-wrap{position:relative;padding:16px 2px 6px;}
+.tl-path-svg{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
+.tl-rows{position:relative;display:flex;flex-direction:column;gap:20px;z-index:1;}
+.tl-row{display:flex;align-items:flex-start;}
+.tl-row.reverse{flex-direction:row-reverse;}
+.tl-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;box-sizing:border-box;padding:6px 3px 0;background:none;border:none;font-family:inherit;flex:none;}
+.tl-dot{border-radius:50%;transition:all .18s;flex:none;}
+.tl-year{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;}
+.tl-short{font-size:10.5px;text-align:center;line-height:1.25;}
+.tl-detail{margin-top:14px;background:#FFF3E0;border:1px solid rgba(217,119,6,.32);border-left:3px solid #F7931A;border-radius:10px;padding:14px 18px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;min-height:64px;}
+.tl-detail-year{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#D97706;}
+.tl-detail-title{font-size:15px;font-weight:700;}
+.tl-detail-desc{font-size:13px;color:#6B5031;line-height:1.6;flex-basis:100%;}
+
+@media (max-width:640px){
+  .bar-row.country{grid-template-columns:20px 74px 1fr auto;}
+  .bar-row.corp{grid-template-columns:88px 60px 1fr auto;}
+}
 </style>
 </head>
 <body>
@@ -484,53 +545,81 @@ body {
       <div class="map-caption">CLICK A COUNTRY FOR DETAILS · 색칠된 국가를 클릭하면 상세정보가 열립니다</div>
     </div>
 
-    <section class="timeline">
-      <h2>Adoption Timeline</h2>
-      <p class="timeline-sub">주요 채택 연혁</p>
-      <div class="timeline-list">
-        <div class="timeline-row">
-          <div class="timeline-year">2009</div>
-          <div><div class="timeline-event">Genesis block mined</div><div class="timeline-desc">비트코인 네트워크 가동 시작.</div></div>
+    <div class="section-wrap">
+      <section class="holdings-grid" aria-label="보유 현황">
+        <div class="card">
+          <div class="card-head-row">
+            <div class="titles" style="display:block">
+              <h2>국가별 BTC 보유량 TOP 5</h2>
+            </div>
+            <label class="toggle on" id="unitToggle">
+              <span id="unitToggleLabel">UNIT: BTC</span>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+          <p class="sub">SOVEREIGN HOLDINGS · 압수·매입 포함 추정치 (USD 환산은 실시간 시세 적용)</p>
+          <div class="list-col" id="countryList"></div>
+          <p class="foot">엘살바도르는 2026년 상반기 기준 약 7,700 BTC로 TOP 5에 새로 진입 — 2021년 세계 최초 법정화폐 채택국. 반면 부탄은 2026년 대규모 매각으로 약 3,100 BTC까지 줄어 순위 밖으로 밀려남(2024년 말 정점 대비 70%↓). 미국은 2025년 행정명령으로 압수분을 '전략 비트코인 준비금'으로 전환.</p>
         </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2013</div>
-          <div><div class="timeline-event">Germany recognizes Bitcoin as private money</div><div class="timeline-desc">독일, 주요국 최초로 비트코인을 공식 인정.</div></div>
+
+        <div class="card">
+          <h2>기업 트레저리 — 첫 매수와 현재 보유량</h2>
+          <p class="sub">CORPORATE TREASURIES · FIRST BUY → CURRENT</p>
+          <div class="list-col" id="corpList"></div>
+          <p class="foot">Strategy(구 MicroStrategy)는 2020년 8월 첫 매수 이후 2026년 중반 기준 84만 BTC 이상, 총발행량의 4%를 넘는 물량을 축적 — 기업 트레저리 전략의 원형이 됨. Metaplanet은 2026년 4만 BTC를 넘기며 세계 3위 기업 트레저리로 부상.</p>
         </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2017</div>
-          <div><div class="timeline-event">Japan legalizes crypto payments</div><div class="timeline-desc">일본, 비트코인을 합법 결제수단으로 법제화.</div></div>
+      </section>
+    </div>
+
+    <div class="section-wrap">
+      <div class="card miner-card" aria-label="채굴자 분포">
+        <div class="card-head-row">
+          <div class="titles">
+            <h2>세계 채굴자 분포와 대이동</h2>
+            <span class="sub" style="margin:0">HASHRATE SHARE · 2021 중국발 이동 경로 애니메이션 · 추정치</span>
+          </div>
+          <label class="toggle on" id="migToggle">
+            <span>이동 경로 표시</span>
+            <span class="toggle-track"></span>
+          </label>
         </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2021</div>
-          <div><div class="timeline-event">Canada launches first spot Bitcoin ETF</div><div class="timeline-desc">캐나다, 세계 최초 현물 ETF 승인.</div></div>
-        </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2021</div>
-          <div><div class="timeline-event">El Salvador adopts Bitcoin as legal tender · China bans all activity</div><div class="timeline-desc">엘살바도르 법정화폐 채택, 같은 해 중국은 거래·채굴 전면 금지.</div></div>
-        </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2022</div>
-          <div><div class="timeline-event">Central African Republic adopts, then repeals, legal tender</div><div class="timeline-desc">중앙아프리카공화국, 채택 1년 만인 2023년 철회.</div></div>
-        </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2024</div>
-          <div><div class="timeline-event">US approves spot Bitcoin ETFs</div><div class="timeline-desc">미국 SEC 현물 ETF 승인 — 홍콩·호주가 뒤이어 승인.</div></div>
-        </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2024</div>
-          <div><div class="timeline-event">Germany sells its seized 50,000 BTC</div><div class="timeline-desc">독일, 압수 보유 물량 전량 매각.</div></div>
-        </div>
-        <div class="timeline-row">
-          <div class="timeline-year">2025</div>
-          <div><div class="timeline-event">US establishes Strategic Bitcoin Reserve</div><div class="timeline-desc">미국, 행정명령으로 전략 비트코인 준비금 설립.</div></div>
-        </div>
-        <div class="timeline-row timeline-row-last">
-          <div class="timeline-year">2025</div>
-          <div><div class="timeline-event">El Salvador–IMF agreement scales back mandates</div><div class="timeline-desc">IMF 협약으로 민간 부문 비트코인 수용 의무 완화.</div></div>
+        <div class="miner-grid">
+          <div class="miner-canvas-wrap">
+            <canvas id="mapCanvas"></canvas>
+            <div class="miner-map-fallback" id="mapFallback">world map — 네트워크 연결 필요</div>
+          </div>
+          <div class="list-col">
+            <div id="minerList" class="list-col"></div>
+            <p class="foot" style="margin:4px 0 0">2019년 중국은 전세계 해시레이트의 75%를 차지했으나, 2021년 6월 전면 금지 이후 미국이 1위로. 지도 위 이동선은 중국발 채굴 장비의 주요 이주 경로.</p>
+          </div>
         </div>
       </div>
-      <p class="timeline-footnote">본 페이지의 수치는 공개 자료 기반의 대략적 추정치이며, 투자 조언이 아닙니다.</p>
-    </section>
+    </div>
+
+    <div class="section-wrap">
+      <div class="card" aria-label="타임라인">
+        <div class="card-head-row">
+          <div class="titles">
+            <h2>비트코인 탄생 &amp; Adoption Timeline</h2>
+            <span class="sub" style="margin:0">1983 → 2025 · 점을 클릭하거나 올려보세요</span>
+          </div>
+        </div>
+        <div class="tl-wrap" id="tlWrap">
+          <svg class="tl-path-svg" id="tlPathSvg">
+            <defs>
+              <linearGradient id="tlGrad" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="rgba(217,119,6,.28)"></stop>
+                <stop offset="100%" stop-color="rgba(217,119,6,.85)"></stop>
+              </linearGradient>
+            </defs>
+            <path id="tlPathLine" fill="none" stroke="url(#tlGrad)" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <div class="tl-rows" id="tlItems"></div>
+        </div>
+        <div class="tl-detail" id="tlDetail"></div>
+        <p class="foot" style="margin-top:20px">본 페이지의 수치는 공개 자료 기반의 대략적 추정치이며, 투자 조언이 아닙니다.</p>
+      </div>
+    </div>
 
   </div>
 
@@ -900,6 +989,376 @@ body {
   }
 
   init();
+})();
+</script>
+
+<!-- 실시간 비트코인(bitcoin.html)에서 이동해온 섹션: 국가별 보유량 / 기업 트레저리 / 채굴자 분포 / 비트코인 탄생 & Adoption Timeline -->
+<script>
+(function () {
+  "use strict";
+
+  var state = { sel: 0, showMigration: true, holdingsUnit: "BTC" };
+  var liveData = { price: 105432 };
+
+  // ───────── holdings data ─────────
+  var countryData = [
+    { name: "🇺🇸 미국", v: 328000 },
+    { name: "🇨🇳 중국", v: 190000 },
+    { name: "🇬🇧 영국", v: 61000 },
+    { name: "🇺🇦 우크라이나", v: 46351 },
+    { name: "🇸🇻 엘살바도르", v: 7693 }
+  ];
+  var corpData = [
+    { name: "Strategy", first: "2020.08", v: 843775 },
+    { name: "Metaplanet", first: "2024.04", v: 43000 },
+    { name: "MARA", first: "2021.01", v: 36300 },
+    { name: "Riot", first: "2021.04", v: 15680 },
+    { name: "Tesla", first: "2021.02", v: 11509 },
+    { name: "Block", first: "2020.10", v: 8997 }
+  ];
+  var minerData = [
+    { name: "🇺🇸 미국", pct: 40 }, { name: "🇨🇳 중국", pct: 15 }, { name: "🇷🇺 러시아", pct: 10 },
+    { name: "🇨🇦 캐나다", pct: 6 }, { name: "🇰🇿 카자흐스탄", pct: 5 }
+  ];
+
+  function fmtAmt(btc) {
+    return state.holdingsUnit === "USD"
+      ? "$" + (btc * liveData.price / 1e9).toFixed(1) + "B"
+      : btc.toLocaleString("en-US");
+  }
+
+  function renderHoldings() {
+    var cMax = countryData[0].v;
+    document.getElementById("countryList").innerHTML = countryData.map(function (c, i) {
+      var w = Math.round(c.v / cMax * 100) + "%";
+      return '<div class="bar-row country">' +
+        '<span class="bar-rank">0' + (i + 1) + '</span>' +
+        '<span class="bar-name">' + c.name + '</span>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + w + ';background:linear-gradient(90deg,rgba(247,147,26,.55),#F7931A)"></div></div>' +
+        '<span class="bar-amt">' + fmtAmt(c.v) + '</span>' +
+        '</div>';
+    }).join("");
+
+    document.getElementById("corpList").innerHTML = corpData.map(function (k, i) {
+      var w = Math.max(2, Math.round(Math.sqrt(k.v / 847000) * 100)) + "%";
+      var chipBg = i === 0 ? "#F7931A" : "#E8C08A";
+      var barBg = i === 0 ? "linear-gradient(90deg,rgba(247,147,26,.55),#F7931A)" : "rgba(247,147,26,.45)";
+      return '<div class="bar-row corp">' +
+        '<div class="corp-name-wrap">' +
+        '<div class="corp-chip" style="background:' + chipBg + '">' + k.name[0] + '</div>' +
+        '<span class="corp-name">' + k.name + '</span>' +
+        '</div>' +
+        '<span class="corp-first">' + k.first + '</span>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + w + ';background:' + barBg + '"></div></div>' +
+        '<span class="bar-amt">' + fmtAmt(k.v) + '</span>' +
+        '</div>';
+    }).join("");
+  }
+
+  var unitToggle = document.getElementById("unitToggle");
+  var unitToggleLabel = document.getElementById("unitToggleLabel");
+  unitToggle.addEventListener("click", function () {
+    state.holdingsUnit = state.holdingsUnit === "BTC" ? "USD" : "BTC";
+    unitToggle.classList.toggle("on", state.holdingsUnit === "BTC");
+    unitToggleLabel.textContent = "UNIT: " + state.holdingsUnit;
+    renderHoldings();
+  });
+
+  // best-effort live USD price just for the BTC/USD unit toggle above (no key needed)
+  fetch("https://mempool.space/api/v1/prices").then(function (r) { return r.json(); }).then(function (d) {
+    if (d && typeof d.USD === "number") { liveData.price = d.USD; renderHoldings(); }
+  }).catch(function () {});
+
+  // ───────── miner list + world map ─────────
+  function renderMiners() {
+    document.getElementById("minerList").innerHTML = minerData.map(function (m, i) {
+      var w = Math.round(m.pct / 40 * 100) + "%";
+      return '<div class="bar-row miner-row">' +
+        '<span class="bar-rank">0' + (i + 1) + '</span>' +
+        '<span class="bar-name">' + m.name + '</span>' +
+        '<div class="bar-track" style="height:18px"><div class="bar-fill" style="width:' + w + ';background:linear-gradient(90deg,rgba(247,147,26,.5),#F7931A)"></div></div>' +
+        '<span class="bar-amt" style="min-width:44px">' + m.pct + '%</span>' +
+        '</div>';
+    }).join("");
+  }
+
+  var migToggle = document.getElementById("migToggle");
+  migToggle.addEventListener("click", function () {
+    state.showMigration = !state.showMigration;
+    migToggle.classList.toggle("on", state.showMigration);
+  });
+
+  var mapCanvas = document.getElementById("mapCanvas");
+  var mapFallback = document.getElementById("mapFallback");
+  var mapCtx = mapCanvas.getContext("2d");
+  var geo = null;
+  var baseLayer = null;
+  var rafId = null;
+
+  function proj(lon, lat, w, h) {
+    return [(lon + 180) / 360 * w, (78 - lat) / 140 * h];
+  }
+
+  function buildMap() {
+    var cssW = mapCanvas.parentElement.clientWidth;
+    if (!cssW || !geo) return;
+    var cssH = Math.round(cssW * 0.52);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    mapCanvas.width = cssW * dpr;
+    mapCanvas.height = cssH * dpr;
+    mapCanvas.style.height = cssH + "px";
+    var W = mapCanvas.width, H = mapCanvas.height;
+
+    var off = document.createElement("canvas");
+    off.width = W; off.height = H;
+    var octx = off.getContext("2d");
+    octx.fillStyle = "#fff";
+    function drawPoly(rings) {
+      octx.beginPath();
+      rings.forEach(function (ring) {
+        ring.forEach(function (pt, i) {
+          var p = proj(pt[0], pt[1], W, H);
+          if (i) octx.lineTo(p[0], p[1]); else octx.moveTo(p[0], p[1]);
+        });
+        octx.closePath();
+      });
+      octx.fill();
+    }
+    geo.features.forEach(function (f) {
+      var g = f.geometry;
+      if (!g) return;
+      if (g.type === "Polygon") drawPoly(g.coordinates);
+      else if (g.type === "MultiPolygon") g.coordinates.forEach(drawPoly);
+    });
+    var img = octx.getImageData(0, 0, W, H).data;
+
+    var base = document.createElement("canvas");
+    base.width = W; base.height = H;
+    var bctx = base.getContext("2d");
+    bctx.fillStyle = "#FFF3E0";
+    bctx.fillRect(0, 0, W, H);
+    var step = Math.max(5, Math.round(W / 130));
+    bctx.fillStyle = "rgba(217,119,6,0.45)";
+    for (var y = step; y < H; y += step) {
+      for (var x = step; x < W; x += step) {
+        if (img[(y * W + x) * 4 + 3] > 128) {
+          bctx.beginPath();
+          bctx.arc(x, y, step * 0.22, 0, 6.2832);
+          bctx.fill();
+        }
+      }
+    }
+    baseLayer = base;
+    animateMap();
+  }
+
+  function animateMap() {
+    if (rafId) cancelAnimationFrame(rafId);
+    var W = mapCanvas.width, H = mapCanvas.height;
+    var P = function (lon, lat) { return proj(lon, lat, W, H); };
+    var miners = [
+      { p: P(-98, 39), pct: 40, name: "US" },
+      { p: P(104, 35), pct: 15, name: "CN" },
+      { p: P(94, 60), pct: 10, name: "RU" },
+      { p: P(-110, 56), pct: 6, name: "CA" },
+      { p: P(67, 48), pct: 5, name: "KZ" }
+    ];
+    var cn = P(110, 33);
+    var routes = [
+      { to: P(-98, 39), lift: 0.35 },
+      { to: P(67, 48), lift: 0.18 },
+      { to: P(94, 60), lift: 0.12 },
+      { to: P(-110, 56), lift: 0.45 }
+    ];
+    var scale = W / 1000;
+
+    function tick(t) {
+      mapCtx.clearRect(0, 0, W, H);
+      mapCtx.drawImage(baseLayer, 0, 0);
+
+      if (state.showMigration) {
+        routes.forEach(function (r) {
+          var cx = (cn[0] + r.to[0]) / 2;
+          var cy = Math.min(cn[1], r.to[1]) - Math.abs(r.to[0] - cn[0]) * r.lift * 0.5;
+          mapCtx.strokeStyle = "rgba(247,147,26,0.28)";
+          mapCtx.lineWidth = 1.2 * scale;
+          mapCtx.setLineDash([4 * scale, 5 * scale]);
+          mapCtx.lineDashOffset = -t * 0.02 * scale;
+          mapCtx.beginPath();
+          mapCtx.moveTo(cn[0], cn[1]);
+          mapCtx.quadraticCurveTo(cx, cy, r.to[0], r.to[1]);
+          mapCtx.stroke();
+          mapCtx.setLineDash([]);
+          var u = (t * 0.00012 + r.lift) % 1;
+          var px = (1 - u) * (1 - u) * cn[0] + 2 * (1 - u) * u * cx + u * u * r.to[0];
+          var py = (1 - u) * (1 - u) * cn[1] + 2 * (1 - u) * u * cy + u * u * r.to[1];
+          mapCtx.fillStyle = "#D96A00";
+          mapCtx.beginPath();
+          mapCtx.arc(px, py, 2.6 * scale, 0, 6.2832);
+          mapCtx.fill();
+        });
+      }
+
+      miners.forEach(function (m) {
+        var r = (4 + m.pct * 0.55) * scale;
+        var pulse = 1 + 0.25 * Math.sin(t * 0.002 + m.pct);
+        mapCtx.fillStyle = "rgba(247,147,26,0.15)";
+        mapCtx.beginPath(); mapCtx.arc(m.p[0], m.p[1], r * pulse * 1.6, 0, 6.2832); mapCtx.fill();
+        mapCtx.fillStyle = "rgba(247,147,26,0.9)";
+        mapCtx.beginPath(); mapCtx.arc(m.p[0], m.p[1], r * 0.55, 0, 6.2832); mapCtx.fill();
+        mapCtx.fillStyle = "#2E2013";
+        mapCtx.font = "600 " + Math.round(11 * scale) + "px 'IBM Plex Mono', monospace";
+        mapCtx.textAlign = "center";
+        mapCtx.fillText(m.name + " " + m.pct + "%", m.p[0], m.p[1] - r * 0.55 - 6 * scale);
+      });
+      rafId = requestAnimationFrame(tick);
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function initMap() {
+    fetch("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json")
+      .then(function (res) {
+        if (!res.ok) throw new Error("fetch failed");
+        return res.json();
+      })
+      .then(function (data) {
+        geo = data;
+        buildMap();
+        if (window.ResizeObserver) {
+          new ResizeObserver(function () { buildMap(); }).observe(mapCanvas.parentElement);
+        }
+      })
+      .catch(function () {
+        mapFallback.classList.add("show");
+      });
+  }
+
+  // ───────── genesis + adoption timeline (merged, S-curve visual) ─────────
+  var events = [
+    { year: 1983, short: "이캐시", title: "eCash — 데이비드 차움", desc: "은닉 서명(blind signature) 기반의 익명 전자화폐 개념 제시. 암호화폐 계보의 출발점." },
+    { year: 1997, short: "해시캐시", title: "Hashcash — 아담 백", desc: "스팸 방지용 작업증명(Proof-of-Work) 고안. 비트코인 채굴 메커니즘의 직접적 원형." },
+    { year: 1998, short: "비머니", title: "b-money — 웨이 다이", desc: "분산 합의로 화폐를 발행·검증하는 익명 전자화폐 제안. 비트코인 백서 첫 번째 참고문헌." },
+    { year: 1998, short: "비트골드", title: "Bit Gold — 닉 재보", desc: "PoW 결과를 연결해 희소성 있는 디지털 금을 만드는 설계. 비트코인과 가장 닮은 선행 개념." },
+    { year: 2004, short: "RPOW", title: "RPOW — 할 피니", desc: "재사용 가능한 작업증명 토큰 구현. 할 피니는 훗날 최초의 비트코인 수신자가 된다." },
+    { year: 2008, short: "비트코인 백서", title: "Bitcoin — 사토시 나카모토", desc: "10월 31일 백서 공개. 2009년 1월 3일 제네시스 블록 채굴로 네트워크 가동." },
+    { year: 2009, short: "제네시스", title: "Genesis block mined", desc: "비트코인 네트워크 가동 시작." },
+    { year: 2013, short: "독일 인정", title: "Germany recognizes Bitcoin as private money", desc: "독일, 주요국 최초로 비트코인을 공식 인정." },
+    { year: 2017, short: "일본 합법화", title: "Japan legalizes crypto payments", desc: "일본, 비트코인을 합법 결제수단으로 법제화." },
+    { year: 2021, short: "캐나다 ETF", title: "Canada launches first spot Bitcoin ETF", desc: "캐나다, 세계 최초 현물 ETF 승인." },
+    { year: 2021, short: "엘살바도르", title: "El Salvador adopts Bitcoin as legal tender · China bans all activity", desc: "엘살바도르 법정화폐 채택, 같은 해 중국은 거래·채굴 전면 금지." },
+    { year: 2022, short: "중앙아공", title: "Central African Republic adopts, then repeals, legal tender", desc: "중앙아프리카공화국, 채택 1년 만인 2023년 철회." },
+    { year: 2024, short: "미국 ETF", title: "US approves spot Bitcoin ETFs", desc: "미국 SEC 현물 ETF 승인 — 홍콩·호주가 뒤이어 승인." },
+    { year: 2024, short: "독일 매각", title: "Germany sells its seized 50,000 BTC", desc: "독일, 압수 보유 물량 전량 매각." },
+    { year: 2025, short: "전략준비금", title: "US establishes Strategic Bitcoin Reserve", desc: "미국, 행정명령으로 전략 비트코인 준비금 설립." },
+    { year: 2025, short: "엘살 완화", title: "El Salvador–IMF agreement scales back mandates", desc: "IMF 협약으로 민간 부문 비트코인 수용 의무 완화." }
+  ];
+
+  function computePerRow(width) {
+    if (width >= 900) return 7;
+    if (width >= 620) return 5;
+    if (width >= 420) return 4;
+    return 3;
+  }
+
+  function smoothPath(pts) {
+    if (pts.length < 2) return "";
+    var d = "M" + pts[0].x.toFixed(1) + "," + pts[0].y.toFixed(1) + " ";
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i];
+      var p1 = pts[i];
+      var p2 = pts[i + 1];
+      var p3 = pts[i + 2] || p2;
+      var c1x = p1.x + (p2.x - p0.x) / 6, c1y = p1.y + (p2.y - p0.y) / 6;
+      var c2x = p2.x - (p3.x - p1.x) / 6, c2y = p2.y - (p3.y - p1.y) / 6;
+      d += "C" + c1x.toFixed(1) + "," + c1y.toFixed(1) + " " + c2x.toFixed(1) + "," + c2y.toFixed(1) + " " + p2.x.toFixed(1) + "," + p2.y.toFixed(1) + " ";
+    }
+    return d;
+  }
+
+  function drawTimelinePath() {
+    var wrap = document.getElementById("tlWrap");
+    var wrapRect = wrap.getBoundingClientRect();
+    var dots = document.querySelectorAll("#tlItems .tl-dot");
+    var pts = [];
+    dots.forEach(function (dot) {
+      var r = dot.getBoundingClientRect();
+      pts.push({ x: r.left + r.width / 2 - wrapRect.left, y: r.top + r.height / 2 - wrapRect.top });
+    });
+    document.getElementById("tlPathLine").setAttribute("d", smoothPath(pts));
+    var grad = document.getElementById("tlGrad");
+    if (grad) grad.setAttribute("x2", Math.max(1, wrapRect.width));
+  }
+
+  function renderTimeline() {
+    var wrap = document.getElementById("tlWrap");
+    var width = wrap.clientWidth || 900;
+    var perRow = computePerRow(width);
+    var itemWidthPct = (100 / perRow) + "%";
+    var itemsEl = document.getElementById("tlItems");
+    itemsEl.innerHTML = "";
+
+    var idx = 0;
+    while (idx < events.length) {
+      var rowEvents = events.slice(idx, idx + perRow);
+      var rowIdx = Math.floor(idx / perRow);
+      var rowEl = document.createElement("div");
+      rowEl.className = "tl-row" + (rowIdx % 2 === 1 ? " reverse" : "");
+      rowEvents.forEach(function (e) {
+        var i = events.indexOf(e);
+        var on = i === state.sel;
+        var btn = document.createElement("button");
+        btn.className = "tl-item";
+        btn.type = "button";
+        btn.style.width = itemWidthPct;
+        btn.innerHTML =
+          '<span class="tl-dot" style="width:' + (on ? "18px" : "12px") + ';height:' + (on ? "18px" : "12px") +
+          ';background:' + (on ? "#F7931A" : "#FFF8EF") + ';border:2px solid ' + (on ? "#F7931A" : "rgba(217,119,6,.7)") +
+          ';margin-top:' + (on ? "0px" : "3px") + '"></span>' +
+          '<span class="tl-year" style="color:' + (on ? "#F7931A" : "#96714A") + '">' + e.year + '</span>' +
+          '<span class="tl-short" style="color:' + (on ? "#2E2013" : "#BC9668") + '">' + e.short + '</span>';
+        btn.addEventListener("click", function () { selectEvent(i); });
+        btn.addEventListener("mouseenter", function () { selectEvent(i); });
+        rowEl.appendChild(btn);
+      });
+      itemsEl.appendChild(rowEl);
+      idx += perRow;
+    }
+
+    var se = events[state.sel];
+    document.getElementById("tlDetail").innerHTML =
+      '<span class="tl-detail-year">' + se.year + '</span>' +
+      '<span class="tl-detail-title">' + se.title + '</span>' +
+      '<span class="tl-detail-desc">' + se.desc + '</span>';
+
+    drawTimelinePath();
+  }
+
+  function selectEvent(i) {
+    if (state.sel === i) return;
+    state.sel = i;
+    renderTimeline();
+  }
+
+  (function () {
+    var tlResizePending = false;
+    var wrap = document.getElementById("tlWrap");
+    if (window.ResizeObserver) {
+      new ResizeObserver(function () {
+        if (tlResizePending) return;
+        tlResizePending = true;
+        requestAnimationFrame(function () { tlResizePending = false; renderTimeline(); });
+      }).observe(wrap);
+    } else {
+      window.addEventListener("resize", function () { renderTimeline(); });
+    }
+  })();
+
+  // ───────── init ─────────
+  renderHoldings();
+  renderMiners();
+  initMap();
+  renderTimeline();
 })();
 </script>
 </body>

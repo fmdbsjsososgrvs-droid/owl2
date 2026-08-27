@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>비트코인 글로벌 채택 현황 · Bitcoin Adoption Dashboard</title>
-<meta name="description" content="비트코인이 세계에 얼마나 채택되었는지 보여주는 대시보드 — 채택의 역사, 국가·기업 보유량, 반감기, 해시레이트, 가격, 채굴자 분포.">
+<title>실시간 비트코인 · Live Bitcoin Dashboard</title>
+<meta name="description" content="실시간 비트코인 대시보드 — 반감기, 업비트 시세, 김치 프리미엄, 장기 가격, 해시레이트.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -41,46 +41,6 @@
   .card-head-row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 18px;margin-bottom:8px;}
   .card-head-row .titles{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;}
 
-  /* toggle switch */
-  .toggle{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:#96714A;font-family:'IBM Plex Mono',monospace;user-select:none;cursor:pointer;}
-  .toggle-track{width:34px;height:19px;border-radius:10px;background:rgba(217,119,6,.25);position:relative;transition:background .15s;flex:none;}
-  .toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#FFF8EF;transition:transform .15s;}
-  .toggle.on .toggle-track{background:#F7931A;}
-  .toggle.on .toggle-track::after{transform:translateX(15px);}
-  .toggle:hover .toggle-track{background:rgba(217,119,6,.4);}
-  .toggle.on:hover .toggle-track{background:#e28611;}
-
-  /* timeline (S-curve / boustrophedon layout — no horizontal scroll) */
-  .tl-wrap{position:relative;padding:16px 2px 6px;}
-  .tl-path-svg{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
-  .tl-rows{position:relative;display:flex;flex-direction:column;gap:20px;z-index:1;}
-  .tl-row{display:flex;align-items:flex-start;}
-  .tl-row.reverse{flex-direction:row-reverse;}
-  .tl-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;box-sizing:border-box;padding:6px 3px 0;background:none;border:none;font-family:inherit;flex:none;}
-  .tl-dot{border-radius:50%;transition:all .18s;flex:none;}
-  .tl-year{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;}
-  .tl-short{font-size:10.5px;text-align:center;line-height:1.25;}
-  .tl-detail{margin-top:14px;background:#FFF3E0;border:1px solid rgba(217,119,6,.32);border-left:3px solid #F7931A;border-radius:10px;padding:14px 18px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;min-height:64px;}
-  .tl-detail-year{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#D97706;}
-  .tl-detail-title{font-size:15px;font-weight:700;}
-  .tl-detail-desc{font-size:13px;color:#6B5031;line-height:1.6;flex-basis:100%;}
-
-  /* holdings */
-  .holdings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:clamp(14px,1.8vw,24px);}
-  .bar-row{display:grid;gap:10px;align-items:center;}
-  .bar-row.country{grid-template-columns:26px 92px 1fr auto;}
-  .bar-row.corp{grid-template-columns:110px 74px 1fr auto;}
-  .bar-rank{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#96714A;}
-  .bar-name{font-size:13px;font-weight:600;}
-  .bar-track{height:22px;background:rgba(217,119,6,.14);border-radius:5px;overflow:hidden;}
-  .bar-fill{height:100%;border-radius:5px;}
-  .bar-amt{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#2E2013;min-width:96px;text-align:right;}
-  .corp-name-wrap{display:flex;align-items:center;gap:8px;min-width:0;}
-  .corp-chip{width:26px;height:26px;border-radius:7px;color:#100E0A;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex:none;}
-  .corp-name{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .corp-first{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#96714A;}
-  .list-col{display:flex;flex-direction:column;gap:13px;}
-
   /* network grid */
   .network-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:clamp(14px,1.8vw,24px);}
   .halving-card{display:flex;flex-direction:column;}
@@ -99,20 +59,15 @@
   svg.chart{width:100%;height:auto;display:block;}
   svg.chart polyline, svg.chart polygon{transition:points .4s;}
 
-  .map-section{grid-column:1/-1;}
-  .map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(460px,100%),1fr));gap:20px;align-items:center;}
-  .map-canvas-wrap{position:relative;}
-  .map-canvas-wrap canvas{width:100%;display:block;border-radius:10px;}
-  .map-fallback{position:absolute;inset:0;display:none;place-items:center;font-size:12px;color:#96714A;background:repeating-linear-gradient(45deg,#FFF3E0,#FFF3E0 10px,#FFEBD5 10px,#FFEBD5 20px);border-radius:10px;font-family:'IBM Plex Mono',monospace;text-align:center;padding:12px;}
-  .map-fallback.show{display:grid;}
-  .miner-row{grid-template-columns:26px 100px 1fr auto;}
+  /* kimchi premium */
+  .kp-display{display:flex;flex-direction:column;align-items:flex-start;gap:16px;}
+  .kp-value{font-family:'IBM Plex Mono',monospace;font-size:clamp(32px,5vw,44px);font-weight:600;color:#D97706;line-height:1;}
+  .kp-rows{display:flex;flex-direction:column;gap:8px;width:100%;}
+  .kp-row{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:#6B5031;border-top:1px solid rgba(217,119,6,.14);padding-top:8px;}
+  .kp-row span:first-child{color:#96714A;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;}
+  .kp-row span:last-child{font-family:'IBM Plex Mono',monospace;font-weight:600;color:#2E2013;}
 
   footer{text-align:center;font-size:10.5px;color:#BC9668;font-family:'IBM Plex Mono',monospace;padding:8px 0 16px;}
-
-  @media (max-width:640px){
-    .bar-row.country{grid-template-columns:20px 74px 1fr auto;}
-    .bar-row.corp{grid-template-columns:88px 60px 1fr auto;}
-  }
 </style>
 <style id="unified-nav-style">
 .site-nav{position:sticky;top:0;z-index:100;background:#fdf4e7;border-bottom:1px solid rgba(224,123,10,.32);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
@@ -152,64 +107,15 @@
     <div class="brand">
       <div class="brand-mark">₿</div>
       <div>
-        <h1>비트코인 글로벌 채택 현황</h1>
-        <p>GLOBAL BITCOIN ADOPTION · 실시간 가격·해시레이트·블록 데이터 연동</p>
+        <h1>실시간 비트코인</h1>
+        <p>LIVE BITCOIN · 실시간 가격·해시레이트·블록 데이터 연동</p>
         <p class="live-row" id="liveStatus"><span class="live-dot" id="liveDot"></span><span id="liveText">실시간 데이터 불러오는 중…</span></p>
       </div>
     </div>
     <div class="chips" id="chips"></div>
   </header>
 
-  <!-- ══════════ 1. TIMELINE ══════════ -->
-  <section class="card" aria-label="타임라인">
-    <div class="card-head-row">
-      <div class="titles">
-        <h2>비트코인 탄생</h2>
-        <span class="sub" style="margin:0">1983 → 2008 · 점을 클릭하거나 올려보세요</span>
-      </div>
-    </div>
-    <div class="tl-wrap" id="tlWrap">
-      <svg class="tl-path-svg" id="tlPathSvg">
-        <defs>
-          <linearGradient id="tlGrad" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="rgba(217,119,6,.28)"></stop>
-            <stop offset="100%" stop-color="rgba(217,119,6,.85)"></stop>
-          </linearGradient>
-        </defs>
-        <path id="tlPathLine" fill="none" stroke="url(#tlGrad)" stroke-width="2" stroke-linecap="round"></path>
-      </svg>
-      <div class="tl-rows" id="tlItems"></div>
-    </div>
-    <div class="tl-detail" id="tlDetail"></div>
-  </section>
-
-  <!-- ══════════ 2. HOLDINGS ══════════ -->
-  <section class="holdings-grid" aria-label="보유 현황">
-
-    <div class="card">
-      <div class="card-head-row">
-        <div class="titles" style="display:block">
-          <h2>국가별 BTC 보유량 TOP 5</h2>
-        </div>
-        <label class="toggle on" id="unitToggle">
-          <span id="unitToggleLabel">UNIT: BTC</span>
-          <span class="toggle-track"></span>
-        </label>
-      </div>
-      <p class="sub">SOVEREIGN HOLDINGS · 압수·매입 포함 추정치 (USD 환산은 실시간 시세 적용)</p>
-      <div class="list-col" id="countryList"></div>
-      <p class="foot">엘살바도르는 2026년 상반기 기준 약 7,700 BTC로 TOP 5에 새로 진입 — 2021년 세계 최초 법정화폐 채택국. 반면 부탄은 2026년 대규모 매각으로 약 3,100 BTC까지 줄어 순위 밖으로 밀려남(2024년 말 정점 대비 70%↓). 미국은 2025년 행정명령으로 압수분을 '전략 비트코인 준비금'으로 전환.</p>
-    </div>
-
-    <div class="card">
-      <h2>기업 트레저리 — 첫 매수와 현재 보유량</h2>
-      <p class="sub">CORPORATE TREASURIES · FIRST BUY → CURRENT</p>
-      <div class="list-col" id="corpList"></div>
-      <p class="foot">Strategy(구 MicroStrategy)는 2020년 8월 첫 매수 이후 2026년 중반 기준 84만 BTC 이상, 총발행량의 4%를 넘는 물량을 축적 — 기업 트레저리 전략의 원형이 됨. Metaplanet은 2026년 4만 BTC를 넘기며 세계 3위 기업 트레저리로 부상.</p>
-    </div>
-  </section>
-
-  <!-- ══════════ 3. NETWORK ══════════ -->
+  <!-- ══════════ NETWORK / PRICE GRID ══════════ -->
   <section class="network-grid" aria-label="네트워크">
 
     <div class="card halving-card">
@@ -222,6 +128,57 @@
         <div class="epoch-range"><span id="epochStartLabel">840,000 (2024.04)</span><span id="epochEndLabel">1,050,000</span></div>
       </div>
       <p class="foot" id="halvingFoot">반감기마다 블록 보상이 절반으로 — 현재 3.125 BTC, 2028년 1.5625 BTC로 감소. 총발행량의 약 95%가 이미 채굴됨.</p>
+    </div>
+
+    <div class="card">
+      <h2>가격 (Upbit)</h2>
+      <p class="sub" id="upSub">KRW-BTC · UPBIT · 최근 시세</p>
+      <svg class="chart" viewBox="0 0 560 232">
+        <line x1="10" y1="205" x2="550" y2="205" stroke="rgba(217,119,6,.4)" stroke-width="1"></line>
+        <line x1="10" y1="110" x2="550" y2="110" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
+        <line x1="10" y1="15" x2="550" y2="15" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
+        <polygon id="upPolygon" points="" fill="rgba(247,147,26,.12)"></polygon>
+        <polyline id="upPolyline" points="" fill="none" stroke="#F7931A" stroke-width="2.5" stroke-linejoin="round"></polyline>
+        <circle id="upDot" cx="550" cy="15" r="4" fill="#F7931A"></circle>
+        <text id="upCurrentLabel" x="544" y="36" fill="#2E2013" font-size="12" font-weight="600" font-family="IBM Plex Mono" text-anchor="end"></text>
+        <text id="upMaxLabel" x="14" y="20" fill="#BC9668" font-size="10" font-family="IBM Plex Mono"></text>
+        <text id="upMinLabel" x="14" y="200" fill="#BC9668" font-size="10" font-family="IBM Plex Mono"></text>
+        <text id="upDateStart" x="10" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono"></text>
+        <text id="upDateEnd" x="550" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono" text-anchor="end"></text>
+      </svg>
+      <p class="foot" id="upFoot" style="margin-top:10px">업비트 원화 마켓(KRW-BTC) 기준 최근 일봉 시세 + 실시간 현재가.</p>
+    </div>
+
+    <div class="card">
+      <h2>김치 프리미엄</h2>
+      <p class="sub" id="kpSub">UPBIT vs BINANCE · 실시간 환율 적용</p>
+      <div class="kp-display">
+        <div class="kp-value" id="kpValue">불러오는 중…</div>
+        <div class="kp-rows">
+          <div class="kp-row"><span>업비트 (KRW)</span><span id="kpUpbit">—</span></div>
+          <div class="kp-row"><span>바이낸스 환산 (KRW)</span><span id="kpBinance">—</span></div>
+          <div class="kp-row"><span>USD/KRW</span><span id="kpFx">—</span></div>
+        </div>
+      </div>
+      <p class="foot" id="kpFoot" style="margin-top:10px">업비트 원화가와 바이낸스 달러가(실시간 환율 환산)를 비교한 값. 양(+)이면 국내 시세가 더 비싼 것.</p>
+    </div>
+
+    <div class="card">
+      <h2>가격 (로그 스케일)</h2>
+      <p class="sub" id="pxSub">BTC / USD · LOG SCALE · 2010–2026</p>
+      <svg class="chart" viewBox="0 0 560 232">
+        <line x1="10" y1="205" x2="550" y2="205" stroke="rgba(217,119,6,.4)" stroke-width="1"></line>
+        <line x1="10" y1="110" x2="550" y2="110" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
+        <line x1="10" y1="15" x2="550" y2="15" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
+        <polygon id="pxPolygon" points="10,202 43.8,184.5 77.5,135.3 111.3,82 145,93.1 178.8,89.5 212.5,78.9 246.3,43.6 280,61.1 313.8,52.4 347.5,34.3 381.3,28 415,41.5 448.8,29.5 482.5,18.9 516.3,18.6 550,17.4 550,205 10,205" fill="rgba(247,147,26,.12)"></polygon>
+        <polyline id="pxPolyline" points="10,202 43.8,184.5 77.5,135.3 111.3,82 145,93.1 178.8,89.5 212.5,78.9 246.3,43.6 280,61.1 313.8,52.4 347.5,34.3 381.3,28 415,41.5 448.8,29.5 482.5,18.9 516.3,18.6 550,17.4" fill="none" stroke="#F7931A" stroke-width="2.5" stroke-linejoin="round"></polyline>
+        <circle id="pxDot" cx="550" cy="17.4" r="4" fill="#F7931A"></circle>
+        <text id="pxCurrentLabel" x="544" y="36" fill="#2E2013" font-size="12" font-weight="600" font-family="IBM Plex Mono" text-anchor="end">$105K</text>
+        <text id="pxMinLabel" x="14" y="200" fill="#BC9668" font-size="10" font-family="IBM Plex Mono">$0.08</text>
+        <text id="pxYearStart" x="10" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono">2010</text>
+        <text id="pxYearEnd" x="550" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono" text-anchor="end">2026</text>
+      </svg>
+      <p class="foot" id="pxFoot" style="margin-top:10px">피자 2판 = 10,000 BTC(2010)에서 개당 $105K까지. 2024년 현물 ETF 승인이 기관 자금 유입의 분수령.</p>
     </div>
 
     <div class="card">
@@ -243,86 +200,14 @@
       <p class="foot" id="hrFoot" style="margin-top:10px">2021년 중국의 채굴 전면 금지로 해시레이트가 일시 반토막 — 이후 채굴자들이 미국·중앙아시아로 이주하며 사상 최고치 경신.</p>
     </div>
 
-    <div class="card">
-      <h2>가격</h2>
-      <p class="sub" id="pxSub">BTC / USD · LOG SCALE · 2010–2026</p>
-      <svg class="chart" viewBox="0 0 560 232">
-        <line x1="10" y1="205" x2="550" y2="205" stroke="rgba(217,119,6,.4)" stroke-width="1"></line>
-        <line x1="10" y1="110" x2="550" y2="110" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
-        <line x1="10" y1="15" x2="550" y2="15" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
-        <polygon id="pxPolygon" points="10,202 43.8,184.5 77.5,135.3 111.3,82 145,93.1 178.8,89.5 212.5,78.9 246.3,43.6 280,61.1 313.8,52.4 347.5,34.3 381.3,28 415,41.5 448.8,29.5 482.5,18.9 516.3,18.6 550,17.4 550,205 10,205" fill="rgba(247,147,26,.12)"></polygon>
-        <polyline id="pxPolyline" points="10,202 43.8,184.5 77.5,135.3 111.3,82 145,93.1 178.8,89.5 212.5,78.9 246.3,43.6 280,61.1 313.8,52.4 347.5,34.3 381.3,28 415,41.5 448.8,29.5 482.5,18.9 516.3,18.6 550,17.4" fill="none" stroke="#F7931A" stroke-width="2.5" stroke-linejoin="round"></polyline>
-        <circle id="pxDot" cx="550" cy="17.4" r="4" fill="#F7931A"></circle>
-        <text id="pxCurrentLabel" x="544" y="36" fill="#2E2013" font-size="12" font-weight="600" font-family="IBM Plex Mono" text-anchor="end">$105K</text>
-        <text id="pxMinLabel" x="14" y="200" fill="#BC9668" font-size="10" font-family="IBM Plex Mono">$0.08</text>
-        <text id="pxYearStart" x="10" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono">2010</text>
-        <text id="pxYearEnd" x="550" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono" text-anchor="end">2026</text>
-      </svg>
-      <p class="foot" id="pxFoot" style="margin-top:10px">피자 2판 = 10,000 BTC(2010)에서 개당 $105K까지. 2024년 현물 ETF 승인이 기관 자금 유입의 분수령.</p>
-    </div>
-
-    <div class="card map-section">
-      <div class="card-head-row">
-        <div class="titles">
-          <h2>세계 채굴자 분포와 대이동</h2>
-          <span class="sub" style="margin:0">HASHRATE SHARE · 2021 중국발 이동 경로 애니메이션 · 추정치</span>
-        </div>
-        <label class="toggle on" id="migToggle">
-          <span>이동 경로 표시</span>
-          <span class="toggle-track"></span>
-        </label>
-      </div>
-      <div class="map-grid">
-        <div class="map-canvas-wrap">
-          <canvas id="mapCanvas"></canvas>
-          <div class="map-fallback" id="mapFallback">world map — 네트워크 연결 필요</div>
-        </div>
-        <div class="list-col">
-          <div id="minerList" class="list-col"></div>
-          <p class="foot" style="margin:4px 0 0">2019년 중국은 전세계 해시레이트의 75%를 차지했으나, 2021년 6월 전면 금지 이후 미국이 1위로. 지도 위 이동선은 중국발 채굴 장비의 주요 이주 경로.</p>
-        </div>
-      </div>
-    </div>
   </section>
 
-  <footer>실시간 지표(가격·해시레이트·블록·반감기)는 mempool.space / blockchain.info 공개 API 기준이며, 국가·기업·채굴자 분포는 공개 자료 기반 근사·추정치입니다. 투자 조언이 아닙니다.</footer>
+  <footer>실시간 지표(가격·해시레이트·블록·반감기·김치프리미엄)는 mempool.space / blockchain.info / upbit.com / binance.com / open.er-api.com 공개 API 기준입니다. 투자 조언이 아닙니다. 국가별 보유량·채굴자 분포·채택 연혁은 <a href="Bitcoin%20Adoption%20Atlas.html" style="color:#D97706">Bitcoin Adoption Atlas</a> 페이지로 이동했습니다.</footer>
 </div>
 
 <script>
 (function () {
   "use strict";
-
-  // ───────── static data ─────────
-  var events = [
-    { year: 1983, short: "이캐시", title: "eCash — 데이비드 차움", desc: "은닉 서명(blind signature) 기반의 익명 전자화폐 개념 제시. 암호화폐 계보의 출발점." },
-    { year: 1997, short: "해시캐시", title: "Hashcash — 아담 백", desc: "스팸 방지용 작업증명(Proof-of-Work) 고안. 비트코인 채굴 메커니즘의 직접적 원형." },
-    { year: 1998, short: "비머니", title: "b-money — 웨이 다이", desc: "분산 합의로 화폐를 발행·검증하는 익명 전자화폐 제안. 비트코인 백서 첫 번째 참고문헌." },
-    { year: 1998, short: "비트골드", title: "Bit Gold — 닉 재보", desc: "PoW 결과를 연결해 희소성 있는 디지털 금을 만드는 설계. 비트코인과 가장 닮은 선행 개념." },
-    { year: 2004, short: "RPOW", title: "RPOW — 할 피니", desc: "재사용 가능한 작업증명 토큰 구현. 할 피니는 훗날 최초의 비트코인 수신자가 된다." },
-    { year: 2008, short: "비트코인 백서", title: "Bitcoin — 사토시 나카모토", desc: "10월 31일 백서 공개. 2009년 1월 3일 제네시스 블록 채굴로 네트워크 가동." }
-  ];
-
-  var countryData = [
-    { name: "🇺🇸 미국", v: 328000 },
-    { name: "🇨🇳 중국", v: 190000 },
-    { name: "🇬🇧 영국", v: 61000 },
-    { name: "🇺🇦 우크라이나", v: 46351 },
-    { name: "🇸🇻 엘살바도르", v: 7693 }
-  ];
-
-  var corpData = [
-    { name: "Strategy", first: "2020.08", v: 843775 },
-    { name: "Metaplanet", first: "2024.04", v: 43000 },
-    { name: "MARA", first: "2021.01", v: 36300 },
-    { name: "Riot", first: "2021.04", v: 15680 },
-    { name: "Tesla", first: "2021.02", v: 11509 },
-    { name: "Block", first: "2020.10", v: 8997 }
-  ];
-
-  var minerData = [
-    { name: "🇺🇸 미국", pct: 40 }, { name: "🇨🇳 중국", pct: 15 }, { name: "🇷🇺 러시아", pct: 10 },
-    { name: "🇨🇦 캐나다", pct: 6 }, { name: "🇰🇿 카자흐스탄", pct: 5 }
-  ];
 
   // ───────── live data endpoints (all key-free public APIs) ─────────
   var API = {
@@ -331,7 +216,12 @@
     hashrateCurrent: "https://mempool.space/api/v1/mining/hashrate/3d",
     hashrateHistory: "https://mempool.space/api/v1/mining/hashrate/all",
     difficulty: "https://mempool.space/api/v1/difficulty-adjustment",
-    priceHistory: "https://api.blockchain.info/charts/market-price?timespan=all&format=json&cors=true"
+    priceHistory: "https://api.blockchain.info/charts/market-price?timespan=all&format=json&cors=true",
+    upbitTicker: "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    upbitDays: "https://api.upbit.com/v1/candles/days?market=KRW-BTC&count=200",
+    binanceTicker: "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT",
+    fxPrimary: "https://open.er-api.com/v6/latest/USD",
+    fxFallback: "https://api.frankfurter.dev/v1/latest?from=USD&to=KRW"
   };
 
   var MAX_SUPPLY = 21000000;
@@ -345,23 +235,14 @@
     height: 953842,
     hashrate: 1102e18,
     avgBlockMs: 600000,
-    isLive: false
+    isLive: false,
+    upbitPrice: null,
+    binanceUsd: null,
+    usdKrw: null
   };
   var halvingState = null;
   var priceHistoryCache = null;
-
-  // ───────── app state ─────────
-  var state = {
-    sel: 0,
-    showMigration: true,
-    holdingsUnit: "BTC"
-  };
-
-  function fmtAmt(btc) {
-    return state.holdingsUnit === "USD"
-      ? "$" + (btc * liveData.price / 1e9).toFixed(1) + "B"
-      : btc.toLocaleString("en-US");
-  }
+  var upbitHistoryCache = null;
 
   // ───────── fetch helpers ─────────
   function fetchWithTimeout(url, timeoutMs) {
@@ -378,7 +259,7 @@
   }
   function fetchJSON(url, timeoutMs) { return fetchWithTimeout(url, timeoutMs).then(function (r) { return r.json(); }); }
   function fetchText(url, timeoutMs) { return fetchWithTimeout(url, timeoutMs).then(function (r) { return r.text(); }).then(function (t) { return t.trim(); }); }
-  // one retry after a short delay before giving up â€” smooths over transient
+  // one retry after a short delay before giving up — smooths over transient
   // failures / slow mobile connections instead of waiting for the next interval
   function withRetry(fn, retries, delayMs) {
     return fn().catch(function (err) {
@@ -433,147 +314,6 @@
       { label: "MINED", value: (mined / MAX_SUPPLY * 100).toFixed(1) + "%", color: "#2E2013" }
     ]);
   }
-
-  // ───────── timeline (S-curve / boustrophedon — wraps rows instead of scrolling) ─────────
-  function computePerRow(width) {
-    if (width >= 900) return 7;
-    if (width >= 620) return 5;
-    if (width >= 420) return 4;
-    return 3;
-  }
-
-  // smooth spline through the dot centers (Catmull-Rom -> cubic Bezier)
-  function smoothPath(pts) {
-    if (pts.length < 2) return "";
-    var d = "M" + pts[0].x.toFixed(1) + "," + pts[0].y.toFixed(1) + " ";
-    for (var i = 0; i < pts.length - 1; i++) {
-      var p0 = pts[i - 1] || pts[i];
-      var p1 = pts[i];
-      var p2 = pts[i + 1];
-      var p3 = pts[i + 2] || p2;
-      var c1x = p1.x + (p2.x - p0.x) / 6, c1y = p1.y + (p2.y - p0.y) / 6;
-      var c2x = p2.x - (p3.x - p1.x) / 6, c2y = p2.y - (p3.y - p1.y) / 6;
-      d += "C" + c1x.toFixed(1) + "," + c1y.toFixed(1) + " " + c2x.toFixed(1) + "," + c2y.toFixed(1) + " " + p2.x.toFixed(1) + "," + p2.y.toFixed(1) + " ";
-    }
-    return d;
-  }
-
-  function drawTimelinePath() {
-    var wrap = document.getElementById("tlWrap");
-    var wrapRect = wrap.getBoundingClientRect();
-    var dots = document.querySelectorAll("#tlItems .tl-dot");
-    var pts = [];
-    dots.forEach(function (dot) {
-      var r = dot.getBoundingClientRect();
-      pts.push({ x: r.left + r.width / 2 - wrapRect.left, y: r.top + r.height / 2 - wrapRect.top });
-    });
-    document.getElementById("tlPathLine").setAttribute("d", smoothPath(pts));
-    var grad = document.getElementById("tlGrad");
-    if (grad) grad.setAttribute("x2", Math.max(1, wrapRect.width));
-  }
-
-  function renderTimeline() {
-    var wrap = document.getElementById("tlWrap");
-    var width = wrap.clientWidth || 900;
-    var perRow = computePerRow(width);
-    var itemWidthPct = (100 / perRow) + "%";
-    var itemsEl = document.getElementById("tlItems");
-    itemsEl.innerHTML = "";
-
-    var idx = 0;
-    while (idx < events.length) {
-      var rowEvents = events.slice(idx, idx + perRow);
-      var rowIdx = Math.floor(idx / perRow);
-      var rowEl = document.createElement("div");
-      rowEl.className = "tl-row" + (rowIdx % 2 === 1 ? " reverse" : "");
-      rowEvents.forEach(function (e) {
-        var i = events.indexOf(e);
-        var on = i === state.sel;
-        var btn = document.createElement("button");
-        btn.className = "tl-item";
-        btn.type = "button";
-        btn.style.width = itemWidthPct;
-        btn.innerHTML =
-          '<span class="tl-dot" style="width:' + (on ? "18px" : "12px") + ';height:' + (on ? "18px" : "12px") +
-          ';background:' + (on ? "#F7931A" : "#FFF8EF") + ';border:2px solid ' + (on ? "#F7931A" : "rgba(217,119,6,.7)") +
-          ';margin-top:' + (on ? "0px" : "3px") + '"></span>' +
-          '<span class="tl-year" style="color:' + (on ? "#F7931A" : "#96714A") + '">' + e.year + '</span>' +
-          '<span class="tl-short" style="color:' + (on ? "#2E2013" : "#BC9668") + '">' + e.short + '</span>';
-        btn.addEventListener("click", function () { selectEvent(i); });
-        btn.addEventListener("mouseenter", function () { selectEvent(i); });
-        rowEl.appendChild(btn);
-      });
-      itemsEl.appendChild(rowEl);
-      idx += perRow;
-    }
-
-    var se = events[state.sel];
-    document.getElementById("tlDetail").innerHTML =
-      '<span class="tl-detail-year">' + se.year + '</span>' +
-      '<span class="tl-detail-title">' + se.title + '</span>' +
-      '<span class="tl-detail-desc">' + se.desc + '</span>';
-
-    drawTimelinePath();
-  }
-
-  function selectEvent(i) {
-    if (state.sel === i) return;
-    state.sel = i;
-    renderTimeline();
-  }
-
-  (function () {
-    var tlResizePending = false;
-    var wrap = document.getElementById("tlWrap");
-    if (window.ResizeObserver) {
-      new ResizeObserver(function () {
-        if (tlResizePending) return;
-        tlResizePending = true;
-        requestAnimationFrame(function () { tlResizePending = false; renderTimeline(); });
-      }).observe(wrap);
-    } else {
-      window.addEventListener("resize", function () { renderTimeline(); });
-    }
-  })();
-
-  // ───────── holdings ─────────
-  function renderHoldings() {
-    var cMax = countryData[0].v;
-    document.getElementById("countryList").innerHTML = countryData.map(function (c, i) {
-      var w = Math.round(c.v / cMax * 100) + "%";
-      return '<div class="bar-row country">' +
-        '<span class="bar-rank">0' + (i + 1) + '</span>' +
-        '<span class="bar-name">' + c.name + '</span>' +
-        '<div class="bar-track"><div class="bar-fill" style="width:' + w + ';background:linear-gradient(90deg,rgba(247,147,26,.55),#F7931A)"></div></div>' +
-        '<span class="bar-amt">' + fmtAmt(c.v) + '</span>' +
-        '</div>';
-    }).join("");
-
-    document.getElementById("corpList").innerHTML = corpData.map(function (k, i) {
-      var w = Math.max(2, Math.round(Math.sqrt(k.v / 847000) * 100)) + "%";
-      var chipBg = i === 0 ? "#F7931A" : "#E8C08A";
-      var barBg = i === 0 ? "linear-gradient(90deg,rgba(247,147,26,.55),#F7931A)" : "rgba(247,147,26,.45)";
-      return '<div class="bar-row corp">' +
-        '<div class="corp-name-wrap">' +
-        '<div class="corp-chip" style="background:' + chipBg + '">' + k.name[0] + '</div>' +
-        '<span class="corp-name">' + k.name + '</span>' +
-        '</div>' +
-        '<span class="corp-first">' + k.first + '</span>' +
-        '<div class="bar-track"><div class="bar-fill" style="width:' + w + ';background:' + barBg + '"></div></div>' +
-        '<span class="bar-amt">' + fmtAmt(k.v) + '</span>' +
-        '</div>';
-    }).join("");
-  }
-
-  // ───────── unit toggle ─────────
-  var unitToggle = document.getElementById("unitToggle");
-  var unitToggleLabel = document.getElementById("unitToggleLabel");
-  unitToggle.addEventListener("click", function () {
-    state.holdingsUnit = state.holdingsUnit === "BTC" ? "USD" : "BTC";
-    unitToggle.classList.toggle("on", state.holdingsUnit === "BTC");
-    unitToggleLabel.textContent = "UNIT: " + state.holdingsUnit;
-    renderHoldings();
-  });
 
   // ───────── halving countdown (dynamic target from real block height) ─────────
   function ordinalEn(n) {
@@ -637,174 +377,7 @@
     }).join("");
   }
 
-  // ───────── miner list (static distribution estimate) ─────────
-  function renderMiners() {
-    document.getElementById("minerList").innerHTML = minerData.map(function (m, i) {
-      var w = Math.round(m.pct / 40 * 100) + "%";
-      return '<div class="bar-row miner-row">' +
-        '<span class="bar-rank">0' + (i + 1) + '</span>' +
-        '<span class="bar-name">' + m.name + '</span>' +
-        '<div class="bar-track" style="height:18px"><div class="bar-fill" style="width:' + w + ';background:linear-gradient(90deg,rgba(247,147,26,.5),#F7931A)"></div></div>' +
-        '<span class="bar-amt" style="min-width:44px">' + m.pct + '%</span>' +
-        '</div>';
-    }).join("");
-  }
-
-  // ───────── migration toggle ─────────
-  var migToggle = document.getElementById("migToggle");
-  migToggle.addEventListener("click", function () {
-    state.showMigration = !state.showMigration;
-    migToggle.classList.toggle("on", state.showMigration);
-  });
-
-  // ───────── world map ─────────
-  var mapCanvas = document.getElementById("mapCanvas");
-  var mapFallback = document.getElementById("mapFallback");
-  var mapCtx = mapCanvas.getContext("2d");
-  var geo = null;
-  var baseLayer = null;
-  var rafId = null;
-
-  function proj(lon, lat, w, h) {
-    return [(lon + 180) / 360 * w, (78 - lat) / 140 * h];
-  }
-
-  function buildMap() {
-    var cssW = mapCanvas.parentElement.clientWidth;
-    if (!cssW || !geo) return;
-    var cssH = Math.round(cssW * 0.52);
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    mapCanvas.width = cssW * dpr;
-    mapCanvas.height = cssH * dpr;
-    mapCanvas.style.height = cssH + "px";
-    var W = mapCanvas.width, H = mapCanvas.height;
-
-    var off = document.createElement("canvas");
-    off.width = W; off.height = H;
-    var octx = off.getContext("2d");
-    octx.fillStyle = "#fff";
-    function drawPoly(rings) {
-      octx.beginPath();
-      rings.forEach(function (ring) {
-        ring.forEach(function (pt, i) {
-          var p = proj(pt[0], pt[1], W, H);
-          if (i) octx.lineTo(p[0], p[1]); else octx.moveTo(p[0], p[1]);
-        });
-        octx.closePath();
-      });
-      octx.fill();
-    }
-    geo.features.forEach(function (f) {
-      var g = f.geometry;
-      if (!g) return;
-      if (g.type === "Polygon") drawPoly(g.coordinates);
-      else if (g.type === "MultiPolygon") g.coordinates.forEach(drawPoly);
-    });
-    var img = octx.getImageData(0, 0, W, H).data;
-
-    var base = document.createElement("canvas");
-    base.width = W; base.height = H;
-    var bctx = base.getContext("2d");
-    bctx.fillStyle = "#FFF3E0";
-    bctx.fillRect(0, 0, W, H);
-    var step = Math.max(5, Math.round(W / 130));
-    bctx.fillStyle = "rgba(217,119,6,0.45)";
-    for (var y = step; y < H; y += step) {
-      for (var x = step; x < W; x += step) {
-        if (img[(y * W + x) * 4 + 3] > 128) {
-          bctx.beginPath();
-          bctx.arc(x, y, step * 0.22, 0, 6.2832);
-          bctx.fill();
-        }
-      }
-    }
-    baseLayer = base;
-    animateMap();
-  }
-
-  function animateMap() {
-    if (rafId) cancelAnimationFrame(rafId);
-    var W = mapCanvas.width, H = mapCanvas.height;
-    var P = function (lon, lat) { return proj(lon, lat, W, H); };
-    var miners = [
-      { p: P(-98, 39), pct: 40, name: "US" },
-      { p: P(104, 35), pct: 15, name: "CN" },
-      { p: P(94, 60), pct: 10, name: "RU" },
-      { p: P(-110, 56), pct: 6, name: "CA" },
-      { p: P(67, 48), pct: 5, name: "KZ" }
-    ];
-    var cn = P(110, 33);
-    var routes = [
-      { to: P(-98, 39), lift: 0.35 },
-      { to: P(67, 48), lift: 0.18 },
-      { to: P(94, 60), lift: 0.12 },
-      { to: P(-110, 56), lift: 0.45 }
-    ];
-    var scale = W / 1000;
-
-    function tick(t) {
-      mapCtx.clearRect(0, 0, W, H);
-      mapCtx.drawImage(baseLayer, 0, 0);
-
-      if (state.showMigration) {
-        routes.forEach(function (r) {
-          var cx = (cn[0] + r.to[0]) / 2;
-          var cy = Math.min(cn[1], r.to[1]) - Math.abs(r.to[0] - cn[0]) * r.lift * 0.5;
-          mapCtx.strokeStyle = "rgba(247,147,26,0.28)";
-          mapCtx.lineWidth = 1.2 * scale;
-          mapCtx.setLineDash([4 * scale, 5 * scale]);
-          mapCtx.lineDashOffset = -t * 0.02 * scale;
-          mapCtx.beginPath();
-          mapCtx.moveTo(cn[0], cn[1]);
-          mapCtx.quadraticCurveTo(cx, cy, r.to[0], r.to[1]);
-          mapCtx.stroke();
-          mapCtx.setLineDash([]);
-          var u = (t * 0.00012 + r.lift) % 1;
-          var px = (1 - u) * (1 - u) * cn[0] + 2 * (1 - u) * u * cx + u * u * r.to[0];
-          var py = (1 - u) * (1 - u) * cn[1] + 2 * (1 - u) * u * cy + u * u * r.to[1];
-          mapCtx.fillStyle = "#D96A00";
-          mapCtx.beginPath();
-          mapCtx.arc(px, py, 2.6 * scale, 0, 6.2832);
-          mapCtx.fill();
-        });
-      }
-
-      miners.forEach(function (m) {
-        var r = (4 + m.pct * 0.55) * scale;
-        var pulse = 1 + 0.25 * Math.sin(t * 0.002 + m.pct);
-        mapCtx.fillStyle = "rgba(247,147,26,0.15)";
-        mapCtx.beginPath(); mapCtx.arc(m.p[0], m.p[1], r * pulse * 1.6, 0, 6.2832); mapCtx.fill();
-        mapCtx.fillStyle = "rgba(247,147,26,0.9)";
-        mapCtx.beginPath(); mapCtx.arc(m.p[0], m.p[1], r * 0.55, 0, 6.2832); mapCtx.fill();
-        mapCtx.fillStyle = "#2E2013";
-        mapCtx.font = "600 " + Math.round(11 * scale) + "px 'IBM Plex Mono', monospace";
-        mapCtx.textAlign = "center";
-        mapCtx.fillText(m.name + " " + m.pct + "%", m.p[0], m.p[1] - r * 0.55 - 6 * scale);
-      });
-      rafId = requestAnimationFrame(tick);
-    }
-    rafId = requestAnimationFrame(tick);
-  }
-
-  function initMap() {
-    fetch("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json")
-      .then(function (res) {
-        if (!res.ok) throw new Error("fetch failed");
-        return res.json();
-      })
-      .then(function (data) {
-        geo = data;
-        buildMap();
-        if (window.ResizeObserver) {
-          new ResizeObserver(function () { buildMap(); }).observe(mapCanvas.parentElement);
-        }
-      })
-      .catch(function () {
-        mapFallback.classList.add("show");
-      });
-  }
-
-  // ───────── trend charts (hashrate / price) ─────────
+  // ───────── trend charts (hashrate / price / upbit) ─────────
   var CX0 = 10, CX1 = 550, CYB = 205, CYT = 15;
 
   function downsample(arr, maxN) {
@@ -837,6 +410,17 @@
     if (v < 1000) return "$" + Math.round(v);
     if (v < 10000) return "$" + (v / 1000).toFixed(1) + "K";
     return "$" + Math.round(v / 1000) + "K";
+  }
+
+  function fmtDateShort(sec) {
+    var d = new Date(sec * 1000);
+    return d.getFullYear() + "." + String(d.getMonth() + 1).padStart(2, "0") + "." + String(d.getDate()).padStart(2, "0");
+  }
+
+  function fmtKrwShort(v) {
+    if (v >= 1e8) return "₩" + (v / 1e8).toFixed(2) + "억";
+    if (v >= 1e4) return "₩" + (v / 1e4).toFixed(0) + "만";
+    return "₩" + Math.round(v).toLocaleString("en-US");
   }
 
   function renderHashrateChart(history) {
@@ -909,6 +493,84 @@
     return true;
   }
 
+  function renderUpbitChart(candles) {
+    if (!candles || !candles.length) return false;
+    var raw = candles.map(function (c) { return { t: Math.floor(c.timestamp / 1000), v: c.trade_price }; }).filter(function (p) { return p.v > 0 && p.t; });
+    raw.sort(function (a, b) { return a.t - b.t; });
+    if (raw.length < 5) return false;
+    if (liveData.upbitPrice) {
+      var nowSec = Date.now() / 1000;
+      if (nowSec - raw[raw.length - 1].t > 3600) raw.push({ t: nowSec, v: liveData.upbitPrice });
+      else raw[raw.length - 1].v = liveData.upbitPrice;
+    }
+    var pts = downsample(raw, 140);
+    var coords = scaleSeries(pts, false);
+    document.getElementById("upPolyline").setAttribute("points", ptsAttr(coords));
+    document.getElementById("upPolygon").setAttribute("points", ptsAttr(coords) + " " + CX1 + "," + CYB + " " + CX0 + "," + CYB);
+    var last = coords[coords.length - 1];
+    document.getElementById("upDot").setAttribute("cx", last.x);
+    document.getElementById("upDot").setAttribute("cy", last.y);
+    var lbl = document.getElementById("upCurrentLabel");
+    lbl.setAttribute("x", Math.min(CX1 - 6, last.x));
+    lbl.setAttribute("y", Math.max(28, last.y - 12));
+    lbl.textContent = fmtKrwShort(last.v);
+    var minV = Math.min.apply(null, pts.map(function (p) { return p.v; }));
+    var maxV = Math.max.apply(null, pts.map(function (p) { return p.v; }));
+    document.getElementById("upMinLabel").textContent = fmtKrwShort(minV);
+    document.getElementById("upMaxLabel").textContent = fmtKrwShort(maxV);
+    document.getElementById("upDateStart").textContent = fmtDateShort(coords[0].t);
+    document.getElementById("upDateEnd").textContent = fmtDateShort(coords[coords.length - 1].t);
+    document.getElementById("upSub").textContent = "KRW-BTC · UPBIT · " + fmtDateShort(coords[0].t) + " – " + fmtDateShort(coords[coords.length - 1].t) + " · LIVE";
+    return true;
+  }
+
+  // ───────── kimchi premium ─────────
+  function fetchFx() {
+    return fetchJSON(API.fxPrimary, 6000).then(function (d) {
+      var r = d && d.rates && d.rates.KRW;
+      if (!r) throw new Error("no rate");
+      return r;
+    }).catch(function () {
+      return fetchJSON(API.fxFallback, 6000).then(function (d) {
+        var r = d && d.rates && d.rates.KRW;
+        if (!r) throw new Error("no rate");
+        return r;
+      });
+    });
+  }
+
+  function applyKimchi() {
+    if (!liveData.upbitPrice || !liveData.binanceUsd || !liveData.usdKrw) return;
+    var binanceKrw = liveData.binanceUsd * liveData.usdKrw;
+    var premium = (liveData.upbitPrice / binanceKrw - 1) * 100;
+    var el = document.getElementById("kpValue");
+    el.textContent = (premium >= 0 ? "+" : "") + premium.toFixed(2) + "%";
+    el.style.color = premium >= 0 ? "#D97706" : "#3FA34D";
+    document.getElementById("kpUpbit").textContent = "₩" + Math.round(liveData.upbitPrice).toLocaleString("en-US");
+    document.getElementById("kpBinance").textContent = "₩" + Math.round(binanceKrw).toLocaleString("en-US");
+    document.getElementById("kpFx").textContent = liveData.usdKrw.toFixed(1);
+  }
+
+  function refreshKimchi() {
+    Promise.allSettled([
+      withRetry(function () { return fetchJSON(API.upbitTicker); }, 1),
+      withRetry(function () { return fetchJSON(API.binanceTicker); }, 1),
+      withRetry(function () { return fetchFx(); }, 1)
+    ]).then(function (results) {
+      if (results[0].status === "fulfilled" && results[0].value && results[0].value[0]) {
+        liveData.upbitPrice = results[0].value[0].trade_price;
+      }
+      if (results[1].status === "fulfilled" && results[1].value && results[1].value.price) {
+        liveData.binanceUsd = parseFloat(results[1].value.price);
+      }
+      if (results[2].status === "fulfilled" && typeof results[2].value === "number") {
+        liveData.usdKrw = results[2].value;
+      }
+      applyKimchi();
+      if (upbitHistoryCache) renderUpbitChart(upbitHistoryCache);
+    });
+  }
+
   // ───────── live status indicator ─────────
   function setLiveStatus(ok) {
     var dot = document.getElementById("liveDot");
@@ -947,7 +609,6 @@
       liveData.isLive = anyOk;
       applyLiveChips();
       applyHalvingCard();
-      renderHoldings();
       setLiveStatus(anyOk);
       // re-plot the chart's last point/label against the freshly-fetched price
       // instead of waiting up to 10 min for the next full history refetch
@@ -956,7 +617,7 @@
   }
 
   function refreshCharts() {
-    // these two payloads are much larger (full price/hashrate history), so they
+    // these payloads are much larger (full price/hashrate/day history), so they
     // get a longer timeout plus a retry before giving up
     withRetry(function () { return fetchJSON(API.hashrateHistory, 15000); }, 1, 2000).then(function (data) {
       if (data && Array.isArray(data.hashrates)) renderHashrateChart(data.hashrates);
@@ -967,21 +628,25 @@
         renderPriceChart(data.values);
       }
     }).catch(function () { });
+    withRetry(function () { return fetchJSON(API.upbitDays, 15000); }, 1, 2000).then(function (data) {
+      if (data && Array.isArray(data)) {
+        upbitHistoryCache = data;
+        renderUpbitChart(data);
+      }
+    }).catch(function () { });
   }
 
   // ───────── init ─────────
   renderChips();
-  renderTimeline();
-  renderHoldings();
   renderCountdown();
-  renderMiners();
-  initMap();
   setInterval(renderCountdown, 1000);
 
   refreshLiveNumbers();
   refreshCharts();
+  refreshKimchi();
   setInterval(refreshLiveNumbers, 60000);
   setInterval(refreshCharts, 600000);
+  setInterval(refreshKimchi, 30000);
 })();
 </script>
 </body>
