@@ -131,25 +131,6 @@
     </div>
 
     <div class="card">
-      <h2>가격 (Upbit)</h2>
-      <p class="sub" id="upSub">KRW-BTC · UPBIT · 최근 시세</p>
-      <svg class="chart" viewBox="0 0 560 232">
-        <line x1="10" y1="205" x2="550" y2="205" stroke="rgba(217,119,6,.4)" stroke-width="1"></line>
-        <line x1="10" y1="110" x2="550" y2="110" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
-        <line x1="10" y1="15" x2="550" y2="15" stroke="rgba(217,119,6,.14)" stroke-width="1"></line>
-        <polygon id="upPolygon" points="" fill="rgba(247,147,26,.12)"></polygon>
-        <polyline id="upPolyline" points="" fill="none" stroke="#F7931A" stroke-width="2.5" stroke-linejoin="round"></polyline>
-        <circle id="upDot" cx="550" cy="15" r="4" fill="#F7931A"></circle>
-        <text id="upCurrentLabel" x="544" y="36" fill="#2E2013" font-size="12" font-weight="600" font-family="IBM Plex Mono" text-anchor="end"></text>
-        <text id="upMaxLabel" x="14" y="20" fill="#BC9668" font-size="10" font-family="IBM Plex Mono"></text>
-        <text id="upMinLabel" x="14" y="200" fill="#BC9668" font-size="10" font-family="IBM Plex Mono"></text>
-        <text id="upDateStart" x="10" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono"></text>
-        <text id="upDateEnd" x="550" y="222" fill="#BC9668" font-size="10" font-family="IBM Plex Mono" text-anchor="end"></text>
-      </svg>
-      <p class="foot" id="upFoot" style="margin-top:10px">업비트 원화 마켓(KRW-BTC) 기준 최근 일봉 시세 + 실시간 현재가.</p>
-    </div>
-
-    <div class="card">
       <h2>김치 프리미엄</h2>
       <p class="sub" id="kpSub">UPBIT vs BINANCE · 실시간 환율 적용</p>
       <div class="kp-display">
@@ -164,7 +145,7 @@
     </div>
 
     <div class="card">
-      <h2>가격 (로그 스케일)</h2>
+      <h2>가격</h2>
       <p class="sub" id="pxSub">BTC / USD · LOG SCALE · 2010–2026</p>
       <svg class="chart" viewBox="0 0 560 232">
         <line x1="10" y1="205" x2="550" y2="205" stroke="rgba(217,119,6,.4)" stroke-width="1"></line>
@@ -218,7 +199,6 @@
     difficulty: "https://mempool.space/api/v1/difficulty-adjustment",
     priceHistory: "https://api.blockchain.info/charts/market-price?timespan=all&format=json&cors=true",
     upbitTicker: "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
-    upbitDays: "https://api.upbit.com/v1/candles/days?market=KRW-BTC&count=200",
     binanceTicker: "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT",
     fxPrimary: "https://open.er-api.com/v6/latest/USD",
     fxFallback: "https://api.frankfurter.dev/v1/latest?from=USD&to=KRW"
@@ -242,7 +222,6 @@
   };
   var halvingState = null;
   var priceHistoryCache = null;
-  var upbitHistoryCache = null;
 
   // ───────── fetch helpers ─────────
   function fetchWithTimeout(url, timeoutMs) {
@@ -412,17 +391,6 @@
     return "$" + Math.round(v / 1000) + "K";
   }
 
-  function fmtDateShort(sec) {
-    var d = new Date(sec * 1000);
-    return d.getFullYear() + "." + String(d.getMonth() + 1).padStart(2, "0") + "." + String(d.getDate()).padStart(2, "0");
-  }
-
-  function fmtKrwShort(v) {
-    if (v >= 1e8) return "₩" + (v / 1e8).toFixed(2) + "억";
-    if (v >= 1e4) return "₩" + (v / 1e4).toFixed(0) + "만";
-    return "₩" + Math.round(v).toLocaleString("en-US");
-  }
-
   function renderHashrateChart(history) {
     if (!history || !history.length) return false;
     var raw = history.map(function (p) { return { t: p.timestamp, v: p.avgHashrate / 1e18 }; }).filter(function (p) { return p.v > 0 && p.t; });
@@ -493,37 +461,6 @@
     return true;
   }
 
-  function renderUpbitChart(candles) {
-    if (!candles || !candles.length) return false;
-    var raw = candles.map(function (c) { return { t: Math.floor(c.timestamp / 1000), v: c.trade_price }; }).filter(function (p) { return p.v > 0 && p.t; });
-    raw.sort(function (a, b) { return a.t - b.t; });
-    if (raw.length < 5) return false;
-    if (liveData.upbitPrice) {
-      var nowSec = Date.now() / 1000;
-      if (nowSec - raw[raw.length - 1].t > 3600) raw.push({ t: nowSec, v: liveData.upbitPrice });
-      else raw[raw.length - 1].v = liveData.upbitPrice;
-    }
-    var pts = downsample(raw, 140);
-    var coords = scaleSeries(pts, false);
-    document.getElementById("upPolyline").setAttribute("points", ptsAttr(coords));
-    document.getElementById("upPolygon").setAttribute("points", ptsAttr(coords) + " " + CX1 + "," + CYB + " " + CX0 + "," + CYB);
-    var last = coords[coords.length - 1];
-    document.getElementById("upDot").setAttribute("cx", last.x);
-    document.getElementById("upDot").setAttribute("cy", last.y);
-    var lbl = document.getElementById("upCurrentLabel");
-    lbl.setAttribute("x", Math.min(CX1 - 6, last.x));
-    lbl.setAttribute("y", Math.max(28, last.y - 12));
-    lbl.textContent = fmtKrwShort(last.v);
-    var minV = Math.min.apply(null, pts.map(function (p) { return p.v; }));
-    var maxV = Math.max.apply(null, pts.map(function (p) { return p.v; }));
-    document.getElementById("upMinLabel").textContent = fmtKrwShort(minV);
-    document.getElementById("upMaxLabel").textContent = fmtKrwShort(maxV);
-    document.getElementById("upDateStart").textContent = fmtDateShort(coords[0].t);
-    document.getElementById("upDateEnd").textContent = fmtDateShort(coords[coords.length - 1].t);
-    document.getElementById("upSub").textContent = "KRW-BTC · UPBIT · " + fmtDateShort(coords[0].t) + " – " + fmtDateShort(coords[coords.length - 1].t) + " · LIVE";
-    return true;
-  }
-
   // ───────── kimchi premium ─────────
   function fetchFx() {
     return fetchJSON(API.fxPrimary, 6000).then(function (d) {
@@ -567,7 +504,6 @@
         liveData.usdKrw = results[2].value;
       }
       applyKimchi();
-      if (upbitHistoryCache) renderUpbitChart(upbitHistoryCache);
     });
   }
 
@@ -626,12 +562,6 @@
       if (data && Array.isArray(data.values)) {
         priceHistoryCache = data.values;
         renderPriceChart(data.values);
-      }
-    }).catch(function () { });
-    withRetry(function () { return fetchJSON(API.upbitDays, 15000); }, 1, 2000).then(function (data) {
-      if (data && Array.isArray(data)) {
-        upbitHistoryCache = data;
-        renderUpbitChart(data);
       }
     }).catch(function () { });
   }
