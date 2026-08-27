@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>궁극적인 보안은 멀티시그? | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-08-27</div>
+  <h1 class="post-h1">궁극적인 보안은 멀티시그?</h1>
+
+  <div class="post-body">
+    <p>최종 종착지는 멀티시그라는 결론이 나왔다.</p>
+
+    <img src="img/a25.png" alt="키스톤 프로, 시드사이너, 에어갭 노트북으로 구성한 2-of-3 멀티시그 서명 흐름" />
+
+    <h2>1. 왜 멀티시그냐</h2>
+
+    <p>최근 콜드카드 사태로 더욱 부각됐다. 시드 생성, 펌웨어 업데이트, 트랜잭션 검증, 와치온리(코디네이터)까지 전부 공격면이 될 수 있다.</p>
+
+    <p>그럼 콜드월렛 제작사를 믿지 말고, 에어갭 노트북을 직접 만들어서 콜드월렛으로 쓰면 안전한가?</p>
+
+    <p>그렇지 않다. 문제는 공격표면의 크기다. 범용 OS의 버그 때문에 여전히 불안감이 남는다. 결국 기기가 외부에서 온 데이터를 처리(파싱)하는 코드가 얼마나 많으냐의 문제다.</p>
+
+    <h2>2. 정리하자면</h2>
+
+    <ul>
+      <li><strong>콜드카드 등 제조사의 서명기기</strong> — 시드 생성 과정의 엔트로피가 실패지점이 됨이 검증됐다.</li>
+      <li><strong>시드사이너 등 오픈소스 하드웨어</strong> — 유통 단계에서 변조된 보드, 바꿔치기된 부품, 노출된 디버그 경로가 공격 벡터가 될 수 있다.</li>
+      <li><strong>직접 만든 에어갭 노트북</strong> — 범용 OS라 공격표면이 크다.</li>
+    </ul>
+
+    <p>셋 다 100% 신뢰할 수는 없다.</p>
+
+    <h2>3. 그나마 최선</h2>
+
+    <p>주사위를 굴려 직접 짱짱한 엔트로피로 시드를 만들고, 패스프레이즈를 설정하고, 트랜잭션을 하드웨어 월렛의 독립 화면으로 직접 눈으로 확인하고, 한 번 더 이 홈페이지의 <a href="security-post-psbt-output-verifier.html">PSBT 잔돈(output) 검증기</a>를 쓴다.</p>
+
+    <p>확인할 내용은 input, output, 금액, change, 수수료다. 이러면 대다수의 위험은 피할 수 있다.</p>
+
+    <blockquote>'대다수'는.</blockquote>
+
+    <p>하지만 다크스키피 등, 100% 안전한 건 아니다.</p>
+
+    <h2>4. 그래서, 멀티시그</h2>
+
+    <p>답은 멀티시그다. 한 제조사의 실수, 한 배포 채널의 오염, 한 코드베이스의 취약점이 전체 자산을 동시에 노출시키지 못하게 해야 한다. 서로 다른 공급망을 가진 장치를 섞는 거다.</p>
+
+    <p>예를 들면, 시드를 키스톤에서 하나, 시드사이너에서 하나, 에어갭 노트북에서 하나 생성해 2-of-3 멀티시그를 구현하는 식이다.</p>
+
+    <h2>5. 그래도 초보자에겐 추천 못 한다</h2>
+
+    <p>그렇다고 초보자에게 멀티시그를 추천할 순 없는 노릇이니 난감할 따름이다.</p>
+
+    <p>셀프커스터디를 처음 알았다면 일단은 주사위 100번 굴려 니모닉 만들기. 이후 트랜잭션을 좀 일으켜 보고, 여유가 있을 때 패스프레이즈. 패스프레이즈까지 하고 나서도 돈을 잃을 불안감이 생기면, 그때 최종적으로 멀티시그로 넘어가면 된다.</p>
+
+    <blockquote>셀프커스터디를 시작하면서부터 멀티시그를 했다간, 자신의 실수로 돈을 잃을 가능성이 너무 높다. (휴먼에러)</blockquote>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#멀티시그</span>
+    <span class="post-tag">#셀프커스터디</span>
+    <span class="post-tag">#에어갭</span>
+    <span class="post-tag">#PSBT</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
