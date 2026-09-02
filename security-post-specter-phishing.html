@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스팩터 피싱사이트 떴다! | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-02</div>
+  <h1 class="post-h1">스팩터 피싱사이트 떴다!</h1>
+
+  <div class="post-body">
+    <p>느긋하게 커피 마시다가 X(트위터)에서 <code>@SpecterWallet</code> 공식 계정이 "가짜 피싱 툴 유포 중이니 조심하라"는 경고를 올린 걸 봤다.</p>
+
+    <p>순간 커피 맛이 싹 사라졌다. 어? 내가 지금 쓰고 있는 스팩터... 설마 그거 아니겠지?</p>
+
+    <img src="img/aa10.jpg" alt="스팩터 데스크탑 관련 이미지" />
+
+    <h2>1. 일단 내 스팩터부터 정밀 검사</h2>
+
+    <p>불안한 마음을 안고 바로 검증에 들어갔다. 공식 GitHub 저장소에서 최신 릴리즈 설치파일을 새로 받고, 체크섬(SHA256)을 공식 배포본과 대조했다 — 정확히 일치.</p>
+
+    <p>여기서 끝내면 아쉽지. GPG 서명까지 확인했다. 서명 검증용 공개키는 GitHub과는 아예 다른 경로(키서버)에서 따로 받아왔다. 한쪽이 해킹당해도 다른 쪽까지 같이 뚫릴 확률은 훨씬 낮아지니까. 결과는 "정상 서명" — 통과.</p>
+
+    <p>이렇게 검증까지 마친 파일로 기존 설치 위에 재설치까지 싹 밀어버렸다.</p>
+
+    <blockquote>결론: 원래 쓰던 스팩터도 정품이었고, 이번 재설치로 100% 검증된 상태로 새로 갈아 끼웠다. 심장 철렁했던 게 무색하게 그냥 해프닝이었다.</blockquote>
+
+    <h2>2. 안심하려는데 또 다른 놈이 튀어나왔다</h2>
+
+    <p>휴, 다행이다 하고 다른 기기에서 테스트 트랜잭션 하나를 날렸는데 — 이 녀석이 20분이 넘도록 스팩터 화면에 코빼기도 안 비쳤다. 또 뭐지 싶어서 mempool.space에 가서 해당 txid를 직접 조회해봤다.</p>
+
+    <p>비트코인 네트워크 전체 멤풀엔 멀쩡히 들어가 있었다. 수수료도 그날 최저 수수료 수준(약 1 sat/vB)이라 딱히 이상한 것도 없었다. 그럼 왜 내 스팩터만 못 보는 거지?</p>
+
+    <p>범인은 비트코인 코어 노드였다. 상태를 보니 "Node uptime: ~0 Hours" — 얼마 전에 노드가 재시작되면서 멤풀이 통째로 초기화된 상태였던 거다. 재시작 이전에 이미 방송된 이 트랜잭션을, 노드가 아직 피어들로부터 다시 전달받지 못한 것뿐이었다. 연결된 피어도 13개로 정상, 동기화 상태도 멀쩡했으니 순전히 타이밍 문제였다.</p>
+
+    <p>별다른 조치 없이 그냥 좀 더 기다렸더니, 노드가 알아서 트랜잭션을 재수신했고 코어와 스팩터 양쪽 다 잔액에 정상 반영됐다.</p>
+
+    <h2>3. 덤으로, 코어에서 스팩터 지갑 보는 법</h2>
+
+    <p>스팩터는 지갑을 만들 때 비트코인 코어에 watch-only 디스크립터 지갑을 알아서 만들어 xpub 기반 정보를 이미 넣어둔다. 그래서 코어 쪽에 xpub을 따로 손으로 입력할 필요가 없다.</p>
+
+    <p>코어 Qt의 "지갑 열기" 메뉴에서 이름이 회색으로 비활성화되어 보이는 항목이 있다면, 그건 이미 열려서 쓰이고 있는 지갑이라는 뜻이니 정상이다. 지갑을 바꿔가며 보고 싶으면 File 메뉴가 아니라 툴바에 있는 "지갑:" 드롭다운에서 고르면 된다. 전환하고 나면 코어 GUI에서도 스팩터랑 똑같은 잔액과 내역을 볼 수 있다.</p>
+
+    <p>결과적으로 오늘 겪은 일들은 다 정상적인 소프트웨어 동작 범위 안이었고, 보안·정품 쪽으로도 아무 이상 없었다.</p>
+
+    <p>ps. 트랜잭션 만드는 김에 예전에 만들어둔 PSBT 잔돈(OUTPUT) 검증기도 오랜만에 다시 돌려봤는데, 오류 하나 없이 깔끔하게 검증을 통과했다. 내 손으로 만든 도구가 내 트랜잭션을 지켜주는 기분, 이거 은근히 짜릿하다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#SpecterDesktop</span>
+    <span class="post-tag">#피싱주의</span>
+    <span class="post-tag">#정품검증</span>
+    <span class="post-tag">#BitcoinCore</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
