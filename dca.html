@@ -594,8 +594,14 @@ body > footer.unified-footer .uf-note{
       computeStats();
     } catch(e){
       console.error(e);
+      var src = document.getElementById('statsSource');
+      if (src) src.textContent = '오프라인 — 가격/차트 정보를 불러올 수 없어요. 온라인 상태에서 다시 열어주세요.';
     }
   })();
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw-dca.js', { scope: '/dca.html' }).catch(function(){});
+  }
 </script>
 <footer class="unified-footer">
   <span class="uf-email">⚡bitsexer@oksu.su</span>

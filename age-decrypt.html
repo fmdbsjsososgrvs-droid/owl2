@@ -119,7 +119,8 @@
 
 <p class="hint">
   이 페이지는 파일과 키를 <b>기기 밖으로 절대 보내지 않습니다.</b> 전부 브라우저 안에서만 처리돼요.
-  키는 저장하지 않으니 열 때마다 붙여넣어야 합니다. 다 보고 나면 <b>지우기</b>를 눌러주세요.
+  키는 저장하지 않으니 열 때마다 붙여넣어야 합니다. 다 보고 나면 <b>지우기</b>를 눌러주세요.<br>
+  사파리에서 공유 버튼 → '홈 화면에 추가'로 한 번 저장해두면, 그다음부턴 오프라인 상태에서도 카메라 스캔까지 그대로 구동.
 </p>
 <footer>
   <div>AGE DECRYPTOR</div>
@@ -359,6 +360,11 @@
     setStatus("✅ 복호화 완료","ok");
   }
 })();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw-agedecrypt.js', { scope: '/age-decrypt.html' }).catch(() => {});
+}
 </script>
 </body>
 </html>

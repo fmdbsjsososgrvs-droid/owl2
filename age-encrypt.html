@@ -139,7 +139,8 @@
 
 <p class="hint">
   파일·키·암호문구를 <b>기기 밖으로 절대 보내지 않습니다.</b> 전부 브라우저 안에서만 처리돼요.
-  복호화는 별도 페이지(age-decrypt.html)에서. <b>YubiKey(age1fido2-hmac1…) 수신자는 여기서 못 씁니다</b> — 일반 공개키/암호문구만.
+  복호화는 별도 페이지(age-decrypt.html)에서. <b>YubiKey(age1fido2-hmac1…) 수신자는 여기서 못 씁니다</b> — 일반 공개키/암호문구만.<br>
+  사파리에서 공유 버튼 → '홈 화면에 추가'로 한 번 저장해두면, 그다음부턴 오프라인 상태에서도 그대로 구동.
 </p>
 <footer>
   <div>AGE ENCRYPTOR</div>
@@ -313,6 +314,11 @@
     setStatus("✅ 암호화 완료 — 저장하거나 복사해서 전달","ok");
   };
 })();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw-ageencrypt.js', { scope: '/age-encrypt.html' }).catch(() => {});
+}
 </script>
 </body>
 </html>
