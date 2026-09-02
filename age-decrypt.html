@@ -253,12 +253,13 @@
 
   function handleQrResult(text){
     stopQrScan();
-    if(/^AGE-SECRET-KEY-(PQ-)?1[0-9A-Z]+$/i.test(text)){
-      qrType="key"; qrValue=text.toUpperCase();
+    var id=extractIdentity(text);
+    if(id){
+      qrType="key"; qrValue=id;
       $("qrStatus").className="ok";
       $("qrStatus").textContent="✅ QR 인식 완료 — 개인키로 인식됨";
     }else{
-      qrType="pass"; qrValue=text;
+      qrType="pass"; qrValue=text.trim();
       $("qrStatus").className="ok";
       $("qrStatus").textContent="✅ QR 인식 완료 — 암호문구로 인식됨";
     }
@@ -282,7 +283,7 @@
     var lines=raw.split(/\r?\n/);
     for(var i=0;i<lines.length;i++){
       var t=lines[i].replace(/\s+/g,"");
-      if(/^AGE-SECRET-KEY-1[0-9A-Z]+$/i.test(t)) return t.toUpperCase();
+      if(/^AGE-SECRET-KEY-(PQ-)?1[0-9A-Z]+$/i.test(t)) return t.toUpperCase();
     }
     return null;
   }
