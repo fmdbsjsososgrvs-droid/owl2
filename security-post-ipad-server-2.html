@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아이패드를 서버로(2) | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-03</div>
+  <h1 class="post-h1">아이패드를 서버로(2)</h1>
+
+  <div class="post-body">
+    <p>어제 만든 아이패드 파일서버, 오늘 실제로 좀 써봤다. 근데 FTP가 너무 느려서 답답했다. 썸네일 하나 뜨는 데도 한참 걸리고, 50메가짜리 동영상은 로딩 시간이 어마어마했다.</p>
+
+    <h2>원인을 두 갈래로 좁혔다</h2>
+
+    <p>느린 이유를 찾아보니 두 가지가 겹쳐있을 가능성이 컸다.</p>
+
+    <p>첫 번째는 Tailscale 연결 방식. Tailscale은 원래 두 기기가 직접(P2P) 붙는 게 정상인데, 네트워크 환경(방화벽, NAT 종류)에 따라 직접 연결이 안 되면 중계 서버(DERP)를 거쳐서 우회한다. 이러면 속도가 뚝 떨어진다 — 특히 한쪽이 셀룰러망이면 흔한 일이라고 한다. 아이폰 Tailscale 앱에서 아이패드를 눌러보면 "Direct"인지 "Relay"인지 바로 확인할 수 있다.</p>
+
+    <p>두 번째는 FTP 프로토콜 자체의 한계. FTP는 "부분 요청(Range Request)"을 잘 못한다. 그래서 썸네일 하나 뜨는데도 파일 전체(또는 앞부분 상당량)를 통째로 받아와야 하고, 영상도 스트리밍이 아니라 사실상 다운로드에 가까운 방식이라 느릴 수밖에 없는 구조였다. WebDAV/HTTP였으면 필요한 부분만 스트리밍해서 훨씬 빨랐을 거라고 한다.</p>
+
+    <h2>WebDAV로 다시 붙여보기</h2>
+
+    <p>일단 Owlfiles에서 WebDAV를 다시 시도해보기로 했다. 진짜 WebDAV를 지원하는지 확인하려고, 아이폰 사파리에서 아이패드 주소를 직접 쳐봤다. 파일 목록이 그냥 브라우저 화면에 뜨면 순수 HTTP 서버라는 뜻이라 WebDAV가 아니라는 걸 의미한다. 결과는 예상대로 — 501 에러. 진짜 WebDAV 프로토콜(PROPFIND 등)을 지원하지 않는 거였다.</p>
+
+    <h2>앱을 갈아탔다</h2>
+
+    <p>이쯤에서 다른 앱으로 넘어가기로 했다. Documents by Readdle, nPlayer 같은 앱들이 iOS에서 WebDAV 서버 기능으로 유명하다는 걸 알게 됐고, 여러 앱을 비교하다가 최종적으로 <strong>PocketServer</strong>라는 앱으로 정착했다. 이 앱은 진짜 WebDAV 프로토콜을 구현했고, 아이디·비밀번호 인증까지 지원했다.</p>
+
+    <p>PocketServer에서 계정을 만들고, 맥북 Finder에서 그 아이디·비밀번호로 접속했더니 — 성공. 아이패드 공유 폴더가 Finder에 그대로 떴다.</p>
+
+    <blockquote>
+      [아이폰] ─┐<br>
+      [맥북] ─┼─(Tailscale 터널)─→ [아이패드: PocketServer WebDAV 서버]<br>
+      [아이패드] ─┘ (인증 + 진짜 WebDAV)
+    </blockquote>
+
+    <p>어디서든 접속되고, 진짜 WebDAV라 스트리밍도 빠르고, 아이디·비밀번호 인증까지 걸려있고, 맥북 Finder랑 아이폰 양쪽 다 연동 확인까지 끝났다. 기념 삼아 예전 여행 사진 한 장을 이 파이프라인으로 올려봤다.</p>
+
+    <img src="img/bb7.jpg" alt="완성 기념으로 올려본 예전 여행 사진" />
+
+    <h2>정리된 체크리스트</h2>
+
+    <ul>
+      <li>평소엔 서버 꺼두고, 필요할 때만 켜기 (배터리/보안)</li>
+      <li>아이패드 자동 잠금 "안 함"도 파일 옮길 때만 잠깐</li>
+      <li>와이파이 비밀번호 주기적으로 확인</li>
+      <li>셀룰러 환경에서도 한 번 더 테스트해서 Tailscale Direct/Relay 최종 확인</li>
+    </ul>
+
+    <p>여러 앱을 비교해보면서(PocketServer, Owlfiles, Documents, FTP vs WebDAV, Tailscale Direct vs Relay) 하나씩 원인을 좁혀가는 과정이었다. 덕분에 나중에 문제가 생겨도 어디부터 봐야 할지는 이제 안다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#WebDAV</span>
+    <span class="post-tag">#PocketServer</span>
+    <span class="post-tag">#Tailscale</span>
+    <span class="post-tag">#아이패드</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
