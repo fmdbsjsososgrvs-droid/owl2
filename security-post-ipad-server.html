@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아이패드를 서버로 굴려보자 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="icon/pt.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="Bitcoin%20Adoption%20Atlas.html"><img src="earth.png" alt="ATLAS" class="nav-icon" /></a></li>
+    <li><a href="coldcardq.html"><img src="bitcoin.png" alt="COLDCARDQ" class="nav-icon" /></a></li>
+    <li><a href="btcgame.html"><img src="game.png" alt="GAME" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-03</div>
+  <h1 class="post-h1">아이패드를 서버로 굴려보자</h1>
+
+  <div class="post-body">
+    <p>안 쓰고 굴러다니는 아이패드가 하나 있었다. 그냥 두기 아까워서, 이번엔 개인 파일서버로 굴려보기로 했다.</p>
+
+    <p>Owlfiles라는 앱을 쓰면 아이패드를 WebDAV/FTP 서버로 바꿀 수 있다. 앱에서 "서버 시작"만 누르면, Tailscale로 묶어둔 내 사설망 안에서 다른 기기가 그 아이패드 저장공간에 파일을 넣고 뺄 수 있게 된다.</p>
+
+    <img src="img/bb4-web.jpg" alt="Owlfiles 앱 서버 화면" />
+
+    <h2>먼저 걱정된 것 — 타인이 들어올 수 있나?</h2>
+
+    <p>"서버"라는 말이 붙으면 제일 먼저 드는 생각이 "이거 남이 뚫고 들어올 수 있는 거 아니야?"다. 확인해보니 두 가지를 구분해서 봐야 했다.</p>
+
+    <p>상단에 뜨는 VPN 아이콘은 Tailscale 터널이 살아있다는 표시일 뿐, Owlfiles 서버가 켜져 있는지와는 별개다. 그리고 서버 자체가 Tailscale 사설망 안에서만 열려있는 구조라, 내 기기들끼리 묶인 그 네트워크 바깥에서는 애초에 접근 경로 자체가 없다. 즉 인터넷에 무방비로 노출된 공개 서버가 아니라, 내 기기들만 아는 사설 터널 안에서만 열리는 서버다.</p>
+
+    <h2>슬립 문제 — 화면이 꺼지면 서버도 잔다</h2>
+
+    <p>테스트해보니 재밌는 걸 발견했다. 아이패드 화면을 그냥 잠그면(전원 버튼으로 슬립), 1~2분 안에 서버가 응답을 멈췄다. iOS가 배터리 절약을 위해 백그라운드 앱을 강제로 재워버리는 정책 때문이었다.</p>
+
+    <p>다시 켜서 서버를 껐다 켜니 접속이 됐다. 그래서 운영 방침을 이렇게 정했다.</p>
+
+    <blockquote>평소엔 서버를 꺼둔다. 파일 옮길 일이 있을 때만 아이패드 화면 자동 잠금을 "안 함"으로 바꾸고, 그때만 서버를 켠다.</blockquote>
+
+    <img src="img/bb5.jpg" alt="아이패드 자동 잠금 설정 화면" />
+
+    <p>사실 이게 오히려 보안 관점에서도 더 낫다. 서버가 켜져 있는 시간 자체가 공격 가능 시간이니, 필요할 때만 켜는 게 최소 노출 원칙에 맞는 거다.</p>
+
+    <p>몇 가지 추가로 신경 쓰는 것들:</p>
+
+    <ul>
+      <li>작업 중엔 전원 버튼을 실수로 누르지 않기 — 수동으로 화면을 잠그면 자동 잠금 설정과 무관하게 그 순간 바로 서버가 멈춘다.</li>
+      <li>화면을 계속 켜두면 배터리 소모가 크니, 파일 옮기는 동안은 충전 케이블을 연결해둔다.</li>
+      <li>작업 끝나면 서버 중지 + 자동 잠금 원상복구를 세트로 한다. 안 그러면 나중에 깜빡하고 화면 켜진 채로 방치하게 된다.</li>
+    </ul>
+
+    <h2>덤으로 발견한 것 — 사진 앱에서 바로 전송</h2>
+
+    <p>쓰다 보니 알게 된 건데, 아이폰 사진 앱에서 파일 앱을 거치지 않고 바로 아이패드로 사진을 보낼 수도 있었다. 사진 앱에서 공유 버튼을 누르고 공유 시트를 옆으로 넘기면 Owlfiles가 목록에 뜬다. 그걸 탭하고 업로드 대상(아이패드 연결)을 고르면 바로 전송된다.</p>
+
+    <img src="img/bb6.PNG" alt="사진 앱 공유 시트에서 Owlfiles로 전송하는 화면" />
+
+    <p>(공유 시트에 안 보이면 맨 아래 "더 보기"에서 토글을 켜줘야 할 수도 있다. iOS가 기본적으로 자주 안 쓰는 공유 확장을 숨겨두는 경우가 있다.)</p>
+
+    <p>이렇게 하니 아이패드가 진짜 "무선 개인 파일서버"처럼 굴러간다. 평소엔 조용히 꺼져 있다가, 필요할 때만 잠깐 켜서 쓰는 방식. 안 쓰던 기기 하나 살리는 김에 보안 습관까지 하나 더 챙긴 셈이다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#WebDAV</span>
+    <span class="post-tag">#Owlfiles</span>
+    <span class="post-tag">#아이패드</span>
+    <span class="post-tag">#Tailscale</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
