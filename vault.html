@@ -142,8 +142,13 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
   box-shadow: 0 0 0 1px rgba(255,255,255,.4), 0 8px 24px rgba(224,123,10,.28), 0 0 18px var(--btn-glow);
 }
 .menu-btn .mb-title { display: flex; align-items: center; flex-wrap: wrap; font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--btn-fg); letter-spacing: .05em; text-transform: uppercase; transition: color .2s; }
-.menu-btn .mb-title::before { content: "> "; color: rgba(255,255,255,.7); }
-.menu-btn .mb-icon { width: 18px; height: 18px; margin-right: 8px; flex-shrink: 0; }
+.menu-btn .mb-icon {
+  display: inline-block; width: 18px; height: 18px; margin-right: 8px; flex-shrink: 0;
+  background-color: #ffc266;
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
 .menu-btn .mb-en { display: block; margin-top: 4px; margin-left: 20px; font-size: 11px; font-weight: 400; opacity: .8; letter-spacing: .12em; }
 
 #status { font-size: 12px; letter-spacing: .05em; color: var(--text2); margin: 10px 2px; min-height: 16px; }
@@ -232,13 +237,13 @@ footer.vault-footer {
     <p class="subtext">파일을 암호화하고, 그 열쇠를 QR로 만들고, QR로 주고받는 걸 한 곳에서.</p>
 
     <button class="menu-btn" data-goto="view-encrypt-select">
-      <div class="mb-title"><img class="mb-icon" src="icon/lock.png" alt="" />암호파일 만들기 <span class="mb-en">Encrypt</span></div>
+      <div class="mb-title"><span class="mb-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');"></span>암호파일 만들기 <span class="mb-en">Encrypt</span></div>
     </button>
     <button class="menu-btn" data-goto="view-decrypt">
-      <div class="mb-title"><img class="mb-icon" src="icon/key.png" alt="" />암호파일 풀기 <span class="mb-en">Decrypting</span></div>
+      <div class="mb-title"><span class="mb-icon" style="-webkit-mask-image:url('icon/key.png');mask-image:url('icon/key.png');"></span>암호파일 풀기 <span class="mb-en">Decrypting</span></div>
     </button>
     <button class="menu-btn" data-goto="view-qr-home">
-      <div class="mb-title"><img class="mb-icon" src="icon/qr-code.png" alt="" />QR 파일전송 <span class="mb-en">QRcode Transmission</span></div>
+      <div class="mb-title"><span class="mb-icon" style="-webkit-mask-image:url('icon/qr-code.png');mask-image:url('icon/qr-code.png');"></span>QR 파일전송 <span class="mb-en">QRcode Transmission</span></div>
     </button>
 
     <p class="hint">이 페이지는 아무것도 서버로 전송하지 않으며, 전부 이 기기 안에서만 처리됩니다. 오프라인 상태에서도 그대로 작동합니다.</p>
