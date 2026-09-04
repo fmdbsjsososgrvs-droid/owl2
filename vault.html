@@ -22,12 +22,12 @@
   --green: #3a9a3a;
   --red: #c94040;
   --mono: 'Share Tech Mono', monospace;
-  --btn-bg: #14100a;
-  --btn-bg-hover: #201709;
-  --btn-fg: #f0b25a;
-  --btn-fg-hover: #ffd699;
-  --btn-border: rgba(224,123,10,.4);
-  --btn-glow: rgba(224,123,10,.45);
+  --btn-bg: #b35a06;
+  --btn-bg-hover: #d47908;
+  --btn-fg: #ffffff;
+  --btn-fg-hover: #ffffff;
+  --btn-border: rgba(255,255,255,.32);
+  --btn-glow: rgba(224,123,10,.55);
 }
 * { box-sizing: border-box; }
 body {
@@ -98,7 +98,7 @@ button::before, .btn::before {
 }
 button::after, .btn::after {
   content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; z-index: -1;
-  background: linear-gradient(100deg, transparent, rgba(224,123,10,.22), transparent);
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent);
   transform: skewX(-18deg); pointer-events: none;
 }
 button:hover:not(:disabled)::after, .btn:hover::after { animation: btn-shine 1.1s ease-in-out; }
@@ -110,24 +110,25 @@ button:hover:not(:disabled), .btn:hover {
 }
 button:disabled { opacity: .4; cursor: default; }
 button.primary, .btn.primary {
-  background: linear-gradient(165deg, #241708 0%, var(--btn-bg) 100%);
-  border-color: var(--accent); color: var(--btn-fg-hover); font-weight: 700;
+  background: var(--btn-bg);
+  border-color: rgba(255,255,255,.5); color: #fff; font-weight: 700;
   animation: btn-pulse 2.6s ease-in-out infinite;
 }
 button.primary:hover:not(:disabled), .btn.primary:hover {
-  color: #fff; box-shadow: 0 0 0 1px var(--accent), 0 0 22px rgba(224,123,10,.65), inset 0 0 16px rgba(224,123,10,.18);
+  background: var(--btn-bg-hover);
+  color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 0 22px rgba(224,123,10,.65), inset 0 0 16px rgba(255,255,255,.15);
 }
 @keyframes btn-pulse {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(224,123,10,.22), 0 0 8px rgba(224,123,10,.22); }
-  50% { box-shadow: 0 0 0 1px rgba(224,123,10,.36), 0 0 15px rgba(224,123,10,.4); }
+  0%, 100% { box-shadow: 0 0 0 1px rgba(224,123,10,.28), 0 0 8px rgba(224,123,10,.28); }
+  50% { box-shadow: 0 0 0 1px rgba(224,123,10,.45), 0 0 15px rgba(224,123,10,.5); }
 }
-button.ghost { background: transparent; box-shadow: none; animation: none; }
-button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); }
+button.ghost { background: transparent; box-shadow: none; animation: none; color: var(--text2); border-color: var(--border2); }
+button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var(--accent2); border-color: var(--accent2); }
 #encRevealToggle, #encRevealToggle:hover:not(:disabled) { color: var(--text); }
 
 .menu-btn {
   display: block; width: 100%; background: var(--btn-bg); border: 1px solid var(--btn-border);
-  border-left: 3px solid var(--accent); border-radius: 4px; padding: 20px;
+  border-left: 3px solid rgba(255,255,255,.55); border-radius: 4px; padding: 20px;
   margin-bottom: 14px; cursor: pointer; text-align: left; font-family: inherit;
   position: relative; overflow: hidden; isolation: isolate;
   transition: border-color .2s, box-shadow .25s, transform .15s, background .2s;
@@ -137,13 +138,12 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); }
   background: repeating-linear-gradient(180deg, rgba(255,255,255,.04) 0px, rgba(255,255,255,.04) 1px, transparent 1px, transparent 3px);
 }
 .menu-btn:hover {
-  border-color: var(--accent); background: var(--btn-bg-hover); transform: translateY(-2px);
-  box-shadow: 0 0 0 1px rgba(224,123,10,.3), 0 8px 24px rgba(224,123,10,.22), 0 0 18px var(--btn-glow);
+  border-left-color: #fff; background: var(--btn-bg-hover); transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.4), 0 8px 24px rgba(224,123,10,.28), 0 0 18px var(--btn-glow);
 }
-.menu-btn .mb-title { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--btn-fg); letter-spacing: .05em; margin-bottom: 4px; text-transform: uppercase; transition: color .2s; }
-.menu-btn .mb-title::before { content: "> "; color: var(--text3); }
-.menu-btn:hover .mb-title { color: var(--btn-fg-hover); }
-.menu-btn .mb-sub { font-size: 12.5px; color: #b99666; line-height: 1.6; }
+.menu-btn .mb-title { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--btn-fg); letter-spacing: .05em; text-transform: uppercase; transition: color .2s; }
+.menu-btn .mb-title::before { content: "> "; color: rgba(255,255,255,.7); }
+.menu-btn .mb-en { display: block; margin-top: 4px; margin-left: 20px; font-size: 11px; font-weight: 400; opacity: .8; letter-spacing: .12em; }
 
 #status { font-size: 12px; letter-spacing: .05em; color: var(--text2); margin: 10px 2px; min-height: 16px; }
 #status.ok { color: var(--green); }
@@ -219,16 +219,13 @@ footer.vault-footer {
     <p class="subtext">파일을 암호화하고, 그 열쇠를 QR로 만들고, QR로 주고받는 걸 한 곳에서.</p>
 
     <button class="menu-btn" data-goto="view-encrypt-select">
-      <div class="mb-title">🔒 암호파일 만들기</div>
-      <div class="mb-sub">파일을 선택하면 개인키/공개키를 자동으로 만들어 암호화합니다.</div>
+      <div class="mb-title">암호파일 만들기 <span class="mb-en">Encrypt</span></div>
     </button>
     <button class="menu-btn" data-goto="view-decrypt">
-      <div class="mb-title">🔓 암호파일 풀기</div>
-      <div class="mb-sub">암호화 파일과 비밀번호(QR 또는 문자)로 원본을 복원합니다.</div>
+      <div class="mb-title">암호파일 풀기 <span class="mb-en">Decrypting</span></div>
     </button>
     <button class="menu-btn" data-goto="view-qr-home">
-      <div class="mb-title">📡 QR 파일전송</div>
-      <div class="mb-sub">QR 코드로 파일이나 문서를 주고받습니다.</div>
+      <div class="mb-title">QR 파일전송 <span class="mb-en">QRcode Transmission</span></div>
     </button>
 
     <p class="hint">이 페이지는 아무것도 서버로 전송하지 않으며, 전부 이 기기 안에서만 처리됩니다. 오프라인 상태에서도 그대로 작동합니다.</p>
@@ -246,7 +243,7 @@ footer.vault-footer {
         <div id="encFileInfo" class="hint"></div>
       </div>
       <div class="btnrow">
-        <button id="encGoBtn" class="primary" disabled>▶ 암호화</button>
+        <button id="encGoBtn" class="primary" disabled>암호화</button>
       </div>
     </div>
     <div id="encStatus" class="hint"></div>
@@ -316,10 +313,10 @@ footer.vault-footer {
     <div class="card">
       <div id="encDoneMeta" class="hint"></div>
       <div class="btnrow">
-        <a id="encDownloadFileBtn" class="btn primary" download>⬇ 암호화 파일 다운로드</a>
+        <a id="encDownloadFileBtn" class="btn primary" download>암호화 파일 다운로드</a>
       </div>
       <div class="btnrow">
-        <a id="encDownloadQrBtn" class="btn primary" download>⬇ 비밀번호 QR 다운로드</a>
+        <a id="encDownloadQrBtn" class="btn primary" download>비밀번호 QR 다운로드</a>
       </div>
       <div class="btnrow">
         <button id="encRevealToggle" class="ghost">공개키 / 개인키 문자로 확인하기</button>
@@ -355,11 +352,11 @@ footer.vault-footer {
     <div class="card">
       <label>2 · 비밀번호(개인키) 입력 방법</label>
       <div class="btnrow">
-        <button id="decCamBtn">📷 QR 카메라 인식</button>
-        <button id="decImgBtn">🖼 QR 이미지 인식</button>
+        <button id="decCamBtn">QR 카메라 인식</button>
+        <button id="decImgBtn">QR 이미지 인식</button>
       </div>
       <div class="btnrow">
-        <button id="decTxtToggle">✎ 문자열 직접 입력</button>
+        <button id="decTxtToggle">문자열 직접 입력</button>
       </div>
 
       <div id="decCamBox" style="display:none;margin-top:14px;">
@@ -388,7 +385,7 @@ footer.vault-footer {
       <img id="decResImg" style="display:none;">
       <textarea id="decResText" readonly style="display:none;"></textarea>
       <div class="btnrow">
-        <a id="decResLink" class="btn primary" download>⬇ 파일로 저장</a>
+        <a id="decResLink" class="btn primary" download>파일로 저장</a>
         <button id="decResCopyBtn" style="display:none;">텍스트 복사</button>
       </div>
     </div>
@@ -405,12 +402,10 @@ footer.vault-footer {
     <div class="eyebrow">// QR 파일전송</div>
     <h1 class="page-title">QR 파일전송</h1>
     <button class="menu-btn" data-goto="view-qr-send">
-      <div class="mb-title">📤 QR로 파일/문서 보내기</div>
-      <div class="mb-sub">파일을 QR 애니메이션으로 만들어 보여줍니다.</div>
+      <div class="mb-title">QR로 파일/문서 보내기 <span class="mb-en">Send</span></div>
     </button>
     <button class="menu-btn" data-goto="view-qr-recv">
-      <div class="mb-title">📥 QR로 파일/문서 받기</div>
-      <div class="mb-sub">카메라로 QR 애니메이션을 스캔해서 파일을 복원합니다.</div>
+      <div class="mb-title">QR로 파일/문서 받기 <span class="mb-en">Receive</span></div>
     </button>
     <p class="hint">오프라인 상태에서도 사용 가능합니다.</p>
   </div>
@@ -440,8 +435,8 @@ footer.vault-footer {
         <input type="range" id="qsChunkSize" min="150" max="1500" step="50" value="700">
       </div>
       <div class="btnrow">
-        <button id="qsStartBtn" class="primary" disabled>▶ 시작</button>
-        <button id="qsStopBtn" disabled>■ 정지</button>
+        <button id="qsStartBtn" class="primary" disabled>시작</button>
+        <button id="qsStopBtn" disabled>정지</button>
       </div>
     </div>
     <div id="qsStatus" class="hint"></div>
@@ -461,8 +456,8 @@ footer.vault-footer {
         <canvas class="overlay" id="qrOverlay"></canvas>
       </div>
       <div class="btnrow">
-        <button id="qrStartBtn" class="primary">▶ 카메라 시작</button>
-        <button id="qrStopBtn" disabled>■ 정지</button>
+        <button id="qrStartBtn" class="primary">카메라 시작</button>
+        <button id="qrStopBtn" disabled>정지</button>
       </div>
       <div style="margin:10px 2px;background:var(--bg2);border-radius:3px;height:8px;overflow:hidden;">
         <div id="qrProgressInner" style="height:100%;width:0%;background:var(--accent);transition:width .2s;"></div>
@@ -475,7 +470,7 @@ footer.vault-footer {
       <div id="qrResFname" style="font-weight:700;word-break:break-all;"></div>
       <div id="qrResMeta" class="hint"></div>
       <img id="qrResImg" style="display:none;">
-      <div class="btnrow"><a id="qrResLink" class="btn primary" download>⬇ 파일로 저장</a></div>
+      <div class="btnrow"><a id="qrResLink" class="btn primary" download>파일로 저장</a></div>
     </div>
   </div>
 
