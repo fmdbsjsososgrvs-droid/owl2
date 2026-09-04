@@ -152,6 +152,21 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
 .qr-preview-wrap { display: flex; justify-content: center; margin: 10px 0; }
 #qrDesignCanvas, #qrDesignBox { background: #fff; padding: 10px; border-radius: 8px; border: 1px solid var(--border); }
 
+.swatch-row { display: flex; flex-wrap: wrap; gap: 10px; }
+button.swatch {
+  flex: none; width: 34px; height: 34px; padding: 0; min-width: 0;
+  border-radius: 50%; border: 2px solid rgba(0,0,0,.12); cursor: pointer;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.5);
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+  animation: none;
+}
+button.swatch:hover:not(:disabled) { transform: scale(1.1); }
+button.swatch::before, button.swatch::after { content: none; }
+button.swatch.selected {
+  border-color: var(--accent2);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.7), 0 0 0 3px rgba(224,123,10,.28);
+}
+
 .warn-box {
   background: #fff3e0; border: 1px solid var(--border2); border-radius: 6px;
   padding: 12px 14px; font-size: 12.5px; color: var(--text2); line-height: 1.6; margin: 14px 0;
@@ -262,14 +277,31 @@ footer.vault-footer {
         <label>제목 (QR 위에 표시)</label>
         <input type="text" id="qrTitle" placeholder="예: 내 개인키" maxlength="24">
       </div>
-      <div class="row2">
-        <div class="field">
-          <label>도트 색상</label>
-          <input type="text" id="qrDotColor" value="#1a1208">
+      <div class="field">
+        <label>도트 색상</label>
+        <input type="hidden" id="qrDotColor" value="#1a1208">
+        <div class="swatch-row" id="qrDotSwatches">
+          <button type="button" class="swatch selected" data-color="#1a1208" style="background:#1a1208" aria-label="검은색"></button>
+          <button type="button" class="swatch" data-color="#dc2626" style="background:#dc2626" aria-label="빨강색"></button>
+          <button type="button" class="swatch" data-color="#e07b0a" style="background:#e07b0a" aria-label="오렌지색"></button>
+          <button type="button" class="swatch" data-color="#ff1493" style="background:#ff1493" aria-label="핫핑크"></button>
+          <button type="button" class="swatch" data-color="#16a34a" style="background:#16a34a" aria-label="초록색"></button>
+          <button type="button" class="swatch" data-color="#2563eb" style="background:#2563eb" aria-label="파란색"></button>
+          <button type="button" class="swatch" data-color="#1e3a5f" style="background:#1e3a5f" aria-label="남색"></button>
+          <button type="button" class="swatch" data-color="#7c3aed" style="background:#7c3aed" aria-label="보라색"></button>
         </div>
-        <div class="field">
-          <label>배경 색상</label>
-          <input type="text" id="qrBgColor" value="#fdf4e7">
+      </div>
+      <div class="field">
+        <label>배경 색상</label>
+        <input type="hidden" id="qrBgColor" value="#ffffff">
+        <div class="swatch-row" id="qrBgSwatches">
+          <button type="button" class="swatch selected" data-color="#ffffff" style="background:#ffffff" aria-label="흰색"></button>
+          <button type="button" class="swatch" data-color="#fcd5d5" style="background:#fcd5d5" aria-label="연한빨강"></button>
+          <button type="button" class="swatch" data-color="#fde3c2" style="background:#fde3c2" aria-label="연한오렌지"></button>
+          <button type="button" class="swatch" data-color="#ffd9ec" style="background:#ffd9ec" aria-label="연한핫핑크"></button>
+          <button type="button" class="swatch" data-color="#fde68a" style="background:#fde68a" aria-label="노랑"></button>
+          <button type="button" class="swatch" data-color="#cdeefd" style="background:#cdeefd" aria-label="하늘"></button>
+          <button type="button" class="swatch" data-color="#e6d7fb" style="background:#e6d7fb" aria-label="연한보라"></button>
         </div>
       </div>
       <div class="row2">
@@ -550,7 +582,7 @@ footer.vault-footer {
       data: encIdentity || 'preview',
       qrOptions: { errorCorrectionLevel: 'M' },
       dotsOptions: { color: $('qrDotColor').value || '#1a1208', type: $('qrDotType').value },
-      backgroundOptions: { color: $('qrBgColor').value || '#fdf4e7' },
+      backgroundOptions: { color: $('qrBgColor').value || '#ffffff' },
       cornersSquareOptions: { color: $('qrDotColor').value || '#1a1208', type: $('qrCornerType').value },
       cornersDotOptions: { color: $('qrDotColor').value || '#1a1208', type: $('qrCornerDotType').value }
     };
@@ -579,6 +611,23 @@ footer.vault-footer {
     $(id).addEventListener('input', renderQrDesign);
     $(id).addEventListener('change', renderQrDesign);
   });
+
+  // 색상 스와치 선택 — 클릭한 색을 숨은 input에 넣고 selected 표시만 옮긴 뒤,
+  // 위에 이미 걸려있는 input 이벤트 리스너가 자동으로 미리보기를 다시 그린다.
+  function wireSwatches(rowId, hiddenInputId){
+    var row = $(rowId);
+    row.querySelectorAll('.swatch').forEach(function(sw){
+      sw.addEventListener('click', function(){
+        row.querySelectorAll('.swatch').forEach(function(s){ s.classList.remove('selected'); });
+        sw.classList.add('selected');
+        var hidden = $(hiddenInputId);
+        hidden.value = sw.dataset.color;
+        hidden.dispatchEvent(new Event('input'));
+      });
+    });
+  }
+  wireSwatches('qrDotSwatches', 'qrDotColor');
+  wireSwatches('qrBgSwatches', 'qrBgColor');
 
   $('qrDesignDoneBtn').onclick = function(){
     goto('view-encrypt-done');
