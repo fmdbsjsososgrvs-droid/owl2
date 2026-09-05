@@ -388,10 +388,6 @@ footer.vault-footer {
       <label>2 · 비밀번호(개인키) 입력 방법</label>
       <div class="btnrow">
         <button id="decCamBtn">QR 카메라 인식</button>
-        <button id="decImgBtn">QR 이미지 인식</button>
-      </div>
-      <div class="btnrow">
-        <button id="decTxtToggle">문자열 직접 입력</button>
       </div>
 
       <div id="decCamBox" style="display:none;margin-top:14px;">
@@ -402,11 +398,6 @@ footer.vault-footer {
         <div class="btnrow">
           <button id="decCamStop" class="ghost">중지</button>
         </div>
-      </div>
-      <input type="file" id="decImgFileInput" accept="image/*" style="display:none;margin-top:14px;">
-      <div id="decTxtBox" style="display:none;margin-top:14px;">
-        <textarea id="decTxtInput" rows="3" placeholder="AGE-SECRET-KEY-1..." autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
-        <div class="btnrow"><button id="decTxtUseBtn" class="primary">이 값 사용</button></div>
       </div>
 
       <div id="decKeyStatus" class="hint"></div>
@@ -783,46 +774,6 @@ footer.vault-footer {
     tryDecrypt();
   }
 
-  // -- 텍스트 입력 --
-  $('decTxtToggle').onclick = function(){
-    stopDecCam();
-    var box = $('decTxtBox');
-    box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-  };
-  $('decTxtUseBtn').onclick = function(){
-    var raw = $('decTxtInput').value;
-    var id = extractIdentity(raw);
-    if (id) { setDecKey('key', id, '개인키로 인식됨'); return; }
-    if (raw.trim()) { setDecKey('pass', raw.trim(), '암호문구로 인식됨'); return; }
-    $('decKeyStatus').className = 'hint err';
-    $('decKeyStatus').textContent = '값을 입력해줘';
-  };
-
-  // -- 이미지에서 QR 인식 --
-  $('decImgBtn').onclick = function(){ stopDecCam(); $('decImgFileInput').click(); };
-  $('decImgFileInput').onchange = function(){
-    var f = this.files[0];
-    if (!f) return;
-    var img = new Image();
-    img.onload = function(){
-      var c = document.createElement('canvas');
-      c.width = img.naturalWidth; c.height = img.naturalHeight;
-      var cx = c.getContext('2d');
-      cx.drawImage(img, 0, 0);
-      var data = cx.getImageData(0,0,c.width,c.height);
-      var code = jsQR(data.data, data.width, data.height);
-      if (code && code.data) {
-        var id = extractIdentity(code.data);
-        if (id) setDecKey('key', id, 'QR에서 개인키 인식됨');
-        else setDecKey('pass', code.data.trim(), 'QR에서 암호문구 인식됨');
-      } else {
-        $('decKeyStatus').className = 'hint err';
-        $('decKeyStatus').textContent = '이미지에서 QR을 못 찾았어';
-      }
-    };
-    img.src = URL.createObjectURL(f);
-  };
-
   // -- 카메라로 QR 인식 --
   var decStream = null, decRafId = null, decScanning = false;
   var decVideo = $('decVideo'), decOverlay = $('decOverlay'), decOctx = decOverlay.getContext('2d');
@@ -830,7 +781,6 @@ footer.vault-footer {
   var decCtx = decCanvas.getContext('2d', { willReadFrequently: true });
 
   $('decCamBtn').onclick = async function(){
-    $('decTxtBox').style.display = 'none';
     $('decCamBox').style.display = 'block';
     $('decKeyStatus').className = 'hint';
     $('decKeyStatus').textContent = '카메라 권한 확인 중…';
