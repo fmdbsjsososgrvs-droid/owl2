@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hobby &amp; Travel | OWL BUTLER</title>
+<title>Bitcoin Blog | OWL BUTLER</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
   --border2: rgba(224,123,10,.32);
   --accent: #e07b0a;
   --accent2: #c96c00;
-  --accent-lt: #f5a623;
   --text: #1a1208;
   --text2: #7a6040;
   --text3: #a08060;
@@ -145,30 +144,27 @@ body {
   background: #fff;
   text-decoration: none;
   color: inherit;
-  transition: border-color .35s, box-shadow .35s, transform .35s;
-  z-index: 0;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
 }
 .post-card:hover {
   border-color: var(--border2);
   box-shadow: 0 10px 28px rgba(224,123,10,.14);
   transform: translateY(-3px);
 }
-/* 컬러 워시: hover 시 은은한 오렌지-골드 그라데이션이 카드에 번지듯 퍼짐 */
+/* 유리창 반짝임: hover 시 대각선 하이라이트가 카드를 가로질러 스윕 */
 .post-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(125deg, rgba(224,123,10,.14), rgba(245,166,35,.16) 45%, transparent 75%);
-  opacity: 0;
-  transform: scale(1.04);
-  transition: opacity .5s ease, transform .5s ease;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,.75) 50%, rgba(255,255,255,0) 70%, transparent 100%);
+  transform: skewX(-18deg);
+  transition: left .85s cubic-bezier(.2,.7,.2,1);
   pointer-events: none;
-  z-index: -1;
 }
-.post-card:hover::before {
-  opacity: 1;
-  transform: scale(1);
-}
+.post-card:hover::before { left: 130%; }
 .post-main { flex: 1; min-width: 0; }
 .post-meta {
   display: flex;
@@ -215,7 +211,7 @@ body {
 }
 .blog-empty .e-icon {
   font-size: 26px;
-  color: var(--accent);
+  color: var(--accent-lt, var(--accent));
   margin-bottom: 14px;
 }
 .blog-empty .e-title {
@@ -245,8 +241,8 @@ body {
   </a>
   <ul class="nav-menu">
     <li><a href="security.html"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
-    <li><a href="travel.html" class="active"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
-    <li><a href="bitcoinblog.html"><img src="bitcoin.png" alt="BITCOINBLOG" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="bitcoinblog.html" class="active"><img src="bitcoin.png" alt="BITCOINBLOG" class="nav-icon" /></a></li>
     <li><a href="psbt.html"><img src="icon/folder.png" alt="PSBT" class="nav-icon" /></a></li>
     <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
     <li><a href="vault.html"><img src="icon/key-round.png" alt="VAULT" class="nav-icon" /></a></li>
@@ -254,9 +250,9 @@ body {
 </nav>
 
 <div class="blog-head">
-  <div class="blog-eyebrow">// Hobby &amp; Travel</div>
-  <h1 class="blog-title">HOBBY &amp; TRAVEL</h1>
-  <p class="blog-desc">취미, 여행, 삶에 대한 기록.</p>
+  <div class="blog-eyebrow">// Bitcoin</div>
+  <h1 class="blog-title">Bitcoin Blog</h1>
+  <p class="blog-desc">비트코인에 대한 기록.</p>
   <div class="blog-search">
     <input type="text" id="blogSearch" placeholder="검색" autocomplete="off" />
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -268,7 +264,7 @@ body {
   POST CARD TEMPLATE (복사해서 .blog-list 안에 추가, 최신순으로 위에 삽입)
   data-title / data-tags 는 검색·태그 필터용 (JS가 읽음)
 
-  <a class="post-card" href="travel-post-slug.html" data-title="글 제목" data-tags="태그1,태그2">
+  <a class="post-card" href="bitcoinblog-post-slug.html" data-title="글 제목" data-tags="태그1,태그2">
     <div class="post-main">
       <div class="post-meta"><span>2026-01-01</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
       <p class="post-title">글 제목</p>
@@ -278,70 +274,11 @@ body {
   </a>
 -->
 <div class="blog-list" id="blogList">
-  <a class="post-card" href="travel-post-daughter-date.html" data-title="딸아이와 데이트" data-tags="딸,만화방,체인소맨,힐링">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-09-05</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">딸아이와 데이트</p>
-      <p class="post-excerpt">만화방에서 딸과 나눈 체인소맨 토론. "천사의 악마는 왜 악마야?" 작가 마음이라 답했지만, 생각해보면 꽤 합리적인 질문이었다.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/bb12-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-hongkong.html" data-title="10년전의 홍콩거리" data-tags="홍콩,여행,추억,느와르">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-09-04</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">10년전의 홍콩거리</p>
-      <p class="post-excerpt">중국 합병 전, 느와르 감성 그대로였던 홍콩. 낡은 아파트와 명품 백화점 사이 그 묘한 분위기, 그리고 마지막 날의 게 요리.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/bb8-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-manga.html" data-title="만화 제작후기" data-tags="부엉만화,만화제작기,AI,비트코인">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-08-29</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">만화 제작후기</p>
-      <p class="post-excerpt">뉴비 시절부터 비트코이너가 되기까지, AI와 포토샵으로 만든 5화짜리 부엉만화 제작 뒷이야기.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/aa5-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-insect-museum.html" data-title="곤충박물관" data-tags="곤충박물관,딸,나들이,추억">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-08-29</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">곤충박물관</p>
-      <p class="post-excerpt">딸아이와 곤충박물관 나들이. 웜을 손에 올리기 싫었는데 딸의 한마디 "아빠, 쫄?"에 결국 올렸다.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/aa1-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-modular.html" data-title="누가 좀 만들어줘" data-tags="프로젝트아라,모듈러폰,상상,비트코인">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-08-29</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">누가 좀 만들어줘</p>
-      <p class="post-excerpt">구글 프로젝트 아라를 떠올리다가 든 생각. SD카드, 유비키, 콜드월렛을 모듈로 꽂는 기기가 있다면 그게 완벽한 내 기기 아닐까.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/a28-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-pow.html" data-title="P.O.W" data-tags="POW,일,비트코인,사토시">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-08-24</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">P.O.W</p>
-      <p class="post-excerpt">돈을 버는 재미 vs 쓰는 재미. 결론은 버는 재미 승. 내 개인키 안에 쌓여가는 사토시에 흥분하라.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/a20-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-gamedev.html" data-title="게임 제작기" data-tags="게임제작,부엉퀴즈게임,굴삭기게임,TheBSociety">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-08-24</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">게임 제작기</p>
-      <p class="post-excerpt">부엉퀴즈 게임과 굴삭기 게임을 AI로 만들며 겪은 밸런싱, 버그, PVP 이야기. 이제 세 번째 게임을 준비 중이다.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/a15-thumb.jpg" alt="" />
-  </a>
-  <a class="post-card" href="travel-post-group.html" data-title="GROUP" data-tags="모임,TheBSociety,기록">
-    <div class="post-main">
-      <div class="post-meta"><span>2026-08-23</span><span class="card-stat">👁 <span data-stat-views>0</span></span><span class="card-stat">♥ <span data-stat-likes>0</span></span><span class="card-stat">💬 <span data-stat-comments>0</span></span></div>
-      <p class="post-title">GROUP</p>
-      <p class="post-excerpt">모임을 만든 지 1년, 신뢰와 유대감으로 다져진 시간과 우리의 상징을 새긴 카드에 대한 기록.</p>
-    </div>
-    <img class="post-thumb" src="img/thumbs/a9-thumb.jpg" alt="" />
-  </a>
+  <div class="blog-empty">
+    <div class="e-icon">₿</div>
+    <div class="e-title">아직 글이 없습니다</div>
+    <div class="e-sub">곧 비트코인 이야기로 채워질 예정입니다.</div>
+  </div>
 </div>
 
 <script>
