@@ -32,6 +32,7 @@ body {
 .site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
 .site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
 .site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;}
 .site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
 .site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
 .site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
@@ -135,11 +136,11 @@ body {
     <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
   </a>
   <ul class="nav-menu">
-    <li><a href="security.html"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
-    <li><a href="travel.html" class="active"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="security.html"><img src="icon/lock.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html" class="active"><img src="icon/car.png" alt="TRAVEL" class="nav-icon" /></a></li>
     <li><a href="bitcoinblog.html"><img src="bitcoin.png" alt="BITCOINBLOG" class="nav-icon" /></a></li>
     <li><a href="psbt.html"><img src="icon/folder.png" alt="PSBT" class="nav-icon" /></a></li>
-    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li class="nav-gap"><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
     <li><a href="vault.html"><img src="icon/key-round.png" alt="VAULT" class="nav-icon" /></a></li>
   </ul>
 </nav>
