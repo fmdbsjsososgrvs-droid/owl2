@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모임 전용 게이트 암호화 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:.2rem;margin:0;padding:0;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu img.nav-icon{height:16px;width:auto;vertical-align:middle;display:block;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body ul { margin: 0 0 22px; padding-left: 22px; }
+.post-body li { margin-bottom: 8px; }
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><img src="icon/shield-check.png" alt="SECURITY" class="nav-icon" /></a></li>
+    <li><a href="travel.html"><img src="icon/sailboat.png" alt="TRAVEL" class="nav-icon" /></a></li>
+    <li><a href="psbt.html"><img src="bitcoin.png" alt="PSBT" class="nav-icon" /></a></li>
+    <li><a href="bitcoin.html"><img src="223.png" alt="BITCOIN" class="nav-icon" /></a></li>
+    <li><a href="vault.html"><img src="icon/key-round.png" alt="VAULT" class="nav-icon" /></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-08</div>
+  <h1 class="post-h1">모임 전용 게이트 암호화</h1>
+
+  <div class="post-body">
+    <p>오늘 하루 종일 매달려서 카드 인증 시스템(CARD GATE)을 완성했다. 실물 회원카드를 사진으로 두 번 인증하면 — 앞면 마크, 뒷면 QR — 그 회원만 볼 수 있는 "숨겨진 페이지"가 열리는 기능이다.</p>
+
+    <h2>어떻게 작동하나</h2>
+    <ul>
+      <li>STEP 1: 카드 앞면 사진을 픽셀 분석(밝기·엣지 검출)해서 엠보싱 마크를 판정한다.</li>
+      <li>STEP 2: 카드 뒷면 QR을 스캔해서 회원코드를 해시로 대조한다.</li>
+      <li>둘 다 통과하면, 암호화돼있던 "숨겨진 페이지"를 그 자리에서 복호화해서 보여준다.</li>
+    </ul>
+
+    <img src="img/bb22-web.jpg" alt="THE B SOCIETY GATE - 2단계 인증 화면" />
+
+    <h2>카드 생성 페이지도 손봤다</h2>
+    <p>기존에 있던 자유입력 칸을 "THE B SOCIETY CODE"로 바꿨다. 코드를 입력하면 QR로 변환돼서 카드 이미지의 마크 자리에 그대로 합성된다. 이미지를 저장하면 QR이 포함된 최종 이미지가 통째로 저장되는데, 이게 곧 STEP 2에서 스캔하는 "카드 뒷면"이 되는 셈이다. "하고 싶은 말" 자유 입력 칸은 세 번째 칸으로 따로 복원해뒀다.</p>
+
+    <img src="img/bb21-web.jpg" alt="카드 생성 페이지 - QR 코드가 합성된 실시간 미리보기" />
+
+    <h2>회원 67명 코드 정리</h2>
+    <p>회원들이 넘겨준 닉네임+카드코드 목록을 파싱해서 코드만 뽑아냈다. 최종 67명으로 확정했고, 표기가 애매해서 코드 확인이 안 된 몇 명은 이번엔 제외했다 — 나중에 정확한 코드가 확인되면 언제든 추가할 수 있다.</p>
+
+    <h2>자잘한 버그들</h2>
+    <ul>
+      <li>STEP 1·2의 사진 선택 버튼을 누르면 카메라가 바로 켜지던 문제를 고쳤다 (남아있던 속성 하나가 원인이었다).</li>
+      <li>STEP 1의 원형 가이드를 바깥 네모 가이드와 같은 둥근 사각형으로 통일했다.</li>
+      <li>안내 문구를 "THE B SOCIETY 마크가 잘 보이도록 찍어주세요."로 다듬었다.</li>
+    </ul>
+
+    <h2>카피 다듬기</h2>
+    <p>소제목을 "CARD GATE"에서 "THE B SOCIETY GATE"로 바꾸고, 긴 한글 설명 대신 "01 MARK VERIFICATION." / "02 MEMBER CODE VERIFICATION." 두 줄로 줄였다. 성공 메시지도 전부 "VERIFY"로 통일했고 (예전엔 수치와 후보 개수까지 길게 출력했었다), 최종 안내문도 "VERIFIED — the hidden page is now unlocked."로 정리했다.</p>
+
+    <h2>숨겨진 페이지, "초대장" 새로 디자인</h2>
+    <p>인증을 통과하면 먼저 "초대장" / "THE B SOCIETY 멤버와 그 가족분들만 참여 가능합니다."라는 문구가 뜨고, 그 아래로 네이비+골드 아르데코 청첩장 스타일의 카드가 나타난다. 타이틀은 Pinyon Script 필기체 폰트에 흐르는 금빛 셰이머 효과를 넣었고, 실시간으로 갱신되는 D-day 카운트다운도 붙였다. 화면 크기가 달라져도 카드 안 글자가 넘치지 않게 반응형으로 처리하는 과정에서, 좁은 화면에서 텍스트가 카드 밖으로 삐져나오던 버그도 같이 잡았다.</p>
+
+    <p>기술적으로 살짝 까다로웠던 부분 하나 — 암호화를 풀고 나온 콘텐츠를 그냥 innerHTML로 집어넣으면 안에 있는 &lt;script&gt;가 브라우저 정책상 실행이 안 된다. 그래서 createContextualFragment 방식으로 바꿔 넣었더니, 카드 안의 카운트다운 스크립트가 제대로 돌아갔다.</p>
+
+    <h2>실제 데이터로 교체</h2>
+    <p>회원 67명의 코드와 초대장 디자인을 가지고, 실서비스와 똑같은 암호화 로직으로 실제 데이터 묶음을 새로 생성했다. 기존 데모 카드의 해시값이 새로 만든 값과 완전히 일치하는 걸로 로직이 정확하다는 걸 먼저 확인했고, 이후 브라우저에서 실제 QR 이미지를 만들어 여러 회원 코드를 STEP 2에 직접 스캔시켜 전원 정상 통과하는 것까지 확인했다. 데모용 1건뿐이던 걸 실제 67명 분량으로 교체하고 배포를 마쳤다.</p>
+
+    <h2>보안은 이렇게 잡았다</h2>
+    <ul>
+      <li>사진·QR 전부 브라우저 안에서만 처리되고, 서버로는 아무것도 올라가지 않는다.</li>
+      <li>회원코드는 평문으로 저장되지 않는다. 조회용 해시만 들어있고, 숨겨진 페이지 내용 자체도 각 회원코드로 파생한 키로 암호화돼있어서 코드를 모르면 소스를 봐도 못 푼다.</li>
+      <li>다만 설계상 회원코드(영문+숫자 6자, 약 21억 개 조합)가 유출되면 누구나 풀 수 있는 구조라서, 코드 관리 — 실물 카드로만 전달하고 목록 파일 자체가 새어나가지 않게 하는 것 — 가 제일 중요하다.</li>
+      <li>회원코드를 만들어내는 관리자 도구와 실제 코드 목록 파일은 애초에 git에 올라가지 않도록 걸어뒀다.</li>
+    </ul>
+
+    <blockquote>우리 모임은 이미 특별하지만 더 특별해질 것이고, 그런 미래를 위해 준비해두는 이 작업이 기쁘기 그지없다. 뭐, 만드는 자체가 재밌기도 하지만.</blockquote>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#보안</span>
+    <span class="post-tag">#암호화</span>
+    <span class="post-tag">#모임</span>
+    <span class="post-tag">#THEBSOCIETY</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
