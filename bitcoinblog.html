@@ -152,6 +152,7 @@ body {
   border-color: var(--border2);
   box-shadow: 0 10px 28px rgba(224,123,10,.14);
   transform: translateY(-3px);
+  animation: cpJitter .32s steps(8) 1;
 }
 /* 유리창 반짝임: hover 시 대각선 하이라이트가 카드를 가로질러 스윕 */
 .post-card::before {
@@ -167,6 +168,57 @@ body {
   pointer-events: none;
 }
 .post-card:hover::before { left: 130%; }
+/* 사이버펑크 글리치: hover 진입 시 노이즈가 스치며 카드가 흔들림 */
+.post-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 140px 140px;
+  mix-blend-mode: overlay;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity .3s ease;
+}
+.post-card:hover::after {
+  opacity: .16;
+  animation: cpNoise .32s steps(5) 1;
+}
+@keyframes cpNoise {
+  0%   { opacity: .6;  transform: translate(0,0); }
+  20%  { opacity: .1;  transform: translate(-3%,2%); }
+  40%  { opacity: .55; transform: translate(2%,-3%); }
+  60%  { opacity: .08; transform: translate(-2%,-1%); }
+  80%  { opacity: .4;  transform: translate(1%,2%); }
+  100% { opacity: .16; transform: translate(0,0); }
+}
+@keyframes cpJitter {
+  0%   { transform: translateY(-3px) translate(0,0); }
+  15%  { transform: translateY(-3px) translate(-2px,1px); }
+  30%  { transform: translateY(-3px) translate(2px,-1px); }
+  45%  { transform: translateY(-3px) translate(-1px,-2px); }
+  60%  { transform: translateY(-3px) translate(1px,2px); }
+  75%  { transform: translateY(-3px) translate(-1px,0); }
+  90%  { transform: translateY(-3px) translate(1px,0); }
+  100% { transform: translateY(-3px) translate(0,0); }
+}
+.post-card:hover .post-title {
+  animation: cpGlitchText .32s steps(5) 1;
+}
+@keyframes cpGlitchText {
+  0%   { text-shadow: 0 0 transparent; }
+  20%  { text-shadow: -2px 0 #ff2b6d, 2px 0 #00e5ff; }
+  40%  { text-shadow: 2px 0 #ff2b6d, -2px 0 #00e5ff; }
+  60%  { text-shadow: -1px 0 #ff2b6d, 1px 0 #00e5ff; }
+  80%  { text-shadow: 1px 0 #ff2b6d, -1px 0 #00e5ff; }
+  100% { text-shadow: 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .post-card:hover,
+  .post-card:hover::after,
+  .post-card:hover .post-title { animation: none; }
+}
 .post-main { flex: 1; min-width: 0; }
 .post-meta {
   display: flex;
