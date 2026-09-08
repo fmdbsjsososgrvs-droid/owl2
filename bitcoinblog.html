@@ -154,21 +154,7 @@ body {
   transform: translateY(-3px);
   animation: cpJitter .32s steps(8) 1;
 }
-/* 유리창 반짝임: hover 시 대각선 하이라이트가 카드를 가로질러 스윕 */
-.post-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -60%;
-  width: 45%;
-  height: 100%;
-  background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,.75) 50%, rgba(255,255,255,0) 70%, transparent 100%);
-  transform: skewX(-18deg);
-  transition: left .85s cubic-bezier(.2,.7,.2,1);
-  pointer-events: none;
-}
-.post-card:hover::before { left: 130%; }
-/* 사이버펑크 글리치: hover 진입 시 노이즈가 스치며 카드가 흔들림 */
+/* 사이버펑크 글리치: hover 진입 시 노이즈가 스치며 카드가 흔들림 (다른 페이지의 유리 반짝임 효과 대신 이걸로 대체) */
 .post-card::after {
   content: '';
   position: absolute;
