@@ -185,6 +185,10 @@ body {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color .25s ease;
+}
+.post-excerpt.is-decoded {
+  color: var(--accent2);
 }
 .post-thumb {
   flex-shrink: 0;
@@ -309,7 +313,7 @@ body {
     });
   });
 
-  // 카드 제목 호버 시 "해독" 스크램블 효과 (vault.html 버튼과 동일한 방식) — 다 풀리면 짙은 오렌지색으로
+  // 카드 제목·설명 호버 시 "해독" 스크램블 효과 (vault.html 버튼과 동일한 방식) — 다 풀리면 짙은 오렌지색으로
   (function initTitleDecodeFx() {
     var CHARS = '!<>-_\\/[]{}=+*^?#@%$&01';
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -338,10 +342,14 @@ body {
       }, 28);
     }
     blogList?.querySelectorAll('.post-card').forEach(function (card) {
-      var title = card.querySelector('.post-title');
-      if (!title) return;
-      card.addEventListener('mouseenter', function () { scramble(title); });
-      card.addEventListener('mouseleave', function () { title.classList.remove('is-decoded'); });
+      var targets = card.querySelectorAll('.post-title, .post-excerpt');
+      if (!targets.length) return;
+      card.addEventListener('mouseenter', function () {
+        targets.forEach(function (el) { scramble(el); });
+      });
+      card.addEventListener('mouseleave', function () {
+        targets.forEach(function (el) { el.classList.remove('is-decoded'); });
+      });
     });
   })();
 </script>
