@@ -53,6 +53,7 @@
       background:var(--group); color:#fff; font-size:.62rem; font-weight:700;
     }
     .group-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(8px,3vw,20px); }
+    .group-grid.single { grid-template-columns:1fr; max-width:320px; margin:0 auto; }
 
     .tool-block {
       display:flex; flex-direction:column; align-items:center; text-align:center;
@@ -63,7 +64,13 @@
       transition:border-color .25s, box-shadow .25s, transform .25s;
     }
     .tool-block:hover { border-color:var(--group-border); box-shadow:0 10px 28px var(--group-sh14); transform:translateY(-3px); }
-    .frame-label { font-family:var(--mono); font-size:clamp(.56rem,1.8vw,.7rem); letter-spacing:.2em; color:var(--group); text-transform:uppercase; margin-bottom:.5rem; }
+    .tool-icon {
+      display:block; width:clamp(26px,7vw,34px); height:clamp(26px,7vw,34px); margin-bottom:.9rem; flex-shrink:0;
+      background-color:var(--group);
+      -webkit-mask-size:contain; mask-size:contain;
+      -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      -webkit-mask-position:center; mask-position:center;
+    }
     .frame-title {
       font-family:var(--mono); font-size:clamp(.66rem,2.2vw,1.2rem); letter-spacing:.06em; color:var(--black);
       margin-bottom:clamp(1rem,4vw,2rem); overflow-wrap:break-word; word-break:keep-all;
@@ -136,66 +143,77 @@
   </nav>
 
   <div class="frame-wrap">
-    <div class="tool-group" data-group="a">
+    <div class="tool-group">
       <div class="group-label"><span class="group-num">01</span>계산 &amp; 검증</div>
       <div class="group-grid">
         <div class="tool-block">
-          <p class="frame-label">// P2P HELPER</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/hand-coins.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/hand-coins.svg');" role="img" aria-label="P2P"></span>
           <h2 class="frame-title">P2P 수수료 계산기.</h2>
-          <a class="go-btn" href="https://bsosa.vercel.app/P2PHELPER.html" target="_blank" rel="noopener">P2P HELPER</a>
+          <a class="go-btn" href="https://bsosa.vercel.app/P2PHELPER.html" target="_blank" rel="noopener">P2P</a>
         </div>
         <div class="tool-block">
-          <p class="frame-label">// PSBT</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/circle-check-big.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/circle-check-big.svg');" role="img" aria-label="PSBT"></span>
           <h2 class="frame-title">PSBT 잔돈(OUTPUT) 검증기</h2>
-          <a class="go-btn" href="https://psbt-verifier.pages.dev" target="_blank" rel="noopener">PSBT VERIFY</a>
+          <a class="go-btn" href="https://psbt-verifier.pages.dev" target="_blank" rel="noopener">PSBT</a>
         </div>
       </div>
     </div>
 
-    <div class="tool-group" data-group="b">
-      <div class="group-label"><span class="group-num">02</span>비트코인</div>
+    <div class="tool-group">
+      <div class="group-label"><span class="group-num">02</span>실시간 채택 현황</div>
       <div class="group-grid">
         <div class="tool-block">
-          <p class="frame-label">// ADOPTION ATLAS</p>
-          <h2 class="frame-title">비트코인 채택 지도</h2>
-          <a class="go-btn" href="Bitcoin%20Adoption%20Atlas.html" target="_blank" rel="noopener">ADOPTION ATLAS</a>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/clock.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/clock.svg');" role="img" aria-label="LIVE"></span>
+          <h2 class="frame-title">실시간 비트코인 대시보드</h2>
+          <a class="go-btn" href="bitcoin.html" target="_blank" rel="noopener">LIVE</a>
         </div>
         <div class="tool-block">
-          <p class="frame-label">// BITCOIN SYSTEM</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/map.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/map.svg');" role="img" aria-label="ATLAS"></span>
+          <h2 class="frame-title">비트코인 채택 지도</h2>
+          <a class="go-btn" href="Bitcoin%20Adoption%20Atlas.html" target="_blank" rel="noopener">ATLAS</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-group">
+      <div class="group-label"><span class="group-num">03</span>비트코인 시스템</div>
+      <div class="group-grid single">
+        <div class="tool-block">
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/bitcoin.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/bitcoin.svg');" role="img" aria-label="SYSTEM"></span>
           <h2 class="frame-title">비트코인 시스템</h2>
           <a class="go-btn" href="coldcardq.html" target="_blank" rel="noopener">SYSTEM</a>
         </div>
       </div>
     </div>
 
-    <div class="tool-group" data-group="d">
-      <div class="group-label"><span class="group-num">03</span>게임과 만화</div>
+    <div class="tool-group">
+      <div class="group-label"><span class="group-num">04</span>게임과 만화</div>
       <div class="group-grid">
         <div class="tool-block">
-          <p class="frame-label">// OWL GAME</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/gamepad-2.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/gamepad-2.svg');" role="img" aria-label="GAME"></span>
           <h2 class="frame-title">비트코이너 키우기</h2>
-          <a class="go-btn" href="btcgame.html" target="_blank" rel="noopener">OWL GAME</a>
+          <a class="go-btn" href="btcgame.html" target="_blank" rel="noopener">GAME</a>
         </div>
         <div class="tool-block">
-          <p class="frame-label">// OWL MANGA</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/book-image.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/book-image.svg');" role="img" aria-label="MANGA"></span>
           <h2 class="frame-title">부엉만화</h2>
-          <a class="go-btn" href="BMANGA1.html" target="_blank" rel="noopener">OWL MANGA</a>
+          <a class="go-btn" href="BMANGA1.html" target="_blank" rel="noopener">MANGA</a>
         </div>
       </div>
     </div>
 
-    <div class="tool-group" data-group="c">
-      <div class="group-label"><span class="group-num">04</span>투자 계산기</div>
+    <div class="tool-group">
+      <div class="group-label"><span class="group-num">05</span>투자 계산기</div>
       <div class="group-grid">
         <div class="tool-block">
-          <p class="frame-label">// HODLER CALCULATOR</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/rabbit.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/rabbit.svg');" role="img" aria-label="HODL"></span>
           <h2 class="frame-title">HODLER / 구매력 계산기</h2>
-          <a class="go-btn" href="https://bsosa.vercel.app/HODL.html" target="_blank" rel="noopener">HODLER CALCULATOR</a>
+          <a class="go-btn" href="https://bsosa.vercel.app/HODL.html" target="_blank" rel="noopener">HODL</a>
         </div>
         <div class="tool-block">
-          <p class="frame-label">// DCA CALCULATOR</p>
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/hand-coins.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/hand-coins.svg');" role="img" aria-label="DCA"></span>
           <h2 class="frame-title">DCA / 적립식 계산기</h2>
-          <a class="go-btn" href="dca.html" target="_blank" rel="noopener">DCA CALCULATOR</a>
+          <a class="go-btn" href="dca.html" target="_blank" rel="noopener">DCA</a>
         </div>
       </div>
     </div>
