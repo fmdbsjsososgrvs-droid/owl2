@@ -117,6 +117,28 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
 }
 .warn-box b { color: var(--text); }
 .hint { font-size: 12px; line-height: 1.65; color: var(--text2); margin-top: 12px; }
+
+.howto-toggle { width: 100%; justify-content: space-between; }
+.howto-box { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.howto-box.open { display: block; }
+.manual-step { margin-bottom: 20px; }
+.manual-step:last-of-type { margin-bottom: 0; }
+.klabel { font-size: 10px; letter-spacing: .15em; color: var(--accent2); text-transform: uppercase; margin: 0 0 6px; font-weight: 700; }
+.step-text { font-size: 12.5px; color: var(--text2); line-height: 1.65; margin: 0 0 8px; }
+.step-text code, .subtext code, .field-note code, .hint code { background: var(--bg2); border-radius: 3px; padding: 1px 5px; font-family: var(--mono); font-size: .95em; }
+.code-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.code-row code {
+  flex: 1; min-width: 0; background: var(--bg2); border: 1px solid var(--border2); border-radius: 4px;
+  padding: 9px 10px; font-family: var(--mono); font-size: 12px; word-break: break-all; line-height: 1.5;
+}
+.copy-btn {
+  flex: none; width: auto; font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; padding: 9px 12px; cursor: pointer;
+  background: transparent; color: var(--text2); border: 1px solid var(--border2);
+  border-radius: 4px; animation: none;
+}
+.copy-btn:hover { background: rgba(224,123,10,.08); color: var(--accent2); border-color: var(--accent2); }
+.copy-btn::before, .copy-btn::after { content: none; }
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32.png">
@@ -152,8 +174,59 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
     <p class="hint">age, age-plugin-yubikey가 설치돼 있어야 합니다. identity 파일이 아직 없다면 먼저 한 번만 만들어두세요: <code>age-plugin-yubikey --identity --slot N &gt; yubikey-identity.txt</code> (N은 1~20 사이 숫자 — <code>age-plugin-yubikey --list</code> 결과의 "Slot:" 옆에 적힌 값). 복호화 실행 시 유비키의 PIN·터치를 요구합니다.</p>
   </div>
 
-  <div class="warn-box">
-    ✅ <b>검증 완료:</b> 이 페이지의 유비키(piv-p256) 암호화 로직은 age-plugin-yubikey의 공개 소스 코드를 그대로 따라 구현했고, 실제 유비키 하드웨어로 암호화 → 복호화 왕복까지 확인했습니다.
+  <div class="card">
+    <button type="button" id="howtoToggle" class="ghost howto-toggle">사용법 HOW TO <span id="howtoArrow">▾</span></button>
+    <div id="howtoBox" class="howto-box">
+
+      <div class="manual-step">
+        <div class="klabel">1. 설치 (처음 한 번만)</div>
+        <p class="step-text">맥/리눅스에 age와 age-plugin-yubikey가 필요합니다.</p>
+        <div class="code-row">
+          <code id="cmd1">brew install age age-plugin-yubikey</code>
+          <button type="button" class="copy-btn" data-copy="cmd1">복사</button>
+        </div>
+      </div>
+
+      <div class="manual-step">
+        <div class="klabel">2. 공개키 확인</div>
+        <p class="step-text">이미 유비키에 키를 만들어둔 적이 있다면, 아래 명령으로 공개키(recipient)를 다시 볼 수 있습니다.</p>
+        <div class="code-row">
+          <code id="cmd2">age-plugin-yubikey --list</code>
+          <button type="button" class="copy-btn" data-copy="cmd2">복사</button>
+        </div>
+        <p class="step-text">아직 한 번도 키를 만든 적이 없다면, 인자 없이 실행해서 새로 만드세요. 슬롯·PIN정책·터치정책을 물어보고, 끝나면 공개키를 바로 출력해줍니다.</p>
+        <div class="code-row">
+          <code id="cmd2b">age-plugin-yubikey</code>
+          <button type="button" class="copy-btn" data-copy="cmd2b">복사</button>
+        </div>
+      </div>
+
+      <div class="manual-step">
+        <div class="klabel">3. 슬롯 번호 확인하고 적어두기</div>
+        <p class="step-text"><code>--list</code> 결과 맨 위쪽 주석에 <code>Slot: N</code>이라고 적혀 있습니다 (N은 1~20 사이 숫자). 이 <b>공개키(age1yubikey1...)</b>와 <b>슬롯 번호</b>를 어딘가에 적어두세요 — 나중에 identity 파일을 다시 만들 때 필요합니다.</p>
+      </div>
+
+      <div class="manual-step">
+        <div class="klabel">4. identity 파일 만들기 (처음 한 번만)</div>
+        <p class="step-text">N 자리에 위에서 확인한 슬롯 번호를 넣어서 실행하세요. PIN·터치 없이 바로 만들어집니다.</p>
+        <div class="code-row">
+          <code id="cmd4">age-plugin-yubikey --identity --slot N &gt; yubikey-identity.txt</code>
+          <button type="button" class="copy-btn" data-copy="cmd4">복사</button>
+        </div>
+      </div>
+
+      <div class="manual-step">
+        <div class="klabel">5. 맥북에서 복호화</div>
+        <p class="step-text">암호화된 파일이 있는 폴더로 이동한 뒤 (예: <code>cd ~/Downloads</code>), identity 파일로 복호화합니다. 파일명은 본인 것으로 바꿔서 실행하세요.</p>
+        <div class="code-row">
+          <code id="cmd5">age -d -i yubikey-identity.txt -o 원본파일명 원본파일명.age</code>
+          <button type="button" class="copy-btn" data-copy="cmd5">복사</button>
+        </div>
+        <p class="step-text">실행하면 유비키 PIN(기본값 123456, 변경했다면 그 값)을 물어보고, 터치 정책이 켜져 있다면 유비키 터치도 요구합니다.</p>
+      </div>
+
+      <div class="hint" id="howtoCopyStatus"></div>
+    </div>
   </div>
 </div>
 
@@ -272,6 +345,28 @@ $('copyCmdBtn').addEventListener('click', async () => {
   } catch {
     setStatus('복사 실패 — 직접 선택해 복사하세요.', 'err');
   }
+});
+
+$('howtoToggle').addEventListener('click', () => {
+  const box = $('howtoBox');
+  const open = box.classList.toggle('open');
+  $('howtoArrow').textContent = open ? '▴' : '▾';
+});
+
+document.querySelectorAll('.copy-btn').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const target = $(btn.dataset.copy);
+    const howtoStatus = $('howtoCopyStatus');
+    try {
+      await navigator.clipboard.writeText(target.textContent);
+      howtoStatus.textContent = '복사했습니다.';
+      howtoStatus.className = 'hint';
+      howtoStatus.style.color = 'var(--green)';
+    } catch {
+      howtoStatus.textContent = '복사 실패 — 직접 선택해 복사하세요.';
+      howtoStatus.style.color = 'var(--red)';
+    }
+  });
 });
 </script>
 </body>
