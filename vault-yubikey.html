@@ -149,7 +149,7 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
     <div class="btnrow">
       <button id="copyCmdBtn" class="ghost">명령어 복사</button>
     </div>
-    <p class="hint">age, age-plugin-yubikey가 설치돼 있어야 합니다. identity 파일이 아직 없다면 먼저 한 번만 만들어두세요: <code>age-plugin-yubikey --identity --slot 9a &gt; yubikey-identity.txt</code> (슬롯 번호는 키 생성 시 정한 값으로). 복호화 실행 시 유비키의 PIN·터치를 요구합니다.</p>
+    <p class="hint">age, age-plugin-yubikey가 설치돼 있어야 합니다. identity 파일이 아직 없다면 먼저 한 번만 만들어두세요: <code>age-plugin-yubikey --identity --slot N &gt; yubikey-identity.txt</code> (N은 1~20 사이 숫자 — <code>age-plugin-yubikey --list</code> 결과의 "Slot:" 옆에 적힌 값). 복호화 실행 시 유비키의 PIN·터치를 요구합니다.</p>
   </div>
 
   <div class="warn-box">
