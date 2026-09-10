@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>물리적 보안키 - YUBIKEY (4) | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-10</div>
+  <h1 class="post-h1">물리적 보안키 - YUBIKEY (4)</h1>
+
+  <div class="post-body">
+    <p>아이폰에서 언제든지 APY(age-plugin-yubikey 방식 암호화)를 만들고 싶어서, 웹앱으로 만들어봤다. 복호화는 맥북이나 리눅스에서 해야 한다.</p>
+
+    <h2>(3)편에서 막혔던 지점을 다시 봤다</h2>
+
+    <p>지난 편에서 "PIV/스마트카드 통신 API 자체가 브라우저에 없다"는 걸 확인하고 결국 제작을 보류했었다. 근데 그건 어디까지나 <b>복호화</b> 얘기였다. 다시 짚어보니, <b>암호화</b>는 완전히 다른 문제였다 — 유비키 공개키(<code>age1yubikey1...</code>) 문자열 하나만 있으면, 하드웨어와 아무런 통신 없이도 그냥 순수 수학으로 끝나는 작업이었다. 유비키를 그 자리에 꽂을 필요가 아예 없다는 뜻이다.</p>
+
+    <p>그래서 방향을 바꿨다. "아이폰에서 언제 어디서나 암호화" + "복호화는 실제 유비키가 꽂힌 맥북/리눅스에서만" — 이 조합이면 (3)편에서 부딪혔던 iOS 제약을 아예 우회할 수 있었다.</p>
+
+    <h2>vault2 허브에 두 번째 버튼으로 넣었다</h2>
+
+    <p>기존 vault(QR+age) 허브 페이지 옆에, 유비키 공개키로 암호화하는 페이지를 새 버튼으로 추가했다. 파일 하나, 공개키 하나 넣으면 끝.</p>
+
+    <img src="img/c1-web.jpg" alt="vault2 허브의 YubiKey + AGE 버튼" />
+
+    <img src="img/c2-web.jpg" alt="YubiKey + AGE 암호화 페이지" />
+
+    <h2>근데 이게 표준 방식이 아니었다</h2>
+
+    <p><code>age1yubikey1...</code> 공개키는 age 스펙에 원래 있는 X25519 방식이 아니라, age-plugin-yubikey라는 플러그인이 자기만의 방식(<code>piv-p256</code> 스탠자)으로 만든 거였다. 그래서 기존에 쓰던 age 암호화 라이브러리로는 애초에 처리가 안 됐다.</p>
+
+    <p>결국 이 플러그인의 실제 공개 소스 코드(str4d/age-plugin-yubikey, age-core)를 직접 읽어서 — P-256 타원곡선 ECDH, HKDF 솔트·라벨 값, ChaCha20-Poly1305 래핑, 태그 계산법까지 — 그대로 재현해서 구현했다. 라이브러리의 진짜 Encrypter/Decrypter로 왕복 테스트를 돌려서 로직이 맞는지 먼저 확인했고, 그다음 진짜 유비키를 꽂고 실제 복호화까지 성공시켰다. 기억에 의존한 짐작이 아니라 소스코드를 직접 대조해서 만든 거라 안심이 된다.</p>
+
+    <h2>사용법까지 페이지 안에 넣었다</h2>
+
+    <p>처음엔 그냥 암호화 버튼 하나만 있었는데, 막상 쓰려니 맥북에서 뭘 어떻게 설치하고 어떤 명령어를 쳐야 하는지 매번 찾아봐야 했다. 그래서 "사용법 HOW TO" 버튼을 눌러 펼쳐지는 매뉴얼을 페이지 안에 통째로 넣었다 — 설치, 공개키 확인, 슬롯 번호 확인, identity 파일 만들기, 맥북에서 복호화까지 단계별로, 명령어마다 복사 버튼까지 달아서.</p>
+
+    <img src="img/c3-web.jpg" alt="페이지 안에 펼쳐지는 사용법 매뉴얼" />
+
+    <p>이제 언제 어디서나 암호화를 해서 저장할 수 있다니, 산뜻하구만.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#YubiKey</span>
+    <span class="post-tag">#age암호화</span>
+    <span class="post-tag">#age-plugin-yubikey</span>
+    <span class="post-tag">#웹앱</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
