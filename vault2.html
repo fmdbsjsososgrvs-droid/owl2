@@ -12,9 +12,9 @@
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     :root {
       --bg:#fdf4e7; --bg2:#faebd4; --bg3:#f5ddb8;
-      --orange:#7c3aed; --orange2:#5b21b6; --orange-lt:#a78bfa;
+      --orange:#e07b0a; --orange2:#c96c00; --orange-lt:#f5a623;
       --black:#1a1208; --gray:#7a6040; --muted:#a08060;
-      --border:rgba(124,58,237,.18); --border2:rgba(124,58,237,.32);
+      --border:rgba(224,123,10,.18); --border2:rgba(224,123,10,.32);
       --mono:'Share Tech Mono',monospace;
       --sans:'Inter','Noto Sans KR',sans-serif;
     }
@@ -39,7 +39,7 @@
       flex:1; max-width:820px; width:100%; margin:0 auto; padding:48px 5% 100px;
       display:flex; flex-direction:column; gap:40px;
     }
-    .tool-group { --group:var(--orange); --group-lt:var(--orange-lt); --group-dk:var(--orange2); --group-border:var(--border2); --group-sh35:rgba(124,58,237,.35); --group-sh45:rgba(124,58,237,.45); --group-sh14:rgba(124,58,237,.14); }
+    .tool-group { --group:var(--orange); --group-lt:var(--orange-lt); --group-dk:var(--orange2); --group-border:var(--border2); --group-sh35:rgba(224,123,10,.35); --group-sh45:rgba(224,123,10,.45); --group-sh14:rgba(224,123,10,.14); }
 
     .group-label {
       display:flex; align-items:center; gap:.65rem;
@@ -144,11 +144,16 @@
   <div class="frame-wrap">
     <div class="tool-group">
       <div class="group-label"><span class="group-num">01</span>암호화 전송</div>
-      <div class="group-grid single">
+      <div class="group-grid">
         <div class="tool-block">
           <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/qr-code.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/qr-code.svg');" role="img" aria-label="AGE + QR"></span>
           <h2 class="frame-title">암호화 QR 전송.</h2>
           <a class="go-btn" href="vault.html" target="_blank" rel="noopener">AGE + QR</a>
+        </div>
+        <div class="tool-block">
+          <span class="tool-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/key-round.svg');mask-image:url('https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/key-round.svg');" role="img" aria-label="YUBIKEY + AGE"></span>
+          <h2 class="frame-title">YubiKey 공개키로 암호화.</h2>
+          <a class="go-btn" href="vault-yubikey.html" target="_blank" rel="noopener">YUBIKEY + AGE</a>
         </div>
       </div>
     </div>
