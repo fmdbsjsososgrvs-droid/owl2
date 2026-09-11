@@ -169,12 +169,6 @@ body {
 
     <blockquote>결국 USB 암호화는 스크립트 대신 <code>cryptsetup luksFormat</code> + <code>systemd-cryptenroll --fido2-device=auto</code> 명령어를 직접 쳐서 끝냈다.</blockquote>
 
-    <h2>지문(fingerprint)을 손으로 옮겨적다가 두 글자를 틀렸다</h2>
-
-    <p>키 지문을 기록해두려고 손으로 옮겨적었는데, 40자리 16진수 중 두 그룹을 틀리게 적었다. <code>6010</code>을 <code>6018</code>로, <code>0993</code>을 <code>8993</code>으로. 4자리씩 묶어서 실제 값이랑 하나하나 대조해보고서야 어디가 틀렸는지 잡아낼 수 있었다. 공개해도 되는, 비밀도 아닌 40자리 식별자조차 손으로 옮기면 이렇게 쉽게 틀린다는 게 새삼스러웠다.</p>
-
-    <p>최종 지문: <code>2B6C 9276 36C3 CE01 89BD  89F2 6010 771A 0993 AD18</code></p>
-
     <h2>PIN이 왜 4개나 따로 있는지</h2>
 
     <p><code>keytocard</code>를 실행하면서 "Admin PIN"을 넣으라길래 잠깐 헷갈렸다. 정리해보니 물리적으로 하나인 유비키 안에 FIDO2 PIN, PIV PIN, OpenPGP User PIN, OpenPGP Admin PIN — 완전히 독립된 4개의 PIN 체계가 따로 존재하고 있었다. 애플/구글/X 로그인에 쓰던 FIDO2 PIN이랑은 전혀 다른 애플릿, 다른 AID라서 오늘 새로 만든 OpenPGP 설정이 기존 2단계 인증 용도랑 서로 간섭할 걱정은 없다는 것도 확인했다.</p>
