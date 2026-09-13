@@ -924,7 +924,7 @@ footer.vault-footer {
   }
   function qsShowFrame(text){
     if (!qsQrCode) {
-      qsQrCode = new QRCode(document.getElementById('qsQrBox'), { text: text, width: 280, height: 280, correctLevel: QRCode.CorrectLevel.M });
+      qsQrCode = new QRCode(document.getElementById('qsQrBox'), { text: text, width: 480, height: 480, correctLevel: QRCode.CorrectLevel.M });
     } else { qsQrCode.makeCode(text); }
   }
   function qsBuildPlaylist(){
@@ -994,7 +994,7 @@ footer.vault-footer {
       if (parts.length < 4) return;
       var tc = parseInt(parts[1],10); var crcHex = parts[2]; var fnameB64 = parts.slice(3).join('|');
       var fname; try { fname = decodeURIComponent(escape(atob(fnameB64))); } catch(e){ return; }
-      if (qrTotalChunks === null) { qrTotalChunks = tc; qrCrcExpected = crcHex; qrFilename = fname; $('qrStatus').textContent = '헤더 인식됨: ' + qrFilename + ' (' + qrTotalChunks + '조각)'; }
+      if (qrTotalChunks === null || qrTotalChunks !== tc || qrCrcExpected !== crcHex || qrFilename !== fname) { qrTotalChunks = tc; qrCrcExpected = crcHex; qrFilename = fname; qrGotChunks = {}; $('qrStatus').textContent = '헤더 인식됨: ' + qrFilename + ' (' + qrTotalChunks + '조각)'; }
     } else if (text.indexOf('QRF1D|')===0){
       var firstSep = text.indexOf('|', 6);
       if (firstSep === -1) return;
