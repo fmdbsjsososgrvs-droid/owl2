@@ -924,7 +924,7 @@ footer.vault-footer {
   }
   function qsShowFrame(text){
     if (!qsQrCode) {
-      qsQrCode = new QRCode(document.getElementById('qsQrBox'), { text: text, width: 480, height: 480, correctLevel: QRCode.CorrectLevel.M });
+      qsQrCode = new QRCode(document.getElementById('qsQrBox'), { text: text, width: 280, height: 280, correctLevel: QRCode.CorrectLevel.M });
     } else { qsQrCode.makeCode(text); }
   }
   function qsBuildPlaylist(){
