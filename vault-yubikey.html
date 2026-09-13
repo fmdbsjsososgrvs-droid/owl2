@@ -147,7 +147,7 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
 <div class="wrap">
   <div class="eyebrow">// VAULT</div>
   <h1 class="page-title">YubiKey + AGE 암호화</h1>
-  <p class="subtext">파일을 age로 암호화합니다. 대상은 유비키 PIV 공개키(<code>age1yubikey1...</code>) 하나뿐 — 유비키 자체는 여기서 필요 없습니다. 암호화된 파일은 맥/리눅스로 옮겨서, 실제 유비키를 꽂고 <code>age</code> + <code>age-plugin-yubikey</code>로 복호화하세요.</p>
+  <p class="subtext">파일을 age로 암호화합니다. 대상은 유비키 PIV 공개키(<code>age1yubikey1...</code>) — 유비키 자체는 여기서 필요 없습니다. 여러 유비키 공개키를 등록하면 그중 아무 유비키로나 복호화할 수 있습니다. 암호화된 파일은 맥/리눅스로 옮겨서, 실제 유비키를 꽂고 <code>age</code> + <code>age-plugin-yubikey</code>로 복호화하세요.</p>
 
   <div class="card">
     <div class="field">
@@ -155,9 +155,9 @@ button.ghost:hover:not(:disabled) { background: rgba(224,123,10,.08); color: var
       <input type="file" id="fileInput" />
     </div>
     <div class="field">
-      <label>2. 유비키 공개키</label>
-      <input type="text" id="recipientInput" placeholder="age1yubikey1..." autocomplete="off" spellcheck="false" />
-      <p class="field-note">맥/리눅스에서 <code>age-plugin-yubikey --list</code>로 뽑은 공개키를 그대로 붙여넣으세요. (처음이라면 인자 없이 <code>age-plugin-yubikey</code>를 실행해 키를 먼저 생성하세요.)</p>
+      <label>2. 유비키 공개키 (한 줄에 하나씩, 여러 개 가능)</label>
+      <textarea id="recipientInput" rows="3" placeholder="age1yubikey1...&#10;age1yubikey1... (두 번째 유비키, 선택)" autocomplete="off" spellcheck="false" style="width:100%;font-family:var(--mono);font-size:13px;padding:.6rem;border-radius:8px;border:1px solid var(--border2);background:var(--bg);color:var(--text);resize:vertical;"></textarea>
+      <p class="field-note">맥/리눅스에서 <code>age-plugin-yubikey --list</code>로 뽑은 공개키를 한 줄에 하나씩 붙여넣으세요. 등록한 유비키 중 아무거나 하나로 복호화됩니다. (처음이라면 인자 없이 <code>age-plugin-yubikey</code>를 실행해 키를 먼저 생성하세요.)</p>
     </div>
     <div class="btnrow">
       <button id="encryptBtn" class="primary">암호화 + 다운로드</button>
@@ -299,11 +299,16 @@ $('encryptBtn').addEventListener('click', async () => {
   const fileInput = $('fileInput');
   const recipientInput = $('recipientInput');
   const file = fileInput.files[0];
-  const recipientStr = recipientInput.value.trim();
+  const recipientLines = recipientInput.value.split('\n').map(s => s.trim()).filter(s => s.length > 0);
 
   if (!file) { setStatus('파일을 선택하세요.', 'err'); return; }
-  if (!recipientStr.startsWith('age1yubikey1')) {
-    setStatus('age1yubikey1...로 시작하는 공개키를 입력하세요.', 'err');
+  if (recipientLines.length === 0) {
+    setStatus('age1yubikey1...로 시작하는 공개키를 한 줄 이상 입력하세요.', 'err');
+    return;
+  }
+  const badLine = recipientLines.find(s => !s.startsWith('age1yubikey1'));
+  if (badLine) {
+    setStatus('age1yubikey1...로 시작하지 않는 줄이 있습니다: ' + badLine, 'err');
     return;
   }
 
@@ -311,9 +316,10 @@ $('encryptBtn').addEventListener('click', async () => {
   setStatus('암호화 중...', '');
 
   try {
-    const recipient = new PivP256Recipient(recipientStr);
     const e = new Encrypter();
-    e.addRecipient(recipient);
+    for (const recipientStr of recipientLines) {
+      e.addRecipient(new PivP256Recipient(recipientStr));
+    }
 
     const bytes = new Uint8Array(await file.arrayBuffer());
     const ciphertext = await e.encrypt(bytes);
@@ -330,7 +336,8 @@ $('encryptBtn').addEventListener('click', async () => {
     $('cmdBox').textContent = cmd;
     $('cmdCard').style.display = '';
 
-    setStatus(`완료: ${outName} 다운로드됨.`, 'ok');
+    const countNote = recipientLines.length > 1 ? ` (유비키 ${recipientLines.length}개 중 아무거나로 복호화 가능)` : '';
+    setStatus(`완료: ${outName} 다운로드됨.${countNote}`, 'ok');
   } catch (err) {
     console.error(err);
     setStatus('암호화 실패: ' + (err && err.message ? err.message : err), 'err');
