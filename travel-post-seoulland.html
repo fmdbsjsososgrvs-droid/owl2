@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서울랜드 나들이 | HOBBY & TRAVEL | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="travel.html">← HOBBY & TRAVEL 목록으로</a>
+
+  <div class="post-date">2026-09-13</div>
+  <h1 class="post-h1">서울랜드 나들이</h1>
+
+  <div class="post-body">
+    <p>서울랜드에 다녀왔다. 매년 4~5번씩은 가는 곳이라 딱히 새로울 것도 없었는데, 이번엔 조금 특별한 게 있었다. 바로 스카이X를 — 드디어 — 탄 것이다.</p>
+
+    <img src="img/c8-web.jpg" alt="서울랜드 물놀이 구역, 노란 파라솔과 놀이시설" />
+
+    <img src="img/c9-web.jpg" alt="월드컵 테마의 회전 놀이기구" />
+
+    <p>아내는 예전부터 타보고 싶어했던 기구라 기대 만발이었고, 나 역시 첫 경험이라 두근거렸다. 매번 타려고는 했는데, 바람이 많이 분다거나 하는 여러 이유로 안 되는 경우가 대부분이었거든.</p>
+
+    <img src="img/c10-web.jpg" alt="스카이X 탑승장 입구" />
+
+    <img src="img/c11-web.jpg" alt="하늘 높이 솟은 스카이X 타워" />
+
+    <p>그렇게 처음 타본 유료 기구. 소감을 말하자면 꿀잼이었다. 번지점프만큼 무섭지는 않았지만, 그에 필적한달까? 뒤로 올라가는 동안은 좀 살 떨리긴 했다.</p>
+
+    <blockquote>딸아이는 처음 올라갈 땐 살짝 얼었지만, 다 타고 나선 재밌다며 또 타자고 졸라댔다.</blockquote>
+
+    <p>그 외에도 후룸라이드, 블랙홀2000, 바이킹 등 여러 가지를 탔다. 귀신의 집은 마감이어서 경험하지 못했다.</p>
+
+    <img src="img/c12-web.jpg" alt="마감된 서울랜드 귀신동굴 입구" />
+
+    <p>이것저것 군것질도 하고, 행복한 시간이었다. 돌아오는 길에 딸아이에게 오늘 뭐가 제일 재밌었냐고 물었더니, 역시 압도적 1위로 스카이X를 꼽았다. 다음에 서울랜드에 가면 항상 타야겠구만.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#서울랜드</span>
+    <span class="post-tag">#스카이X</span>
+    <span class="post-tag">#딸</span>
+    <span class="post-tag">#나들이</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
