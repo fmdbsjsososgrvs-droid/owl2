@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소프트포크 & 하드포크 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body ul { margin: 0 0 22px; padding-left: 22px; }
+.post-body li { margin-bottom: 8px; }
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-09-13</div>
+  <h1 class="post-h1">소프트포크 & 하드포크</h1>
+
+  <div class="post-body">
+    <p>비트코인은 어떤 식으로 업그레이드되고, 또 어떤 식으로 나뉘었을까. 방식은 두 가지뿐이다. 발전시킨 건 소프트포크, 분리시킨 건 하드포크.</p>
+
+    <img src="img/c14-web.jpg" alt="소프트포크(더 엄격해지는 규칙)와 하드포크(체인이 갈라지는 모습)를 비교한 일러스트" />
+
+    <h2>소프트포크 — 규칙을 더 엄격하게</h2>
+
+    <p>기존 규칙을 강화하거나 새 규칙을 추가해서, 비트코인이 더 엄격하게 작동하도록 만드는 업그레이드 방식이다. 옛날 클라이언트도 새 블록을 여전히 유효하다고 받아들이는 게 핵심이라, 체인이 갈라지지 않는다.</p>
+
+    <p>사토시가 도입한 1MB 블록 크기 제한이 대표적인 예다. 비트코인이 처음 나왔을 땐 블록 크기 제한이 아예 없었는데, 2010년 7월 15일에 사토시가 코드를 하나 추가했다.</p>
+
+    <blockquote><code>static const unsigned int MAX_BLOCK_SIZE = 1000000;</code></blockquote>
+
+    <p>이 코드는 2010년 7월 19일에 배포됐고, 79,400번째 블록부터 적용되도록 설정됐다. 이후 이 숫자 하나를 두고 몇 년째 전쟁이 벌어질 줄은 그때는 아무도 몰랐겠지.</p>
+
+    <h2>하드포크 — 아예 갈라서기</h2>
+
+    <p>네트워크를 둘로 쪼개는 방식이다. 체인이 분리되면서 서로 다른 코인이 양쪽 네트워크에 각각 존재하게 된다. 기존 걸 강화하는 게 아니라 아예 새로 만드는 거다. 비트코인캐시가 대표적인 사례.</p>
+
+    <p>이 방식은 모든 사용자가 기존 클라이언트를 지우고 새로 배포된 클라이언트로 교체해야 한다. 소프트포크와 달리 구버전이 신버전 블록을 거부하기 때문에, 어중간하게 걸쳐 있을 수가 없다.</p>
+
+    <h2>소프트포크로 시작했다가 하드포크로 끝난 BIP-110</h2>
+
+    <p>이론만 보면 둘은 깔끔하게 나뉘지만, 최근 BIP-110 사례를 보면 둘의 경계가 생각보다 유동적이라는 걸 알 수 있다.</p>
+
+    <p>BIP-110은 원래 1년짜리 한시적 소프트포크로 설계됐다. OP_RETURN을 비롯해 트랜잭션 안에 넣을 수 있는 임의의 비금융 데이터(이미지, 텍스트 등)를 제한하는 규칙 7개를 새로 도입해서, 비트코인 블록공간을 화폐 기능에 더 집중시키자는 취지였다. UASF(사용자 활성화 소프트포크) 방식으로, 채굴자가 아니라 노드 운영자들이 규칙을 밀어붙이는 구조였다.</p>
+
+    <p>961,632번 블록에서 강제 시그널링 기간이 시작됐는데, 채굴자 지지율이 2.5% 안팎에 머물렀다. 필요한 기준은 55%. 8월 8일, 결국 이 기준을 못 채우고 체인이 갈라졌다. 그런데 분리된 소수 체인은 해시파워가 거의 없다 보니 여덟 시간 동안 블록을 딱 2개밖에 못 캐고 사실상 멈춰버렸다.</p>
+
+    <p>여기서 끝났으면 그냥 '실패한 소프트포크 시도'로 남았을 텐데, 지지자들이 포기하지 않았다. 개발자 루크 대시주어가 작업증명 알고리즘 자체를 SHA-256d에서 Blake2b로 바꿔버린 거다. ASIC 채굴기가 지배하는 판을 우회해서 일반 CPU·GPU로도 채굴에 참여할 수 있게 하려는 목적이었다. 여기에 블록 크기도 300KB로 확 줄였다 — 비트코인 본체의 1MB 베이스, 4MB 웨이트 한도보다 훨씬 작은 값이다.</p>
+
+    <p>결과적으로 소프트포크 시도는 실패했지만, 그 실패를 발판 삼아 완전히 별개의 규칙과 작업증명을 가진 하드포크 체인으로 다시 태어난 셈이다. 최근엔 이 재기동된 체인에서 800개 넘는 블록이 채굴됐다는 소식도 들린다. 이게 오래갈지는 또 다른 문제고.</p>
+
+    <p>비트코인을 둘러싼 이런 전쟁과 역사를 더 알고 싶다면, <b>《블록사이즈 워》</b>를 추천한다. 흥미진진 개꿀잼 서적이다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#소프트포크</span>
+    <span class="post-tag">#하드포크</span>
+    <span class="post-tag">#BIP110</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
