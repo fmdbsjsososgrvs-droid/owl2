@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PanicVault(2) | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-16</div>
+  <h1 class="post-h1">PanicVault(2)</h1>
+
+  <div class="post-body">
+    <p>지난 편에서 PanicVault를 아이폰에 설정하면서 만족스러워했는데, 같은 걸 맥북에서도 쓰려다가 생각지 못한 구멍을 하나 발견했다.</p>
+
+    <h2>맥에선 앱별 Touch ID 차단이 안 된다</h2>
+
+    <p>PanicVault는 유니버설 구매라 맥에도 바로 설치할 수 있었다. 근데 나는 맥에서도 비밀번호 + 유비키로만 열리길 원했지, Touch ID로는 못 열리게 하고 싶었다. 시스템 설정을 뒤져봤는데 앱 단위로 Touch ID를 끄는 옵션 자체가 없었다.</p>
+
+    <img src="img/cc1-web.jpg" alt="macOS 시스템 설정의 Touch ID 및 암호 화면" />
+
+    <p>iOS는 설정 → Face ID 및 암호 코드 안에 앱별로 "이 앱이 Face ID 쓰게 허용할지" 토글이 따로 있어서, 앱이 아무리 자기 내부 설정을 켜도 OS 차원에서 막을 수 있다. 근데 macOS엔 이런 앱별 생체인증 권한 체계 자체가 없다. 결국 남는 건 PanicVault 자체 설정 안의 "Unlock with Touch ID" 토글뿐이었다.</p>
+
+    <h2>지문 정보 자체는 못 훔쳐간다는 확인은 했다</h2>
+
+    <p>맥을 통째로 털려서 지문 정보까지 빼갔다고 가정해도, 그걸로 원격에서 Touch ID를 우회할 수는 없다는 건 확인했다. 지문은 Secure Enclave라는, 메인 OS랑 완전히 분리된 별도 보안 칩 안에서만 처리되고 절대 밖으로 안 나간다. 게다가 Touch ID는 그 순간 센서에 진짜 손가락이 물리적으로 닿아야 작동하는 구조라, 저장된 지문 값을 소프트웨어로 "재생"해서 인증을 우회할 방법 자체가 없다. 이 구조는 맥·아이폰·아이패드 전부 동일하다(Apple Silicon 기준).</p>
+
+    <h2>근데 진짜 문제는 따로 있었다</h2>
+
+    <p>지문을 훔칠 수 없다는 건 안심할 일이지만, 핵심은 그게 아니었다. <b>토글은 언제든 다시 켤 수 있다</b>는 거다. 그리고 다시 켜는 순간, 유비키라는 "나와 별개인 물리적 객체"를 따로 확보해야 한다는 조건 자체가 사라진다.</p>
+
+    <blockquote>원격 공격자한텐 의미 없지만, 물리적으로 내 옆에 있을 수 있는 상황(강압, 동거인·동료가 맥에 접근 가능한 상태에서 내 손가락만 갖다 대게 하는 상황)에선 유비키를 따로 찾아낼 필요 없이 그 자리에서 바로 뚫린다.</blockquote>
+
+    <p>이걸 막을 기술적 수단이 macOS엔 없다. 결국 남는 건 "이 토글을 절대 다시 켜지 않는다"는 스스로의 다짐뿐인데, 나는 보안을 사람의 의지력에 맡기고 싶지 않다.</p>
+
+    <h2>결론 — 맥용 PanicVault는 안 쓰기로 했다</h2>
+
+    <p>아이폰·아이패드용 PanicVault는 OS가 앱별 생체인증을 강제로 차단해주니 안심하고 쓸 수 있지만, 맥용은 이 한 겹이 빠져있어서 보안 수준이 한 단계 떨어진다. 그래서 맥에서는 PanicVault를 쓰지 않기로 했다.</p>
+
+    <p>대신 맥OS가 기본으로 지원하는 DMG(디스크 이미지) 암호화로 가려고 한다. 서드파티 앱의 토글에 기대는 대신, OS 자체의 디스크 유틸리티로 암호화 볼륨을 만들면 적어도 "앱 설정이 몰래 바뀌어서 뚫린다"는 이 특정 구멍은 원천적으로 없앨 수 있다. 다음 편에서 만들어보겠다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#PanicVault</span>
+    <span class="post-tag">#TouchID</span>
+    <span class="post-tag">#SecureEnclave</span>
+    <span class="post-tag">#DMG</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
