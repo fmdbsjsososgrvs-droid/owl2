@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bitcoin X fate | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body ul { margin: 0 0 22px; padding-left: 22px; }
+.post-body li { margin-bottom: 8px; }
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 28px;
+  font-size: 14px;
+}
+.post-body th, .post-body td {
+  border: 1px solid var(--border2);
+  padding: 9px 12px;
+  text-align: left;
+}
+.post-body th {
+  background: var(--bg2);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-09-16</div>
+  <h1 class="post-h1">bitcoin X fate</h1>
+
+  <div class="post-body">
+    <p>페이트 스테이 나이트를 다시 보다가, 길가메쉬와 에미야 아처의 관계를 보면서 문득 비트코인이 겹쳐 보였다.</p>
+
+    <h2>상성이라는 우아한 룰</h2>
+
+    <p>페이트 세계관엔 '서번트'라는 영령들이 있고, 이들에겐 클래스가 있다. 세이버, 랜서, 아처, 라이더, 캐스터… 그리고 이 클래스 사이엔 가위바위보 같은 상성이 있다. 세이버는 랜서를 견제하고, 랜서는 아처의 거리를 좁히고, 아처는 세이버의 사정거리 밖에서 처치한다.</p>
+
+    <blockquote>능력의 절대값보다, 상성의 방향이 결정적이다.</blockquote>
+
+    <p>검사가 아무리 세도, 활을 정확히 든 자에겐 거리에서 무너진다. 모든 강함은 자기 모양에 맞는 약점을 갖는다는 게, 능력자 배틀물을 관통하는 룰이다.</p>
+
+    <h2>길가메쉬가 유일하게 경계한 남자</h2>
+
+    <p>페이트에서 가장 강력한 캐릭터로 꼽히는 길가메쉬의 능력은, 모든 보구의 원본을 소장한 보물창고 '게이트 오브 바빌론'이다. 적을 보면 보구를 무한대로 던져서 압살한다. 정면 승부에선 사실상 사기캐다.</p>
+
+    <p>근데 이 절대강자조차 단 한 명, 에미야 아처만은 끝까지 경계했다. 에미야는 검사도 영웅도 아니다. 그의 능력은 본 적 있는 모든 무기를 복제하는 것. 길가메쉬가 보구 100개를 던지면 에미야는 100개를 복제해 받아친다. 양으로 압도하는 능력이, 양 자체가 무의미해지는 능력을 만나는 순간 무력해진다. 절대강자 본인이 자기 천적의 정체를 가장 잘 아는 셈이다.</p>
+
+    <h2>현실의 길가메쉬 = 달러</h2>
+
+    <p>현실 세계로 옮겨보면, 길가메쉬 포지션엔 달러가 있다. 달러의 보물창고를 열어보면 이렇다.</p>
+
+    <ul>
+      <li>SWIFT 망 위에서 움직이는 거의 모든 국제 자금 흐름을 추적한다.</li>
+      <li>개인 계좌든 한 국가의 외환보유고든, 동결시킬 수 있다.</li>
+      <li>적대국을 글로벌 금융 시스템에서 통째로 추방할 수 있다(제재).</li>
+      <li>필요하면 그냥 찍어낸다. 무제한 발행.</li>
+      <li>세계 무역과 외환 거래 대부분이 달러 기준으로 돌아간다.</li>
+    </ul>
+
+    <p>어떤 나라도, 어떤 기업도, 이 보물창고를 정면으로 못 이긴다. 유로도 위안도 엔도 그냥 다른 종류의 검과 창일 뿐, 같은 상성 안에서 싸우는 한 답이 없다.</p>
+
+    <h2>강함의 출처가 곧 약점이다</h2>
+
+    <p>근데 모든 절대강자에겐 약점이 있다. 달러의 약점은 정확히 하나, '무제한 발행' 그 자체다. 이게 달러의 능력이자 동시에 약점이라는 게 핵심이다.</p>
+
+    <p>1971년 금본위제가 폐지되면서 달러는 사실상 뭐든 찍어낼 수 있는 화폐가 됐고, 그 이후로 달러의 구매력은 큰 폭으로 깎여나갔다는 게 흔히 인용되는 얘기다. 2020년엔 코로나 대응으로 1년 만에 달러 공급량이 큰 폭으로 늘었다는 통계도 있다. 인쇄기를 돌릴 때마다, 이미 달러를 들고 있는 모든 사람이 자는 동안 조금씩 가치를 잃는다. 보이지 않는 세금이다.</p>
+
+    <p>문제는 이 약점이 능력의 출처라는 것. 달러가 세계를 지배하는 건 무한히 찍을 수 있어서고, 그 인쇄가 모든 보유자의 가치를 갉아먹는다. 보구창고가 클수록, 그걸 복제해서 되돌려줄 자가 가져갈 몫도 커지는 셈이다.</p>
+
+    <h2>비트코인, 정확히 그 약점만 노린 카운터</h2>
+
+    <p>비트코인의 설계도를 펴보면, 신기하리만치 달러의 약점만을 향해 조준돼 있다.</p>
+
+    <table>
+      <tr><th>달러의 약점</th><th>비트코인의 대응</th></tr>
+      <tr><td>무제한 발행</td><td>21,000,000개 절대 고정</td></tr>
+      <tr><td>추적·동결·제재</td><td>검열 저항 — 거래를 막을 단일 지점이 없음</td></tr>
+      <tr><td>중앙 권한</td><td>탈중앙화 — 멈출 수 있는 주체가 없음</td></tr>
+      <tr><td>정치·국가 리스크</td><td>국가 무관, 전 세계 공통 규약</td></tr>
+      <tr><td>지속적인 인플레이션</td><td>반감기로 4년마다 발행량 절반</td></tr>
+    </table>
+
+    <p>이건 우연이 아니다. 비트코인은 그냥 새로운 화폐가 아니라, 달러라는 거대 능력의 약점만을 정확히 노린 카운터다.</p>
+
+    <p>길가메쉬가 에미야를 끝까지 경계한 이유와 똑같다. 다른 화폐들은 같은 룰 안에서 싸웠지만, 비트코인은 발행 권한이라는 룰 자체를 폐지해버렸다. 각국 정부가 비트코인을 규제하려는 시도가 끊이지 않는 이유도, 어쩌면 절대강자 본인이 자기 천적의 정체를 가장 잘 알기 때문 아닐까.</p>
+
+    <h2>결론</h2>
+
+    <p>이 카운터를 결국 누가 들고 있느냐가 진짜 질문으로 남는다. 은행이나 거래소가 대신 들어주면, 카운터의 의미는 사라진다. 같은 룰로 돌아가버리니까. 비트코인은 각자가 각자의 자산을 각자 직접 든다는 전제 위에서만 카운터로 작동한다.</p>
+
+    <blockquote>절대강자 본인이, 자기 천적의 정체를 가장 잘 안다.</blockquote>
+
+    <p>비트코인을 이해한다는 건, 결국 이 상성 관계를 이해하는 거였다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#Fate</span>
+    <span class="post-tag">#길가메쉬</span>
+    <span class="post-tag">#달러</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
