@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>풀노드 은닉 작업 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body code {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-09-17</div>
+  <h1 class="post-h1">풀노드 은닉 작업</h1>
+
+  <div class="post-body">
+    <p>아이폰에서 숨기고, 아이패드에서 숨기고, 맥북에서도 숨겼다. 이제 남은 건 윈도우 데스크탑 하나 — 여기서 돌리는 비트코인 코어(풀노드)와 스펙터 차례다.</p>
+
+    <h2>목표는 "안전"이 아니라 "존재 부인"</h2>
+
+    <p>강도든 누구든, 물리적으로 컴퓨터 앞에 앉을 수 있는 제3자가 있다고 가정했다. 그 상황에서 풀노드와 가족 사진을 "못 열게" 막는 것만으로는 부족하다고 봤다. 목표는 그보다 한 단계 위, 플러서블 디나이어빌리티(plausible deniability) — 애초에 숨긴 게 있다는 사실 자체를 증명할 방법이 없는 상태였다.</p>
+
+    <h2>비트락커 대신 베라크립트 히든 볼륨</h2>
+
+    <p>윈도우 기본 암호화인 비트락커는 탈락시켰다. 잠금 아이콘이 뜨고 암호 입력창이 나오는 순간, "여기 뭔가 숨겨져 있다"는 사실 자체가 드러난다. 강요당하면 부인할 수가 없다.</p>
+
+    <p>대신 베라크립트(VeraCrypt)의 히든 볼륨 기능을 썼다. 겉보기 암호(공개용)를 입력하면 그냥 평범한 빈 디스크처럼 보인다. 그 안에서 "빈 공간"처럼 보이는 영역에, 실은 완전히 다른 두 번째 암호로만 열리는 히든 볼륨이 숨어 있는 구조다. 겉보기 암호를 넘겨줘도 히든 볼륨의 존재를 암호학적으로 증명할 방법이 없다.</p>
+
+    <blockquote>겉보기 암호만 알려줘도, 그 안에 진짜가 있다는 걸 증명할 수 없다.</blockquote>
+
+    <p>구조는 이렇다.</p>
+
+    <ul>
+      <li>Outer(겉보기) 볼륨 — 500GB, NTFS, 짧고 공개해도 되는 비밀번호로 포맷. 더미 파일들로 채워둠.</li>
+      <li>Hidden(진짜) 볼륨 — Direct 모드로 생성, 약 249GB, NTFS, 길고 복잡한 비밀번호.</li>
+      <li>마운트하면 드라이브 문자 H:, 그 안에 폴더 하나(<code>H:\abc</code>)를 만들어 실제 데이터를 전부 여기에 둠.</li>
+    </ul>
+
+    <p>두 비밀번호 모두 본인만 알고, 이 기록에도 남기지 않았다.</p>
+
+    <h2>비트코인 코어 데이터 이관</h2>
+
+    <p>기존에 <code>G:\bitcoin_data</code>에 있던 걸 <code>H:\abc\bitcoin_data</code>로 전부 옮겼다. blocks, chainstate, 스펙터 지갑 데이터, banlist.json, bitcoin.conf, mempool.dat, peers.dat, settings.json까지 통째로. 블록 파일(blk*.dat)이 683개였는데, 이관 후 개수가 정확히 일치하는 것까지 확인했다. prune=100000(가지치기 모드)과 txindex=0 설정은 그대로 유지했다.</p>
+
+    <h2>C 드라이브에 흔적이 남는다는 걸 뒤늦게 발견</h2>
+
+    <p>처음엔 비트코인 코어 GUI(Qt)와 스펙터를 공식 설치 프로그램(.exe)으로 깔았다. 근데 이 방식은 C 드라이브와 레지스트리에 흔적을 남긴다는 걸 나중에 알았다.</p>
+
+    <ul>
+      <li><code>C:\Program Files\Bitcoin</code>, <code>C:\Program Files\Specter</code> 폴더</li>
+      <li>제어판 "프로그램 추가/제거" 목록</li>
+      <li>시작 메뉴 바로가기</li>
+    </ul>
+
+    <p>설치 프로그램을 쓰는 이상, 히든 볼륨 안에 데이터를 아무리 잘 숨겨도 "이런 프로그램을 쓰고 있다"는 흔적은 겉(C 드라이브)에 그대로 남는 셈이었다. 그래서 설치형 대신 포터블(압축판) 버전으로 갈아탔다.</p>
+
+    <ul>
+      <li>bitcoin-28.1-win64.zip — 공식 bitcoincore.org, SHA256 체크섬 검증 후 <code>H:\abc\bitcoin-28.1\</code>에 압축 해제.</li>
+      <li>specterd-v2.1.11-win64.zip — 공식 GitHub, SHA256 체크섬 검증 후 <code>H:\abc\specterd\</code>에 압축 해제.</li>
+    </ul>
+
+    <p>스펙터는 윈도우용 GUI 버전이 설치 프로그램으로만 나와서 포터블이 불가능했다. 대신 콘솔 서버판인 specterd를 써서, 실행 후 브라우저로 <code>http://127.0.0.1:25441</code>에 접속하는 방식으로 바꿨다. 기능은 똑같고, 접속 방법만 "앱 아이콘"에서 "브라우저 탭"으로 바뀐 정도.</p>
+
+    <p>기존에 C 드라이브에 깔았던 두 프로그램은 정식 제거 프로그램으로 완전히 지웠다. Program Files 폴더, 레지스트리, 시작 메뉴 항목까지 다 사라진 것 확인했다.</p>
+
+    <h2>히든 볼륨 안의 실행 바로가기</h2>
+
+    <p>결국 <code>H:\abc</code> 안에 이렇게 정리됐다.</p>
+
+    <ul>
+      <li><code>BitcoinCoreQt.lnk</code> — GUI(창) 실행. <code>bitcoin-qt.exe -datadir=H:\abc\bitcoin_data</code></li>
+      <li><code>BitcoinCore.lnk</code> — 헤드리스(콘솔) 실행. <code>bitcoind.exe -datadir=H:\abc\bitcoin_data</code></li>
+      <li><code>SpecterD.lnk</code> — 스펙터 서버 실행(콘솔창만 뜸). 브라우저에서 <code>http://127.0.0.1:25441</code> 접속.</li>
+    </ul>
+
+    <p>이 바로가기들은 히든 볼륨이 마운트돼서 H: 드라이브가 떠 있을 때만 보이고 실행된다.</p>
+
+    <p>주의할 점 몇 개. GUI와 헤드리스는 같은 데이터 폴더를 쓰기 때문에 절대 동시에 실행하면 안 된다. 스펙터 서버는 끌 때 콘솔창 X 버튼이 아니라 반드시 Ctrl+C로 종료해야 한다(X 버튼 종료의 안전성은 아직 확인 못 했다). 비트코인 코어는 X 버튼으로 꺼도 debug.log에서 정상 종료 시퀀스가 확인돼서 안전한 걸로 판단했다.</p>
+
+    <h2>평소 쓰는 순서</h2>
+
+    <ol>
+      <li>베라크립트 실행 → 슬롯 선택 → 컨테이너 파일 선택 → 히든 볼륨 비밀번호 입력해서 마운트. (겉보기 비밀번호를 입력하면 outer 볼륨만 열리고 더미 파일만 보인다 — 히든 볼륨 존재는 전혀 드러나지 않는다.)</li>
+      <li><code>H:\abc\BitcoinCoreQt.lnk</code>(또는 <code>BitcoinCore.lnk</code>) 실행해서 노드 구동.</li>
+      <li>필요하면 <code>H:\abc\SpecterD.lnk</code> 실행 후 브라우저 접속.</li>
+      <li>다 쓰면 프로그램들 정상 종료 → 베라크립트에서 Dismount. H: 드라이브가 시스템에서 완전히 사라지고, 외부에서는 존재 자체를 확인할 수 없다.</li>
+    </ol>
+
+    <h2>정리하면서 같이 처리한 것들</h2>
+
+    <p>예전에 쓰던 <code>E:\fullnode\Bitcoin</code> 폴더는 정식 uninstall.exe로 먼저 지우고, 탐색기에서 Shift+Delete로 폴더 전체(daemon 포함)까지 완전 삭제했다. 이관 전 원본이었던 <code>G:\bitcoin_data</code>도 새 위치에서 GUI/헤드리스/스펙터 모두 정상 작동하는 걸 확인한 다음 완전히 지웠다 — 여기엔 평문 RPC 비밀번호가 담긴 bitcoin.conf 사본도 같이 있었어서, 지우고 나니 보안상으로도 더 나아졌다.</p>
+
+    <p>덤으로 설치한 기억이 없는 마이크로소프트 스토어 앱 "Bitcoin Price Monitor"(게시자: smurz)도 발견해서 지웠다. 윈도우가 "추천 앱"으로 자동 설치했을 가능성이 커 보였고, UWP 샌드박스 앱이라 클립보드 하이재킹류일 가능성은 낮다고 판단했지만 안전 차원에서 제거하고 디펜더 전체 검사도 권장해뒀다.</p>
+
+    <h2>결론</h2>
+
+    <p>이제 아이폰, 아이패드, 맥북에 이어 윈도우 데스크탑까지 — 물리적으로 컴퓨터 앞에 누가 앉더라도 풀노드가 거기 있다는 사실 자체를 증명할 방법이 없는 상태가 됐다. 가족 사진/영상은 폴더(<code>H:\abc\family_photos</code>)만 만들어두고 아직 비어 있는데, 이건 다른 곳 백업에서 채워 넣는 일만 남았다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#풀노드</span>
+    <span class="post-tag">#VeraCrypt</span>
+    <span class="post-tag">#히든볼륨</span>
+    <span class="post-tag">#플러서블디나이어빌리티</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
