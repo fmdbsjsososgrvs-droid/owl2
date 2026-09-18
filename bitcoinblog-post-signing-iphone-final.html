@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서명용 아이폰 (final) | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-09-18</div>
+  <h1 class="post-h1">서명용 아이폰 (final)</h1>
+
+  <div class="post-body">
+    <p>(1)(2)(3)을 거치며 우여곡절이 많았던 서명용 에어갭 아이폰. 이번에 용도를 하나 더 얹으면서 드디어 완결판을 만들었다.</p>
+
+    <img src="img/c27-web.jpg" alt="서명용 아이폰 가죽 케이스" />
+
+    <p>와이파이도 블루투스도 안 되는 완전 에어갭 상태의 아이폰이다. 여기에 문서를 넣는 방법은 두 가지. QR 전송으로 다른 기기에서 옮기거나, 아니면 이 안에서 직접 문서를 만든다.</p>
+
+    <h2>1. 문서를 들여온다</h2>
+
+    <p>비행기 모드, 와이파이·블루투스 완전 차단 상태에서 QR 코드로 텍스트를 주고받는다. (3)편에서 뼈아프게 확인했던 것처럼, 이 모든 페이지는 사파리가 아니라 엣지에 저장해서 쓴다 — 사파리는 로컬 HTML의 카메라 기능을 아예 안 열어준다는 걸 그때 배웠다.</p>
+
+    <img src="img/c28-web.jpg" alt="가죽 케이스 안의 서명용 아이폰과 The B Society 카드" />
+
+    <h2>2. 암호화한다</h2>
+
+    <p>여기서부터가 이번에 새로 정리한 부분이다. 문서 성격에 따라 암호화 방법을 나눴다.</p>
+
+    <ul>
+      <li>나 혼자 보는 개인적인 문서 — PGPony 앱으로 암호화. 유비키로 열고 닫는다.</li>
+      <li>가족들과 같이 봐야 하는 내용 — 직접 만들어둔 웹앱, QR-age로 암호화. 나 혼자 유비키를 들고 있어도, 필요하면 가족이 비밀번호(암호문구)만으로 열 수 있게.</li>
+    </ul>
+
+    <p>혼자만 열 수 있으면 되는 것과, 나 없이도 가족이 열 수 있어야 하는 것 — 이 둘을 같은 방식으로 묶지 않고 나눠둔 게 이번 정리의 핵심이다.</p>
+
+    <h2>3. PanicVault에 보관한다</h2>
+
+    <p>이렇게 암호화한 문서는 전부 PanicVault에 넣어둔다. 유비키 챌린지-리스폰스로 여는 그 금고다. 결국 문서 하나가 "PGPony 또는 QR-age로 암호화 → PanicVault 보관"이라는 이중 잠금을 거치는 셈이다.</p>
+
+    <blockquote>이로써 보안 짱짱한 문서보관용 아이폰이 만들어졌다.</blockquote>
+
+    <p>물론 에어갭 노트북에 문서를 보관해도 된다. 근데 이 아이폰은 성격이 좀 다르다. 노트북의 백업 역할도 하고, 무엇보다 훨씬 간편하게 꺼내 볼 수 있는 용도다.</p>
+
+    <p>나한테는 간편하고, 공격자한테는 한없이 풀기 어려운 암호화. 편의성과 보안성은 반비례한다고들 하는데, 그 저울 위에서 내가 원하는 딱 그 지점을 찾은 느낌이다.</p>
+
+    <p>물론 완벽하게 보안성 쪽으로 기운 건 아니라서, 비트코인 시드는 여기 안 넣는다. 그건 여전히 다른 곳이다.</p>
+
+    <h2>여담</h2>
+
+    <p>이걸로 에어갭 노트북, 암호화 메모리, 윈도우 데스크탑, 그리고 이 에어갭 아이폰까지 — 갖고 있는 기기들의 암호화/은닉화를 전부 마쳤다. 새 장비가 들어올 때까진 딱히 뜯어볼 것도, 고칠 것도 없어서 심심해지겠구나 싶다.</p>
+
+    <img src="img/c29-web.jpg" alt="분해해둔 예비 기기" />
+
+    <p>할 일이 없으니 애꿎은 예비 기기나 뜯어보며 시간을 보내는 중이다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#서명용아이폰</span>
+    <span class="post-tag">#에어갭</span>
+    <span class="post-tag">#PGPony</span>
+    <span class="post-tag">#PanicVault</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
