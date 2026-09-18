@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>맥북 네오 사용 후기 | Hobby &amp; Travel | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="travel.html">← HOBBY 목록으로</a>
+
+  <div class="post-date">2026-09-18</div>
+  <h1 class="post-h1">맥북 네오 사용 후기</h1>
+
+  <div class="post-body">
+    <p>저렴하고 이쁘고, 한번쯤 경험해보고 싶었던 맥북을 샀다. 좋은 성능이 그리 필요 없어서 네오로 골랐다.</p>
+
+    <img src="img/mb1-web.jpg" alt="맥북 에어 네오 뒷면, 책상 위에 로지텍 MX Master 3S와 함께" />
+
+    <h2>말로만 듣던 트랙패드, 좋았다</h2>
+
+    <p>말로만 듣던 트랙패드 사용감. 확실히 좋았다. 지금은 트랙패드에 로지텍 MX Master 3S를 같이 쓰고 있는데, 이 조합이 아주 예술이다. 이제 윈도우로 못 돌아가겠다.</p>
+
+    <h2>아이폰·아이패드 연동, 시작은 좋았는데</h2>
+
+    <p>맥북으로 제일 먼저 한 일은 아이폰, 아이패드와의 연동이었다. 아이폰에서 컨트롤+C를 누르고 맥북에서 컨트롤+V를 누르면 문자와 사진이 그대로 넘어오는 편의성이라니, 감탄스러웠다. 하지만 그것도 잠시, 이 기능이 자꾸 에러가 나더라. 결국 나중엔 에어드랍만 쓰게 됐다.</p>
+
+    <h2>클로드와 함께 하는 멀티태스킹</h2>
+
+    <p>두 번째로 한 일은 클로드. 뭔가 일을 하나 맡겨놓고, 나는 윈도우 데스크탑이나 아이폰으로 다른 일을 하는 멀티태스킹이 가능해졌다. 맥OS가 처음이라 클로드의 도움을 정말 많이 받았다. "이거 어떻게 해?", "이 기능 있어?", "단축키 뭐야?" 이런 질문을 진짜 백 번은 한 것 같다.</p>
+
+    <h2>난수 생성과 유비키, 그리고 포맷의 굴레</h2>
+
+    <p>세 번째로 한 일이자 가장 본격적인 용도는 난수 생성과 유비키(YubiKey)를 이용한 암호화였다. 처음에는 수동으로 와이파이·블루투스를 끄고, 맥북에서 문서를 작성한 다음 암호화해서 저장하고 옮기는 방식으로 썼다. 그러고 나서는 맥북을 포맷(모든 콘텐츠 및 설정 지우기)했다.</p>
+
+    <p>윈도우는 포맷해도 파일 찌꺼기가 남아 복구가 가능한 반면, 애플은 디스크를 암호화한 뒤 그 암호 자체를 쪼개버려서 절대 복구가 불가능하다는 설명을 들으니 꽤 믿음직스러웠다. 뭐, 이것도 결국 애플을 신뢰해야 하는 지점이긴 하지만.</p>
+
+    <p>하지만 이 짓도 한두 번이지, 포맷을 계속 반복하다 보니 지쳐서 결국 방침을 바꿨다. 집안에 굴러다니던 LG 노트북을 에어갭으로 만들고, 민감한 문서 작성은 거기서 하는 걸로.</p>
+
+    <h2>지금은 순수 작업 머신</h2>
+
+    <p>그 이후로 지금의 맥북은 순수하게 AI 작업, 홈페이지 제작, 그리고 복호화 백업머신으로 쓰고 있다.</p>
+
+    <img src="img/mb2-web.jpg" alt="맥북 에어 네오를 펼쳐 홈페이지 작업 화면을 띄운 모습" />
+
+    <p>뭐, 아이폰·아이패드와의 연계는 말할 것도 없다. 음악 넣고 앱 관리하는 작업도 USB 연결하니 바로 되더라고. 결론: 원하던 기능을 100% 수행. 맥OS의 경험 만족스러움. 가격도 만족. 평점 별 네개반 ⭐️⭐️⭐️⭐️✨</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#맥북</span>
+    <span class="post-tag">#트랙패드</span>
+    <span class="post-tag">#클로드</span>
+    <span class="post-tag">#에어갭</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
