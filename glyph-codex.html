@@ -1,0 +1,219 @@
+<meta charset="utf-8">
+<title>글리프 코덱스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Noto+Sans+KR:wght@400;600;800&family=Noto+Serif:wght@600&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --ground: #060b18;
+  --panel: #0c1630;
+  --panel-2: #0a1226;
+  --line: #23406a;
+  --line-soft: #172a48;
+  --text: #e2eeff;
+  --muted: #8fa6cc;
+  --faint: #5d7096;
+  --accent: #7fc0ff;
+  --white: #f4f8ff;
+  --yellow: #ffd95c;
+  --orange: #ff9a3c;
+  --armor: #8fd0ff;
+  --engine: #ff9a7a;
+  --thruster: #a8f0c0;
+  --pend: #c9a8e8;
+  --focus: #ffd27a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--ground); color: var(--text);
+  font: 15px/1.55 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
+  padding-inline: 16px; padding-block: 0 48px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+header.top { padding-block: 28px 18px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 24px; }
+header.top h1 { margin: 0; font: 800 26px/1.1 Orbitron, 'Noto Sans KR', sans-serif; letter-spacing: .08em; text-wrap: balance; }
+header.top h1 small { display: block; margin-top: 6px; font: 600 13px 'Noto Sans KR', sans-serif; letter-spacing: 0; color: var(--muted); }
+.stamp { margin-left: auto; font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums; }
+
+/* 규칙 요약 */
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.rule { border: 1px solid var(--line-soft); border-radius: 8px; padding: 12px 14px; background: var(--panel-2); font-size: 13px; color: var(--muted); }
+.rule b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
+.bandrow { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 2px; }
+
+/* 필터 바 */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(6, 11, 24, .94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line-soft); padding-block: 12px; margin-bottom: 16px; }
+.tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+.tab { font: 800 14px 'Noto Sans KR', sans-serif; color: var(--muted); background: none; border: 2px solid var(--line); border-radius: 6px; padding: 6px 16px; cursor: pointer; }
+.tab[aria-selected="true"] { color: #06101f; background: var(--accent); border-color: var(--accent); }
+.tab .n { font-family: Orbitron, sans-serif; font-size: 12px; margin-left: 6px; opacity: .8; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.fg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fg > span { font-size: 12px; font-weight: 800; color: var(--faint); letter-spacing: .04em; margin-right: 2px; }
+.chip { font: 600 13px 'Noto Sans KR', sans-serif; color: var(--muted); background: var(--panel-2); border: 1px solid var(--line); border-radius: 14px; padding: 3px 11px; cursor: pointer; }
+.chip:hover { color: var(--text); border-color: var(--accent); }
+.chip[aria-pressed="true"] { color: #06101f; background: var(--text); border-color: var(--text); }
+.chip.b0[aria-pressed="true"] { background: var(--white); border-color: var(--white); }
+.chip.b1[aria-pressed="true"] { background: var(--yellow); border-color: var(--yellow); }
+.chip.b2[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); }
+.search { flex: 1 1 220px; min-width: 0; display: flex; gap: 6px; }
+.search input { flex: 1; min-width: 0; font: 14px 'Noto Sans KR', sans-serif; color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+.search input::placeholder { color: var(--faint); }
+.reset { font: 600 12px 'Noto Sans KR', sans-serif; color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.reset:hover { color: var(--text); }
+button:focus-visible, input:focus-visible, .gw:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.count { font-size: 12px; color: var(--faint); margin: 0 0 10px; font-variant-numeric: tabular-nums; }
+
+/* 카드 그리드 */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.card h3 { margin: 0; font-size: 18px; font-weight: 800; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; font-weight: 700; border: 1px solid currentColor; border-radius: 4px; padding: 0 7px; line-height: 20px; }
+.tag.armor { color: var(--armor); } .tag.engine { color: var(--engine); } .tag.thruster { color: var(--thruster); }
+.tag.sock { color: var(--muted); font-variant-numeric: tabular-nums; }
+.tag.b0 { color: var(--white); } .tag.b1 { color: var(--yellow); } .tag.b2 { color: var(--orange); }
+
+/* 글리프 순서 (단어로) */
+.seq { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; padding: 8px 10px; border-radius: 6px; background: var(--panel-2); border: 1px dashed var(--line); }
+.seq .ar { color: var(--faint); font-size: 12px; }
+.gw { font-weight: 800; font-size: 15px; background: none; border: 0; padding: 1px 2px; cursor: pointer; border-radius: 3px; }
+.gw .gs { font-family: 'Noto Serif', 'Palatino Linotype', 'Times New Roman', serif; font-size: 1em; font-weight: 800; margin-left: 3px; }   /* 2026-09-26 사용자: 글리프 문자도 한글과 같은 크기 */
+.gw:hover { text-decoration: underline; text-underline-offset: 3px; }
+.c0 { color: var(--white); } .c1 { color: var(--yellow); } .c2 { color: var(--orange); }
+.fx { margin: 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: 14px; }
+.fx li::before { content: '+ '; color: var(--faint); }
+.fx li.sp { color: var(--orange); font-weight: 800; }
+.fx li.sp::after { content: ' · 특수 옵션'; font-size: 11px; font-weight: 600; color: var(--faint); }
+.fx li.pend { color: var(--pend); }
+.fx li.pend::after { content: ' · 미적용(예정)'; font-size: 11px; color: var(--faint); }
+
+/* 글리프 카드 */
+.gcard h3 .sym { font-family: 'Noto Serif', 'Palatino Linotype', 'Times New Roman', serif; font-size: 1em; font-weight: 800; }
+.gopt { font-size: 15px; font-weight: 600; }
+.uses { font-size: 13px; color: var(--muted); }
+.uses b { color: var(--text); font-weight: 700; }
+.uses .none { color: var(--faint); }
+.hl { background: rgba(255, 210, 122, .18); outline: 1px solid rgba(255, 210, 122, .45); }
+.empty { padding: 40px 0; text-align: center; color: var(--muted); }
+@media (max-width: 520px) { .grid { grid-template-columns: 1fr; } header.top h1 { font-size: 21px; } .stamp { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>GLYPH CODEX<small>글리프 · 스크립트 도감 — 우주대장간 코덱스 기판용</small></h1>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+
+  <div class="bar">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-s" aria-selected="true" data-tab="s">스크립트<span class="n" id="n-s"></span></button>
+      <button class="tab" role="tab" id="tab-g" aria-selected="false" data-tab="g">글리프<span class="n" id="n-g"></span></button>
+    </div>
+    <div class="filters">
+      <div class="fg" id="f-on"><span>장비</span></div>
+      <div class="fg" id="f-sock"><span>소켓</span></div>
+      <div class="fg" id="f-band"><span>희귀도</span></div>
+      <div class="search"><input id="q" type="search" placeholder="이름 · 글리프 · 옵션 검색 (예: 감마, 대시, 방어력)" aria-label="검색"><button class="reset" id="reset" type="button">초기화</button></div>
+    </div>
+  </div>
+
+  <p class="count" id="count"></p>
+  <div class="grid" id="list"></div>
+</div>
+
+<script>
+const DATA = {"glyphs": [{"ch": "Ν", "name": "뉴", "band": 0, "opt": "무기 데미지 +2%", "short": "데미지 +2%", "key": "dmg"}, {"ch": "Μ", "name": "뮤", "band": 0, "opt": "무기 쿨타임 -2%", "short": "무기쿨 -2%", "key": "cd"}, {"ch": "Ξ", "name": "크시", "band": 0, "opt": "치명타 확률 +2%", "short": "치명확률 +2%", "key": "critC"}, {"ch": "Τ", "name": "타우", "band": 0, "opt": "치명타 피해 +3%", "short": "치명피해 +3%", "key": "critD"}, {"ch": "Σ", "name": "시그마", "band": 0, "opt": "오더 공격력 +2%", "short": "오더공격 +2%", "key": "dmgW"}, {"ch": "Γ", "name": "감마", "band": 0, "opt": "엔트로피 공격력 +2%", "short": "엔트공격 +2%", "key": "dmgR"}, {"ch": "Ε", "name": "엡실론", "band": 0, "opt": "최대 체력 +2%", "short": "최대체력 +2%", "key": "hpPct"}, {"ch": "Ο", "name": "오미크론", "band": 1, "opt": "슈퍼노바 충전 속도 +3%", "short": "충전속도 +3%", "key": "chargeSpd"}, {"ch": "Η", "name": "에타", "band": 0, "opt": "방어력 +2%", "short": "방어력 +2%", "key": "armor"}, {"ch": "Ϝ", "name": "디감마", "band": 0, "opt": "전체 피해 감소 -1%", "short": "피해감소 -1%", "key": "dr"}, {"ch": "Φ", "name": "피", "band": 1, "opt": "이동속도 +2%", "short": "이동속도 +2%", "key": "speed"}, {"ch": "Υ", "name": "입실론", "band": 2, "opt": "대시 쿨다운 -3%", "short": "대시쿨 -3%", "key": "dashCd"}, {"ch": "Ρ", "name": "로", "band": 2, "opt": "대시 거리 +3%", "short": "대시거리 +3%", "key": "dashDist"}, {"ch": "Ψ", "name": "프시", "band": 2, "opt": "흡수 범위 +3%", "short": "흡수범위 +3%", "key": "magnet"}, {"ch": "Ω", "name": "오메가", "band": 0, "opt": "경험치 +3%", "short": "경험치 +3%", "key": "xp"}, {"ch": "Λ", "name": "람다", "band": 0, "opt": "사토시 획득 +3%", "short": "사토시 +3%", "key": "sats"}, {"ch": "Κ", "name": "카파", "band": 0, "opt": "처치 시 글리프 드랍률 +3%", "short": "글리프 +3%", "key": "glyphDrop"}, {"ch": "Π", "name": "파이", "band": 0, "opt": "피격 무효 확률 +1%", "short": "무효확률 +1%", "key": "dodge"}, {"ch": "Δ", "name": "델타", "band": 1, "opt": "싱크 해방 데미지 +3%", "short": "해방피해 +3%", "key": "parryDmg"}, {"ch": "Α", "name": "알파", "band": 1, "opt": "상성 배율 +2%", "short": "상성배율 +2%", "key": "weak"}, {"ch": "Β", "name": "베타", "band": 2, "opt": "서지 대시 피해 +3%", "short": "대시피해 +3%", "key": "dashDmg"}, {"ch": "Ι", "name": "이오타", "band": 2, "opt": "엔트로피 명중 시 감전(둔화) 확률 +3%", "short": "감전확률 +3%", "key": "shock"}, {"ch": "Ζ", "name": "제타", "band": 0, "opt": "첫 타격 시 고정 피해 +2", "short": "첫타격 +2", "key": "firstHit"}, {"ch": "Χ", "name": "카이", "band": 0, "opt": "싱크 흡수 판정 범위 +3%", "short": "싱크범위 +3%", "key": "parryR"}, {"ch": "α", "name": "알파(소)", "band": 0, "opt": "최대 체력 +3", "short": "최대체력 +3", "key": "hp"}, {"ch": "β", "name": "베타(소)", "band": 0, "opt": "캐스케이드 분열 데미지 +3%", "short": "분열피해 +3%", "key": "boltDmg"}, {"ch": "γ", "name": "감마(소)", "band": 0, "opt": "센티널 요격 범위 +3%", "short": "요격범위 +3%", "key": "sentinelR"}, {"ch": "Θ", "name": "세타", "band": 1, "opt": "슈퍼노바 최대 충전 데미지 +3%", "short": "풀차지 +3%", "key": "chargeMax"}, {"ch": "δ", "name": "델타(소)", "band": 1, "opt": "슈퍼노바 에너지탄 크기 +3%", "short": "탄크기 +3%", "key": "novaSize"}, {"ch": "ω", "name": "오메가(소)", "band": 1, "opt": "처치 시 소규모 폭발 피해 +3", "short": "처치폭발 +3", "key": "killBlast"}, {"ch": "σ", "name": "시그마(소)", "band": 1, "opt": "처치마다 공격력 +0.3% (최대 10중첩 · 6초)", "short": "처치버프 +0.3%", "key": "stack"}, {"ch": "φ", "name": "피(소)", "band": 1, "opt": "서지 대시 쿨다운 -3%", "short": "서지쿨 +3%", "key": "surgeCd"}, {"ch": "Ϛ", "name": "스티그마", "band": 2, "opt": "캐스케이드 분열 단계 +1", "short": "분열단계 +1", "key": "boltJumps"}, {"ch": "Ϙ", "name": "코파", "band": 2, "opt": "서지 전이 타격 수 +1", "short": "전이타격 +1", "key": "surgeJumps"}, {"ch": "Ϡ", "name": "삼피", "band": 2, "opt": "디퓨전 줄기당 타격 적 수 +1", "short": "줄기타격 +1", "key": "diffJumps"}, {"ch": "Ϻ", "name": "산", "band": 2, "opt": "센티널 요격 속도 +3%", "short": "요격속도 +3%", "key": "sentinelRate"}], "scripts": [{"id": "wallet", "name": "월렛", "on": "armor", "seq": ["δ", "Μ", "ω", "φ", "σ", "Ν"], "lines": ["최대 체력 +40%", "사망 시 1회 부활"], "special": [false, true], "pend": []}, {"id": "keystore", "name": "키스토어", "on": "armor", "seq": ["Κ", "Τ"], "lines": ["방어력 +14%", "전체 피해 감소 -4%", "흡수 범위 +10%", "체력 회복 2 / 초"], "special": [false, false, false, false], "pend": []}, {"id": "mempool", "name": "멤풀", "on": "armor", "seq": ["Μ", "Π", "Η"], "lines": ["방어력 +12%", "이동속도 +6%", "최대 체력 +20", "체력 회복 2 / 초", "센티널 쿨타임 -50%"], "special": [false, false, false, false, true], "pend": []}, {"id": "ledger", "name": "레저", "on": "armor", "seq": ["Λ", "Γ", "Θ"], "lines": ["방어력 +20%", "전체 피해 감소 -5%", "경험치 +15%", "센티널 +1", "센티널 요격 +2회/초"], "special": [false, false, false, true, false], "pend": []}, {"id": "escrow", "name": "에스크로", "on": "armor", "seq": ["Ε", "Ξ", "Α", "Π"], "lines": ["무기 쿨타임 -10%", "최대 체력 +10%", "체력 회복 3 / 초"], "special": [false, false, false], "pend": []}, {"id": "custody", "name": "커스터디", "on": "armor", "seq": ["Σ", "Τ", "Δ", "Η"], "lines": ["방어력 +10%", "최대 체력 +20", "치명타 확률 +10%", "치명타 피해 +20%", "라티스 +1"], "special": [false, false, false, false, true], "pend": []}, {"id": "immutable", "name": "임뮤터블", "on": "armor", "seq": ["Ι", "Υ", "Τ", "Β", "Η"], "lines": ["방어력 +50%", "최대 체력 +30", "전체 피해 감소 -6%"], "special": [false, false, false], "pend": []}, {"id": "checkpoint", "name": "체크포인트", "on": "armor", "seq": ["Ξ", "Ι", "Η", "Ρ", "Π"], "lines": ["사망 시 1회 부활", "방어력 +25%", "최대 체력 +20"], "special": [true, false, false], "pend": []}, {"id": "genesis", "name": "제네시스", "on": "engine", "seq": ["Γ", "Σ"], "lines": ["라티스 레이저 +5", "오더 공격력 +10%", "경험치 +10%"], "special": [true, false, false], "pend": []}, {"id": "halving", "name": "반감기", "on": "engine", "seq": ["Η", "Ϝ"], "lines": ["무기 데미지 +6%", "무기 쿨타임 -8%", "사토시 획득 +10%"], "special": [false, false, false], "pend": ["채굴기 효율 +10%"]}, {"id": "mnemonic", "name": "니모닉", "on": "engine", "seq": ["δ", "σ", "φ", "ω"], "lines": ["싱크 +1", "모든 엔트로피 무기 제거"], "special": [true, true], "pend": []}, {"id": "fullnode", "name": "풀노드", "on": "engine", "seq": ["Φ", "Ν", "Ξ"], "lines": ["치명타 확률 +7%", "치명타 피해 +20%", "샷노이즈x2 +1"], "special": [false, false, true], "pend": []}, {"id": "consensus", "name": "컨센서스", "on": "engine", "seq": ["Ξ", "Ν", "Υ"], "lines": ["오더 공격력 +20%", "엔트로피 공격력 +20%", "상성 배율 +10%"], "special": [false, false, false], "pend": []}, {"id": "multisig", "name": "멀티시그", "on": "engine", "seq": ["Μ", "Τ", "Σ", "Θ"], "lines": ["오더 공격력 +25%", "엔트로피 공격력 +25%", "치명타 확률 +5%", "치명타 피해 +10%", "무기 쿨타임 -10%"], "special": [false, false, false, false, false], "pend": []}, {"id": "transaction", "name": "트랜잭션", "on": "engine", "seq": ["Τ", "Σ", "Ο", "Β"], "lines": ["무기 데미지 +20%", "무기 쿨타임 -10%", "처치 시 소규모 폭발 피해 +10"], "special": [false, false, false], "pend": ["거래 수수료 할인 -15%"]}, {"id": "sovereignty", "name": "소버런티", "on": "engine", "seq": ["Ϝ", "Ρ", "Γ", "Ψ"], "lines": ["무기 데미지 +30%", "오더 공격력 +20%", "엔트로피 공격력 +20%", "치명타 피해 +30%"], "special": [false, false, false, false], "pend": ["거래 수수료 할인 -30%"]}, {"id": "relay", "name": "릴레이", "on": "thruster", "seq": ["Ε", "Λ"], "lines": ["이동속도 +10%", "대시 쿨다운 -10%", "경험치 +10%"], "special": [false, false, false], "pend": []}, {"id": "channel", "name": "채널", "on": "thruster", "seq": ["Ξ", "Ν"], "lines": ["대시 거리 +12%", "이동속도 +8%", "서지 +1"], "special": [false, false, true], "pend": []}, {"id": "coinbase", "name": "코인베이스", "on": "thruster", "seq": ["Ξ", "Β"], "lines": ["사토시 획득 +30%", "이동속도 +8%", "대시 쿨다운 -8%"], "special": [false, false, false], "pend": []}, {"id": "routing", "name": "라우팅", "on": "thruster", "seq": ["Μ", "Τ", "Λ"], "lines": ["대시 쿨다운 -40%", "대시 거리 +50%"], "special": [false, false], "pend": []}, {"id": "oracle", "name": "오라클", "on": "thruster", "seq": ["Ο", "Α", "Ξ"], "lines": ["대시 거리 +100%", "이동속도 +50%", "최대 체력 +20", "캐스케이드 +1"], "special": [false, false, false, true], "pend": []}, {"id": "overflow", "name": "오버플로우", "on": "thruster", "seq": ["Ρ", "Φ", "Λ", "Σ"], "lines": ["이동속도 +15%", "대시 거리 +20%", "피격 무효 확률 +5%"], "special": [false, false, false], "pend": []}, {"id": "finality", "name": "파이널리티", "on": "thruster", "seq": ["Φ", "Ν", "Ι", "Τ"], "lines": ["이동속도 +40%", "대시 거리 +10%", "대시 쿨다운 -10%"], "special": [false, false, false], "pend": []}], "bands": [{"name": "저랩", "range": "Lv 1~20", "lv": 1, "col": 0, "cn": "하양"}, {"name": "중랩", "range": "Lv 21~40", "lv": 21, "col": 2, "cn": "노랑"}, {"name": "고랩", "range": "Lv 41~99", "lv": 41, "col": 3, "cn": "주황"}], "onLabel": {"armor": "체인메일", "engine": "엔진", "thruster": "타키온"}, "socketCap": {"armor": 6, "engine": 4, "thruster": 4}, "order": "ΑΒΓΔΕϜΗΙΚΛΜΝΞΟΠΡΣΤΥΦΨΩΖΘΧϚϘϠϺαβγδσφω"};
+const ON = { armor: '체인메일', engine: '엔진', thruster: '타키온' };
+const BAND_NAME = ['하양', '노랑', '주황'];
+const G = {}; DATA.glyphs.forEach((g, i) => { G[g.ch] = g; });
+const ORDER = [...DATA.order].filter((c) => G[c]);
+// 스크립트 희귀도 = 들어가는 글리프 중 가장 높은 구간 (그 레벨이 돼야 다 모을 수 있다)
+DATA.scripts.forEach((s) => { s.band = Math.max(...s.seq.map((c) => G[c].band)); s.sock = s.seq.length; });
+// 글리프 → 쓰이는 스크립트
+ORDER.forEach((c) => { G[c].uses = []; });
+DATA.scripts.forEach((s) => s.seq.forEach((c, k) => G[c].uses.push({ s, pos: k + 1 })));
+
+const st = { tab: 's', on: 'all', sock: 'all', band: 'all', q: '' };
+try { const m = /^#(s|g)$/.exec(location.hash); if (m) st.tab = m[1]; } catch (e) {}
+
+document.getElementById('stamp').textContent = `스크립트 ${DATA.scripts.length}종 · 글리프 ${ORDER.length}종 · 게임 코드 기준 2026-09-26`;
+document.getElementById('n-s').textContent = DATA.scripts.length;
+document.getElementById('n-g').textContent = ORDER.length;
+
+function chips(id, key, opts) {
+  const el = document.getElementById(id);
+  opts.forEach(([v, label, cls]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (cls ? ' ' + cls : ''); b.textContent = label; b.dataset.v = v;
+    b.onclick = () => { st[key] = v; render(); };
+    el.appendChild(b);
+  });
+}
+chips('f-on', 'on', [['all', '전체'], ['armor', '체인메일'], ['engine', '엔진'], ['thruster', '타키온']]);
+chips('f-sock', 'sock', [['all', '전체'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']]);
+chips('f-band', 'band', [['all', '전체'], ['0', '하양', 'b0'], ['1', '노랑', 'b1'], ['2', '주황', 'b2']]);
+
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const norm = (t) => String(t).toLowerCase().replace(/\s+/g, '');
+const gword = (c, hl) => `<button type="button" class="gw c${G[c].band}${hl ? ' hl' : ''}" data-g="${esc(G[c].name)}" title="${esc(G[c].opt)} · ${BAND_NAME[G[c].band]}">${esc(G[c].name)}<span class="gs">${c}</span></button>`;
+const qHitsGlyph = (c, q) => q && (norm(G[c].name).includes(q) || norm(G[c].name.replace(/\(소\)/, '')) === q);
+
+function scriptCard(s, q) {
+  return `<article class="card">
+    <h3>${esc(s.name)}</h3>
+    <div class="meta"><span class="tag ${s.on}">${ON[s.on]}</span><span class="tag sock">소켓 ${s.sock}</span><span class="tag b${s.band}">${BAND_NAME[s.band]} 글리프 필요</span></div>
+    <div class="seq" aria-label="끼우는 순서">${s.seq.map((c) => gword(c, qHitsGlyph(c, q))).join('<span class="ar">→</span>')}</div>
+    <ul class="fx">${s.lines.map((l, k) => `<li${s.special && s.special[k] ? ' class="sp"' : ''}>${esc(l)}</li>`).join('')}${s.pend.map((l) => `<li class="pend">${esc(l)}</li>`).join('')}</ul>
+  </article>`;
+}
+function glyphCard(c) {
+  const g = G[c], uses = g.uses.filter((u) => (st.on === 'all' || u.s.on === st.on) && (st.sock === 'all' || String(u.s.sock) === st.sock));
+  return `<article class="card gcard">
+    <h3><span class="c${g.band}">${esc(g.name)}</span><span class="sym c${g.band}">${c}</span></h3>
+    <div class="meta"><span class="tag b${g.band}">${BAND_NAME[g.band]} · ${DATA.bands[g.band].range}</span></div>
+    <div class="gopt">${esc(g.opt)}</div>
+    <div class="uses">${uses.length ? '쓰이는 스크립트 — ' + uses.map((u) => `<b>${esc(u.s.name)}</b>(${ON[u.s.on]} ${u.pos}번째)`).join(', ') : '<span class="none">이 조건에 맞는 스크립트에는 쓰이지 않음 — 옵션만 붙음</span>'}</div>
+  </article>`;
+}
+
+function render() {
+  document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === st.tab)));
+  [['f-on', 'on'], ['f-sock', 'sock'], ['f-band', 'band']].forEach(([id, key]) => document.querySelectorAll(`#${id} .chip`).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === st[key]))));
+  document.getElementById('f-sock').querySelectorAll('.chip').forEach((b) => { b.hidden = st.on !== 'armor' && b.dataset.v === '5'; });   // 엔진·타키온은 4소켓까지
+  if (st.on !== 'armor' && st.sock === '5') st.sock = 'all';
+  const q = norm(st.q), list = document.getElementById('list');
+  let html = '', n = 0;
+  if (st.tab === 's') {
+    DATA.scripts.forEach((s) => {
+      if (st.on !== 'all' && s.on !== st.on) return;
+      if (st.sock !== 'all' && String(s.sock) !== st.sock) return;
+      if (st.band !== 'all' && String(s.band) !== st.band) return;
+      if (q && !norm([s.name, ON[s.on], ...s.seq.map((c) => G[c].name), ...s.lines, ...s.pend].join(' ')).includes(q)) return;
+      html += scriptCard(s, q); n++;
+    });
+    document.getElementById('count').textContent = `스크립트 ${n}종 표시 · 희귀도 = 들어가는 글리프 중 가장 높은 색`;
+  } else {
+    ORDER.forEach((c) => {
+      const g = G[c];
+      if (st.band !== 'all' && String(g.band) !== st.band) return;
+      if ((st.on !== 'all' || st.sock !== 'all') && !g.uses.some((u) => (st.on === 'all' || u.s.on === st.on) && (st.sock === 'all' || String(u.s.sock) === st.sock))) return;
+      if (q && !norm([g.name, c, g.opt, ...g.uses.map((u) => u.s.name)].join(' ')).includes(q)) return;
+      html += glyphCard(c); n++;
+    });
+    document.getElementById('count').textContent = `글리프 ${n}종 표시` + (st.on !== 'all' || st.sock !== 'all' ? ' · 장비/소켓 필터 = 그 조건의 스크립트에 들어가는 글리프' : '');
+  }
+  list.innerHTML = html || '<p class="empty">조건에 맞는 항목이 없습니다. 필터를 바꾸거나 초기화하세요.</p>';
+  try { history.replaceState(null, '', '#' + st.tab); } catch (e) {}
+}
+document.querySelectorAll('.tab').forEach((t) => { t.onclick = () => { st.tab = t.dataset.tab; render(); }; });
+document.getElementById('q').addEventListener('input', (e) => { st.q = e.target.value; render(); });
+document.getElementById('reset').onclick = () => { Object.assign(st, { on: 'all', sock: 'all', band: 'all', q: '' }); document.getElementById('q').value = ''; render(); };
+// 글리프 단어를 누르면 그 글리프가 들어가는 스크립트만
+document.getElementById('list').addEventListener('click', (e) => {
+  const b = e.target.closest('.gw'); if (!b) return;
+  st.tab = 's'; st.q = b.dataset.g; document.getElementById('q').value = st.q; render();
+});
+render();
+</script>
