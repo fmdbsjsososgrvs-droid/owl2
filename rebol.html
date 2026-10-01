@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLOCK ZERO 진화표</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Noto+Sans+KR:wght@400;700;800&display=swap">
+<style>
+  :root { --bg: #03050b; --panel: #0a1228; --line: #22375f; --text: #e6eeff; --muted: #93a7cc; --gold: #ffd27a; --btc: #f7931a; --w: #e0a04a; --p: #6f9fe6; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; padding: 28px 16px 40px; }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font: 800 26px Orbitron, 'Noto Sans KR', sans-serif; letter-spacing: .06em; color: var(--btc); }
+  .sub { margin: 0 0 22px; color: var(--muted); }
+  .list { display: grid; gap: 10px; }
+  .row { display: grid; grid-template-columns: 1fr auto 1fr auto 1.3fr; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
+  .it { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .it img { width: 40px; height: 40px; border-radius: 8px; flex: none; }
+  .it b { font-weight: 800; } .it small { display: block; font-size: 11px; font-weight: 700; }
+  .w small { color: var(--w); } .p small { color: var(--p); }
+  .op { color: var(--muted); font-weight: 800; font-size: 18px; }
+  .evo { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--gold); background: rgba(255, 210, 122, .08); }
+  .evo b { color: var(--gold); }
+  .paths { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+  .wp { padding: 12px 14px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--fc); }
+  .wp.order { --fc: #3a9bff; } .wp.entropy { --fc: #ff8a2a; }
+  .wp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; } .wp-head img { width: 40px; height: 40px; border-radius: 8px; }
+  .wp-head b { font-size: 16px; } .wp-head small { display: block; font-size: 11px; font-weight: 800; color: var(--fc); }
+  .step { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 6px 0; border-top: 1px dashed #22375f; font-size: 13px; color: #cfe0ff; }
+  .step img { width: 22px; height: 22px; border-radius: 4px; } .step .to { color: var(--gold); font-weight: 800; } .step .ar { color: var(--muted); }
+  .step .tag { font-size: 10.5px; font-weight: 800; padding: 1px 7px; border-radius: 99px; background: #2a1e08; color: var(--gold); border: 1px solid #6a4a14; }
+  .step .none { color: var(--muted); } .evo.merge b { display: flex; align-items: center; gap: 6px; } .evo.merge b img { width: 22px; height: 22px; border-radius: 4px; } .evo span { display: block; font-size: 13px; color: #cfe0ff; }
+  .shared { margin-left: 4px; font-size: 11px; padding: 1px 6px; border-radius: 99px; background: #1c3a6e; color: #bcd6ff; white-space: nowrap; }
+  h2 { margin: 28px 0 10px; font-size: 17px; }
+  ol { margin: 0; padding-left: 22px; } li { margin: 4px 0; } li b { color: var(--gold); }
+  .tip { margin-top: 14px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: #cfe0ff; font-size: 14px; }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr auto 1fr; }
+    .row .arrow { display: none; }
+    .evo { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>진화표</h1>
+  <p class="sub">BLOCK ZERO v2 · 무기 + 짝 패시브 → 진화</p>
+  <div class="list" id="list"></div>
+
+  <h2>진화하는 방법</h2>
+  <ol>
+    <li>무기를 <b>Lv7 (MAX)</b> 까지 올린다.</li>
+    <li>짝 패시브를 <b>1레벨 이상</b> 가지고 있는다.</li>
+    <li>그 상태로 <b>레벨업</b>하면 카드 3장 중에 <b>★ 진화 카드</b>가 반드시 뜬다 — 고르면 진화.</li>
+  </ol>
+  <div class="tip">조건이 맞은 무기가 여럿이면 진화 카드도 여러 장 뜬다. 진화 카드는 밴할 수 없다.<br>
+    보스를 잡으면 나오는 <b style="color:var(--gold)">레벨업 코어</b>를 주우면 레벨이 3 오른다 — 진화 조건을 채우는 지름길.<br>
+    진화한 무기는 레벨업 카드로 <b style="color:var(--gold)">★2 · ★3</b> 까지 더 강화된다 (단계마다 피해 +35% · 쿨타임 -10%).</div>
+  <h2>합체 진화 <small style="font-size:12px;color:var(--muted);font-weight:400">두 무기가 합쳐져 한 칸</small></h2>
+  <div class="list" id="merges"></div>
+  <div class="tip">두 무기를 조건대로 갖춘 채 레벨업하면 합체 진화 카드가 뜬다. 고르면 두 번째 무기 칸이 비어 다른 무기를 넣을 수 있다.<br>라티스 샷 x8 · 비트코인 네트워크는 재료 진화 무기가 <b style="color:var(--gold)">★3</b> 이어야 합칠 수 있고, 합친 무기는 재료 ★3 위력으로 시작해 레벨업 카드로 한 번 더(★2) 강화된다. 싱크 · 슈퍼노바 MAX 도 재료 진화 무기(멤풀 폭풍 · 앱솔루트 제로)가 ★3 이어야 하고, 합친 뒤 ★ 단계는 없음.</div>
+  <h2>무기별 진화 경로 <small style="font-size:12px;color:var(--muted);font-weight:400">무기 10종 — 무엇으로 진화 · 합체할 수 있나 (게임 데이터에서 바로 읽음)</small></h2>
+  <div class="paths" id="paths"></div>
+  <h2>기체</h2>
+  <div class="tip">
+    <b>모든 기체가 모든 무기 · 모든 진화 · 합체 진화를 쓸 수 있다</b> (2026-09-30). 기체마다 다른 것은 옵션뿐.<br>
+    <b>발키리</b> — 모든 무기 쿨타임 -5% (사토시 +30% 는 정식판 구매 보상 제타 글리프로)<br>
+    <b>와이번</b> — 엔트로피 공격력 +25% · 오더 공격력 -25%<br>
+    <b>스칼렛</b> — 와이번의 진화형 · 액티브 스킬(무기) 칸 +1<br>
+    <b>세라프</b> — 오더 공격력 +25% · 엔트로피 공격력 -25%<br>
+    <b>헤일로</b> — 세라프의 진화형 · 쿨타임 -15% · 최대 체력 -15%<br>
+    <b>발키리 오메가</b> — 발키리의 진화형 · 패시브 멀티시그 + 라이트닝 기본 장착<br>
+    <b>곰들렌</b> — 액티브 스킬 칸 +1 (추후 제작)<br>
+    멀티시그는 오더 무기에만, 라이트닝은 엔트로피 무기에만 효과가 있다. 진화 무기는 모든 기체가 ★3 까지 강화된다.</div>
+</main>
+<script src="js/data.js"></script>
+<script>
+// 게임과 같은 아이콘 (js/ui.js iconURL 에서 가져옴)
+function icon(kind) {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
+  x.lineCap = 'round'; x.lineJoin = 'round';
+  const glow = (col) => { x.shadowColor = col; x.shadowBlur = 8; x.strokeStyle = col; x.fillStyle = col; };
+  x.fillStyle = '#0c1630'; x.fillRect(0, 0, 64, 64);
+  switch (kind) {
+    case 'vector': glow('#8fe8ff'); x.lineWidth = 6; x.beginPath(); x.moveTo(10, 54); x.lineTo(54, 10); x.stroke(); x.lineWidth = 2; x.strokeStyle = '#fff'; x.stroke(); break;
+    case 'hash': glow('#ffd27a'); x.font = '900 40px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('#', 32, 34); break;
+    case 'block': glow('#8fffbc'); x.lineWidth = 4; x.strokeRect(14, 14, 36, 36); x.beginPath(); x.moveTo(32, 20); x.lineTo(32, 32); x.lineTo(42, 38); x.stroke(); break;
+    case 'multi': glow('#c9a8ff'); x.lineWidth = 4; [[20, 22], [44, 22], [32, 44]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 9, 0, 7); x.stroke(); }); break;
+    case 'area': glow('#5fd4ff'); x.lineWidth = 3; [10, 18, 26].forEach((r) => { x.beginPath(); x.arc(32, 32, r, 0, 7); x.stroke(); }); break;
+    case 'cold': glow('#9fd8ff'); x.lineWidth = 4; x.beginPath(); x.moveTo(32, 8); x.lineTo(52, 18); x.lineTo(48, 44); x.lineTo(32, 56); x.lineTo(16, 44); x.lineTo(12, 18); x.closePath(); x.stroke(); break;
+    case 'node': glow('#5dff9c'); x.lineWidth = 4; x.beginPath(); x.arc(32, 32, 8, 0, 7); x.fill(); [[12, 14], [52, 14], [12, 50], [52, 50]].forEach(([a, b]) => { x.beginPath(); x.moveTo(32, 32); x.lineTo(a, b); x.stroke(); x.beginPath(); x.arc(a, b, 4, 0, 7); x.fill(); }); break;
+    case 'lattice': glow('#8fe8ff'); x.lineWidth = 3; [-0.5, -0.17, 0.17, 0.5].forEach((o) => { x.beginPath(); x.moveTo(12, 52); x.quadraticCurveTo(30 + o * 40, 28, 52 + o * 10, 10 + Math.abs(o) * 20); x.stroke(); }); break;
+    case 'sentinel': {   // 2026-09-29 사용자: 슈퍼노바와 안 헷갈리게 — 붉은 궤도 호 + 바깥을 향한 삼각 드론 3기 + 작은 방패 모양 중심
+      glow('#ff3a2a'); x.lineWidth = 3; x.strokeStyle = '#ff5a3a';
+      for (let i = 0; i < 3; i++) { const a0 = i * Math.PI * 2 / 3 + 0.5; x.beginPath(); x.arc(32, 32, 21, a0, a0 + 1.3); x.stroke(); }
+      x.fillStyle = '#ffb08a';
+      for (let i = 0; i < 3; i++) { const a = i * Math.PI * 2 / 3 - Math.PI / 2, cx = 32 + Math.cos(a) * 21, cy = 32 + Math.sin(a) * 21; x.save(); x.translate(cx, cy); x.rotate(a + Math.PI / 2); x.beginPath(); x.moveTo(0, -8); x.lineTo(6, 6); x.lineTo(0, 3); x.lineTo(-6, 6); x.closePath(); x.fill(); x.restore(); }
+      x.fillStyle = '#ff3a2a'; x.beginPath(); x.moveTo(32, 24); x.lineTo(39, 28); x.lineTo(37, 37); x.lineTo(32, 41); x.lineTo(27, 37); x.lineTo(25, 28); x.closePath(); x.fill();
+      break;
+    }
+    case 'nova': { const g = x.createRadialGradient(32, 32, 0, 32, 32, 26); g.addColorStop(0, '#fff'); g.addColorStop(0.4, '#9fc4ff'); g.addColorStop(1, 'rgba(47,140,255,0)'); x.fillStyle = g; x.beginPath(); x.arc(32, 32, 26, 0, 7); x.fill(); break; }
+    case 'cascade': glow('#ff9a5a'); x.lineWidth = 4; x.beginPath(); x.moveTo(8, 12); x.lineTo(24, 30); x.lineTo(18, 34); x.lineTo(40, 50); x.lineTo(34, 36); x.lineTo(56, 44); x.stroke(); break;
+    case 'diffusion': glow('#ff5a8a'); x.lineWidth = 3; [0, 1.3, 2.6, 3.9, 5.2].forEach((a) => { x.beginPath(); x.moveTo(32, 32); x.lineTo(32 + Math.cos(a) * 14 + 4, 32 + Math.sin(a) * 14); x.lineTo(32 + Math.cos(a) * 26, 32 + Math.sin(a) * 26); x.stroke(); }); break;
+    case 'lshot': glow('#5fb4ff'); x.lineWidth = 4; [16, 28, 40, 52].forEach((y, i) => { x.beginPath(); x.moveTo(8, y + 4); x.quadraticCurveTo(30, y - 10 + i * 2, 56, y - 8); x.stroke(); }); x.fillStyle = '#e0f4ff'; x.beginPath(); x.arc(56, 12, 4, 0, 7); x.fill(); break;   // 라티스 샷 x8: 휘어 쫓는 파란 탄
+    case 'btcnet': glow('#ffd27a'); x.lineWidth = 7; x.beginPath(); x.moveTo(8, 56); x.lineTo(50, 14); x.stroke(); x.strokeStyle = '#ff7a1a'; x.shadowColor = '#ff7a1a'; x.lineWidth = 3; [[30, 34, 44, 50, 38, 58], [30, 34, 14, 26, 8, 36], [44, 20, 56, 30, 58, 44]].forEach((q) => { x.beginPath(); x.moveTo(q[0], q[1]); x.lineTo(q[2], q[3]); x.lineTo(q[4], q[5]); x.stroke(); }); x.fillStyle = '#f7931a'; x.font = '900 18px sans-serif'; x.textAlign = 'center'; x.fillText('₿', 50, 22); break;   // 비트코인 네트워크
+    case 'shotnoise4': {   // 2026-10-01 사용자: 샷 노이즈 x4 (진화) 아이콘을 샷 노이즈와 다르게 — 금빛 포신 4문 + 줄지어 날아가는 탄
+      glow('#ffb04a'); x.fillStyle = '#ffd27a'; [14, 26, 38, 50].forEach((y) => { x.beginPath(); x.roundRect ? x.roundRect(6, y - 4, 16, 8, 3) : x.rect(6, y - 4, 16, 8); x.fill(); });
+      x.fillStyle = '#ff9a2a'; [14, 26, 38, 50].forEach((y, i) => { for (let k = 0; k < 4; k++) { x.beginPath(); x.ellipse(29 + k * 9 + (i % 2) * 4, y, 3.4, 2.2, 0, 0, 7); x.fill(); } });
+      break;
+    }
+    case 'shotnoise': glow('#ffb04a'); x.lineWidth = 4; [18, 30, 42].forEach((y) => { x.beginPath(); x.moveTo(10, y + 6); x.lineTo(54, y - 6); x.stroke(); }); break;
+    case 'zero': glow('#9fe4ff'); x.lineWidth = 3; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; x.beginPath(); x.moveTo(32, 32); x.lineTo(32 + Math.cos(a) * 24, 32 + Math.sin(a) * 24); x.stroke(); } x.beginPath(); x.arc(32, 32, 6, 0, 7); x.fill(); break;
+    case 'sync': glow('#ff5a3c'); x.lineWidth = 4; for (let i = 0; i < 6; i++) { const a0 = i * Math.PI / 3; x.beginPath(); x.arc(32, 32, 22, a0, a0 + 0.72); x.stroke(); } x.strokeStyle = '#ffd27a'; x.shadowColor = '#ffd27a'; x.lineWidth = 3; x.beginPath(); x.arc(32, 32, 12, -Math.PI / 2, Math.PI * 1.1); x.stroke(); break;
+    case 'bomb': { const g = x.createRadialGradient(28, 28, 2, 32, 34, 20); g.addColorStop(0, '#e8f4ff'); g.addColorStop(0.4, '#6aa8ff'); g.addColorStop(1, '#1f4fd0'); x.shadowColor = '#4f8bff'; x.shadowBlur = 10; x.fillStyle = g; x.beginPath(); x.arc(32, 34, 18, 0, 7); x.fill(); x.strokeStyle = '#cfe6ff'; x.lineWidth = 3; x.beginPath(); x.moveTo(32, 44); x.lineTo(32, 34); x.lineTo(25, 26); x.moveTo(32, 34); x.lineTo(39, 26); x.stroke(); x.fillStyle = '#9fd0ff'; [[14, 14], [50, 12], [52, 50], [12, 50]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 3, 0, 7); x.fill(); }); break; }
+    case 'mine': glow('#ff8a1a'); x.fillStyle = '#ff7a10'; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; x.beginPath(); x.moveTo(32 + Math.cos(a - 0.2) * 14, 32 + Math.sin(a - 0.2) * 14); x.lineTo(32 + Math.cos(a) * 26, 32 + Math.sin(a) * 26); x.lineTo(32 + Math.cos(a + 0.2) * 14, 32 + Math.sin(a + 0.2) * 14); x.fill(); } x.beginPath(); for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + Math.PI / 6; x.lineTo(32 + Math.cos(a) * 16, 32 + Math.sin(a) * 16); } x.closePath(); x.fill(); x.fillStyle = '#fff4d0'; x.beginPath(); x.arc(32, 32, 5, 0, 7); x.fill(); break;
+    case 'magnet': glow('#ff8a7a'); x.lineWidth = 8; x.beginPath(); x.arc(32, 30, 14, Math.PI, 0); x.stroke(); x.beginPath(); x.moveTo(18, 30); x.lineTo(18, 48); x.moveTo(46, 30); x.lineTo(46, 48); x.stroke(); break;
+    case 'lightning': glow('#ffe066'); x.beginPath(); x.moveTo(36, 6); x.lineTo(16, 36); x.lineTo(30, 36); x.lineTo(24, 58); x.lineTo(48, 26); x.lineTo(34, 26); x.closePath(); x.fill(); break;
+  }
+  return c.toDataURL();
+}
+// [무기, 무기 아이콘, 패시브, 패시브 아이콘, 진화 이름, 효과]
+const ROWS = [   // 2026-09-30 개편: 모든 기체가 모든 진화 · 합체 진화 4종. [구분, 무기, 무기 아이콘, 짝, 짝 아이콘, 진화, 효과, 진화 아이콘]
+  ['오더', '벡터', 'vector', '해시파워', 'hash', '제네시스 빔', '굵은 빛줄기 3개가 한 방향으로 나란히 · 관통 무제한'],
+  ['오더', '라티스', 'lattice', '멀티시그', 'multi', '라티스 스톰', '사방으로 퍼지는 유도 레이저 14줄기'],
+  ['오더', '앱솔루트', 'zero', '콜드월렛', 'cold', '앱솔루트 제로', '얼음 화살을 흩뿌리는 눈꽃 구체 · 끝에서 소용돌이 폭발 · 강한 냉각'],
+  ['오더', '소프트 포크', 'bomb', '블록 타임', 'block', '하드 포크', '폭탄 크기 · 폭발 범위 2배, 파편 10개'],
+  ['엔트로피', '캐스케이드', 'cascade', '라이트닝', 'lightning', '라이트닝 네트워크', '굵은 주황 번개 · 연쇄 30회'],
+  ['엔트로피', '디퓨전', 'diffusion', '멤풀', 'area', '멤풀 폭풍', '넓은 범위의 적 14기에 번개 · 3번 전이'],
+  ['엔트로피', '샷 노이즈', 'shotnoise', '풀노드', 'node', '샷 노이즈 x4', '기관포 4문 — 탄이 두 배 (관통 없음)'],
+  ['엔트로피', '더스트', 'mine', 'UTXO 자석', 'magnet', '더스팅 어택', '지뢰 20개를 화면 전체에 넓게 퍼트림']
+];
+// 합체 진화: 두 무기가 합쳐져 한 칸 — [무기 A, 아이콘, A 조건, 무기 B, 아이콘, B 조건, 결과, 결과 아이콘, 효과]
+const MERGES = [
+  ['센티널', 'sentinel', 'Lv7 (MAX)', '멤풀 폭풍', 'diffusion', '진화 ★3', '싱크', 'sync', '자동 베리어 5초 동안 적 탄 흡수 → 번개로 해방'],
+  ['슈퍼노바', 'nova', 'Lv7 (MAX)', '앱솔루트 제로', 'zero', '진화 ★3', '슈퍼노바 MAX', 'nova', '풀 충전 초대형 에너지탄 · 무조건 관통 · 모든 적에게 3회 타격'],
+  ['샷 노이즈 x4', 'shotnoise4', '진화 ★3', '라티스 스톰', 'lattice', '진화 ★3', '라티스 샷 x8', 'lshot', '샷 노이즈가 파랗게 — 기관포 8문, 탄이 적을 쫓아간다 · ★3 위력으로 시작, 합친 뒤 ★2 까지'],
+  ['제네시스 빔', 'vector', '진화 ★3', '라이트닝 네트워크', 'cascade', '진화 ★3', '비트코인 네트워크', 'btcnet', '빔에 맞은 적(빔에 죽은 적 포함)에서 라이트닝 네트워크 번개가 뻗어 나간다 · ★3 위력으로 시작, 합친 뒤 ★2 까지']
+];
+document.getElementById('list').innerHTML = ROWS.map(([f, w, wi, p, pi, e, t]) => `
+  <div class="row">
+    <div class="it w"><img src="${icon(wi)}" alt=""><div><small>${f} · Lv7</small><b>${w}</b></div></div>
+    <span class="op">+</span>
+    <div class="it p"><img src="${icon(pi)}" alt=""><div><small>패시브</small><b>${p}</b></div></div>
+    <span class="op arrow">→</span>
+    <div class="evo"><b>★ ${e}</b><span>${t}</span></div>
+  </div>`).join('');
+document.getElementById('merges').innerHTML = MERGES.map(([a, ai, ac, b, bi, bc, r, ri, t]) => `
+  <div class="row">
+    <div class="it w"><img src="${icon(ai)}" alt=""><div><small>${ac}</small><b>${a}</b></div></div>
+    <span class="op">+</span>
+    <div class="it w"><img src="${icon(bi)}" alt=""><div><small>${bc}</small><b>${b}</b></div></div>
+    <span class="op arrow">→</span>
+    <div class="evo merge"><b><img src="${icon(ri)}" alt="">★ ${r}</b><span>${t}</span></div>
+  </div>`).join('');
+
+// 무기별 진화 경로 (2026-09-30 사용자): 일반 진화 · 특수 합체(싱크 · 슈퍼노바 MAX) · 합체 진화(MERGE_EVOS) — js/data.js 에서 바로 만든다
+(() => {
+  const pIcon = (id) => PASSIVES[id].icon, wName = (id) => WEAPONS[id].name, eName = (id) => EVOLUTIONS[id].name;
+  const im = (k) => `<img src="${icon(k)}" alt="">`, fac = (id) => WEAPONS[id].fac === 'order' ? '오더' : '엔트로피';
+  document.getElementById('paths').innerHTML = Object.keys(WEAPONS).map((id) => {
+    const W = WEAPONS[id], E = EVOLUTIONS[id], steps = [];
+    if (E && !E.special) steps.push(`${im(W.icon)} ${wName(id)} MAX <span class="ar">+</span> ${im(pIcon(E.with))} ${PASSIVES[E.with].name} <span class="ar">→</span> ${im(E.icon)} <span class="to">★ ${E.name}</span> <span class="tag">★3까지</span>`);
+    if (E && E.special) steps.push(`${im(W.icon)} ${wName(id)} MAX <span class="ar">+</span> ${im(EVOLUTIONS[E.merge].icon)} ${eName(E.merge)}${E.mergeTier > 1 ? ' ★' + E.mergeTier : ''} <span class="ar">→</span> ${im(E.icon)} <span class="to">★ ${E.name}</span> <span class="tag">합체</span>`);
+    Object.entries(EVOLUTIONS).filter(([, X]) => X.special && X.merge === id).forEach(([k, X]) =>   // 이 무기의 진화형이 다른 무기의 합체 재료
+      steps.push(`${im(E.icon)} ${E.name}${X.mergeTier > 1 ? ' ★' + X.mergeTier : ''} <span class="ar">+</span> ${im(WEAPONS[k].icon)} ${wName(k)} MAX <span class="ar">→</span> ${im(X.icon)} <span class="to">★ ${X.name}</span> <span class="tag">합체</span>`));
+    Object.values(MERGE_EVOS).filter((M) => M.base === id || M.need === id).forEach((M) => {
+      const a = M.baseEvo ? `${im(EVOLUTIONS[M.base].icon)} ${eName(M.base)} ★${M.needTier}` : `${im(WEAPONS[M.base].icon)} ${wName(M.base)} MAX`;
+      steps.push(`${a} <span class="ar">+</span> ${im(EVOLUTIONS[M.need].icon)} ${eName(M.need)} ★${M.needTier} <span class="ar">→</span> ${im(M.icon)} <span class="to">★ ${M.name}</span> <span class="tag">합체 · ★${M.maxTier}까지</span>`);
+    });
+    return `<div class="wp ${W.fac}"><div class="wp-head">${im(W.icon)}<div><small>${fac(id)} 무기</small><b>${W.name}</b></div></div>${steps.map((x) => `<div class="step">${x}</div>`).join('') || '<div class="step none">진화 없음</div>'}</div>`;
+  }).join('');
+})();
+</script>
+</body>
+</html>
