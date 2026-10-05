@@ -61,9 +61,12 @@ async function readJson(req) {
 async function hitRateLimit(ipHash, limit) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // 새 형식 비밀키(sb_secret_…)는 apikey 헤더로만, 예전 service_role JWT는 Bearer로도 보낸다
+  const headers = { apikey: key, "Content-Type": "application/json" };
+  if (!key.startsWith("sb_")) headers.Authorization = "Bearer " + key;
   const r = await fetch(url.replace(/\/$/, "") + "/rest/v1/rpc/contact_rate_hit", {
     method: "POST",
-    headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify({ p_key: ipHash, p_limit: limit }),
   });
   if (!r.ok) throw new Error("rate_store_" + r.status);
