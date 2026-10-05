@@ -1,0 +1,8 @@
+# 터미널(vercel CLI) 배포 때 올리지 않을 로컬 전용 파일
+.DS_Store
+**/.DS_Store
+.env*
+.claude
+업데이트 할것.txt
+비트코인블로그_초안
+img/a1
