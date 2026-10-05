@@ -281,6 +281,15 @@
       color: transparent;
       animation: labelShimmer 2.6s linear infinite;
     }
+    .hero-contact-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 18px; padding: 9px 22px;
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em;
+      color: #fff; background: var(--accent); border: 1px solid var(--accent);
+      border-radius: 999px; text-decoration: none;
+      transition: background .18s, color .18s;
+    }
+    .hero-contact-btn:hover { background: transparent; color: var(--accent); }
     @keyframes labelShimmer {
       0% { background-position: 200% 0; }
       100% { background-position: -50% 0; }
@@ -812,9 +821,9 @@ body > footer.unified-footer .uf-note{
     <span class="link-label" data-text="HomePage"></span> : <span class="link-value" data-text="https://owl2-three.vercel.app/"></span><br />
     <span class="link-label" data-text="HomePage 2"></span> : <span class="link-value" data-text="https://dejavu-zeta.vercel.app/"></span><br />
     <span class="link-label" data-text="community"></span> : <span class="link-value" data-text="https://bsosa.vercel.app/"></span><br />
-    <span class="link-label" data-text="LN"></span> : <span class="link-value" data-text="bitsexer@oksu.su"></span><br />
-    <span class="link-label" data-text="Discode"></span> : <span class="link-value" data-text="owl_butler_"></span>
+    <span class="link-label" data-text="LN"></span> : <span class="link-value" data-text="bitsexer@oksu.su"></span>
   </p>
+  <a class="hero-contact-btn" href="contact.html">✉ 연락하기</a>
 </section>
 
 
@@ -965,7 +974,6 @@ body > footer.unified-footer .uf-note{
 </script>
 <footer class="unified-footer">
   <span class="uf-email">⚡bitsexer@oksu.su</span>
-  <a class="uf-contact" href="contact.html" style="font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.15em;color:#c96c00;text-decoration:underline;text-underline-offset:3px;">✉ 연락하기</a>
   <span class="uf-note">NOT YOUR KEYS, NOT YOUR BITCOIN.</span>
 </footer>
 </body>
