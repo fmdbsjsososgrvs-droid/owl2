@@ -1,13 +1,18 @@
 // OWL BUTLER · 연락하기 (Vercel 서버리스 함수)
 // 방문자 메시지를 받아 디스코드 웹후크로 전달한다.
-// 웹후크 주소와 Supabase 비밀키는 환경변수에만 있고, 프런트엔드로는 절대 나가지 않는다.
+// 웹후크 주소는 환경변수에만 있고, 프런트엔드로는 절대 나가지 않는다.
 //
 // 필요한 환경변수 (Vercel > Project > Settings > Environment Variables, 또는 `vercel env add`)
 //   DISCORD_WEBHOOK_URL        디스코드 채널 웹후크 주소 (비밀)
-//   SUPABASE_URL               Supabase 프로젝트 주소
-//   SUPABASE_SERVICE_ROLE_KEY  Supabase service_role(secret) 키 (비밀) — 하루 횟수 제한 기록용
 //   CONTACT_IP_SALT            IP를 해시할 때 섞는 임의 문자열 (비밀, 길고 무작위로)
 //   CONTACT_DAILY_LIMIT        (선택) IP당 하루 최대 전송 수, 기본 3
+//   CONTACT_HOURLY_CAP         (선택) IP와 상관없이 서버 한 대가 1시간에 보내는 최대 수, 기본 20
+//
+// 횟수 기록은 기본적으로 서버 메모리에 한다. 서버가 재시작되거나 여러 대로 나뉘면 초기화되므로
+// 정확한 제한은 아니지만, 시간당 전체 상한과 허니팟이 대량 스팸을 막는다.
+// 아래 두 값을 넣으면 Supabase(supabase/contact.sql)에 기록해 IP당 하루 제한을 정확히 지킨다.
+//   SUPABASE_URL               (선택) Supabase 프로젝트 주소
+//   SUPABASE_SERVICE_ROLE_KEY  (선택) Supabase secret / service_role 키 (비밀)
 
 const crypto = require("crypto");
 
@@ -57,8 +62,31 @@ async function readJson(req) {
   return JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
 }
 
+// ---- 서버 메모리 기록 (서버 한 대 안에서만 유지됨) ----
+const memDaily = new Map(); // "날짜|IP해시" -> 횟수
+const memHourly = [];       // 최근 1시간 전송 시각들
+
+function seoulDay() {
+  return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+}
+
+function hitMemoryDaily(ipHash, limit) {
+  const day = seoulDay();
+  for (const k of memDaily.keys()) if (!k.startsWith(day + "|")) memDaily.delete(k);
+  const key = day + "|" + ipHash;
+  const n = (memDaily.get(key) || 0) + 1;
+  memDaily.set(key, n);
+  return n <= limit;
+}
+
+function underHourlyCap(cap) {
+  const cutoff = Date.now() - 3600 * 1000;
+  while (memHourly.length && memHourly[0] < cutoff) memHourly.shift();
+  return memHourly.length < cap;
+}
+
 // Supabase RPC로 (IP 해시, 날짜) 카운트를 원자적으로 올리고 허용 여부를 받는다
-async function hitRateLimit(ipHash, limit) {
+async function hitSupabaseDaily(ipHash, limit) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   // 새 형식 비밀키(sb_secret_…)는 apikey 헤더로만, 예전 service_role JWT는 Bearer로도 보낸다
@@ -85,7 +113,7 @@ module.exports = async function handler(req, res) {
   }
 
   const env = process.env;
-  if (!env.DISCORD_WEBHOOK_URL || !env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !env.CONTACT_IP_SALT) {
+  if (!env.DISCORD_WEBHOOK_URL || !env.CONTACT_IP_SALT) {
     console.error("contact: 환경변수가 설정되지 않았습니다.");
     return send(res, 503, { ok: false, error: "아직 연락하기 기능이 준비되지 않았습니다." });
   }
@@ -111,16 +139,28 @@ module.exports = async function handler(req, res) {
     return send(res, 400, { ok: false, error: "글자 수 제한을 넘었습니다." });
   }
 
+  const cap = Math.max(1, parseInt(env.CONTACT_HOURLY_CAP, 10) || 20);
+  if (!underHourlyCap(cap)) {
+    return send(res, 429, { ok: false, error: "지금은 메시지가 많이 몰려 있어요. 잠시 후 다시 시도해주세요." });
+  }
+
   const limit = Math.max(1, parseInt(env.CONTACT_DAILY_LIMIT, 10) || 3);
   const ipHash = crypto.createHmac("sha256", env.CONTACT_IP_SALT).update(clientIp(req)).digest("hex");
-  try {
-    if (!(await hitRateLimit(ipHash, limit))) {
-      return send(res, 429, { ok: false, error: `하루에 ${limit}통까지만 보낼 수 있습니다. 내일 다시 시도해주세요.` });
+  let allowed;
+  if (env.SUPABASE_URL && env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      allowed = await hitSupabaseDaily(ipHash, limit);
+    } catch (e) {
+      console.error("contact: Supabase 기록 실패, 메모리로 대신함", e.message);
+      allowed = hitMemoryDaily(ipHash, limit);
     }
-  } catch (e) {
-    console.error("contact: rate limit 저장소 오류", e.message);
-    return send(res, 503, { ok: false, error: "잠시 후 다시 시도해주세요." });
+  } else {
+    allowed = hitMemoryDaily(ipHash, limit);
   }
+  if (!allowed) {
+    return send(res, 429, { ok: false, error: `하루에 ${limit}통까지만 보낼 수 있습니다. 내일 다시 시도해주세요.` });
+  }
+  memHourly.push(Date.now());
 
   const fields = [{ name: "보낸 사람", value: defuse(name) || "(익명)", inline: true }];
   fields.push({ name: "답장 연락처", value: defuse(contact) || "(없음)", inline: true });
