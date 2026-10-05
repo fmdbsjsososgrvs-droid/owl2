@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다크나이트 트릴로지 | Hobby &amp; Travel | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="travel.html">← HOBBY 목록으로</a>
+
+  <div class="post-date">2026-10-05</div>
+  <h1 class="post-h1">다크나이트 트릴로지</h1>
+
+  <div class="post-body">
+    <p>M-DISC 를 굽는게 메인이었다.</p>
+
+    <p>보안 문서 저장에 아주 좋아. 이거 하려고 삼.</p>
+
+    <img src="img/darkknight1-web.jpg" alt="책상 위의 외장 블루레이 드라이브" />
+
+    <p>단종 될까봐 드라이브는 두개 구매.<br>블루레이가 사양산업이라 말이지.</p>
+
+    <p>역시 이것저것 신경쓰다보면 예상보다 돈이 더 깨진다.</p>
+
+    <p>혀튼 중요한 서류를 작성 전까지 맥북을 오프라인 상태로 두다가</p>
+
+    <p>다 굽고 난 이후에야 온라인에 연결하고, 아이폰과도 계정 동기화를 시켰다.</p>
+
+    <p>애플 조합이 좋긴 좋더라.</p>
+
+    <p>그리고 기왕 블루레이 산김에<br>아내를 위한 영화 블루레이 선물.</p>
+
+    <img src="img/darkknight2-web.jpg" alt="밴드 오브 브라더스와 더 퍼시픽 블루레이 옆면" />
+
+    <img src="img/darkknight3-web.jpg" alt="밴드 오브 브라더스, 더 퍼시픽 블루레이 앞면" />
+
+    <p>밴오브가 그렇게 명작이라더라.<br>아내가 너무 좋아해서 선물.<br>이미 10번이상 봤는데도 또 본다고. 대단함 ㄷㄷ</p>
+
+    <p>그리고</p>
+
+    <img src="img/darkknight4-web.jpg" alt="다크나이트 트릴로지 박스와 배트맨 비긴즈 디스크가 든 검은 케이스" />
+
+    <img src="img/darkknight5-web.jpg" alt="다크나이트 트릴로지 4K 박스와 배트맨 비긴즈, 다크나이트, 다크나이트 라이즈 케이스" />
+
+    <img src="img/darkknight6-web.jpg" alt="비닐 포장된 다크나이트 트릴로지 4K 박스" />
+
+    <p>나 역시 그간 내가 소장하고 싶었던 영화.<br>다크나이트 트릴로지를 샀다.</p>
+
+    <p>케이스 속까지 시커먼게 아주 내스타일.</p>
+
+    <p>바로 배트맨 비긴즈 부터 시청.</p>
+
+    <p>간단 소감.</p>
+
+    <blockquote>배트맨은 슈퍼히어로가 아니다. 능력 같은거 없다.<br><br>단지 내면의 공포를 극복해내고 복수심을 이겨낸 한 선한 인간일 뿐이다.</blockquote>
+
+    <p>다시 봐도 진국이네.</p>
+
+    <p>다음은 다크나이트. 패배로 끝나는 이야기.<br>기대된다앗</p>
+
+    <img src="img/darkknight7-web.jpg" alt="게임 케이스 옆에 꽂힌 블루레이 컬렉션 선반" />
+
+    <p>이제 컬렉션에 게임과 더불어 영화들도 쌓일 예정이다.</p>
+
+    <img src="img/darkknight8-web.jpg" alt="이동식 스탠드 TV와 아래 놓인 TV 스피커" />
+
+    <p>삼텐바이미 + 보스 티비 스피커 조합.</p>
+
+    <p>여기에 맥북을 물린 후, 리핑해둔 영화에 자막을 입혀 본다.</p>
+
+    <p>이 조합도 꽤나 마음에 든다.</p>
+
+    <p>끝!</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#다크나이트</span>
+    <span class="post-tag">#블루레이</span>
+    <span class="post-tag">#M-DISC</span>
+    <span class="post-tag">#영화</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>

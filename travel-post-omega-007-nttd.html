@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OMEGA 007 NTTD | Hobby &amp; Travel | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="travel.html">← HOBBY 목록으로</a>
+
+  <div class="post-date">2026-10-05</div>
+  <h1 class="post-h1">OMEGA 007 NTTD</h1>
+
+  <div class="post-body">
+    <p><strong>OMEGA SEAMASTER</strong><br>- NO TIME TO DIE EDITION -</p>
+
+    <p>내 마지막 시계질이자 종결템. 로망이었던 최후의 덕질.<br>오메가 씨마 007 노 타임 투 다이 에디션을 소개한다.</p>
+
+    <img src="img/omega1-web.jpg" alt="007 파우치 위에 놓인 오메가 씨마스터 노 타임 투 다이 에디션" />
+
+    <p>내 보물 3호</p>
+
+    <p>시계를 모르는 사람은</p>
+
+    <p>"응~ 그돈씨~"<br>"응~ 롤렉스 미만잡~"</p>
+
+    <p>이라고 하겠지만<br>덕후들 사이에선 인지도가 꽤 있다.</p>
+
+    <p>007 에서 등장했던 유명한 장면</p>
+
+    <img src="img/omega2-web.jpg" style="width:auto;max-width:100%;margin-left:auto;margin-right:auto;" alt="007 영화 속 '롤렉스인가요? 오메가요' 기차 장면" />
+
+    <p>물론 시계덕후들 사이에서나 유명하지.<br>일반인들은 그런거 모르더라.</p>
+
+    <img src="img/omega3-web.jpg" style="width:auto;max-width:100%;margin-left:auto;margin-right:auto;" alt="턱시도 차림으로 손목시계를 찬 다니엘 크레이그" />
+
+    <p>주연배우 다니엘 크레이그가 제작에 참여했기로도 유명하다.<br>근데 이 아저씬 롤렉스를 더 좋아함 ㅋㅋㅋ</p>
+
+    <p>007 영화를 좋아하기도 하고, 덕후기도 하고<br>마지막으로 시계를 산다면 이게 좋겠다 싶어서 질렀다.</p>
+
+    <p>이 로망시계를 구입하며 다시는 시계에 돈을 안쓰기로 마음먹었고,<br>이후 나 자신과 약속한대로 시계질은 끝. 더 이상 아무 시계도 안 사고 있다.</p>
+
+    <p>내 마지막 시계다.</p>
+
+    <p>블랙 + 초코 색상이라 보통 갈색, 검은색 계열 옷에 잘 어울린다.</p>
+
+    <img src="img/omega4-web.jpg" style="width:auto;max-width:100%;margin-left:auto;margin-right:auto;" alt="버버리 체크 소매와 함께 찬 오메가 시계" />
+
+    <p>버버리와 짤떡궁합?</p>
+
+    <img src="img/omega5-web.jpg" alt="정장 차림 손목 위의 오메가 시계" />
+
+    <p>그래도 시계는 정장에 가장 잘 어울리긴 함</p>
+
+    <p>이 글 쓰려고 간만에 오메가 홈페이지 들어가봤더니 가격이 또 올랐더라.<br>난 1400 일때 샀는데 지금은 1600 이여.<br>뭐, 환율 때문인듯.</p>
+
+    <img src="img/omega6-web.jpg" alt="오메가 홈페이지의 씨마스터 노 타임 투 다이 에디션 상품 화면" />
+
+    <p>덕질용 아이템 치곤 최상위 가격.<br>시계 치곤 중간 가격.</p>
+
+    <img src="img/omega7-web.jpg" alt="박스, 보증서, 파우치와 함께 놓인 오메가 시계 구성품" />
+
+    <p>그간 샀던 시계들처럼, 팔 생각은 없다.<br>이녀석은 나의 컬렉션으로 오직 내 손목 위에서만 있었던 녀석.<br>나와 시작과 끝을 함께 할 것이다.</p>
+
+    <p>끝<br>' ㅅ')/</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#오메가</span>
+    <span class="post-tag">#씨마스터</span>
+    <span class="post-tag">#007</span>
+    <span class="post-tag">#시계</span>
+    <span class="post-tag">#컬렉션</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
