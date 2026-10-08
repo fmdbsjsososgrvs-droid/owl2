@@ -119,6 +119,17 @@ body {
   border-radius: 999px;
   padding: 4px 12px;
 }
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32.png">
@@ -143,6 +154,10 @@ body {
 
   <div class="post-date">2026-09-15</div>
   <h1 class="post-h1">bitcoin X hunter hunter</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/k0vDAIa49lA?rel=0" title="비트코인 X 헌터헌터 · 제약과 서약" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 
   <div class="post-body">
     <p>요즘 헌터x헌터를 다시 정주행하다가 문득 든 생각인데, 넨의 '제약과 서약' 규칙, 이거 완전 비트코인 아닌가.</p>
