@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한방에? 나눠서? | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-08</div>
+  <h1 class="post-h1">한방에? 나눠서?</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/wzV_PCcGHNI?rel=0" title="한 번에 살까, 나눠 살까" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>목돈이 생기면 누구나 같은 질문을 한다. 한 번에 넣을까, 나눠서 넣을까. 이 질문에는 정답이 있을 것 같지만, 자료를 따라가 보면 수학이 답할 수 있는 부분은 생각보다 좁다. 나머지는 확신의 문제다.</p>
+
+    <h2>1. 먼저 용어부터</h2>
+
+    <p>한 번에 사는 것을 일시 매수(lump sum)라 하고, 나눠 사는 것을 분할 매수라 한다. 그런데 분할 매수는 두 가지가 섞여 쓰인다. 월급에서 매달 일정액을 사는 정기 적립과, 이미 가진 목돈을 몇 달에 걸쳐 나눠 넣는 방식이다. 월급은 한 번에 들어오지 않으니 앞의 것은 선택지가 아니라 자연스러운 흐름이다. 이 글이 다루는 것은 뒤의 경우다. 이미 손에 목돈이 있을 때 한꺼번에 넣을지 나눠 넣을지의 문제다.</p>
+
+    <p>뱅가드 보고서도 이 구분을 분명히 한다. 정기 적립은 월급에서 일정액을 꾸준히 넣는 것이고, 보고서가 비교하는 것은 지금 당장 쓸 수 있는 <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf" target="_blank" rel="noopener">목돈의 투입 방식</a>이다.</p>
+
+    <h2>2. 통계는 일시 매수 쪽이 우세하다</h2>
+
+    <p>뱅가드가 2023년 낸 보고서는 1976~2022년의 세계 주식 지수(MSCI World) 자료로 둘을 비교했다. 목돈을 한 번에 넣은 경우와 석 달에 걸쳐 나눠 넣은 경우를 1년 뒤 자산으로 비교하니 일시 매수가 <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf" target="_blank" rel="noopener">약 68%의 기간에 앞섰다</a>. 뱅가드는 여러 시장과 시뮬레이션을 합쳐 대체로 3분의 2 정도라고 요약한다.</p>
+
+    <p>이해를 돕기 위해 숫자로 바꿔 보자. 900만 원이 있고 이를 석 달에 걸쳐 300만 원씩 넣는다고 하자. 첫 달에는 300만 원만 시장에 있고, 둘째 달에는 600만 원, 셋째 달부터 900만 원이 전부 들어간다. 가격이 계속 오르는 시장이라면 첫 달 이후 들어간 돈은 더 비싼 값에 사게 되고, 그 사이 시장 밖에 있던 돈은 상승분을 얻지 못한다. 일시 매수가 이기는 경우가 많은 이유다.</p>
+
+    <p>이유는 단순하다. 나눠 넣는 동안 아직 투입되지 않은 돈은 현금으로 남는다. 주식과 채권이 현금보다 오래 앞서 왔다면 현금으로 있던 기간은 그만큼 기회비용이다. 보고서에 따르면 1976~2022년에 미국 주식은 현금성 자산보다 76%의 기간에 앞섰다. 투입 기간이 길수록 이 비용은 커진다.</p>
+
+    <p>다만 격차의 크기도 봐야 한다. 같은 보고서에서 100% 주식 포트폴리오의 1년 뒤 중간값은 일시 매수가 나눠 넣는 방식보다 약 2.2% 높았고, 주식 60%에 채권 40%를 섞은 포트폴리오의 평균 결과는 약 1.8% 높았다. 이 정도 차이가 앞으로 쌓일 결과 전체를 뒤집지는 않는다. 학계에서도 일시 투입이 낫다는 관점은 오래됐다. 1979년 콘스탄티니데스는 <a href="https://www.cambridge.org/core/journals/journal-of-financial-and-quantitative-analysis/article/note-on-the-suboptimality-of-dollarcost-averaging-as-an-investment-policy/0C483B96429655B24F34FB628CF9CEEB" target="_blank" rel="noopener">분할 투입이 위험을 줄인다는 통념을 반박</a>하는 논문을 썼다.</p>
+
+    <h2>3. 비트코인에 그대로 적용할 수 있을까</h2>
+
+    <p>여기서 조심해야 한다. 위의 자료는 주식과 채권 시장의 것이다. 비트코인은 변동 폭이 훨씬 크고 역사도 짧다. 2017년 12월 1만 9,870달러였던 가격은 1년 뒤 <a href="https://fortune.com/crypto/2018/12/17/bitcoin-all-time-high-anniversary" target="_blank" rel="noopener">3,391달러로 83% 내렸다</a>. 이런 시장에서는 일시 매수 직후의 하락이 훨씬 아프다. 반대로 상승 구간에서는 나눠 넣는 동안 가격이 도망가는 비용도 더 크다. 비트코인에 대한 일시 대 분할의 비교 분석은 몇몇 보고서가 있지만 업계가 내놓은 것이어서 이 글에서는 근거로 쓰지 않는다.</p>
+
+    <p>국제결제은행(BIS)의 조사는 다른 시사점을 준다. 2015~2022년 주요 거래 앱 이용자 다수가 <a href="https://www.bis.org/publ/bisbull69.htm" target="_blank" rel="noopener">비트코인에서 손실을 봤다</a>. 이 보고서를 전한 <a href="https://decrypt.co/121763/bitcoin-after-2015-lost-money-bis-report" target="_blank" rel="noopener">보도</a>에 따르면 거래량 대부분은 가격이 3만 달러를 넘은 구간에서 나왔다. 많은 사람이 방식보다 시점, 곧 열기가 오른 때 들어갔다는 이야기다. 일시냐 분할이냐보다 어떤 상태의 마음으로 시장에 들어가느냐가 결과를 가른 사례로 읽힌다. 이 부분은 내 해석이다.</p>
+
+    <h2>4. 정리</h2>
+
+    <p>일시냐 분할이냐는 우위가 작은 문제다. 나눠 넣는다면 기간과 횟수를 미리 정해 두고 중간에 가격을 보고 바꾸지 않는 편이 낫다고 본다. BIS 자료가 보여 준 것도 방식보다 열기가 오른 때 들어간 마음이었다. 그러니 매수법을 고르기 전에 내가 무엇을 얼마나 이해하고 있는지부터 점검해야 한다.</p>
+
+    <p>그 이해의 바탕은 이 돈이 어떤 규칙으로 움직이는지를 아는 것이다. 비트코인은 발행 규칙이 공개돼 있고 총량이 2,100만 개로 정해져 있다(<a href="https://en.wikipedia.org/wiki/Bitcoin" target="_blank" rel="noopener">위키백과</a>). 가격이 크게 내려도 계획을 지킬 수 있는 확신은 가격표가 아니라 이 규칙을 이해한 데서 나온다고 본다.</p>
+
+    <p>비트코인이 답이다.</p>
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf" target="_blank" rel="noopener">Vanguard — Cost averaging: Invest now or temporarily hold your cash?</a> (Vanguard, 2023)</li>
+      <li><a href="https://www.cambridge.org/core/journals/journal-of-financial-and-quantitative-analysis/article/note-on-the-suboptimality-of-dollarcost-averaging-as-an-investment-policy/0C483B96429655B24F34FB628CF9CEEB" target="_blank" rel="noopener">Cambridge Core — A Note on the Suboptimality of Dollar-Cost Averaging as an Investment Policy</a> (Constantinides, JFQA, 1979)</li>
+      <li><a href="https://fortune.com/crypto/2018/12/17/bitcoin-all-time-high-anniversary" target="_blank" rel="noopener">Fortune — Bitcoin Is in the Doldrums After Hitting an All-Time High a Year Ago</a> (Fortune, 2018)</li>
+      <li><a href="https://www.bis.org/publ/bisbull69.htm" target="_blank" rel="noopener">BIS — Crypto shocks and retail losses</a> (국제결제은행 Bulletin 69, 2023)</li>
+      <li><a href="https://decrypt.co/121763/bitcoin-after-2015-lost-money-bis-report" target="_blank" rel="noopener">Decrypt — Bitcoin after 2015 lost money, BIS report</a> (Decrypt, 2023)</li>
+      <li><a href="https://en.wikipedia.org/wiki/Bitcoin" target="_blank" rel="noopener">위키백과 — Bitcoin</a> (Wikipedia, 2026 열람)</li>
+    </ul>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#분할매수</span>
+    <span class="post-tag">#일시매수</span>
+    <span class="post-tag">#확신</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
