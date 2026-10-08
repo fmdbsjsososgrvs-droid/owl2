@@ -120,6 +120,17 @@ body {
   border-radius: 999px;
   padding: 4px 12px;
 }
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32.png">
@@ -144,6 +155,10 @@ body {
 
   <div class="post-date">2026-09-11</div>
   <h1 class="post-h1">물리적 보안키 - YUBIKEY (final)</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/65pZeI0cqvs?rel=0" title="손안의 열쇠 하나 · 유비키 활용법" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 
   <div class="post-body">
     <p>나는 내 개인적 기밀정보를 세 가지로 분류한다.</p>
