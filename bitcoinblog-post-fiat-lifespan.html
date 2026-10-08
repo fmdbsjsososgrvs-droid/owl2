@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마음대로 찍는 돈의 수명 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-09</div>
+  <h1 class="post-h1">마음대로 찍는 돈의 수명</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/djtLgEsgVrA?rel=0" title="마음대로 찍는 돈의 수명" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>내 통장의 돈은 10년 뒤, 100년 뒤에도 가치가 있을까. 역사에서 답을 찾아보면 낙관하기 어렵다.</p>
+
+    <h2>1. 법정화폐란 무엇인가</h2>
+
+    <p>법정화폐(fiat money)는 금이나 은 같은 귀금속이 뒷받침하지 않는 정부 발행 화폐다. 정부가 법으로 통용을 정해서 쓰이고, 가치는 쓰는 사람들이 그 가치를 받아들인다는 합의에 기대고 있다. 지폐를 가장 먼저 쓴 곳은 중국 송나라다. 현재의 전 세계적인 법정화폐 체제는 1971년 닉슨 대통령이 달러와 금의 교환을 끊은 뒤 자리 잡았다(<a href="https://en.wikipedia.org/wiki/Fiat_money" target="_blank" rel="noopener">위키백과</a>).</p>
+
+    <p>문제는 발행의 규율이다. 금이나 은으로 바꿔 준다는 약속이 있으면 발행량에 제한이 생긴다. 그 약속이 없거나 약해지면 발행자의 판단이 유일한 제동이 된다. 역사에는 그 제동이 풀린 사례가 여럿 있다.</p>
+
+    <h2>2. 로마: 은화에서 은이 빠지다</h2>
+
+    <p>로마의 은화 데나리우스는 아우구스투스 때(기원전 27년~기원후 14년) 순도 97.5~98% 정도였다. 기원후 64년 네로가 순도를 94.5%로 낮추면서 본격적인 하락이 시작됐다. 193~235년에는 여러 황제가 78.5%에서 50%까지 계속 낮췄고, 200년경에는 60% 밑으로, 300년경에는 5% 수준까지 내려갔다(<a href="https://en.wikipedia.org/wiki/Denarius" target="_blank" rel="noopener">위키백과, 데나리우스</a>). 은 함량을 줄이면 같은 은으로 더 많은 동전을 찍을 수 있다. 눈에 띄지 않는 방식으로 주화의 가치를 희석하는 것이다.</p>
+
+    <p>물가가 오르자 디오클레티아누스 황제는 301년 최고가격령을 내려 물건과 임금의 상한을 정했다. 위반하는 이익 추구자와 투기꾼에게는 사형을 규정했다. 그러나 집행은 들쑥날쑥했고 인플레이션을 잡는 데는 거의 성공하지 못했다. 305년 황제가 물러날 무렵에는 사실상 무시됐다. 안정은 몇십 년 뒤 콘스탄티누스의 주화 개혁(310년대)에서야 왔다(<a href="https://en.wikipedia.org/wiki/Edict_on_Maximum_Prices" target="_blank" rel="noopener">위키백과, 최고가격령</a>).</p>
+
+    <h2>3. 송나라: 종이 어음이 쓸모없어지다</h2>
+
+    <p>교자(交子)는 11세기 쓰촨 청두의 상인들이 무거운 철전을 대신해 만든 어음에서 출발했다. 상인들이 파산하자 송나라 정부가 1023년 관청을 세웠고, 1024년 표준화한 정부 지폐를 발행했다. 문제는 준비금이었다. 발행한 지폐에 비해 뒷받침하는 철전이 턱없이 부족했다. 1204년에는 액면 1,000문 지폐가 100~400문 정도로 받아들여졌다. 지방 정부는 세금 면제증과 금, 은, 직함까지 팔아 재정을 메워야 했다. 1256년에는 남은 교자와 철전을 회자(會子)라는 새 지폐로 바꾸는 개혁이 이뤄졌다(<a href="https://en.wikipedia.org/wiki/Jiaozi_(currency)" target="_blank" rel="noopener">위키백과, 교자</a>).</p>
+
+    <p>유럽에서도 비슷한 일이 있었다. 스웨덴은 1661년 정기적인 지폐 발행을 시작했지만 가치가 빠르게 떨어져 1776년에는 은본위로 돌아갔다(<a href="https://en.wikipedia.org/wiki/Fiat_money" target="_blank" rel="noopener">위키백과, 법정화폐</a>). 종이 돈은 발명 초기부터 과잉 발행의 문제와 함께 다녔다.</p>
+
+    <h2>4. 독일: 인쇄기가 만든 4조 배</h2>
+
+    <p>제1차 세계대전 뒤 독일 바이마르 공화국은 전쟁 부채와 배상금 부담을 안고 있었다. 1918년 국가 부채가 이미 1,560억 마르크였고, 1921년 5월 런던 일정표로 정해진 배상금이 500억 마르크였다. 1921년 8월부터 중앙은행 총재는 마르크를 내고 외화를 사들이는 전략을 썼다. 1923년 1월 프랑스와 벨기에가 루르 지방을 점령하자 정부는 파업하는 노동자들의 임금을 지폐를 찍어 지급했다. 마르크 가치는 1922년 중반 달러당 320마르크에서 같은 해 12월 7,400마르크, 1923년 11월에는 4조 2천억 마르크가 됐다. 빵 한 덩어리가 1922년 말 약 160마르크에서 1923년 말 2,000억 마르크가 됐다. 1923년 11월 16일 부동산 담보 채권으로 뒷받침한 렌텐마르크가 나오면서 진정됐다(<a href="https://en.wikipedia.org/wiki/Hyperinflation_in_the_Weimar_Republic" target="_blank" rel="noopener">위키백과, 바이마르 하이퍼인플레이션</a>).</p>
+
+    <p>경제학에서는 물가가 월 50% 넘게 오르는 상황을 하이퍼인플레이션이라 부른다. 바이마르 독일은 1922년 8월부터 1923년 12월까지 이 상태였고, 정점의 월간 물가 상승률은 약 29,525%였다. 1945~46년 헝가리는 최고액권이 100경 펜괴였고, 1992~94년 유고슬라비아에서는 물가가 2.3일마다 두 배가 됐다. 2000년대 짐바브웨도 대표적인 사례다. 이런 상황은 통화 개혁이나 달러화(외국의 안정된 통화를 대신 쓰는 것), 지출 삭감, 통화위원회 제도 같은 극단적 조치로 끝나는 경우가 많았다(<a href="https://en.wikipedia.org/wiki/Hyperinflation" target="_blank" rel="noopener">위키백과, 하이퍼인플레이션</a>).</p>
+
+    <p>이 사례들에는 공통점이 있다. 로마는 3세기 위기를 겪는 중이었고, 송나라 정부는 철전이 모자라는데도 지폐를 늘리다 세금 면제증까지 팔아 재정을 메웠고, 독일은 전쟁 부채와 배상금, 점령 비용을 한꺼번에 떠안았다. 모두 정부가 큰 재정 압박을 받던 시기였고, 그 압박을 돈의 양이나 품질로 풀려고 했다. 신뢰가 한 번 흔들린 뒤에는 속도가 급격히 빨라졌다는 점도 같다. 이 설명은 위 사례들을 내가 묶어 본 해석이다.</p>
+
+    <h2>5. 달러는 아직 서 있다, 그러나</h2>
+
+    <p>오늘의 달러는 위 사례들처럼 무너지지 않았다. 그렇다고 가치가 그대로인 것도 아니다. 미국 소비자물가지수는 1913년 1월 9.8에서 2026년 8월 335.0으로 올랐다. 34배다. 1913년의 달러 가치를 100으로 두면 지금 달러는 약 3 수준이다(<a href="https://fred.stlouisfed.org/series/CPIAUCNS" target="_blank" rel="noopener">FRED, 소비자물가지수</a>). 무너지지는 않았지만 100여 년 동안 구매력의 97%를 잃었다는 뜻이다.</p>
+
+    <p>이 값을 연평균으로 환산하면 3% 남짓이다. 급격한 붕괴가 아니라 천천히 데워지는 냄비에 가깝다. 사람들이 알아채기 어려운 것은 오히려 이런 느린 변화다.</p>
+
+    <h2>6. 정리</h2>
+
+    <p>로마는 은화에서 은을 빼냈고, 송나라는 준비금보다 많은 지폐를 찍었고, 독일은 인쇄기로 임금을 지급했다. 전부 발행하는 쪽의 재량이 유일한 제동이었고, 그 제동이 풀리자 돈의 값이 흔들렸다. 달러는 무너지지 않았지만 100여 년 동안 구매력의 97%를 잃었다. 붕괴든 완만한 희석이든, 저축한 사람이 값을 치른다는 점은 같다.</p>
+
+    <p>그렇다면 필요한 것은 발행자의 재량이 없는 돈이다. 비트코인은 발행 규칙이 공개돼 있고 총량이 2,100만 개로 정해져 있다. 한 기관의 결정으로 공급을 늘릴 수 없는 돈이다. 은 함량을 몰래 줄이거나 인쇄기를 돌리는 일이 규칙 안에는 없다.</p>
+
+    <p>내 결론은 이렇다. 비트코인이 답이다.</p>
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/Fiat_money" target="_blank" rel="noopener">위키백과 — Fiat money</a> (Wikipedia, 2026 열람) — 법정화폐의 정의, 중국에서 시작된 지폐, 1971년 이후 전 세계 체제, 스웨덴 지폐 사례</li>
+      <li><a href="https://en.wikipedia.org/wiki/Denarius" target="_blank" rel="noopener">위키백과 — Denarius</a> (Wikipedia, 2026 열람) — 아우구스투스 때 97.5~98%, 네로 94.5%, 200년경 60% 미만, 300년경 5%</li>
+      <li><a href="https://en.wikipedia.org/wiki/Edict_on_Maximum_Prices" target="_blank" rel="noopener">위키백과 — Edict on Maximum Prices</a> (Wikipedia, 2026 열람) — 301년 최고가격령, 사형 규정, 실효 부족, 콘스탄티누스 개혁</li>
+      <li><a href="https://en.wikipedia.org/wiki/Jiaozi_(currency)" target="_blank" rel="noopener">위키백과 — Jiaozi (currency)</a> (Wikipedia, 2026 열람) — 11세기 청두 상인 어음, 1023~1024년 정부 발행, 준비금 부족, 1204년 가치 하락, 1256년 회자 교체</li>
+      <li><a href="https://en.wikipedia.org/wiki/Hyperinflation_in_the_Weimar_Republic" target="_blank" rel="noopener">위키백과 — Hyperinflation in the Weimar Republic</a> (Wikipedia, 2026 열람) — 환율 추이, 루르 점령, 렌텐마르크</li>
+      <li><a href="https://en.wikipedia.org/wiki/Hyperinflation" target="_blank" rel="noopener">위키백과 — Hyperinflation</a> (Wikipedia, 2026 열람) — 월 50% 정의, 헝가리·유고슬라비아·짐바브웨 사례</li>
+      <li><a href="https://fred.stlouisfed.org/series/CPIAUCNS" target="_blank" rel="noopener">FRED — Consumer Price Index for All Urban Consumers (CPIAUCNS)</a> (미 노동통계국 자료, 세인트루이스 연은, 2026) — 1913년 1월 9.8, 2026년 8월 334.98</li>
+    </ul>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#화폐의역사</span>
+    <span class="post-tag">#법정화폐</span>
+    <span class="post-tag">#인플레이션</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
