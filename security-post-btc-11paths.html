@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비트코인이 사라지는 11가지 경로 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-10-12</div>
+  <h1 class="post-h1">비트코인이 사라지는 11가지 경로</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/FAx_XV9fBQ4?rel=0" title="비트코인이 사라지는 11가지 경로" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>비트코인을 가장 많이 잃게 만드는 범인은 누구일까. 대개 해커를 떠올린다. 『비트코인의 길』 17장의 저자는 다르게 본다. 저자가 흔한 순서대로 꼽은 손실 경로 열한 개 가운데 1위는 키를 잃어버리는 나 자신이다. 이 순서는 저자의 경험에서 나온 정리이고 통계가 아니다. 그래서 이 글은 순서를 그대로 믿기보다, 경로를 지도처럼 펼치고 확인할 수 있는 숫자를 옆에 붙여 본다.</p>
+
+    <h2>1. 벽 하나가 아니라 성 하나</h2>
+
+    <p>저자는 방어를 성으로 그린다. 바깥 벽, 좁은 입구, 망루, 안뜰, 가장 귀한 것을 둔 안쪽 방. 층 하나하나는 공격자에게 시간과 수고를 더 들게 하고, 지키는 쪽에는 대응할 틈을 준다. 저자의 표현을 빌리면 자기 은행이 된다는 것은 자기 경비원이 된다는 뜻이다. 경비를 남에게 맡겨도 그 경비원을 감독할 책임은 내게 남는다.</p>
+
+    <p>저자가 꼽은 열한 경로는 이렇다.</p>
+
+    <ol>
+      <li>개인키 분실</li>
+      <li>상속 계획 없는 사망</li>
+      <li>사기·사회공학</li>
+      <li>악성코드</li>
+      <li>잘못된 주소·클립보드 조작</li>
+      <li>거래소의 해킹·파산·규제</li>
+      <li>랜섬(강탈)</li>
+      <li>국가 몰수</li>
+      <li>물리적 강압</li>
+      <li>믿었던 사람의 절도</li>
+      <li>지나치게 복잡한 설정</li>
+    </ol>
+
+    <p>나는 이것을 네 무리로 묶어 읽는다. 내가 나를 잠그는 길, 남이 나를 움직이는 길, 맡긴 곳이 무너지는 길, 사람의 손이 닿는 길이다.</p>
+
+    <h2>2. 내가 나를 잠그는 길: ①·②·⑪</h2>
+
+    <p>첫째 무리는 공격자가 없다. 키를 적은 종이를 잃거나, 비밀번호를 잊거나, 백업 없이 기기가 고장 난다. 저자는 이것을 영구 손실의 가장 큰 단일 원인으로 본다. 얼마나 사라졌는지는 추정만 있다. 체이널리시스는 2020년 5년 넘게 움직이지 않은 코인을 약 370만 개로 봤다.</p>
+
+    <p>둘째는 주인이 떠나면서 키도 함께 떠나는 경우다. 비트코인에는 사망 신고를 받아 줄 창구가 없다. 셋째는 의외로 지나친 대비다. 도둑을 막으려고 키를 여러 조각으로 나누고 조건을 겹겹이 걸다 보면, 정작 복구에 필요한 정보 하나를 잊어 스스로 잠긴다. 저자는 대부분의 사람에게 멀티시그(여러 키의 서명이 있어야 움직이는 방식)는 불필요한 실패 지점을 더한다고 주장한다. 이는 저자의 의견이고, 쓰는 사람의 이해도와 보유 규모에 따라 판단이 갈린다.</p>
+
+    <h2>3. 남이 나를 움직이는 길: ③·④·⑤·⑦</h2>
+
+    <p>둘째 무리의 공격자는 키를 직접 깨지 않는다. 내가 스스로 보내게 만든다. 저자는 사기와 사회공학을 규모로 가장 큰 도난 경로로 꼽는데, 공식 집계도 같은 방향을 가리킨다. 미국 FBI 인터넷범죄신고센터(IC3)의 <a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf" target="_blank" rel="noopener">2025년 보고서</a>에서 암호화폐가 얽힌 신고는 18만 1,565건, 신고 피해액은 약 113억 7천만 달러였다. 그중 투자 사기만 약 72억 달러였다. 체이널리시스는 2025년 사기 피해를 약 <a href="https://www.chainalysis.com/blog/crypto-scams-2026/" target="_blank" rel="noopener">170억 달러</a>로 추정했고, 사칭 사기는 1년 새 1,400% 넘게 늘었다고 봤다. 같은 해 해킹으로 <a href="https://www.chainalysis.com/blog/crypto-hacking-stolen-funds-2026/" target="_blank" rel="noopener">도난당한 금액</a>은 약 34억 달러였다. 기준이 다른 추정이라 단순 비교는 조심해야 하지만, 속여서 받아 내는 쪽이 뚫고 들어오는 쪽보다 훨씬 크다.</p>
+
+    <p>수법은 낯익다. 연애 상대인 척, 유명인이나 수사기관·세무당국·지갑 회사 직원인 척, 지금 안 하면 큰일 난다는 재촉. 저자의 원칙은 단순하다. 누가 전화하든 끊는다. 모든 비트코인 활동은 내가 먼저 시작한다. 계획에 없던 일은 하지 않는다.</p>
+
+    <p>악성코드와 주소 바꿔치기는 같은 원리를 기계가 대신한다. 복사해 둔 받는 주소를 붙여 넣는 순간 공격자의 주소로 바뀌어 있거나, 가짜 지갑 앱이 키를 빼 간다. 비트코인 송금은 되돌릴 수 없으니 보내기 전에 확인하는 습관이 대응의 방향이다.</p>
+
+    <p>랜섬은 키 대신 다른 소중한 것을 볼모로 잡는다. 파일을 잠그거나 사생활을 폭로하겠다며 비트코인을 요구한다. 체이널리시스는 2025년 랜섬웨어로 체인 위에서 <a href="https://www.chainalysis.com/blog/crypto-ransomware-2026/" target="_blank" rel="noopener">오간 돈</a>을 약 8억 2천만 달러로 집계했다. 저자가 말하는 방향은 남이 나를 흔들 수 있는 지렛대를 줄이는 것이다.</p>
+
+    <h2>4. 맡긴 곳이 무너지는 길: ⑥·⑧</h2>
+
+    <p>셋째 무리는 키가 내 손에 없을 때 생긴다. 마운트곡스는 2014년 2월 파산을 신청하며 약 <a href="https://www.cnbc.com/2014/03/20/mtgox-says-it-found-200000-bitcoins-in-forgotten-wallet.html" target="_blank" rel="noopener">85만 BTC를 잃었다</a>고 밝혔다. 2022년 11월 무너진 FTX에서는 법원이 고객 손실을 <a href="https://www.opb.org/article/2024/03/28/sam-bankman-fried-sentenced-to-25-years-in-prison-for-his-ftx-crimes/" target="_blank" rel="noopener">80억 달러</a>로 봤고, 창업자는 2024년 3월 28일 징역 25년을 선고받았다.</p>
+
+    <p>캐나다 쿼드리가CX는 2018년 12월 CEO가 숨진 뒤 '키를 혼자 쥔 사람이 죽어 돈이 묶였다'는 이야기로 알려졌다. 그런데 온타리오 증권위원회는 2020년 6월 <a href="https://betakit.com/osc-finds-quadriga-ceo-ran-ponzi-scheme-leading-up-to-crypto-exchanges-downfall/" target="_blank" rel="noopener">조사 보고서</a>에서 고객 약 7만 6천 명의 손실 최소 1억 6,900만 캐나다달러 대부분이 CEO의 사기 거래에서 나왔다고 결론 냈다. 키 분실처럼 보인 일이 사실은 맡긴 곳의 배신이었다. 거래소에 둔 잔고는 내 코인이 아니라 거래소에 대한 청구권이다.</p>
+
+    <p>국가 몰수도 같은 줄기다. 1933년 미국 행정명령 6102 때 은행에 맡긴 금은 기록대로 넘어갔지만 개인이 쥔 금은 단속이 고르지 않았다고 저자는 쓴다. 미국인의 금 보유는 1974년 12월 31일 <a href="https://www.archives.gov/federal-register/codification/executive-order/11825.html" target="_blank" rel="noopener">다시 허용</a>됐다.</p>
+
+    <h2>5. 사람의 손이 닿는 길: ⑨·⑩</h2>
+
+    <p>넷째 무리는 가장 원시적이다. 2009년 2월 웹툰 <a href="https://xkcd.com/538/" target="_blank" rel="noopener">xkcd 538화 「보안」</a>은 암호 마니아가 상상하는 정교한 해독과, 5달러짜리 렌치로 비밀번호를 털어 내는 현실을 나란히 그렸다. 그 뒤 보유자를 노린 납치·주거 침입을 '렌치 공격'이라 부르게 됐다.</p>
+
+    <p>체이널리시스에 따르면 2025년 공개된 <a href="https://www.chainalysis.com/blog/violent-crypto-wrench-attacks-2026/" target="_blank" rel="noopener">폭력 공격 시도</a>는 95건이었고, 성공한 공격으로 빼앗긴 돈은 약 5,800만 달러로 역대 최대였다. 2026년에는 6월 말까지 46건이 나왔다. 프랑스가 가장 많았는데, 체이널리시스는 2024년 한 세무 공무원이 보유자들의 이름과 주소, 보유 내역을 빼돌려 팔았다는 혐의 사건을 배경으로 꼽는다. 개발자 제임슨 롭이 모으는 <a href="https://github.com/jlopp/physical-bitcoin-attacks" target="_blank" rel="noopener">공개 사건 목록</a>도 스스로 전부가 아니라고 밝힌다. 알려지지 않은 사건이 더 있다는 뜻이다.</p>
+
+    <p>저자의 첫 대응은 말하지 않는 것이다. 영화 「파이트 클럽」의 대사를 비틀어 첫째 규칙도 둘째 규칙도 비트코인 이야기를 하지 않는 것이라 하고, 얼마 있느냐는 질문에는 "충분하지 않다"고 답하라고 한다.</p>
+
+    <p>마지막은 믿었던 사람이다. 보안 연구자 요안나 루트코프스카가 2009년 이름 붙인 이블 메이드 공격처럼, 내 공간에 드나드는 누군가가 비운 사이 손을 댈 수 있다. 저자는 서랍과 옷장은 숨긴 곳이 아니라고 말한다.</p>
+
+    <h2>6. 정리</h2>
+
+    <p>열한 경로를 펼쳐 보면 해커가 키를 뚫는 장면은 생각보다 작다. 크게 보이는 것은 잊어버리는 나, 말해 버리는 나, 재촉에 서두르는 나, 맡겨 두고 잊은 나다. 대응의 방향도 거기서 나온다.</p>
+
+    <ul>
+      <li>보유 사실을 드러내지 않는다.</li>
+      <li>모든 거래는 내가 먼저 시작하고 보내기 전에 확인한다.</li>
+      <li>키를 남의 손에 오래 두지 않는다.</li>
+      <li>내가 이해하는 만큼만 단순하게 짓고, 복구가 실제로 되는지 미리 확인한다.</li>
+      <li>떠난 뒤를 위한 길도 열어 둔다.</li>
+    </ul>
+
+    <p>저자는 완벽한 설정은 없다고 한다. 하나의 방어를 키우면 다른 방어가 약해진다. 직접 보관은 거래소 위험을 없애는 대신 내 책임을 키우고, 맡기면 분실 위험이 줄어드는 대신 압류와 파산 위험이 붙는다. 나는 이 대목이 17장의 핵심이라고 본다. 정답 대신 의식적인 설계가 있을 뿐이다.</p>
+
+    <blockquote>경비원을 고용해도 경비원을 지키는 일은 내 몫이다.</blockquote>
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li>『비트코인의 길(The Way of Bitcoin)』 17장 「방어」 — 성곽 모델, 손실 경로 11개와 순서, 전화는 끊고 시작은 내가, 6102 은행 금 대 개인 금, 멀티시그 의견, 트레이드오프</li>
+      <li><a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf" target="_blank" rel="noopener">2025 IC3 Annual Report</a> (FBI 인터넷범죄신고센터, 2026) — 암호화폐 관련 신고 181,565건, 피해 약 113억 7천만 달러, 투자 사기 약 72억 달러</li>
+      <li><a href="https://www.chainalysis.com/blog/crypto-scams-2026/" target="_blank" rel="noopener">2026 Crypto Crime Report: Scams</a> (Chainalysis, 2026) — 2025년 사기 피해 추정 약 170억 달러, 사칭 사기 1,400% 이상 증가</li>
+      <li><a href="https://www.chainalysis.com/blog/crypto-hacking-stolen-funds-2026/" target="_blank" rel="noopener">2025 Crypto Theft Reaches $3.4 Billion</a> (Chainalysis, 2026) — 2025년 해킹 도난 약 34억 달러</li>
+      <li><a href="https://www.chainalysis.com/blog/crypto-ransomware-2026/" target="_blank" rel="noopener">Crypto Ransomware: 2026 Crypto Crime Report</a> (Chainalysis, 2026) — 2025년 랜섬웨어 지급액 약 8억 2천만 달러</li>
+      <li><a href="https://www.chainalysis.com/blog/violent-crypto-wrench-attacks-2026/" target="_blank" rel="noopener">Violent Wrench Attacks Targeting Crypto Holders</a> (Chainalysis, 2026-08-06) — 2025년 공격 시도 95건, 피해 5,800만 달러, 2026년 6월 말까지 46건</li>
+      <li><a href="https://github.com/jlopp/physical-bitcoin-attacks" target="_blank" rel="noopener">physical-bitcoin-attacks</a> (Jameson Lopp, GitHub) — 공개된 물리적 공격 사건 목록</li>
+      <li><a href="https://xkcd.com/538/" target="_blank" rel="noopener">xkcd 538: Security</a> (Randall Munroe, 2009-02-02) — 5달러 렌치 만화</li>
+      <li><a href="https://www.cnbc.com/2014/03/20/mtgox-says-it-found-200000-bitcoins-in-forgotten-wallet.html" target="_blank" rel="noopener">Mt. Gox says it found 200,000 bitcoins in 'forgotten' wallet</a> (CNBC/Reuters, 2014) — 파산 신청 때 약 85만 BTC 손실 발표</li>
+      <li><a href="https://www.opb.org/article/2024/03/28/sam-bankman-fried-sentenced-to-25-years-in-prison-for-his-ftx-crimes/" target="_blank" rel="noopener">Sam Bankman-Fried sentenced to 25 years in prison</a> (NPR/OPB, 2024-03-28) — 징역 25년, 고객 손실 80억 달러</li>
+      <li><a href="https://betakit.com/osc-finds-quadriga-ceo-ran-ponzi-scheme-leading-up-to-crypto-exchanges-downfall/" target="_blank" rel="noopener">OSC finds Quadriga CEO ran "Ponzi scheme"</a> (BetaKit, 2020) — 고객 7만 6천 명, 손실 최소 1억 6,900만 캐나다달러</li>
+      <li><a href="https://www.archives.gov/federal-register/codification/executive-order/11825.html" target="_blank" rel="noopener">Executive Order 11825</a> (미국 국립문서보관소) — 1974년 12월 31일 금 보유 규제 폐지</li>
+      <li><a href="https://decrypt.co/37171/lost-bitcoin-3-7-million-bitcoin-are-probably-gone-forever" target="_blank" rel="noopener">Lost Bitcoin: 3.7 Million Bitcoin Are Probably Gone Forever</a> (Decrypt, 2020) — 체이널리시스, 약 370만 개 추정</li>
+    </ul>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#보안</span>
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#셀프커스터디</span>
+    <span class="post-tag">#렌치공격</span>
+    <span class="post-tag">#사회공학</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
