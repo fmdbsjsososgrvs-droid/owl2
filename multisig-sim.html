@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>멀티시그 시뮬레이터 | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* owlbutler 홈페이지와 같은 색 */
+  --bg:#fdf4e7; --bg2:#faebd4; --bg3:#f5ddb8;
+  --border:rgba(224,123,10,.18); --border2:rgba(224,123,10,.32);
+  --accent:#e07b0a; --accent2:#c96c00; --accent-lt:#f5a623;
+  --text:#1a1208; --text2:#7a6040; --text3:#a08060;
+  --ok:#1b8a52; --bad:#c0392b;
+  --ink:var(--text); --mut:var(--text2);
+  --mono:'Share Tech Mono',ui-monospace,Menlo,monospace;
+  --sans:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+.wrap{max-width:1400px;margin:0 auto;padding:16px}
+.top{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);padding:6px 4px 14px;margin-bottom:22px}
+.top .logo{width:34px;height:34px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:17px}
+.top .brand{font-family:var(--mono);letter-spacing:.32em;font-size:15px}
+.chip{display:block;width:max-content;max-width:100%;margin:6px auto 14px;border:1px solid var(--border2);padding:6px 16px;font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--accent);text-align:center}
+h1{font-family:var(--mono);font-weight:400;font-size:30px;letter-spacing:.22em;margin:8px 0 6px;text-align:center;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--accent)}
+.rule{width:110px;height:2px;margin:0 auto 12px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.sub{color:var(--text2);font-size:13.5px;text-align:center;margin:0 0 12px}
+.warn{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:9px 14px;font-size:13px;text-align:center;max-width:640px;margin:0 auto 16px;color:var(--text)}
+.warn b{color:var(--accent2)}
+
+/* mode + tabs */
+.bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:3px}
+.seg button{background:none;border:0;color:var(--text2);padding:6px 14px;border-radius:7px;font:inherit;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+#tabs{display:none}
+
+/* stage */
+#stage{display:flex;gap:24px;justify-content:center;align-items:flex-start}
+.slot{position:relative}
+.slot .scaled{transform-origin:top left;position:absolute;left:0;top:0}
+.label{text-align:center;font-family:var(--mono);font-size:13px;color:var(--text2);margin-bottom:8px;letter-spacing:.12em}
+.dev{outline:0;transition:filter .2s}
+.slot.active .dev{filter:drop-shadow(0 6px 18px rgba(224,123,10,.55))}
+.slot:not(.active) .dev{opacity:.9;filter:drop-shadow(0 4px 10px rgba(26,18,8,.18))}
+
+/* ---------- SeedSigner ---------- */
+.ss{width:470px;height:330px;background:linear-gradient(145deg,#4a4e55,#2a2c30);border-radius:34px;position:relative;
+  box-shadow:inset 0 2px 3px #fff3,0 14px 24px #0007}
+.ss .screen{position:absolute;left:125px;top:41px;width:240px;height:248px}
+.ss .screen .inner{width:240px;height:248px}
+.ss .dpad{position:absolute;left:18px;top:106px;width:100px;height:100px;border-radius:50%;background:#1d1f22;box-shadow:inset 0 2px 6px #000}
+.ss .dpad button{position:absolute;width:30px;height:30px;border:0;background:none;color:#9aa;font-size:16px;cursor:pointer}
+.ss .dpad .u{left:35px;top:2px}.ss .dpad .d{left:35px;bottom:2px}.ss .dpad .l{left:2px;top:35px}.ss .dpad .r{right:2px;top:35px}
+.ss .dpad .c{left:30px;top:30px;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#555,#222)}
+.ss .keys{position:absolute;right:14px;top:70px;display:flex;flex-direction:column;gap:22px}
+.ss .keys button{width:58px;height:34px;border-radius:17px;border:0;background:#1f2124;color:#aab;font-size:12px;cursor:pointer;box-shadow:inset 0 1px 3px #000,0 1px 0 #fff2}
+.ss .screw{position:absolute;width:18px;height:18px;border-radius:50%;background:#15171a;box-shadow:inset 0 1px 2px #000}
+
+/* ---------- Krux (Maix Amigo style) ---------- */
+.kx{width:520px;height:350px;background:linear-gradient(145deg,#33363b,#1b1d20);border-radius:22px;position:relative;
+  box-shadow:inset 0 2px 3px #fff2,0 14px 24px #0007}
+.kx .screen{position:absolute;left:30px;top:24px;width:460px;height:302px;border-radius:6px;overflow:hidden;background:#000;border:3px solid #0a0a0a}
+.kx .btn{position:absolute;right:6px;width:6px;height:36px;border-radius:3px;background:#111}
+.kx .tag{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);font-size:9px;color:#777;letter-spacing:.3em}
+
+/* ---------- Phone app ---------- */
+.ph{width:300px;height:620px;background:#111;border-radius:42px;position:relative;padding:12px;box-shadow:inset 0 0 0 2px #444,0 14px 24px #0007}
+.ph .screen{width:276px;height:596px;border-radius:32px;overflow:hidden;background:#f5f6f8;position:relative;color:#111}
+.ph .notch{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:80px;height:20px;background:#111;border-radius:12px;z-index:3}
+
+/* shared screen content */
+.scr{width:100%;height:100%;display:flex;flex-direction:column;font-family:-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif}
+/* seedsigner skin */
+.ss .scr{background:#000;color:#fff;padding:8px 10px}
+.ss .ttl{text-align:center;font-weight:700;font-size:20px;padding:4px 0 8px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:38px}
+.ss .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.ss .it{background:#262626;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:15px;font-weight:600;color:#ddd}
+.ss .it .ic{font-size:30px;line-height:1}
+.ss .it.sel{background:#ff9f0a;color:#111}
+.ss .list{display:flex;flex-direction:column;gap:6px;flex:1;overflow:hidden}
+.ss .list .it{flex-direction:row;justify-content:flex-start;padding:8px 12px;gap:10px;flex:0 0 auto;font-size:15px}
+.ss .list .it .ic{font-size:18px}
+.ss .body{font-size:14px;color:#ccc;text-align:center;flex:1;display:flex;align-items:center;justify-content:center;padding:6px}
+/* ss extras */
+.ss .sub{font-size:12px;color:#bbb;text-align:center;line-height:1.5;margin-bottom:6px}
+.ss .foot{font-size:10.5px;color:#ffb02e;text-align:center;padding-top:5px;line-height:1.3}
+.ss .it.big{font-size:26px;font-weight:800;padding:14px 0}
+.ss .scr .body{flex:0 1 auto;margin:8px 0;line-height:1.55}
+.ss .scr .body~.list,.ss .scr .custom~.list{margin-top:auto}.ss .scr .list{flex:0 0 auto}
+.body .bi{width:100%;overflow-wrap:anywhere;word-break:break-word}
+.kx .ttl{position:relative}.kx .kback{position:absolute;left:0;top:3px;font-size:14px;color:#7be0a8;cursor:pointer;padding:3px 10px;border:1px solid #1f7a4d;border-radius:6px;background:#0c1f16}
+.ap .row small{display:block;font-size:10.5px;color:#6b7783;margin-top:2px;font-weight:400}
+.ap .mono{font-family:ui-monospace,Menlo,monospace;font-size:10px;line-height:1.5;word-break:break-all;background:#f5f6f8;border:1px solid #e1e4ea;border-radius:8px;padding:8px;margin:6px 16px}
+.ap .toast{position:absolute;left:14px;right:14px;bottom:72px;background:#0b2230;color:#fff;font-size:11.5px;padding:9px 12px;border-radius:10px;text-align:center;z-index:4}
+/* entry */
+.wi{width:100%;font-size:20px;background:#111;color:#fff;border:2px solid #ff9f0a;border-radius:8px;padding:8px;text-align:center;outline:0;margin:6px 0;font-family:ui-monospace,Menlo,monospace}
+.kx .wi{border-color:#1f7a4d;font-size:24px}
+.sg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:36px}
+.sgw{background:#262626;color:#ddd;border-radius:8px;padding:6px 10px;font-size:15px;cursor:pointer}
+.kx .sgw{font-size:18px;padding:8px 14px}
+.sgn{color:#ff6b6b;font-size:13px}
+.pw{margin-left:8px;background:#fff;border:1px solid var(--border2);color:var(--accent2);border-radius:8px;padding:2px 9px;font-family:var(--sans);font-size:11px;letter-spacing:0;cursor:pointer}.pw:hover{background:var(--bg3)}
+#guide details{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:8px 10px;margin:0 0 10px;font-size:13px}
+#guide summary{cursor:pointer;font-weight:700}
+#guide .wl{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.7;margin:6px 0;color:var(--accent2)}
+#guide .gb{background:#fff;border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:6px 12px;font:inherit;font-size:12.5px;cursor:pointer;margin:2px 4px 2px 0}
+#guide .gb.pri{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+/* qr */
+.aqr{text-align:center}.aqc{font-size:10.5px;color:#999;margin-top:3px}.ap .aqc{color:#556}
+.qrw{display:flex;justify-content:center;align-items:center;flex:1}
+.qr{border-radius:6px;display:block}
+/* krux skin */
+.kx .scr{background:#000;color:#fff;padding:8px 18px}
+.kx .ttl{text-align:center;font-size:20px;padding:4px 0 10px;color:#fff;border-bottom:1px solid #333;margin-bottom:6px}
+.kx .list{display:flex;flex-direction:column;flex:1;gap:2px}
+.kx .it{padding:9px 14px;font-size:18px;color:#ddd;border-radius:4px;cursor:pointer}
+.kx .it.sel{background:#1f7a4d;color:#fff}
+.kx .sub{font-size:13px;color:#bbb;text-align:center;margin:2px 0 8px}
+.kx .foot{font-size:12px;color:#ffb02e;text-align:center;padding-top:6px}
+.kx .grid{display:grid;gap:8px;margin:6px 0}
+.kx .grid .it{text-align:center;font-size:24px;font-weight:700;background:#222;padding:14px 0}
+.kx .grid .it.sel{background:#1f7a4d}
+.kx .wds{display:flex;gap:30px;justify-content:center;font-size:16px;color:#fff;margin:4px 0 6px;line-height:1.55}
+.kx .wds .n{color:#888;display:inline-block;width:26px;text-align:right;margin-right:4px}
+.kx .scr .body~.list{margin-top:auto}.kx .scr .list{flex:0 0 auto}
+.kx .scr .body{flex:0 1 auto;margin:8px 0}
+.kx .body{font-size:16px;color:#ccc;text-align:center;flex:1;display:flex;align-items:center;justify-content:center;padding:6px}
+/* app skin (watch-only coordinator, drawn from scratch) */
+.ph .screen{background:#fff}
+.ap{height:100%;display:flex;flex-direction:column;background:#fff;color:#0b2230;font-size:13px;position:relative}
+.ap .sb{display:flex;justify-content:space-between;align-items:center;padding:10px 22px 0 28px;font-weight:700;font-size:12px;height:34px}
+.ap .hd{display:flex;align-items:center;justify-content:space-between;padding:8px 14px 4px;min-height:40px}
+.ap .hd .t{font-weight:800;font-size:15px;flex:1;text-align:center}
+.ap .hd .ib{width:28px;font-size:18px;cursor:pointer;background:none;border:0;color:#0b2230;padding:0}
+.ap .big{font-size:24px;font-weight:500;padding:6px 16px 0}
+.ap .lead{padding:6px 16px 8px;font-size:13px}
+.ap .main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.ap .wt{display:flex;gap:10px;padding:8px 16px;cursor:pointer;align-items:flex-start}
+.ap .wt.off{opacity:.45;cursor:default}
+.ap .wt .c{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.ap .wt b{display:block;font-weight:500;font-size:14px}
+.ap .wt span{font-size:10.5px;color:#6b7783;line-height:1.3;display:block}
+.ap .sep{height:6px;background:#f1f2f4;margin:6px 0}
+.ap .row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e6e8eb;cursor:pointer;font-size:13.5px}
+.ap .lab{display:flex;justify-content:space-between;padding:6px 16px 3px;font-weight:700;font-size:12px}
+.ap .lab em{font-style:normal;color:#888;font-weight:400}
+.ap input.nm{margin:0 16px;width:calc(100% - 32px);height:38px;border:1.5px solid #0b2230;border-radius:9px;padding:0 10px;font:inherit;font-size:14px;outline:0}
+.ap .rd{display:flex;align-items:center;justify-content:space-between;margin:0 16px 4px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:13.5px}
+.ap .rd.on{background:#eaf1fd}
+.ap .rd .p{border:1px solid #cfd5db;border-radius:10px;font-size:9px;padding:1px 6px;font-weight:700;margin-left:6px}
+.ap .rd i{width:18px;height:18px;border-radius:50%;border:2px solid #0b2230;display:inline-block;position:relative}
+.ap .rd.on i::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#0b2230}
+.ap .va{text-align:center;text-decoration:underline;font-size:12px;font-weight:600;padding:6px;cursor:pointer}
+.ap .cta{margin:auto 16px 16px;height:42px;border-radius:21px;background:#0b2230;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0;width:calc(100% - 32px)}
+.ap .cta.dis{background:#e8e8e8;color:#777;cursor:default}
+.ap .key{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer}
+.ap .key .c{width:34px;height:34px;border-radius:50%;background:#f1f2f4;flex:none;display:flex;align-items:center;justify-content:center}
+.ap .key .c::before{content:"";width:12px;height:17px;border:1.5px solid #0b2230;border-radius:3px;box-shadow:inset 0 5px 0 -3px #0b2230}
+.ap .key .n{flex:1}.ap .key .n b{font-weight:500;font-size:14px;display:block}
+.ap .tag{display:inline-block;background:#e9ebee;font-size:9px;font-weight:700;border-radius:7px;padding:1px 7px;margin:1px 0}
+.ap .key .n small{display:block;color:#6b7783;font-size:10.5px}
+.ap .cb{width:20px;height:20px;border:2px solid #0b2230;border-radius:3px;flex:none;position:relative}
+.ap .cb.on{background:#0b2230}.ap .cb.on::after{content:"✓";color:#fff;position:absolute;left:2px;top:-3px;font-size:13px}
+.ap .req{border-top:1px solid #dfe2e5;padding:10px 16px 4px}
+.ap .req .r1{display:flex;align-items:center;justify-content:space-between}
+.ap .req b{font-weight:500;font-size:14px;display:block}.ap .req small{font-size:10px;color:#6b7783;display:block;max-width:120px}
+.ap .stp{display:flex;align-items:center;gap:8px}
+.ap .stp button{width:30px;height:30px;border-radius:50%;border:2px solid #0b2230;background:#fff;font-size:17px;cursor:pointer;padding:0;line-height:1;color:#0b2230}
+.ap .stp .v{width:40px;height:34px;border:1px solid #dfe2e5;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.ap .cfg{text-align:center;font-size:11px;margin:8px 0 8px}
+.ap .cfg span{background:#e9ebee;border-radius:12px;padding:3px 12px;font-weight:700;margin-left:6px}
+.ap .rv{display:flex;justify-content:space-between;padding:6px 16px;font-size:13.5px}.ap .rv b{font-weight:700}
+.ap .hr{height:1px;background:#e6e8eb;margin:6px 16px}
+.ap .mk{font-weight:700;padding:8px 16px 2px;font-size:14px}
+.ap .success{margin:auto;text-align:center;padding:0 24px 40px}
+.ap .success .ok{width:60px;height:60px;border-radius:50%;background:#2e9e6b;color:#fff;font-size:30px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.ap .empty{margin:auto;text-align:center;color:#6b7783;padding:0 24px 80px;font-size:13px;line-height:1.6}
+.ap .fab{position:absolute;right:16px;bottom:16px;height:42px;border-radius:21px;background:#0b2230;color:#fff;font-weight:700;padding:0 18px;display:flex;align-items:center;cursor:pointer;font-size:13px}
+
+
+.ap .sb.dk{background:#05202e;color:#fff}
+.ap .dhd{background:#05202e;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:6px 14px 12px}
+.ap .dhd .t{font-weight:800;font-size:16px}.ap .dhd .nfc{font-size:9px;display:flex;flex-direction:column;align-items:center;width:28px;line-height:1}
+.ap .dhd span{width:28px}
+.ap .wh{display:flex;align-items:center;gap:6px;padding:12px 14px 8px}.ap .wh b{font-size:19px;font-weight:500;flex:none;margin-right:6px}
+.ap .wh i.on{width:9px;height:9px;border-radius:50%;background:#1b6b32;flex:none}
+.ap .wh small{font-size:10px;font-weight:700;flex:none}
+.ap .wh .plus{font-size:22px;cursor:pointer;width:28px;text-align:right;margin-left:auto}
+.ap .wc{margin:6px 14px;border-radius:12px;padding:12px 14px;color:#fff;background:linear-gradient(90deg,#44597a,#14293a 70%);position:relative}
+.ap .wc b{font-size:16px;display:block;font-weight:600}.ap .wc div{font-size:12px;font-weight:600}.ap .wc small{font-size:11px}
+.ap .wc .pill{position:absolute;right:10px;bottom:10px;background:#fff;color:#0b2230;border-radius:12px;font-size:9.5px;font-weight:700;padding:2px 8px}
+.ap .tot{display:flex;justify-content:space-between;padding:10px 14px;background:#f5f5f5;border-top:1px solid #ddd;font-size:11px}
+.ap .tot .r{text-align:right;font-weight:600}.ap .tot small{font-weight:400}
+.ap .tb{display:flex;border-top:1px solid #ddd;background:#fff;padding:6px 0 10px}
+.ap .tb div{flex:1;text-align:center;font-size:9px;color:#777;font-weight:600;cursor:default}
+.ap .tb div[data-a]{cursor:pointer}
+.ap .tb div span{display:block;font-size:17px;line-height:1.2}.ap .tb div.on{color:#0b2230}
+.ap .kg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px}
+.ap .kt{background:#f5f5f5;border-radius:12px;padding:12px 10px;font-size:12.5px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.ap .kt.off{opacity:.5;cursor:default}.ap .kt .g{font-size:15px;width:20px;text-align:center}
+.ap .ill{background:#d0e1fd;height:220px;position:relative;display:flex;align-items:flex-end;justify-content:center;padding-top:34px}
+.ap .ill .ib{position:absolute;left:12px;top:40px;font-size:18px;background:none;border:0;color:#0b2230;cursor:pointer}
+.ap .qrph{width:96px;height:140px;background:#3b87aa;border:1px solid #1d4d66;border-radius:8px;margin-bottom:0;padding-top:14px;display:flex;justify-content:center;align-items:flex-start}
+.ap .qri{width:68px;height:68px;background:#7cc9e0;border-radius:4px;position:relative}
+.ap .qri::after{content:"";position:absolute;inset:10px;background:repeating-conic-gradient(#3a3f7a 0 25%,#40d0c8 0 50%) 0 0/10px 10px;border-radius:2px}
+.ap .stepi{display:flex;gap:8px;padding:6px 16px}
+.ap .stepi i{font-style:normal;width:20px;height:20px;border:2px solid #0b2230;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.ap .stepi b{font-size:12.5px;display:block}.ap .stepi span{font-size:11px;color:#333;line-height:1.35;display:block;margin-top:2px}
+.ap .ta{margin:0 16px;height:120px;border:1px solid #d7dbe0;border-radius:10px;padding:10px;font-size:12px;color:#999;word-break:break-all;overflow:hidden}
+.ap .ta.f{color:#0b2230}
+.ap .ob{margin:10px 16px 0;height:34px;border:2px solid #0b2230;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:12.5px;cursor:pointer}
+.ap .ob.off{opacity:.45;cursor:default}
+.ap .cam{position:absolute;inset:0;background:linear-gradient(120deg,#16181b 0 22%,#5a5c5e 22%);color:#fff;z-index:5;display:flex;flex-direction:column}
+.ap .ch{display:flex;align-items:center;justify-content:space-between;padding:44px 14px 6px}.ap .ch .t{font-weight:700;font-size:14px}
+.ap .ib.w{color:#fff;background:none;border:0;font-size:18px;cursor:pointer;width:28px;text-align:left;padding:0}
+.ap .vf{position:relative;margin:50px 20px 0;height:226px;background:#c3c7c3aa;border-radius:12px}
+.ap .vf i{position:absolute;width:26px;height:26px;border:4px solid #fff}
+.ap .vf .a{left:0;top:0;border-right:0;border-bottom:0;border-radius:12px 0 0 0}.ap .vf .b{right:0;top:0;border-left:0;border-bottom:0;border-radius:0 12px 0 0}
+.ap .vf .c2{left:0;bottom:0;border-right:0;border-top:0;border-radius:0 0 0 12px}.ap .vf .d{right:0;bottom:0;border-left:0;border-top:0;border-radius:0 0 12px 0}
+.ap .seen{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.9}
+.ap .simscan.low{top:auto;bottom:-22px;transform:translateX(-50%)}
+.ap .nosig{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:12px;line-height:1.6;padding:0 16px}
+.ap .nosig small{display:block;color:#ddd;font-size:9.5px;margin-top:6px}
+.ap .simscan{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#ffb02e;color:#111;border:0;border-radius:12px;padding:10px 14px;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap}
+.ap .simscan small{display:block;font-weight:500;font-size:9.5px;margin-top:3px}
+.ap .pct{align-self:center;background:#0009;border-radius:5px;padding:2px 8px;font-size:12px;margin-top:70px}
+.ap .cbtn{display:flex;gap:12px;justify-content:center;margin-top:20px}.ap .cbtn span{width:38px;height:38px;border-radius:50%;background:#fff;color:#0b2230;display:flex;align-items:center;justify-content:center}
+
+/* guide */
+#guide{margin:22px auto 0;max-width:920px;background:#fffaf1;border:1px solid var(--border2);border-radius:14px;padding:16px 18px;box-shadow:0 8px 24px rgba(224,123,10,.08)}
+#guide h2{margin:0 0 4px;font-family:var(--mono);font-weight:400;font-size:17px;letter-spacing:.14em;color:var(--accent2)}
+#guide .step{font-size:13px;color:var(--text2);margin:0 0 8px}
+#guide .now{font-size:15px;line-height:1.65;margin:0 0 10px;color:var(--text)}
+#guide .dice{background:rgba(224,123,10,.1);border:1px solid var(--accent);border-radius:10px;padding:8px 10px;font-size:13px;margin:0 0 10px;color:var(--accent2)}
+.dots{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 12px}
+.dots i{width:22px;height:6px;border-radius:3px;background:var(--bg3)}
+.dots i.done{background:var(--ok)}.dots i.cur{background:var(--accent)}
+.nav{display:flex;gap:8px}
+.nav button{background:#fff;border:1px solid var(--border2);color:var(--text);border-radius:9px;padding:8px 16px;font:inherit;font-size:14px;cursor:pointer}
+.nav button.pri{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+.cmp{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:8px 10px;font-size:13px;margin:0 0 10px;line-height:1.8}.cmp code{font-size:12px;color:var(--accent2)}.cmp b{display:block;color:var(--ok);margin-top:4px}
+.okb{background:#e6f4ea;color:#145c38;border:1px solid var(--ok);border-radius:10px;padding:8px 10px;font-size:13px;margin:0 0 10px}
+.hint{font-size:12px;color:var(--text3);margin-top:10px}
+@media (max-width:1180px){#tabs{display:inline-flex}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="top" href="index.html" style="text-decoration:none;color:inherit"><span class="logo">B</span><span class="brand">OWL BUTLER</span></a>
+  <span class="chip">// MULTISIG PRACTICE LAB</span>
+  <h1>MULTISIG <em>SIMULATOR</em></h1>
+  <div class="rule"></div>
+  <p class="sub">멀티시그 만들기·복원 연습 · 시드사이너 + 크록스 + 와치온리 앱(넌척) · 2-of-2</p>
+  <div class="warn"><b>연습용 시뮬레이터예요.</b> 실제 자산을 보관하는 시드 문구는 입력하지 마세요.</div>
+
+  <div class="bar">
+    <div class="seg" id="modeSeg">
+      <button data-m="make" class="on">만들기</button>
+      <button data-m="restore">복원하기</button>
+    </div>
+    <div class="seg" id="tabs">
+      <button data-d="ss" class="on">시드사이너</button>
+      <button data-d="kx">크록스</button>
+      <button data-d="app">앱(넌척)</button>
+    </div>
+  </div>
+
+  <div id="stage">
+    <div class="slot" id="slot-ss" data-d="ss">
+      <div class="label">시드사이너 <button class="pw" onclick="powerCycle('ss')">⏻ 껐다 켜기</button></div>
+      <div class="scaled">
+        <div class="dev ss" tabindex="0" aria-label="시드사이너">
+          <span class="screw" style="left:18px;top:18px"></span><span class="screw" style="right:18px;top:18px"></span>
+          <span class="screw" style="left:18px;bottom:18px"></span><span class="screw" style="right:18px;bottom:18px"></span>
+          <div class="screen"><div class="inner" id="scr-ss"></div></div>
+          <div class="dpad">
+            <button class="u" data-k="up" aria-label="위">▲</button><button class="d" data-k="down" aria-label="아래">▼</button>
+            <button class="l" data-k="left" aria-label="왼쪽">◀</button><button class="r" data-k="right" aria-label="오른쪽">▶</button>
+            <button class="c" data-k="ok" aria-label="선택"></button>
+          </div>
+          <div class="keys">
+            <button data-k="back">KEY1</button><button data-k="home">KEY2</button><button data-k="ok">KEY3</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot" id="slot-app" data-d="app">
+      <div class="label">와치온리 앱(넌척) <button class="pw" onclick="resetApp()">↺ 앱 재설치</button></div>
+      <div class="scaled">
+        <div class="dev ph" tabindex="0" aria-label="와치온리 앱">
+          <div class="screen"><div class="notch"></div><div id="scr-app" style="height:100%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot" id="slot-kx" data-d="kx">
+      <div class="label">크록스 (Maix Amigo형) <button class="pw" onclick="powerCycle('kx')">⏻ 껐다 켜기</button></div>
+      <div class="scaled">
+        <div class="dev kx" tabindex="0" aria-label="크록스">
+          <div class="screen"><div id="scr-kx" style="width:100%;height:100%"></div></div>
+          <span class="btn" style="top:60px"></span><span class="btn" style="top:110px"></span>
+          <span class="tag">KRUX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="guide"></div>
+</div>
+
+<script>
+/* qrcode-generator 1.4.4 (c) Kazuhiko Arase, MIT License */
+var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(l=4*u+17),e(0,0),e(l-7,0),e(0,l-7),i(),o(),v(t,r),7<=u&&h(t),null==n&&(n=w(u,f,c)),d(n,r)}var u=t,f=y[r],g=null,l=0,n=null,c=[],s={},e=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||l<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||l<=r+n||(g[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},o=function(){for(var t=8;t<l-8;t+=1)null==g[t][6]&&(g[t][6]=t%2==0);for(var r=8;r<l-8;r+=1)null==g[6][r]&&(g[6][r]=r%2==0)},i=function(){for(var t=B.getPatternPosition(u),r=0;r<t.length;r+=1)for(var e=0;e<t.length;e+=1){var n=t[r],o=t[e];if(null==g[n][o])for(var i=-2;i<=2;i+=1)for(var a=-2;a<=2;a+=1)g[n+i][o+a]=-2==i||2==i||-2==a||2==a||0==i&&0==a}},h=function(t){for(var r=B.getBCHTypeNumber(u),e=0;e<18;e+=1){var n=!t&&1==(r>>e&1);g[Math.floor(e/3)][e%3+l-8-3]=n}for(e=0;e<18;e+=1){n=!t&&1==(r>>e&1);g[e%3+l-8-3][Math.floor(e/3)]=n}},v=function(t,r){for(var e=f<<3|r,n=B.getBCHTypeInfo(e),o=0;o<15;o+=1){var i=!t&&1==(n>>o&1);o<6?g[o][8]=i:o<8?g[o+1][8]=i:g[l-15+o][8]=i}for(o=0;o<15;o+=1){i=!t&&1==(n>>o&1);o<8?g[8][l-o-1]=i:o<9?g[8][15-o-1+1]=i:g[8][15-o-1]=i}g[l-8][8]=!t},d=function(t,r){for(var e=-1,n=l-1,o=7,i=0,a=B.getMaskFunction(r),u=l-1;0<u;u-=2)for(6==u&&(u-=1);;){for(var f=0;f<2;f+=1)if(null==g[n][u-f]){var c=!1;i<t.length&&(c=1==(t[i]>>>o&1)),a(n,u-f)&&(c=!c),g[n][u-f]=c,-1==(o-=1)&&(i+=1,o=7)}if((n+=e)<0||l<=n){n-=e,e=-e;break}}},w=function(t,r,e){for(var n=b.getRSBlocks(t,r),o=M(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=C(i[u],l.getLength()-1).mod(l);a[u]=new Array(l.getLength()-1);for(g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=0<=s?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};s.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=x(t);break;case"Alphanumeric":e=m(t);break;case"Byte":e=L(t);break;case"Kanji":e=D(t);break;default:throw"mode:"+r}c.push(e),n=null},s.isDark=function(t,r){if(t<0||l<=t||r<0||l<=r)throw t+","+r;return g[t][r]},s.getModuleCount=function(){return l},s.make=function(){if(u<1){for(var t=1;t<40;t++){for(var r=b.getRSBlocks(t,f),e=M(),n=0;n<c.length;n++){var o=c[n];e.put(o.getMode(),4),e.put(o.getLength(),B.getLengthInBits(o.getMode(),t)),o.write(e)}var i=0;for(n=0;n<r.length;n++)i+=r[n].dataCount;if(e.getLengthInBits()<=8*i)break}u=t}a(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){a(!0,e);var n=B.getLostPoint(s);(0==e||n<t)&&(t=n,r=e)}return r}())},s.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<s.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<s.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=s.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},s.createSvgTag=function(t,r,e,n){var o={};"object"==typeof t&&(t=(o=t).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,f,c=s.getModuleCount()*t+2*r,g="";for(f="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",g+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',g+=o.scalable?"":' width="'+c+'px" height="'+c+'px"',g+=' viewBox="0 0 '+c+" "+c+'" ',g+=' preserveAspectRatio="xMinYMin meet"',g+=n.text||e.text?' role="img" aria-labelledby="'+p([n.id,e.id].join(" ").trim())+'"':"",g+=">",g+=n.text?'<title id="'+p(n.id)+'">'+p(n.text)+"</title>":"",g+=e.text?'<description id="'+p(e.id)+'">'+p(e.text)+"</description>":"",g+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',g+='<path d="',a=0;a<s.getModuleCount();a+=1)for(u=a*t+r,i=0;i<s.getModuleCount();i+=1)s.isDark(a,i)&&(g+="M"+(i*t+r)+","+u+f);return g+='" stroke="transparent" fill="black"/>',g+="</svg>"},s.createDataURL=function(o,t){o=o||2,t=void 0===t?4*o:t;var r=s.getModuleCount()*o+2*t,i=t,a=r-t;return I(r,r,function(t,r){if(i<=t&&t<a&&i<=r&&r<a){var e=Math.floor((t-i)/o),n=Math.floor((r-i)/o);return s.isDark(n,e)?0:1}return 1})},s.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=s.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=s.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=p(e),o+='"'),o+="/>"};var p=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return s.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*s.getModuleCount()+2*t,u=t,f=a-t,c={"██":"█","█ ":"▀"," █":"▄","  ":" "},g={"██":"▀","█ ":"▀"," █":" ","  ":" "},l="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<f&&u<=r&&r<f&&s.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<f&&u<=r+1&&r+1<f&&s.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",l+=t<1&&f<=r+1?g[i]:c[i];l+="\n"}return a%2&&0<t?l.substring(0,l.length-a-1)+Array(1+a).join("▀"):l.substring(0,l.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=s.getModuleCount()*t+2*r,u=r,f=a-r,c=Array(t+1).join("██"),g=Array(t+1).join("  "),l="",h="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),h="",n=0;n<a;n+=1)i=1,u<=n&&n<f&&u<=e&&e<f&&s.isDark(o,Math.floor((n-u)/t))&&(i=0),h+=i?c:g;for(o=0;o<t;o+=1)l+=h+"\n"}return l.substring(0,l.length-1)},s.renderTo2dContext=function(t,r){r=r||2;for(var e=s.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=s.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},s}i.stringToBytes=(i.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,i.createStringToBytes=function(u,f){var i=function(){function t(){var t=r.read();if(-1==t)throw"eof";return t}for(var r=S(u),e=0,n={};;){var o=r.read();if(-1==o)break;var i=t(),a=t()<<8|t();n[String.fromCharCode(o<<8|i)]=a,e+=1}if(e!=f)throw e+" != "+f;return n}(),a="?".charCodeAt(0);return function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);if(n<128)r.push(n);else{var o=i[t.charAt(e)];"number"==typeof o?(255&o)==o?r.push(o):(r.push(o>>>8),r.push(255&o)):r.push(a)}}return r}};var r,t,a=1,u=2,o=4,f=8,y={L:1,M:0,Q:3,H:2},e=0,n=1,c=2,g=3,l=4,h=5,s=6,v=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],(t={}).getBCHTypeInfo=function(t){for(var r=t<<10;0<=d(r)-d(1335);)r^=1335<<d(r)-d(1335);return 21522^(t<<10|r)},t.getBCHTypeNumber=function(t){for(var r=t<<12;0<=d(r)-d(7973);)r^=7973<<d(r)-d(7973);return t<<12|r},t.getPatternPosition=function(t){return r[t-1]},t.getMaskFunction=function(t){switch(t){case e:return function(t,r){return(t+r)%2==0};case n:return function(t,r){return t%2==0};case c:return function(t,r){return r%3==0};case g:return function(t,r){return(t+r)%3==0};case l:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case h:return function(t,r){return t*r%2+t*r%3==0};case s:return function(t,r){return(t*r%2+t*r%3)%2==0};case v:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},t.getErrorCorrectPolynomial=function(t){for(var r=C([1],0),e=0;e<t;e+=1)r=r.multiply(C([1,w.gexp(e)],0));return r},t.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case o:case f:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case o:return 16;case f:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case o:return 16;case f:return 12;default:throw"mode:"+t}}},t.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);5<i&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},t);function d(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r}var w=function(){for(var r=new Array(256),e=new Array(256),t=0;t<8;t+=1)r[t]=1<<t;for(t=8;t<256;t+=1)r[t]=r[t-4]^r[t-5]^r[t-6]^r[t-8];for(t=0;t<255;t+=1)e[r[t]]=t;var n={glog:function(t){if(t<1)throw"glog("+t+")";return e[t]},gexp:function(t){for(;t<0;)t+=255;for(;256<=t;)t-=255;return r[t]}};return n}();function C(n,o){if(void 0===n.length)throw n.length+"/"+o;var r=function(){for(var t=0;t<n.length&&0==n[t];)t+=1;for(var r=new Array(n.length-t+o),e=0;e<n.length-t;e+=1)r[e]=n[e+t];return r}(),i={getAt:function(t){return r[t]},getLength:function(){return r.length},multiply:function(t){for(var r=new Array(i.getLength()+t.getLength()-1),e=0;e<i.getLength();e+=1)for(var n=0;n<t.getLength();n+=1)r[e+n]^=w.gexp(w.glog(i.getAt(e))+w.glog(t.getAt(n)));return C(r,0)},mod:function(t){if(i.getLength()-t.getLength()<0)return i;for(var r=w.glog(i.getAt(0))-w.glog(t.getAt(0)),e=new Array(i.getLength()),n=0;n<i.getLength();n+=1)e[n]=i.getAt(n);for(n=0;n<t.getLength();n+=1)e[n]^=w.gexp(w.glog(t.getAt(n))+r);return C(e,0).mod(t)}};return i}function p(){var e=[],o={writeByte:function(t){e.push(255&t)},writeShort:function(t){o.writeByte(t),o.writeByte(t>>>8)},writeBytes:function(t,r,e){r=r||0,e=e||t.length;for(var n=0;n<e;n+=1)o.writeByte(t[n+r])},writeString:function(t){for(var r=0;r<t.length;r+=1)o.writeByte(t.charCodeAt(r))},toByteArray:function(){return e},toString:function(){var t="";t+="[";for(var r=0;r<e.length;r+=1)0<r&&(t+=","),t+=e[r];return t+="]"}};return o}var k,A,b=(k=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],(A={}).getRSBlocks=function(t,r){var e=function(t,r){switch(r){case y.L:return k[4*(t-1)+0];case y.M:return k[4*(t-1)+1];case y.Q:return k[4*(t-1)+2];case y.H:return k[4*(t-1)+3];default:return}}(t,r);if(void 0===e)throw"bad rs block @ typeNumber:"+t+"/errorCorrectionLevel:"+r;for(var n,o,i=e.length/3,a=[],u=0;u<i;u+=1)for(var f=e[3*u+0],c=e[3*u+1],g=e[3*u+2],l=0;l<f;l+=1)a.push((n=g,o=void 0,(o={}).totalCount=c,o.dataCount=n,o));return a},A),M=function(){var e=[],n=0,o={getBuffer:function(){return e},getAt:function(t){var r=Math.floor(t/8);return 1==(e[r]>>>7-t%8&1)},put:function(t,r){for(var e=0;e<r;e+=1)o.putBit(1==(t>>>r-e-1&1))},getLengthInBits:function(){return n},putBit:function(t){var r=Math.floor(n/8);e.length<=r&&e.push(0),t&&(e[r]|=128>>>n%8),n+=1}};return o},x=function(t){var r=a,n=t,e={getMode:function(){return r},getLength:function(t){return n.length},write:function(t){for(var r=n,e=0;e+2<r.length;)t.put(o(r.substring(e,e+3)),10),e+=3;e<r.length&&(r.length-e==1?t.put(o(r.substring(e,e+1)),4):r.length-e==2&&t.put(o(r.substring(e,e+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return e},m=function(t){var r=u,n=t,e={getMode:function(){return r},getLength:function(t){return n.length},write:function(t){for(var r=n,e=0;e+1<r.length;)t.put(45*o(r.charAt(e))+o(r.charAt(e+1)),11),e+=2;e<r.length&&t.put(o(r.charAt(e)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return e},L=function(t){var r=o,e=i.stringToBytes(t),n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=0;r<e.length;r+=1)t.put(e[r],8)}};return n},D=function(t){var r=f,e=i.stringToBytesFuncs.SJIS;if(!e)throw"sjis not supported.";!function(){var t=e("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=e(t),n={getMode:function(){return r},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return n},S=function(t){var e=t,n=0,o=0,i=0,r={read:function(){for(;i<8;){if(n>=e.length){if(0==i)return-1;throw"unexpected end of file./"+i}var t=e.charAt(n);if(n+=1,"="==t)return i=0,-1;t.match(/^\s$/)||(o=o<<6|a(t.charCodeAt(0)),i+=6)}var r=o>>>i-8&255;return i-=8,r}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return r},I=function(t,r,e){for(var n=function(t,r){var n=t,o=r,l=new Array(t*r),e={setPixel:function(t,r,e){l[r*n+t]=e},write:function(t){t.writeString("GIF87a"),t.writeShort(n),t.writeShort(o),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(n),t.writeShort(o),t.writeByte(0);var r=i(2);t.writeByte(2);for(var e=0;255<r.length-e;)t.writeByte(255),t.writeBytes(r,e,255),e+=255;t.writeByte(r.length-e),t.writeBytes(r,e,r.length-e),t.writeByte(0),t.writeString(";")}},i=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,o=h(),i=0;i<r;i+=1)o.add(String.fromCharCode(i));o.add(String.fromCharCode(r)),o.add(String.fromCharCode(e));var a=p(),u=function(t){var e=t,n=0,o=0,r={write:function(t,r){if(t>>>r!=0)throw"length over";for(;8<=n+r;)e.writeByte(255&(t<<n|o)),r-=8-n,t>>>=8-n,n=o=0;o|=t<<n,n+=r},flush:function(){0<n&&e.writeByte(o)}};return r}(a);u.write(r,n);var f=0,c=String.fromCharCode(l[f]);for(f+=1;f<l.length;){var g=String.fromCharCode(l[f]);f+=1,o.contains(c+g)?c+=g:(u.write(o.indexOf(c),n),o.size()<4095&&(o.size()==1<<n&&(n+=1),o.add(c+g)),c=g)}return u.write(o.indexOf(c),n),u.write(e,n),u.flush(),a.toByteArray()},h=function(){var r={},e=0,n={add:function(t){if(n.contains(t))throw"dup key:"+t;r[t]=e,e+=1},size:function(){return e},indexOf:function(t){return r[t]},contains:function(t){return void 0!==r[t]}};return n};return e}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=p();n.write(a);for(var u=function(){function e(t){a+=String.fromCharCode(r(63&t))}var n=0,o=0,i=0,a="",t={},r=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return t.writeByte=function(t){for(n=n<<8|255&t,o+=8,i+=1;6<=o;)e(n>>>o-6),o-=6},t.flush=function(){if(0<o&&(e(n<<6-o),o=n=0),i%3!=0)for(var t=3-i%3,r=0;r<t;r+=1)a+="="},t.toString=function(){return a},t}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return i}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||57344<=n?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
+</script>
+<script>
+/* ===== 장치 크기 (기본 px) ===== */
+const SIZE={ss:[470,330],app:[300,620],kx:[520,350]};
+const NAME={ss:'시드사이너',kx:'크록스',app:'앱(넌척)'};
+/* BIP39 영어 단어 목록 (2048개) */
+const WORDLIST_STR='abandon ability able about above absent absorb abstract absurd abuse access accident account accuse achieve acid acoustic acquire across act action actor actress actual adapt add addict address adjust admit adult advance advice aerobic affair afford afraid again age agent agree ahead aim air airport aisle alarm album alcohol alert alien all alley allow almost alone alpha already also alter always amateur amazing among amount amused analyst anchor ancient anger angle angry animal ankle announce annual another answer antenna antique anxiety any apart apology appear apple approve april arch arctic area arena argue arm armed armor army around arrange arrest arrive arrow art artefact artist artwork ask aspect assault asset assist assume asthma athlete atom attack attend attitude attract auction audit august aunt author auto autumn average avocado avoid awake aware away awesome awful awkward axis baby bachelor bacon badge bag balance balcony ball bamboo banana banner bar barely bargain barrel base basic basket battle beach bean beauty because become beef before begin behave behind believe below belt bench benefit best betray better between beyond bicycle bid bike bind biology bird birth bitter black blade blame blanket blast bleak bless blind blood blossom blouse blue blur blush board boat body boil bomb bone bonus book boost border boring borrow boss bottom bounce box boy bracket brain brand brass brave bread breeze brick bridge brief bright bring brisk broccoli broken bronze broom brother brown brush bubble buddy budget buffalo build bulb bulk bullet bundle bunker burden burger burst bus business busy butter buyer buzz cabbage cabin cable cactus cage cake call calm camera camp can canal cancel candy cannon canoe canvas canyon capable capital captain car carbon card cargo carpet carry cart case cash casino castle casual cat catalog catch category cattle caught cause caution cave ceiling celery cement census century cereal certain chair chalk champion change chaos chapter charge chase chat cheap check cheese chef cherry chest chicken chief child chimney choice choose chronic chuckle chunk churn cigar cinnamon circle citizen city civil claim clap clarify claw clay clean clerk clever click client cliff climb clinic clip clock clog close cloth cloud clown club clump cluster clutch coach coast coconut code coffee coil coin collect color column combine come comfort comic common company concert conduct confirm congress connect consider control convince cook cool copper copy coral core corn correct cost cotton couch country couple course cousin cover coyote crack cradle craft cram crane crash crater crawl crazy cream credit creek crew cricket crime crisp critic crop cross crouch crowd crucial cruel cruise crumble crunch crush cry crystal cube culture cup cupboard curious current curtain curve cushion custom cute cycle dad damage damp dance danger daring dash daughter dawn day deal debate debris decade december decide decline decorate decrease deer defense define defy degree delay deliver demand demise denial dentist deny depart depend deposit depth deputy derive describe desert design desk despair destroy detail detect develop device devote diagram dial diamond diary dice diesel diet differ digital dignity dilemma dinner dinosaur direct dirt disagree discover disease dish dismiss disorder display distance divert divide divorce dizzy doctor document dog doll dolphin domain donate donkey donor door dose double dove draft dragon drama drastic draw dream dress drift drill drink drip drive drop drum dry duck dumb dune during dust dutch duty dwarf dynamic eager eagle early earn earth easily east easy echo ecology economy edge edit educate effort egg eight either elbow elder electric elegant element elephant elevator elite else embark embody embrace emerge emotion employ empower empty enable enact end endless endorse enemy energy enforce engage engine enhance enjoy enlist enough enrich enroll ensure enter entire entry envelope episode equal equip era erase erode erosion error erupt escape essay essence estate eternal ethics evidence evil evoke evolve exact example excess exchange excite exclude excuse execute exercise exhaust exhibit exile exist exit exotic expand expect expire explain expose express extend extra eye eyebrow fabric face faculty fade faint faith fall false fame family famous fan fancy fantasy farm fashion fat fatal father fatigue fault favorite feature february federal fee feed feel female fence festival fetch fever few fiber fiction field figure file film filter final find fine finger finish fire firm first fiscal fish fit fitness fix flag flame flash flat flavor flee flight flip float flock floor flower fluid flush fly foam focus fog foil fold follow food foot force forest forget fork fortune forum forward fossil foster found fox fragile frame frequent fresh friend fringe frog front frost frown frozen fruit fuel fun funny furnace fury future gadget gain galaxy gallery game gap garage garbage garden garlic garment gas gasp gate gather gauge gaze general genius genre gentle genuine gesture ghost giant gift giggle ginger giraffe girl give glad glance glare glass glide glimpse globe gloom glory glove glow glue goat goddess gold good goose gorilla gospel gossip govern gown grab grace grain grant grape grass gravity great green grid grief grit grocery group grow grunt guard guess guide guilt guitar gun gym habit hair half hammer hamster hand happy harbor hard harsh harvest hat have hawk hazard head health heart heavy hedgehog height hello helmet help hen hero hidden high hill hint hip hire history hobby hockey hold hole holiday hollow home honey hood hope horn horror horse hospital host hotel hour hover hub huge human humble humor hundred hungry hunt hurdle hurry hurt husband hybrid ice icon idea identify idle ignore ill illegal illness image imitate immense immune impact impose improve impulse inch include income increase index indicate indoor industry infant inflict inform inhale inherit initial inject injury inmate inner innocent input inquiry insane insect inside inspire install intact interest into invest invite involve iron island isolate issue item ivory jacket jaguar jar jazz jealous jeans jelly jewel job join joke journey joy judge juice jump jungle junior junk just kangaroo keen keep ketchup key kick kid kidney kind kingdom kiss kit kitchen kite kitten kiwi knee knife knock know lab label labor ladder lady lake lamp language laptop large later latin laugh laundry lava law lawn lawsuit layer lazy leader leaf learn leave lecture left leg legal legend leisure lemon lend length lens leopard lesson letter level liar liberty library license life lift light like limb limit link lion liquid list little live lizard load loan lobster local lock logic lonely long loop lottery loud lounge love loyal lucky luggage lumber lunar lunch luxury lyrics machine mad magic magnet maid mail main major make mammal man manage mandate mango mansion manual maple marble march margin marine market marriage mask mass master match material math matrix matter maximum maze meadow mean measure meat mechanic medal media melody melt member memory mention menu mercy merge merit merry mesh message metal method middle midnight milk million mimic mind minimum minor minute miracle mirror misery miss mistake mix mixed mixture mobile model modify mom moment monitor monkey monster month moon moral more morning mosquito mother motion motor mountain mouse move movie much muffin mule multiply muscle museum mushroom music must mutual myself mystery myth naive name napkin narrow nasty nation nature near neck need negative neglect neither nephew nerve nest net network neutral never news next nice night noble noise nominee noodle normal north nose notable note nothing notice novel now nuclear number nurse nut oak obey object oblige obscure observe obtain obvious occur ocean october odor off offer office often oil okay old olive olympic omit once one onion online only open opera opinion oppose option orange orbit orchard order ordinary organ orient original orphan ostrich other outdoor outer output outside oval oven over own owner oxygen oyster ozone pact paddle page pair palace palm panda panel panic panther paper parade parent park parrot party pass patch path patient patrol pattern pause pave payment peace peanut pear peasant pelican pen penalty pencil people pepper perfect permit person pet phone photo phrase physical piano picnic picture piece pig pigeon pill pilot pink pioneer pipe pistol pitch pizza place planet plastic plate play please pledge pluck plug plunge poem poet point polar pole police pond pony pool popular portion position possible post potato pottery poverty powder power practice praise predict prefer prepare present pretty prevent price pride primary print priority prison private prize problem process produce profit program project promote proof property prosper protect proud provide public pudding pull pulp pulse pumpkin punch pupil puppy purchase purity purpose purse push put puzzle pyramid quality quantum quarter question quick quit quiz quote rabbit raccoon race rack radar radio rail rain raise rally ramp ranch random range rapid rare rate rather raven raw razor ready real reason rebel rebuild recall receive recipe record recycle reduce reflect reform refuse region regret regular reject relax release relief rely remain remember remind remove render renew rent reopen repair repeat replace report require rescue resemble resist resource response result retire retreat return reunion reveal review reward rhythm rib ribbon rice rich ride ridge rifle right rigid ring riot ripple risk ritual rival river road roast robot robust rocket romance roof rookie room rose rotate rough round route royal rubber rude rug rule run runway rural sad saddle sadness safe sail salad salmon salon salt salute same sample sand satisfy satoshi sauce sausage save say scale scan scare scatter scene scheme school science scissors scorpion scout scrap screen script scrub sea search season seat second secret section security seed seek segment select sell seminar senior sense sentence series service session settle setup seven shadow shaft shallow share shed shell sheriff shield shift shine ship shiver shock shoe shoot shop short shoulder shove shrimp shrug shuffle shy sibling sick side siege sight sign silent silk silly silver similar simple since sing siren sister situate six size skate sketch ski skill skin skirt skull slab slam sleep slender slice slide slight slim slogan slot slow slush small smart smile smoke smooth snack snake snap sniff snow soap soccer social sock soda soft solar soldier solid solution solve someone song soon sorry sort soul sound soup source south space spare spatial spawn speak special speed spell spend sphere spice spider spike spin spirit split spoil sponsor spoon sport spot spray spread spring spy square squeeze squirrel stable stadium staff stage stairs stamp stand start state stay steak steel stem step stereo stick still sting stock stomach stone stool story stove strategy street strike strong struggle student stuff stumble style subject submit subway success such sudden suffer sugar suggest suit summer sun sunny sunset super supply supreme sure surface surge surprise surround survey suspect sustain swallow swamp swap swarm swear sweet swift swim swing switch sword symbol symptom syrup system table tackle tag tail talent talk tank tape target task taste tattoo taxi teach team tell ten tenant tennis tent term test text thank that theme then theory there they thing this thought three thrive throw thumb thunder ticket tide tiger tilt timber time tiny tip tired tissue title toast tobacco today toddler toe together toilet token tomato tomorrow tone tongue tonight tool tooth top topic topple torch tornado tortoise toss total tourist toward tower town toy track trade traffic tragic train transfer trap trash travel tray treat tree trend trial tribe trick trigger trim trip trophy trouble truck true truly trumpet trust truth try tube tuition tumble tuna tunnel turkey turn turtle twelve twenty twice twin twist two type typical ugly umbrella unable unaware uncle uncover under undo unfair unfold unhappy uniform unique unit universe unknown unlock until unusual unveil update upgrade uphold upon upper upset urban urge usage use used useful useless usual utility vacant vacuum vague valid valley valve van vanish vapor various vast vault vehicle velvet vendor venture venue verb verify version very vessel veteran viable vibrant vicious victory video view village vintage violin virtual virus visa visit visual vital vivid vocal voice void volcano volume vote voyage wage wagon wait walk wall walnut want warfare warm warrior wash wasp waste water wave way wealth weapon wear weasel weather web wedding weekend weird welcome west wet whale what wheat wheel when where whip whisper wide width wife wild will win window wine wing wink winner winter wire wisdom wise wish witness wolf woman wonder wood wool word work world worry worth wrap wreck wrestle wrist write wrong yard year yellow you young youth zebra zero zone zoo';
+/* ---- 시드 지문 계산 (BIP39 → 마스터키 → XFP). 브라우저 WebCrypto 사용 ---- */
+const BIP39=(WORDS_STR=>{const W=WORDS_STR.split(' ');return {W,I:Object.fromEntries(W.map((w,i)=>[w,i]))};})(WORDLIST_STR);
+function ripemd160(m){
+  const ML=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,7,4,13,1,10,6,15,3,12,0,9,5,2,14,11,8,3,10,14,4,9,15,8,1,2,7,0,6,13,11,5,12,1,9,11,10,0,8,12,4,13,3,7,15,14,5,6,2,4,0,5,9,7,12,2,10,14,1,3,8,11,6,15,13];
+  const MR=[5,14,7,0,9,2,11,4,13,6,15,8,1,10,3,12,6,11,3,7,0,13,5,10,14,15,8,12,4,9,1,2,15,5,1,3,7,14,6,9,11,8,12,2,10,0,4,13,8,6,4,1,3,11,15,0,5,12,2,13,9,7,10,14,12,15,10,4,1,5,8,7,6,2,13,14,0,3,9,11];
+  const SL=[11,14,15,12,5,8,7,9,11,13,14,15,6,7,9,8,7,6,8,13,11,9,7,15,7,12,15,9,11,7,13,12,11,13,6,7,14,9,13,15,14,8,13,6,5,12,7,5,11,12,14,15,14,15,9,8,9,14,5,6,8,6,5,12,9,15,5,11,6,8,13,12,5,12,13,14,11,8,5,6];
+  const SR=[8,9,9,11,13,15,15,5,7,7,8,11,14,14,12,6,9,13,15,7,12,8,9,11,7,7,12,7,6,15,13,11,9,7,15,11,8,6,6,14,12,13,5,14,13,13,7,5,15,5,8,11,14,14,6,14,6,9,12,9,12,5,15,8,8,5,12,9,12,5,14,6,8,13,6,5,15,13,11,11];
+  const KL=[0,0x5a827999,0x6ed9eba1,0x8f1bbcdc,0xa953fd4e],KR=[0x50a28be6,0x5c4dd124,0x6d703ef3,0x7a6d76e9,0];
+  const rol=(x,n)=>(x<<n)|(x>>>(32-n));
+  const f=(j,x,y,z)=>j<16?x^y^z:j<32?(x&y)|(~x&z):j<48?(x|~y)^z:j<64?(x&z)|(y&~z):x^(y|~z);
+  const len=m.length,padLen=((len+9+63)>>6)<<6,b=new Uint8Array(padLen);b.set(m);b[len]=0x80;
+  const dv=new DataView(b.buffer);dv.setUint32(padLen-8,(len*8)>>>0,true);dv.setUint32(padLen-4,Math.floor(len*8/4294967296),true);
+  let h0=0x67452301,h1=0xefcdab89|0,h2=0x98badcfe|0,h3=0x10325476,h4=0xc3d2e1f0|0;
+  for(let o=0;o<padLen;o+=64){
+    const X=[];for(let i=0;i<16;i++)X.push(dv.getUint32(o+i*4,true)|0);
+    let al=h0,bl=h1,cl=h2,dl=h3,el=h4,ar=h0,br=h1,cr=h2,dr=h3,er=h4;
+    for(let j=0;j<80;j++){
+      const r=j>>4;
+      let t=(rol((al+f(j,bl,cl,dl)+X[ML[j]]+KL[r])|0,SL[j])+el)|0;al=el;el=dl;dl=rol(cl,10);cl=bl;bl=t;
+      t=(rol((ar+f(79-j,br,cr,dr)+X[MR[j]]+KR[r])|0,SR[j])+er)|0;ar=er;er=dr;dr=rol(cr,10);cr=br;br=t;
+    }
+    const t=(h1+cl+dr)|0;h1=(h2+dl+er)|0;h2=(h3+el+ar)|0;h3=(h4+al+br)|0;h4=(h0+bl+cr)|0;h0=t;
+  }
+  const out=new Uint8Array(20),ov=new DataView(out.buffer);[h0,h1,h2,h3,h4].forEach((v,i)=>ov.setUint32(i*4,v>>>0,true));return out;
+}
+const EC={P:2n**256n-2n**32n-977n,N:0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141n,
+  G:[0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798n,0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8n]};
+const modp=(a,m=EC.P)=>((a%m)+m)%m;
+function inv(a,m=EC.P){let[x0,x1,r0,r1]=[0n,1n,m,modp(a,m)];while(r1){const q=r0/r1;[x0,x1]=[x1,x0-q*x1];[r0,r1]=[r1,r0-q*r1];}return modp(x0,m);}
+function ecAdd(a,b){if(!a)return b;if(!b)return a;
+  if(a[0]===b[0]&&modp(a[1]+b[1])===0n)return null;
+  const l=a[0]===b[0]?modp(3n*a[0]*a[0]*inv(2n*a[1])):modp((b[1]-a[1])*inv(b[0]-a[0]));
+  const x=modp(l*l-a[0]-b[0]);return [x,modp(l*(a[0]-x)-a[1])];}
+function ecMul(k){let r=null,p=EC.G;while(k>0n){if(k&1n)r=ecAdd(r,p);p=ecAdd(p,p);k>>=1n;}return r;}
+const hex=u=>[...u].map(x=>x.toString(16).padStart(2,'0')).join('');
+const unhex=h=>Uint8Array.from(h.match(/../g).map(x=>parseInt(x,16)));
+const sha256=async b=>new Uint8Array(await crypto.subtle.digest('SHA-256',b));
+async function mnemonicOk(words){
+  const idx=words.map(w=>BIP39.I[w]);if(idx.some(i=>i===undefined))return false;
+  let bits=idx.map(i=>i.toString(2).padStart(11,'0')).join('');
+  const cs=words.length/3,ent=bits.slice(0,bits.length-cs);
+  const bytes=Uint8Array.from(ent.match(/.{8}/g).map(x=>parseInt(x,2)));
+  const h=await sha256(bytes);return bits.slice(-cs)===h[0].toString(2).padStart(8,'0').slice(0,cs);
+}
+async function seedFingerprint(words){
+  const enc=new TextEncoder();
+  const key=await crypto.subtle.importKey('raw',enc.encode(words.join(' ')),'PBKDF2',false,['deriveBits']);
+  const seed=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-512',salt:enc.encode('mnemonic'),iterations:2048},key,512));
+  const hk=await crypto.subtle.importKey('raw',enc.encode('Bitcoin seed'),{name:'HMAC',hash:'SHA-512'},false,['sign']);
+  const I=new Uint8Array(await crypto.subtle.sign('HMAC',hk,seed));
+  const k=BigInt('0x'+hex(I.slice(0,32))),pt=ecMul(k);
+  const pub=new Uint8Array(33);pub[0]=pt[1]%2n===0n?2:3;pub.set(unhex(pt[0].toString(16).padStart(64,'0')),1);
+  const h=ripemd160(await sha256(pub));return hex(h.slice(0,4)).toUpperCase();
+}
+
+
+/* ===== 화면 정의 ===== */
+const ENT={ss:{words:[]},kx:{words:[]}};
+const BK={saved:false,how:'',file:'',wname:'',req:2};   // 복원용 백업 파일(파일 앱/메모장)에 저장했는지 — 앱 재설치·기기 초기화와 상관없이 남아요
+const bsmsText=req=>'BSMS 1.0\n'+DESCS[req].split('#')[0].replace(/\/0\/\*/g,'/**')+'\nNo path restrictions\n'+ADDRS_BY[req][0];
+const sgList=b=>b?BIP39.W.filter(w=>w.startsWith(b)).slice(0,5):[];
+function mountEntry(d){
+  const inp=document.getElementById('wi-'+d),sg=document.getElementById('sg-'+d);if(!inp)return;
+  const E=ENT[d];
+  const draw=()=>{const v=inp.value.trim().toLowerCase(),l=sgList(v);
+    sg.innerHTML=l.map(w=>`<span class="sgw" data-w="${w}">${w}</span>`).join('')||(v?'<span class="sgn">없는 단어예요</span>':'');
+    sg.querySelectorAll('.sgw').forEach(n=>n.addEventListener('click',()=>acceptWord(d,n.dataset.w)));};
+  inp.addEventListener('input',draw);
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){e.preventDefault();const v=inp.value.trim().toLowerCase(),l=sgList(v);
+      if(BIP39.I[v]!==undefined)acceptWord(d,v);else if(l.length===1)acceptWord(d,l[0]);}
+    else if(e.key==='Backspace'&&!inp.value&&E.words.length){e.preventDefault();E.words.pop();render(d);}
+  });
+  setTimeout(()=>{if(active===d)inp.focus();},0);draw();
+}
+function acceptWord(d,w){const E=ENT[d];E.words.push(w);if(E.words.length>=12)finishEntry(d);else render(d);}
+const swap=(d,s)=>{st[d].s=s;st[d].i=0;render(d);};
+async function finishEntry(d){
+  const D=d==='ss'?SS:KX,words=[...ENT[d].words];
+  swap(d,d==='ss'?'calc':'kcalc');
+  if(!(window.crypto&&crypto.subtle)){D.entryErr='nocrypto';return swap(d,d==='ss'?'badsum':'kbad');}
+  if(!(await mnemonicOk(words))){D.entryErr='sum';return swap(d,d==='ss'?'badsum':'kbad');}
+  D.pendFp=await seedFingerprint(words);D.pendWords=words;
+  swap(d,d==='ss'?'fpshow':'kfp');
+}
+function autofill(d){
+  ENT[d].words=[...KEYSRC[d].words];
+  if(d==='ss')reset('ss','enter',['home','seeds','load']);else reset('kx','kenter',['home','load','kmanual']);
+  setActive(d);finishEntry(d);
+}
+const entryErrMsg=D=>D.entryErr==='nocrypto'?'이 주소(file/data)에서는 브라우저 암호 기능이 막혀 있어요.\nhttps나 localhost에서 열어 주세요.':'체크섬이 맞지 않아요.\n단어를 잘못 썼거나 순서가 달라요.';
+const ownSS=()=>SS.fp===KEYSRC.ss.xfp,ownKX=()=>KX.fp===KEYSRC.kx.xfp;
+const descHasFp=fp=>fp===KEYSRC.ss.xfp||fp===KEYSRC.kx.xfp;
+const curW=()=>app.wallets[0];
+const shownDescReq=()=>app.s==='exportqr'?(curW()?curW().req:2):2;
+const descSeen=()=>app.s==='exportqr';
+function powerCycle(d){
+  const D=d==='ss'?SS:KX;clearInterval(D.timer);
+  Object.assign(D,{loaded:false,fp:'',words:null,pendFp:'',pendWords:null,desc:false,descReq:2,viewed:false,xpubShown:false,signed:false,scanMsg:'',ai:0,entryErr:''});
+  ENT[d]={words:[]};reset(d,'home');onState();
+}
+function resetApp(){
+  clearInterval(app.timer);
+  Object.assign(app,{s:'home',h:[],name:'',type:'segwit',keys:[],sel:{},req:0,wallets:[],pend:null,scan:0,spec:'',kname:'',
+    sigs:{ss:false,kx:false},psbtShown:false,broadcast:false,descShown:false,viewed:false,signKey:null,psbtFor:{ss:false,kx:false}});
+  renderApp();onState();
+}
+const KX={signed:false,desc:false,viewed:false,ai:0,scanMsg:'',timer:null,N:5,rolls:[],loaded:false,fp:'',mode:'new',xpubShown:false};
+function rollD6(n){KX.rolls.push(n);if(KX.rolls.length>=KX.N)go('kx','d6done');else render('kx');}
+function kxFinish(){KX.loaded=true;KX.fp=KX.pendFp||KEYSRC.kx.xfp;KX.words=KX.pendWords||KEYSRC.kx.words;reset('kx','home');onState();}
+function ssScan(){
+  const showPsbt=app.s==='psbtqr';
+  const msg=showPsbt&&!SS.desc?'먼저 지갑 설정(디스크립터)을<br>가져오세요. change 확인에 필요해요.':'카메라에 보이는 QR이 없어요.<br>앱에서 Export wallet configuration →<br>Export via QR을 띄워 주세요.';
+  simScan('ss',()=>descSeen()||(showPsbt&&SS.desc),msg,()=>{
+    if(showPsbt)return go('ss','psbtreview');
+    SS.pendReq=shownDescReq();go('ss',descHasFp(SS.fp)?'descreview':'descerr');});
+}
+function kxScanPsbt(){
+  const show=app.s==='psbtqr';
+  simScan('kx',()=>show&&KX.desc,show?'먼저 Wallet Descriptor에서\n지갑 설정을 가져오세요.':'카메라에 보이는 QR이 없어요.\n앱에서 Export transaction QR을 먼저 띄워 주세요.',()=>go('kx','kpsbt'));
+}
+const SS={signed:false,desc:false,viewed:false,ai:0,scanMsg:'',timer:null,xpubShown:false,N:5,rolls:[],pg:0,mode:'new',loaded:false,fp:'',qn:6,wrong:false};
+function rollDice(n){SS.rolls.push(n);if(SS.rolls.length>=SS.N)go('ss','dicedone');else render('ss');}
+const stub=(title)=>({title,body:'이 화면은 다음 단계에서 만들어요.\n(준비 중)',back:true});
+const reset=(d,s,h)=>{Object.assign(st[d],{s,i:0,h:h||[]});render(d);};
+const SCREENS={
+  ss:{
+    home:{title:'Home',layout:'grid',items:[
+      {ic:'▣',label:'Scan',to:'scan'},{ic:'⚷',label:'Seeds',to:'seeds'},
+      {ic:'⚒',label:'Tools',to:'tools'},{ic:'⚙',label:'Settings',to:'settings'}]},
+    scan:()=>({title:'Scan',back:true,body:SS.scanMsg||'카메라로 QR을 비춰요',layout:'list',
+      items:[{label:'스캔 시뮬레이션',fn:()=>ssScan()}]}),
+    psbtreview:()=>({title:'PSBT Overview',layout:'list',back:true,
+      body:`<div style="font-size:12.5px;line-height:1.55;text-align:left"><span style="color:#aaa">Spend</span> <b style="color:#fff">${btc(TX.send)} BTC</b><br><span style="color:#aaa">To</span> ${shortA(TX.to)}<br><span style="color:#aaa">Fee</span> ${TX.fee.toLocaleString()} sats<br><span style="color:#aaa">Change</span> ${btc(TX.change)} BTC <b style="color:#7be0a8">✓ 내 지갑</b></div>`,
+      items:[{label:'Approve PSBT',fn:()=>{SS.signed=true;go('ss','signedqr');onState();}}],foot:'주소·금액이 앱과 같은지 꼭 확인!'}),
+    signedqr:()=>({title:'Signed PSBT',back:true,custom:`<div class="qrw" style="flex-direction:column">${aqHtml('ss',168)}</div>`,foot:'앱에서 Import signature로 비춰요'}),
+    descreview:()=>({title:'Multisig Descriptor',layout:'list',back:true,
+      body:`<div style="font-size:13px;line-height:1.6">${SS.pendReq||2} of 2 · Native Segwit<br><b style="color:#ffb02e">${KEYSRC.ss.xfp}</b>${SS.fp===KEYSRC.ss.xfp?' (이 기기)':''}<br><b style="color:#fff">${KEYSRC.kx.xfp}</b></div>`,
+      items:[{label:'Load',fn:()=>{SS.desc=true;SS.descReq=SS.pendReq||2;go('ss','descok');onState();}}]}),
+    descok:{title:'Descriptor Loaded',body:'지갑 설정을 가져왔어요.\nTools → Address Explorer에서\n주소를 확인해 보세요.',layout:'list',items:[{label:'Done',fn:()=>reset('ss','home')}]},
+    seeds:()=>({title:'Seeds',layout:'list',back:true,items:[
+      ...(SS.loaded?[{ic:'⚷',label:SS.fp,to:'seedmenu'}]:[]),{label:'Load a seed',to:'load'}]}),
+    seedmenu:()=>({title:SS.fp,layout:'list',back:true,items:[
+      {label:'Backup Seed',fn:()=>{SS.mode='view';SS.pg=0;go('ss','words');}},
+      {label:'Export Xpub',fn:()=>{if(ownSS())go('ss','xpub');else go('ss','foreign');}}]}),
+    xpub:{title:'Export Xpub',layout:'list',back:true,items:[{label:'Single Sig',to:'kcam2'},{label:'Multisig',to:'xscript'}]},
+    kcam2:stub('Single Sig'),
+    xscript:{title:'Script Type',layout:'list',back:true,items:[{label:'Native Segwit',to:'xcoord'},{label:'Nested Segwit',to:'kcam2'},{label:'Taproot',to:'kcam2'}]},
+    xcoord:{title:'Coordinator',layout:'list',back:true,items:[{label:'Nunchuk',to:'xconfirm'},{label:'Sparrow',to:'xconfirm'},{label:'Specter',to:'xconfirm'}]},
+    xconfirm:()=>({title:'Export Xpub',layout:'list',back:true,
+      body:`<span style="color:#aaa">Fingerprint</span> <b style="color:#ffb02e">${KEYSRC.ss.xfp}</b><br><span style="color:#aaa">Derivation</span> m/48h/0h/0h/2h<br><span style="color:#aaa">Multisig · Native Segwit</span>`,
+      items:[{label:'Export Xpub',fn:()=>{SS.xpubShown=true;go('ss','xpubqr');onState();}}]}),
+    xpubqr:()=>({title:'Xpub QR',back:true,custom:`<div class="qrw">${qrSvg(specOf(KEYSRC.ss),188)}</div>`,
+      foot:'앱에서 Scan QR로 비춰요'}),
+    load:{title:'Load a seed',layout:'list',back:true,items:[
+      {label:'Scan SeedQR',to:'cam'},
+      {label:'Enter 12 words',fn:()=>{ENT.ss={words:[]};go('ss','enter');}},
+      {label:'Enter 24 words',to:'cam'}]},
+    enter:()=>({title:`Word ${ENT.ss.words.length+1}/12`,back:true,
+      custom:`<input class="wi" id="wi-ss" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="알파벳 입력"><div class="sg" id="sg-ss"></div>`,
+      foot:'키보드로 입력 · Enter=확정<br>빈 칸에서 Backspace=이전 단어',mount:()=>mountEntry('ss')}),
+    calc:{title:'Checking…',body:'확인 중이에요…'},
+    badsum:()=>({title:'Seed Error',layout:'list',body:`<span style="color:#ff6b6b">${entryErrMsg(SS)}</span>`,
+      items:[{label:'Try again',fn:()=>{ENT.ss={words:[]};reset('ss','enter',['home','seeds','load']);}}]}),
+    fpshow:()=>({title:'Seed Fingerprint',layout:'list',
+      body:`<span style="color:#aaa">Fingerprint</span><br><b style="color:#ffb02e;font-size:22px">${SS.pendFp}</b><br><span style="font-size:11px;color:#aaa">처음 만들 때 적어 둔 지문과 같은지 확인!</span>`,
+      items:[{label:'Done',fn:()=>{SS.loaded=true;SS.fp=SS.pendFp;SS.words=SS.pendWords;reset('ss','home');onState();}},{label:'Cancel',fn:()=>reset('ss','home')}]}),
+    foreign:()=>({title:'Export Xpub',back:true,body:`이 시드(지문 ${SS.fp})는\n연습 지갑에 쓴 키가 아니에요.\n여기서는 더 진행할 수 없어요.`}),
+    descerr:()=>({title:'Descriptor Error',back:true,layout:'list',
+      body:`<div style="font-size:12.5px;line-height:1.6;color:#ff8a8a">이 지갑 설정에 내 시드가 없어요!<br><span style="color:#aaa">지갑에 포함된 지문</span><br>${KEYSRC.ss.xfp} · ${KEYSRC.kx.xfp}<br><span style="color:#aaa">불러온 시드 지문</span> ${SS.fp}</div>`,
+      items:[{label:'Back',fn:()=>reset('ss','home')}]}),
+    tools:{title:'Tools',layout:'list',back:true,items:[{label:'New seed',to:'newseed'},{label:'Address Explorer',fn:()=>{SS.ai=0;go('ss','addr');if(SS.desc){SS.viewed=true;onState();}}}]},
+    newseed:{title:'New seed',layout:'list',back:true,items:[{label:'Camera',to:'cam'},{label:'Dice',fn:()=>{SS.rolls=[];SS.mode='new';go('ss','dice');}}]},
+    cam:stub('Camera'),
+    addr:()=>SS.desc?{title:`Receive #${SS.ai}`,back:true,
+      body:`<span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#fff;line-height:1.6">${grpHtml(ADDRS_BY[SS.descReq||2][SS.ai])}</span>`,
+      layout:'list',items:[{label:'Next Address',fn:()=>{SS.ai=(SS.ai+1)%3;render('ss');}}],foot:'앱·크록스의 #0과 같은지 비교해요'}
+      :{title:'Address Explorer',back:true,body:'먼저 Scan으로 지갑 설정\n(디스크립터)을 가져오세요.'},
+    dice:()=>({title:`Dice Roll ${Math.min(SS.rolls.length+1,SS.N)}/${SS.N}`,back:true,
+      sub:'주사위를 굴려 나온 숫자를 고르세요<br><b style="color:#fff;letter-spacing:.2em">'+(SS.rolls.length?SS.rolls.join(' '):'-')+'</b>',
+      layout:'grid',cols:3,items:[1,2,3,4,5,6].map(n=>({label:String(n),big:true,fn:()=>rollDice(n)})),
+      foot:'⚠ 연습이라 5번만 굴려요.<br>실제로 시드를 만들 때는 50번을 굴리세요.'}),
+    dicedone:{title:'Dice Done',body:'5번 입력 완료!\n연습용이라 입력한 숫자와 상관없이\n연습용 시드를 만들어요.',items:[{label:'Continue',fn:()=>go('ss','warnwords')}],layout:'list',
+      foot:'⚠ 실제로는 50번 굴려요'},
+    warnwords:{title:'Backup Seed',body:'12개 단어를 종이에 적으세요.\n사진·메모앱 저장은 금지예요.',layout:'list',items:[{label:'I Understand',fn:()=>{SS.pg=0;go('ss','words');}}]},
+    words:()=>{const w=SS.words||KEYSRC.ss.words,a=SS.pg*4,last=SS.pg===2;
+      return {title:`Seed Words ${SS.pg+1}/3`,back:true,
+        body:w.slice(a,a+4).map((x,i)=>`<span style="color:#888">${a+i+1}.</span> <b style="color:#fff;font-size:17px">${x}</b>`).join('<br>'),
+        layout:'list',items:[{label:last?(SS.mode==='new'?'Verify':'Done'):'Next',fn:()=>{
+          if(!last){SS.pg++;render('ss');}
+          else if(SS.mode==='new'){SS.qn=6+Math.floor(Math.random()*6);go('ss','quiz');}
+          else reset('ss','seedmenu',['home','seeds']);}}]};},
+    quiz:()=>{const w=KEYSRC.ss.words,n=SS.qn,right=w[n];
+      const dec=['zoo','wrap','ocean'].filter(x=>x!==right).slice(0,2);
+      const order=[...dec];order.splice(n%3,0,right);
+      return {title:'Verify',sub:`${n+1}번째 단어는?${SS.wrong?'<br><span style="color:#f55">틀렸어요. 다시!</span>':''}`,layout:'list',
+        items:order.map(o=>({label:o,fn:()=>{if(o===right){SS.wrong=false;go('ss','final');}else{SS.wrong=true;render('ss');}}}))};},
+    final:()=>({title:'Seed Loaded',body:`<span style="color:#aaa">Fingerprint</span><br><b style="color:#ffb02e;font-size:22px">${KEYSRC.ss.xfp}</b>`,
+      layout:'list',items:[{label:'Done',fn:()=>{SS.loaded=true;SS.fp=KEYSRC.ss.xfp;SS.words=KEYSRC.ss.words;reset('ss','home');onState();}}]}),
+    settings:stub('Settings')
+  },
+  kx:{
+    home:()=>KX.loaded?{title:KX.fp,layout:'list',items:[
+      {label:'Backup Mnemonic',fn:()=>{KX.mode='view';go('kx','words');}},
+      {label:'Extended Public Key',fn:()=>{if(ownKX())go('kx','xpub');else go('kx','kforeign');}},{label:'Wallet Descriptor',to:'desc'},
+      {label:'Sign',to:'ksign'},
+      {label:'Address',fn:()=>{KX.ai=0;go('kx','addr');if(KX.desc){KX.viewed=true;onState();}}},
+      {label:'Wipe Key',fn:()=>{powerCycle('kx');}}]}
+      :{title:'Krux',layout:'list',items:[
+      {label:'Load Mnemonic',to:'load'},{label:'New Mnemonic',to:'new'},
+      {label:'Settings',to:'settings'},{label:'About',to:'about'}]},
+    xpub:()=>({title:'Extended Public Key',back:true,
+      body:`<div style="text-align:left;font-size:13px;line-height:1.5"><span style="color:#888">fingerprint</span> ${KEYSRC.kx.xfp}<br><span style="color:#888">path</span> m/48h/0h/0h/2h<br><span style="word-break:break-all;color:#fff">${KEYSRC.kx.xpub.slice(0,56)}…</span></div>`,
+      layout:'list',items:[{label:'Show QR',fn:()=>{KX.xpubShown=true;go('kx','xpubqr');onState();}}]}),
+    xpubqr:()=>({title:'Extended Public Key',back:true,custom:`<div class="qrw">${qrSvg(specOf(KEYSRC.kx),232)}</div>`}),
+    desc:()=>KX.desc?{title:'Wallet Descriptor',back:true,body:(KX.descReq||2)+' of 2 · Native Segwit\n가져오기 완료',layout:'list',items:[{label:'Done',fn:()=>reset('kx','home')}]}
+      :{title:'Wallet Descriptor',back:true,body:KX.scanMsg||'아직 가져온 지갑 설정이 없어요.',layout:'list',
+        items:[{label:'Load from camera',fn:()=>simScan('kx',()=>descSeen(),'카메라에 보이는 QR이 없어요.\n앱에서 Export wallet configuration →\nExport via QR을 띄워 주세요.',()=>{KX.pendReq=shownDescReq();go('kx',descHasFp(KX.fp)?'kreview':'kerr');})}]},
+    ksign:()=>({title:'Sign',back:true,body:KX.scanMsg||'서명할 PSBT를 카메라로 불러와요.',layout:'list',
+      items:[{label:'Load PSBT from camera',fn:()=>kxScanPsbt()}]}),
+    kpsbt:()=>({title:'Transaction',back:true,layout:'list',
+      body:`<div style="text-align:left;font-size:14px;line-height:1.7"><span style="color:#888">Send</span> <b>${btc(TX.send)} BTC</b><br><span style="color:#888">To</span> ${shortA(TX.to)}<br><span style="color:#888">Fee</span> ${TX.fee.toLocaleString()} sats<br><span style="color:#888">Change</span> ${btc(TX.change)} BTC <b style="color:#7be0a8">✓ 내 지갑</b></div>`,
+      items:[{label:'Sign',fn:()=>{KX.signed=true;go('kx','ksigned');onState();}},{label:'Cancel',fn:()=>reset('kx','home')}],foot:'주소·금액이 앱과 같은지 꼭 확인!'}),
+    ksigned:()=>({title:'Signed PSBT',back:true,custom:`<div class="qrw" style="flex-direction:column">${aqHtml('kx',212)}</div>`}),
+    kreview:()=>({title:'Wallet Descriptor',back:true,layout:'list',
+      body:`<div style="font-size:15px;line-height:1.7">${KX.pendReq||2} of 2 · Native Segwit<br><b style="color:#7be0a8">${KEYSRC.kx.xfp}</b>${KX.fp===KEYSRC.kx.xfp?' (이 기기)':''} · <b>${KEYSRC.ss.xfp}</b></div>`,
+      items:[{label:'Load',fn:()=>{KX.desc=true;KX.descReq=KX.pendReq||2;reset('kx','desc',['home']);onState();}},{label:'Cancel',fn:()=>reset('kx','home')}]}),
+    addr:()=>KX.desc?{title:`Receive Address #${KX.ai}`,back:true,
+      body:`<span style="font-family:ui-monospace,Menlo,monospace;font-size:15px;color:#fff;line-height:1.7">${grpHtml(ADDRS_BY[KX.descReq||2][KX.ai])}</span>`,
+      layout:'list',items:[{label:'Next Address',fn:()=>{KX.ai=(KX.ai+1)%3;render('kx');}}]}
+      :{title:'Address',back:true,body:'먼저 Wallet Descriptor에서\n지갑 설정을 가져오세요.'},
+    load:{title:'Load Mnemonic',layout:'list',back:true,items:[{label:'Via Camera',to:'kcam'},{label:'Via Manual',to:'kmanual'}]},
+    kmanual:{title:'Via Manual',layout:'list',back:true,items:[
+      {label:'Via Words',fn:()=>{ENT.kx={words:[]};go('kx','kenter');}},{label:'Via Numbers',to:'kcam'}]},
+    kenter:()=>({title:`Word ${ENT.kx.words.length+1}/12`,back:true,
+      custom:`<input class="wi" id="wi-kx" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="알파벳 입력"><div class="sg" id="sg-kx"></div>`,
+      foot:'키보드로 입력 · Enter=확정 · 빈 칸에서 Backspace=이전 단어',mount:()=>mountEntry('kx')}),
+    kcalc:{title:'Checking…',body:'확인 중이에요…'},
+    kbad:()=>({title:'Invalid Mnemonic',layout:'list',body:`<span style="color:#ff6b6b">${entryErrMsg(KX)}</span>`,
+      items:[{label:'Try again',fn:()=>{ENT.kx={words:[]};reset('kx','kenter',['home','load','kmanual']);}}]}),
+    kfp:()=>({title:'Fingerprint',layout:'list',
+      body:`<b style="color:#7be0a8;font-size:26px">${KX.pendFp}</b><br><span style="font-size:13px;color:#aaa">처음 만들 때 적어 둔 지문과 같은지 확인!</span>`,
+      items:[{label:'Load',fn:()=>go('kx','wtype')},{label:'Cancel',fn:()=>reset('kx','home')}]}),
+    kforeign:()=>({title:'Extended Public Key',back:true,body:`이 키(지문 ${KX.fp})는\n연습 지갑에 쓴 키가 아니에요.\n여기서는 더 진행할 수 없어요.`}),
+    kerr:()=>({title:'Wallet Descriptor',back:true,layout:'list',
+      body:`<div style="font-size:15px;line-height:1.7;color:#ff8a8a">이 지갑 설정에 내 키가 없어요!<br><span style="color:#aaa">지갑에 포함된 지문</span><br>${KEYSRC.ss.xfp} · ${KEYSRC.kx.xfp}<br><span style="color:#aaa">불러온 키 지문</span> ${KX.fp}</div>`,
+      items:[{label:'Back',fn:()=>reset('kx','home')}]}),
+    settings:stub('Settings'),about:stub('About'),
+    new:{title:'New Mnemonic',layout:'list',back:true,items:[
+      {label:'Via Camera',to:'kcam'},
+      {label:'Via D6',fn:()=>{KX.rolls=[];KX.mode='new';go('kx','d6');}},
+      {label:'Via D20',to:'kcam'},{label:'Via Words',to:'kcam'}]},
+    kcam:stub('Via Camera'),
+    d6:()=>({title:`Via D6 · ${Math.min(KX.rolls.length+1,KX.N)}/${KX.N}`,back:true,
+      sub:'굴려서 나온 숫자를 터치하세요 &nbsp; <b style="color:#fff;letter-spacing:.2em">'+(KX.rolls.length?KX.rolls.join(' '):'-')+'</b>',
+      layout:'grid',cols:6,items:[1,2,3,4,5,6].map(n=>({label:String(n),fn:()=>rollD6(n)})),
+      foot:'⚠ 연습이라 5번만 굴려요. 실제로 시드를 만들 때는 50번을 굴리세요.'}),
+    d6done:{title:'Dice Done',body:'5번 입력 완료!\n연습용이라 입력한 숫자와 상관없이 연습용 니모닉을 만들어요.',layout:'list',
+      items:[{label:'Continue',fn:()=>{KX.pendFp=KEYSRC.kx.xfp;KX.pendWords=KEYSRC.kx.words;go('kx','words');}}],foot:'⚠ 실제로는 50번 굴려요'},
+    words:()=>{const w=KX.words&&KX.mode==='view'?KX.words:(KX.pendWords||KEYSRC.kx.words);const col=(a)=>w.slice(a,a+6).map((x,i)=>`<div><span class="n">${a+i+1}.</span> ${x}</div>`).join('');
+      return {title:'Mnemonic',back:KX.mode==='view',custom:`<div class="wds"><div>${col(0)}</div><div>${col(6)}</div></div>`,
+        sub:'종이에 적으세요. 사진·메모앱 저장은 금지예요.',layout:'list',
+        items:[{label:KX.mode==='new'?'Continue':'Done',fn:()=>{if(KX.mode==='new')go('kx','wtype');else reset('kx','home');}}]};},
+    wtype:{title:'Wallet Type',sub:'이 키로 만들 지갑 종류',layout:'list',items:[
+      {label:'Single-sig',fn:()=>kxFinish()},{label:'Multisig',fn:()=>kxFinish()}]},
+  },
+  app:{}
+};
+
+/* ===== 와치온리 앱 (전용 렌더러) =====
+   연습용 가짜 키 정보. 실제 지갑 값이 아니에요. */
+/* 공개된 BIP39 테스트 벡터를 연습용 시드로 사용 (실제 자산에 절대 쓰지 말 것) */
+const KEYSRC={
+  ss:{name:'SeedSigner',xfp:'A07D432C',words:'ozone drill grab fiber curtain grace pudding thank cruise elder eight picnic'.split(' '),
+      xpub:'xpub6EgNigW7AHhN4LnhC5otjJa6PeU9SDYt1eUejvwuVMT5UNBGHA3PQNPxd376ryyjnWnMhHYHwfk9yj3FugEqzaE5YaeydefBZEKTUPJnDQz'},
+  kx:{name:'Krux',xfp:'B760AECD',words:'scheme spot photo card baby mountain device kick cradle pact join borrow'.split(' '),
+      xpub:'xpub6FMYEFj8esWqvZJGaYfqtj58RFHnaaLdkQQy7sWWbYp8QEUCzDKaZzCypZ3K2z2vkpb95hzrHwyhdHWZsUVbxKQEuNDpybGqx3fStLCp6fH'}
+};
+const APP_PATH="48h/0h/0h/2h";
+function qrSvg(text,px){
+  const q=qrcode(0,'M');q.addData(text);q.make();
+  const n=q.getModuleCount(),m=2,s=n+m*2;let d='';
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))d+=`M${c+m},${r+m}h1v1h-1z`;
+  return `<svg class="qr" width="${px}" height="${px}" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges"><rect width="${s}" height="${s}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
+}
+const specOf=k=>`[${k.xfp.toLowerCase()}/${'48h/0h/0h/2h'}]${k.xpub}`;
+/* 2-of-2 지갑 설정 (위 두 xpub으로 계산한 실제 값: BIP380 디스크립터 + 체크섬, bech32 주소) */
+const DESC="wsh(sortedmulti(2,[a07d432c/48h/0h/0h/2h]xpub6EgNigW7AHhN4LnhC5otjJa6PeU9SDYt1eUejvwuVMT5UNBGHA3PQNPxd376ryyjnWnMhHYHwfk9yj3FugEqzaE5YaeydefBZEKTUPJnDQz/0/*,[b760aecd/48h/0h/0h/2h]xpub6FMYEFj8esWqvZJGaYfqtj58RFHnaaLdkQQy7sWWbYp8QEUCzDKaZzCypZ3K2z2vkpb95hzrHwyhdHWZsUVbxKQEuNDpybGqx3fStLCp6fH/0/*))#7jeamd2x";
+const ADDRS=["bc1qcmtn74v02034d70a2x98pvu6hd5zgx3s7kd7wmn23zkmsmt0sahqt953ez", "bc1qlc4xcadyca2ch6dftduuhqfcxnp6x5slpzq4prtxa7m2ehkvm9nqfn2t9t", "bc1ql79ra6mjfshk4sx60flmqthy8l44q64e0zzcdxgg2fqdxj98fgwq09mjan"];
+/* 연습용 거래 (embit로 만든 실제 PSBT, 각 기기 서명 포함) */
+const TX={send:30000,fee:1000,change:69000,fund:100000,to:'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',changeAddr:'bc1qw8ywzhk20q04v92ddv9s0jx4szvjav7w6zc0k2h7fljnqn3eqmqq43jcsa'};
+const PSBT={unsigned:'cHNidP8BAH0CAAAAARERERERERERERERERERERERERERERERERERERERERERAAAAAAD/////AjB1AAAAAAAAFgAUdR526BmRltRUlBxF0bOjI/FDO9aIDQEAAAAAACIAIHHI4V7KeB9WFU1rCwfI1YCZLrPO0LD7Kv5P5TBOOQbAAAAAAAABASughgEAAAAAACIAIMbXP1WPU+NW+f1RinCzmrtoJBow9ZvnbmqIrbhtb4duAQVHUiECeCIUncWpc/p/jjVZYVB6psTW4M+n/FpSrN9hxHCMqt4hA27VbososlL/1B8su4lXj271nfYezSvnMmaFSbygV0wHUq4iBgNu1W6LKLJS/9QfLLuJV49u9Z32Hs0r5zJmhUm8oFdMBxygfUMsMAAAgAAAAIAAAACAAgAAgAAAAAAAAAAAIgYCeCIUncWpc/p/jjVZYVB6psTW4M+n/FpSrN9hxHCMqt4ct2CuzTAAAIAAAACAAAAAgAIAAIAAAAAAAAAAAAAAAQFHUiEDEH/h+WGvxpSmkg521Aw77N/GCce+2KsRH7h9Zw5d6j4hA9AfdgRIVhxsd+gnCbq4vSZxwFMelcmKlWBOcKCO6KcmUq4iAgPQH3YESFYcbHfoJwm6uL0mccBTHpXJipVgTnCgjuinJhygfUMsMAAAgAAAAIAAAACAAgAAgAEAAAAAAAAAIgIDEH/h+WGvxpSmkg521Aw77N/GCce+2KsRH7h9Zw5d6j4ct2CuzTAAAIAAAACAAAAAgAIAAIABAAAAAAAAAAA=',ss:'cHNidP8BAH0CAAAAARERERERERERERERERERERERERERERERERERERERERERAAAAAAD/////AjB1AAAAAAAAFgAUdR526BmRltRUlBxF0bOjI/FDO9aIDQEAAAAAACIAIHHI4V7KeB9WFU1rCwfI1YCZLrPO0LD7Kv5P5TBOOQbAAAAAAAABASughgEAAAAAACIAIMbXP1WPU+NW+f1RinCzmrtoJBow9ZvnbmqIrbhtb4duIgIDbtVuiyiyUv/UHyy7iVePbvWd9h7NK+cyZoVJvKBXTAdHMEQCIH1c2XTF6J/ac7iAtyujawbSh5JalDdDAx2xo2CTtCIyAiA2v8IkIA3L5FiOF+ZUJKtfIUoS8Hunxv/DkuoZRXN5ywEBBUdSIQJ4IhSdxalz+n+ONVlhUHqmxNbgz6f8WlKs32HEcIyq3iEDbtVuiyiyUv/UHyy7iVePbvWd9h7NK+cyZoVJvKBXTAdSriIGA27VbososlL/1B8su4lXj271nfYezSvnMmaFSbygV0wHHKB9QywwAACAAAAAgAAAAIACAACAAAAAAAAAAAAiBgJ4IhSdxalz+n+ONVlhUHqmxNbgz6f8WlKs32HEcIyq3hy3YK7NMAAAgAAAAIAAAACAAgAAgAAAAAAAAAAAAAABAUdSIQMQf+H5Ya/GlKaSDnbUDDvs38YJx77YqxEfuH1nDl3qPiED0B92BEhWHGx36CcJuri9JnHAUx6VyYqVYE5woI7opyZSriICA9AfdgRIVhxsd+gnCbq4vSZxwFMelcmKlWBOcKCO6KcmHKB9QywwAACAAAAAgAAAAIACAACAAQAAAAAAAAAiAgMQf+H5Ya/GlKaSDnbUDDvs38YJx77YqxEfuH1nDl3qPhy3YK7NMAAAgAAAAIAAAACAAgAAgAEAAAAAAAAAAA==',kx:'cHNidP8BAH0CAAAAARERERERERERERERERERERERERERERERERERERERERERAAAAAAD/////AjB1AAAAAAAAFgAUdR526BmRltRUlBxF0bOjI/FDO9aIDQEAAAAAACIAIHHI4V7KeB9WFU1rCwfI1YCZLrPO0LD7Kv5P5TBOOQbAAAAAAAABASughgEAAAAAACIAIMbXP1WPU+NW+f1RinCzmrtoJBow9ZvnbmqIrbhtb4duIgICeCIUncWpc/p/jjVZYVB6psTW4M+n/FpSrN9hxHCMqt5HMEQCIFRoG3AfEnax+0kcAttlDBIBt5yBuPqVFGwi3qHxYuoPAiB8euVBs+/1Q1Z1RVUhPSHEAge/5LJLrNqTnFJS6ST4gAEBBUdSIQJ4IhSdxalz+n+ONVlhUHqmxNbgz6f8WlKs32HEcIyq3iEDbtVuiyiyUv/UHyy7iVePbvWd9h7NK+cyZoVJvKBXTAdSriIGA27VbososlL/1B8su4lXj271nfYezSvnMmaFSbygV0wHHKB9QywwAACAAAAAgAAAAIACAACAAAAAAAAAAAAiBgJ4IhSdxalz+n+ONVlhUHqmxNbgz6f8WlKs32HEcIyq3hy3YK7NMAAAgAAAAIAAAACAAgAAgAAAAAAAAAAAAAABAUdSIQMQf+H5Ya/GlKaSDnbUDDvs38YJx77YqxEfuH1nDl3qPiED0B92BEhWHGx36CcJuri9JnHAUx6VyYqVYE5woI7opyZSriICA9AfdgRIVhxsd+gnCbq4vSZxwFMelcmKlWBOcKCO6KcmHKB9QywwAACAAAAAgAAAAIACAACAAQAAAAAAAAAiAgMQf+H5Ya/GlKaSDnbUDDvs38YJx77YqxEfuH1nDl3qPhy3YK7NMAAAgAAAAIAAAACAAgAAgAEAAAAAAAAAAA=='};
+const btc=s=>(s/1e8).toFixed(8).replace(/0+$/,'').replace(/\.$/,'');
+const shortA=a=>a.slice(0,12)+'…'+a.slice(-8);
+/* 길어서 여러 장이 번갈아 뜨는 QR (실제 기기의 애니메이션 QR을 흉내) */
+const AQ_N=300;
+function aqFrames(key){const s=PSBT[key],n=Math.ceil(s.length/AQ_N);return Array.from({length:n},(_,i)=>`p${i+1}/${n}:`+s.slice(i*AQ_N,(i+1)*AQ_N));}
+let aqTick=0;
+function aqHtml(key,px){return `<div class="aqr" data-k="${key}" data-px="${px}"></div>`;}
+function aqUpdate(){document.querySelectorAll('.aqr').forEach(el=>{
+  const f=aqFrames(el.dataset.k),i=aqTick%f.length;
+  el.innerHTML=qrSvg(f[i],+el.dataset.px)+`<div class="aqc">QR ${i+1}/${f.length}</div>`;});}
+setInterval(()=>{aqTick++;aqUpdate();},700);
+const DESC1="wsh(sortedmulti(1,[a07d432c/48h/0h/0h/2h]xpub6EgNigW7AHhN4LnhC5otjJa6PeU9SDYt1eUejvwuVMT5UNBGHA3PQNPxd376ryyjnWnMhHYHwfk9yj3FugEqzaE5YaeydefBZEKTUPJnDQz/0/*,[b760aecd/48h/0h/0h/2h]xpub6FMYEFj8esWqvZJGaYfqtj58RFHnaaLdkQQy7sWWbYp8QEUCzDKaZzCypZ3K2z2vkpb95hzrHwyhdHWZsUVbxKQEuNDpybGqx3fStLCp6fH/0/*))#jt78laf6";
+const ADDRS1=["bc1qg0qm3ctjyjxdqqnkudpp4c7cfl0j3pphxakj8ugty7lsvvzgwgfs0a70xk", "bc1q5dgnh07dsq2km7gjvprflxne6qllnp2ms2364vdvh4x3x7laag2qk5592e", "bc1qfd773cvwf6uvhzayjqy90k9j9lhwxule683marfth3tg2u4rln2sugeu5u"];
+const DESCS={2:DESC,1:DESC1},ADDRS_BY={2:ADDRS,1:ADDRS1};
+const grp=a=>a.match(/.{1,4}/g).join(' ');
+const grpHtml=a=>a.match(/.{1,16}/g).map(l=>grp(l)).join('<br>');
+function simScan(dev,okCond,failMsg,onDone){
+  const D=dev==='ss'?SS:KX;
+  if(!D.loaded){D.scanMsg='먼저 시드를 만들어 주세요.';render(dev);return;}
+  if(!okCond()){D.scanMsg=failMsg;render(dev);return;}
+  let pct=0;clearInterval(D.timer);
+  D.timer=setInterval(()=>{pct=Math.min(100,pct+10);D.scanMsg='Scanning '+pct+'%';
+    if(pct>=100){clearInterval(D.timer);D.scanMsg='';onDone();}else render(dev);},110);
+  render(dev);
+}
+const fakeSpec=k=>`[${k.xfp.toLowerCase()}/${APP_PATH}]${k.xpub}`;
+const sigShowing=d=>st[d].s==='signedqr'||st[d].s==='ksigned';
+const sigSrc=()=>app.signKey?(sigShowing(app.signKey)&&!app.sigs[app.signKey]?app.signKey:null):['ss','kx'].find(d=>sigShowing(d)&&!app.sigs[d]);
+const pendSrc=()=>['ss','kx'].find(d=>deviceShowsQR(d)&&!app.keys.some(k=>k.id===d))||['ss','kx'].find(deviceShowsQR);
+const deviceShowsQR=id=>(id==='ss'&&st.ss.s==='xpubqr')||(id==='kx'&&st.kx.s==='xpubqr');
+const app={psbtFor:{ss:false,kx:false},signKey:null,sigs:{ss:false,kx:false},psbtShown:false,broadcast:false,descShown:false,viewed:false,s:'home',h:[],name:'',type:'segwit',keys:[],sel:{},req:0,wallets:[],pend:null,scan:0,spec:'',kname:'',startLen:0,timer:null};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function appGo(s){app.h.push(app.s);app.s=s;app.toast='';renderApp();}
+function appBack(){if(app.h.length){app.s=app.h.pop();app.toast='';renderApp();}}
+function backToTx(){while(app.h.length&&app.s!=='tx')app.s=app.h.pop();app.toast='';renderApp();}
+function appTab(s){app.s=s;app.h=[];app.toast='';renderApp();}
+function appCfg(){const n=Object.values(app.sel).filter(Boolean).length;return {n,ok:n>=1&&app.req>=1&&app.req<=n};}
+const IC={
+  key:'<span class="kic"></span>',
+  tabs:{home:'▣',keys:'⚷',svc:'✓',msg:'✉',me:'●'}
+};
+function renderApp(){
+  clearInterval(app.timer);
+  const el=document.getElementById('scr-app');
+  const s=app.s;
+  const dark=(s==='home'||s==='keys');
+  const sb=`<div class="sb${dark?' dk':''}"><span>10:22</span><span>▮▮▮ ◖</span></div>`;
+  const hd=(t,left)=>`<div class="hd"><button class="ib" data-a="${left==='x'?'exit':'back'}">${left==='x'?'✕':'←'}</button><div class="t">${t}</div><span class="ib"></span></div>`;
+  const tabbar=cur=>`<div class="tb">${[['home','Home','home'],['keys','Keys','keys'],['svc','Services',''],['msg','Messages',''],['me','Profile','']].map(([i,l,go])=>`<div class="${cur===i?'on':''}" ${go?`data-a="tab-${go}"`:''}><span>${IC.tabs[i]}</span>${l}</div>`).join('')}</div>`;
+  let h=`<div class="ap">${sb}`;
+  if(s==='home'){
+    h+=`<div class="dhd"><span class="nfc">((·))<small>NFC</small></span><div class="t">Home</div><span></span></div>
+      <div class="wh"><b>Wallets</b><i class="on"></i><small>Online</small><span class="plus" data-a="type">＋</span></div><div class="main">`;
+    if(!app.wallets.length)h+=`<div class="empty">아직 지갑이 없어요.<br>오른쪽 위 ＋ 버튼으로 만들어 보세요.</div>`;
+    h+=app.wallets.map(w=>`<div class="wc" data-a="wallet" style="cursor:pointer"><b>${esc(w.name)}</b><div>${btc(TX.fund)} BTC</div><small>(연습용 잔액)</small><span class="pill">${w.cfg}</span></div>`).join('');
+    h+=`</div><div class="tot"><div><b>Total balance</b></div><div class="r">0 BTC<br><small>($0.00)</small></div></div>${tabbar('home')}`;
+  }else if(s==='keys'){
+    h+=`<div class="dhd"><span></span><div class="t">Keys</div><span></span></div>
+      <div class="wh"><b>Keys</b><span class="plus" data-a="addkey">＋</span></div><div class="main">`;
+    if(!app.keys.length)h+=`<div class="empty">등록된 키가 없어요.<br>＋ 를 눌러 시드사이너나 크록스를 추가해요.</div>`;
+    h+=app.keys.map(k=>`<div class="key" style="cursor:default"><div class="c"></div><div class="n"><b>${esc(k.name)}</b><span class="tag">Airgapped</span><small>XFP: ${k.xfp}</small></div></div>`).join('');
+    h+=`</div>${tabbar('keys')}`;
+  }else if(s==='type'){
+    const T=(c,g,t,d,on)=>`<div class="wt${on?'':' off'}" ${on?`data-a="name"`:''}><div class="c" style="background:${c}">${g}</div><div><b>${t}</b><span>${d}</span></div></div>`;
+    h+=hd('', 'x')+`<div class="big">Create wallet</div><div class="lead">Select wallet type:</div><div class="main">
+      ${T('#0f5b7a','▣','Custom wallet','Choose between single and multi-signature setups. Existing keys required.',true)}
+      ${T('#2b86c5','●','Group wallet','Collaboratively manage Bitcoin with multiple people or devices.')}
+      ${T('#e8590c','♨','Hot wallet','Quickly create a wallet for immediate use. Back up later.')}
+      ${T('#6a3a8c','&lt;/&gt;','Miniscript','Build custom spending rules with signatures, timelocks, and hashlocks.')}
+      <div class="sep"></div>
+      <div class="row off"><span>Join group wallet</span><span>→</span></div>
+      <div class="row" data-a="recover"><span>Recover existing wallet</span><span>→</span></div></div>`;
+  }else if(s==='name'){
+    h+=hd('Create wallet')+`<div class="lab"><span>Wallet name</span><em>${app.name.length}/80</em></div>
+      <input class="nm" id="appName" maxlength="80" value="${esc(app.name)}" placeholder="예: 연습 지갑" autocomplete="off">
+      <div class="lab" style="margin-top:14px"><span>Address type</span></div>
+      <div class="rd${app.type==='segwit'?' on':''}" data-a="t-segwit"><span>Native Segwit<span class="p">Default</span></span><i></i></div>
+      <div class="rd${app.type==='taproot'?' on':''}" data-a="t-taproot"><span>Taproot<span class="p">New</span></span><i></i></div>
+      <div class="va">View all ⌄</div>
+      <button class="cta${app.name.trim()?'':' dis'}" data-a="${app.name.trim()?'config':''}">Continue</button>`;
+  }else if(s==='config'){
+    const c=appCfg();
+    h+=hd('Configure wallet')+`<div class="lead" style="font-weight:700">Assign at least 1 key to the wallet</div><div class="main">
+      ${app.keys.map(k=>`<div class="key" data-a="k-${k.id}"><div class="c"></div><div class="n"><b>${esc(k.name)}</b><span class="tag">Airgapped</span><small>XFP: ${k.xfp}</small></div><div class="cb${app.sel[k.id]?' on':''}"></div></div>`).join('')}
+      <div class="va" data-a="addkey">＋ Add key</div></div>
+      <div class="req"><div class="r1"><div><b>Required keys</b><small>Number of signatures required to unlock funds</small></div>
+        <div class="stp"><button data-a="r-">−</button><div class="v">${app.req}</div><button data-a="r+">＋</button></div></div>
+        <div class="cfg">Current wallet config<span>${c.ok?`${app.req}/${c.n} Multisig`:'Not configured'}</span></div></div>
+      <button class="cta${c.ok?'':' dis'}" style="margin-top:0" data-a="${c.ok?'review':''}">Continue</button>`;
+  }else if(s==='review'){
+    const c=appCfg(),typ=app.type==='segwit'?'Native Segwit':'Taproot';
+    h+=hd('Review wallet')+`<div class="main"><div class="rv" style="margin-top:8px"><span>Wallet name</span><b>${esc(app.name)}</b></div>
+      <div class="rv"><span>Wallet configuration</span><b>${app.req}/${c.n} Multisig</b></div><div class="hr"></div>
+      <div class="rv"><span>Wallet type</span><b>Standard wallet</b></div><div class="rv"><span>Address type</span><b>${typ}</b></div><div class="hr"></div>
+      <div class="mk">Member keys</div>
+      ${app.keys.filter(k=>app.sel[k.id]).map(k=>`<div class="key" style="cursor:default"><div class="c"></div><div class="n"><b>${esc(k.name)}</b><span class="tag">Airgapped</span><small>XFP: ${k.xfp}</small><small>BIP32 path: m/${APP_PATH}</small></div></div>`).join('')}</div>
+      <button class="cta" data-a="created">Create wallet</button>`;
+  }else if(s==='created'){
+    h+=hd('')+`<div class="success"><div class="ok">✓</div><b style="font-size:16px">Wallet created</b><p style="color:#6b7783;font-size:12px;line-height:1.5">복원할 때 필요한 지갑 설정(디스크립터)을<br>파일로 저장해 두세요.</p></div><button class="cta" style="margin-bottom:6px" data-a="export">Back up wallet</button><div class="va" style="margin-bottom:12px" data-a="done">나중에 할게요</div>`;
+  }else if(s==='wallet'){
+    const w=app.wallets[0];
+    h+=hd(esc(w.name))+`<div class="big" style="font-size:22px">${btc(TX.fund)} BTC</div><div class="lead" style="color:#6b7783">${w.cfg} · 연습용 잔액</div><div class="main">
+      <div class="row" data-a="receive"><span>Receive</span><span>→</span></div>
+      <div class="row" data-a="send"><span>Send</span><span>→</span></div>
+      <div class="row" data-a="export"><span>Export wallet configuration</span><span>→</span></div></div>`;
+  }else if(s==='send'){
+    h+=hd('Send')+`<div class="main"><div class="lab"><span>To</span></div>
+      <div class="ta f" style="height:auto;margin-bottom:8px;font-size:11.5px">${TX.to}</div>
+      <div class="rv"><span>Amount</span><b>${btc(TX.send)} BTC</b></div>
+      <div class="rv"><span>Network fee</span><b>${TX.fee.toLocaleString()} sats</b></div>
+      <div class="rv"><span>Change</span><b>${btc(TX.change)} BTC</b></div>
+      <div style="font-size:10.5px;color:#6b7783;padding:6px 16px">연습용으로 주소·금액이 정해져 있어요. 받는 주소 <b>${shortA(TX.to)}</b>를 기억해 두세요. 기기 화면에서도 같은지 확인할 거예요.</div></div>
+      <button class="cta" data-a="tx">Create transaction</button>`;
+  }else if(s==='tx'){
+    const n=Object.values(app.sigs).filter(Boolean).length;
+    const kr=k=>`<div class="key"${app.sigs[k]?' style="cursor:default"':` data-a="sk-${k}"`}><div class="c"></div><div class="n"><b>${esc((app.keys.find(x=>x.id===k)||KEYSRC[k]).name)}</b><small>XFP: ${KEYSRC[k].xfp}</small><small>${app.sigs[k]?'<b style="color:#1b8a52">✓ Signed</b>':'Pending signature'}</small></div>${app.sigs[k]?'':'<span style="font-size:20px;color:#6b7783">›</span>'}</div>`;
+    h+=hd('Transaction')+`<div class="main"><div class="rv" style="margin-top:6px"><span>Sending</span><b>${btc(TX.send)} BTC</b></div>
+      <div class="rv"><span>To</span><b style="font-size:11.5px">${shortA(TX.to)}</b></div>
+      <div class="rv"><span>Fee</span><b>${TX.fee.toLocaleString()} sats</b></div><div class="hr"></div>
+      <div class="mk">Signatures <span class="tag" style="font-size:10px">${n}/2</span></div>${kr('ss')}${kr('kx')}</div>
+      ${n<2?`<div style="font-size:11px;color:#556;text-align:center;padding:8px 20px 22px;line-height:1.5">서명할 키(<b>SeedSigner</b> 또는 <b>Krux</b> 줄)를 눌러서<br>거래를 보내고 서명을 받아요.</div>`
+      :`<button class="cta" data-a="bcast">Broadcast transaction</button>`}`;
+  }else if(s==='signkey'){
+    const k=app.signKey,nm=esc((app.keys.find(x=>x.id===k)||KEYSRC[k]).name);
+    h+=hd(nm)+`<div class="lead" style="color:#6b7783">XFP: ${KEYSRC[k].xfp} · Airgapped</div><div class="main">
+      <div class="row" data-a="psbtqr"><span>Export transaction (QR)<small>기기가 스캔해서 서명해요</small></span><span>→</span></div>
+      <div class="row" data-a="scansig"><span>Import signature (scan QR)<small>기기가 서명한 PSBT QR을 읽어와요</small></span><span>→</span></div>
+      <div class="row off"><span>Import signature (file)</span><span>→</span></div></div>`;
+  }else if(s==='psbtqr'){
+    if(!app.psbtShown||(app.signKey&&!app.psbtFor[app.signKey])){app.psbtShown=true;if(app.signKey)app.psbtFor[app.signKey]=true;queueMicrotask(onState);}
+    h+=hd('Export transaction')+`<div class="main" style="align-items:center"><div style="margin-top:8px">${aqHtml('unsigned',200)}</div>
+      <div style="font-size:11px;line-height:1.5;text-align:center;padding:8px 20px;color:#334">① 기기(시드사이너/크록스)의 카메라로 이 QR을 비춰요.<br>② 기기가 서명하면 아래 버튼으로 서명을 가져와요.</div></div>
+      <button class="cta" data-a="scansig">Import signature (scan QR)</button>`;
+  }else if(s==='scansig'){
+    const src=sigSrc(),other=!src&&app.signKey&&['ss','kx'].find(d=>sigShowing(d)&&!app.sigs[d]);
+    h+=`<div class="cam"><div class="ch"><button class="ib w" data-a="back">✕</button><div class="t">Scan signed PSBT</div><span class="ib"></span></div>
+      <div class="vf"><i class="a"></i><i class="b"></i><i class="c2"></i><i class="d"></i>
+      ${src?`<div class="seen">${aqHtml(src,150)}</div><button class="simscan low" data-a="sigrun">▶ 스캔 시뮬레이션<small>${KEYSRC[src].name} 화면의 서명 QR을 비추는 중</small></button>`
+      :`<div class="nosig">${other?`선택한 키(XFP ${KEYSRC[app.signKey].xfp})의 서명 QR이 아니에요.<br>화면의 QR은 XFP ${KEYSRC[other].xfp} 기기 거예요.`:'카메라에 보이는 서명 QR이 없어요.<br>시드사이너나 크록스에서 서명하고<br><b>Signed PSBT</b> QR을 띄우세요.'}</div>`}</div>
+      <div class="pct" id="scanPct">${app.scan}%</div></div>`;
+  }else if(s==='bcast'){
+    app.broadcast=true;queueMicrotask(onState);
+    h+=hd('')+`<div class="success"><div class="ok">✓</div><b style="font-size:16px">서명 2/2 완료</b><p style="color:#6b7783;font-size:12px;line-height:1.55">실제라면 이제 비트코인 네트워크로 전송돼요.<br>연습이라 <b>실제로 전송하지 않아요.</b></p></div><button class="cta" data-a="home">Done</button>`;
+  }else if(s==='recover'){
+    h+=hd('Recover wallet')+`<div class="lead">저장해 둔 지갑 설정 파일(BSMS/디스크립터)이 있으면 지갑을 되살릴 수 있어요.</div><div class="main">
+      <div class="row" data-a="rfile"><span>Import via file</span><span>→</span></div>
+      <div class="row off"><span>Import via QR</span><span>→</span></div></div>`;
+  }else if(s==='rfile'){
+    h+=hd('Import wallet')+`<div class="lead">파일 앱에서 지갑 설정 파일을 골라요.</div><div class="main">
+      ${BK.saved?`<div class="row" data-a="rimport"><span>📄 ${esc(BK.file)}<small>${esc(BK.how)} · 지갑 설정 파일</small></span><span>→</span></div>`
+      :`<div class="empty">저장해 둔 지갑 설정 파일이 없어요.<br><small>(만들기 모드에서 Export as file로 저장했는지 확인해요)</small></div>`}</div>`;
+  }else if(s==='receive'){
+    if(!app.viewed){app.viewed=true;queueMicrotask(onState);}
+    h+=hd('Receive')+`<div class="main" style="align-items:center"><div style="margin-top:14px">${qrSvg(ADDRS_BY[curW().req][0],180)}</div>
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.6;text-align:center;margin-top:12px;padding:0 20px">${grpHtml(ADDRS_BY[curW().req][0])}</div>
+      <div style="font-size:10.5px;color:#6b7783;margin-top:8px">첫 번째 수신 주소 (#0)</div></div>`;
+  }else if(s==='export'){
+    h+=hd('Export wallet configuration')+`<div class="lead" style="font-size:11.5px;color:#556">복원용 <b>백업</b>과 기기에 <b>등록</b>하는 용도가 달라요.</div><div class="main">
+      <div class="sep" style="margin:0"></div>
+      <div class="row" data-a="exportfile"><span>Export as file (BSMS)<small>복원용 백업 · 파일 앱에 저장</small></span><span>→</span></div>
+      <div class="row" data-a="exporttext"><span>Copy descriptor (text)<small>복원용 백업 · 메모장 등에 붙여넣기</small></span><span>→</span></div>
+      <div class="row" data-a="exportqr"><span>Export via QR<small>기기(시드사이너·크록스)에 등록할 때</small></span><span>→</span></div></div>`;
+  }else if(s==='exportfile'){
+    const w=curW();
+    h+=hd('Export as file')+`<div class="lead"><b>📄 ${esc(w.name)}.bsms</b></div><div class="main"><div class="mono">${esc(bsmsText(w.req)).replace(/\n/g,'<br>')}</div>
+      <div style="font-size:10.5px;color:#6b7783;padding:4px 16px">표준 형식(BSMS)의 예시예요. 실제 앱이 만드는 파일 모양은 조금 다를 수 있어요.</div></div>
+      <button class="cta" data-a="savefile">Save to Files</button>`;
+  }else if(s==='exporttext'){
+    const w=curW();
+    h+=hd('Copy descriptor')+`<div class="lead">지갑 설정(디스크립터) 텍스트</div><div class="main"><div class="mono">${esc(DESCS[w.req])}</div></div>
+      <button class="cta" data-a="savetext">Copy</button>`;
+  }else if(s==='exportqr'){
+    if(!app.descShown){app.descShown=true;queueMicrotask(onState);}
+    h+=hd('Wallet configuration')+`<div class="main" style="align-items:center"><div style="margin-top:6px">${qrSvg(DESCS[curW().req],214)}</div>
+      <div style="font-size:11px;line-height:1.5;text-align:center;padding:10px 20px;color:#334">이 QR은 <b>기기에 지갑 설정을 등록</b>할 때 써요.<br>복원용 백업은 <b>파일로 따로 저장</b>하세요.</div></div>`;
+  }else if(s==='addkey'){
+    const B=(g,t,id)=>`<div class="kt${id?'':' off'}" ${id?`data-a="pick-${id}"`:''}><span class="g">${g}</span>${t}</div>`;
+    h+=hd('', 'x')+`<div class="big">Add key</div><div class="lead">Select your key type:</div><div class="main">
+      <div class="kg">${B('◔','TAPSIGNER')}${B('▯','Trezor')}${B('▣','Jade')}${B('◉','Portal')}${B('▭','SeedSigner')}${B('▯','Keystone')}${B('▦','Foundation')}${B('▦','Coldcard')}${B('▯','Ledger')}${B('▯','BitBox')}${B('▯','Krux')}</div>
+      <div class="sep"></div><div class="wt off"><div class="c" style="background:#f1f2f4;color:#0b2230">〰</div><div><b>Software</b><span>The software key will be stored locally on this device.</span></div></div>
+      <div class="wt" data-a="pick-air" style="cursor:pointer"><div class="c" style="background:#f1f2f4;color:#0b2230">⌶</div><div><b style="padding-top:8px">Generic Airgap</b></div></div></div>`;
+  }else if(s==='airgapIntro'){
+    h+=`<div class="ill"><button class="ib" data-a="back">←</button><div class="qrph"><div class="qri"></div></div></div>
+      <div class="big" style="padding-top:14px">Add an air-gapped key</div><div class="lead">Please ensure to do the following before proceeding.</div>
+      <div class="main"><div class="stepi"><i>1</i><div><b>Initialize the device key</b><span>Follow the vendor's instruction on how to set up your device with a seed phrase.</span></div></div>
+      <div class="stepi"><i>2</i><div><b>Unlock the device</b><span>To unlock the device, you might need to enter a PIN and/or a PASSPHRASE directly on the device screen.</span></div></div></div>
+      <button class="cta" data-a="airgapForm">Continue</button>`;
+  }else if(s==='airgapForm'){
+    h+=hd('Add air-gapped key','x')+`<div class="lab"><span>Key name</span><em>${app.kname.length}/20</em></div>
+      <input class="nm" id="kName" style="border:1px solid #d7dbe0" maxlength="20" value="${esc(app.kname)}" autocomplete="off">
+      <div class="lab" style="margin-top:12px"><span>Key spec</span></div>
+      <div class="ta${app.spec?' f':''}">${app.spec?esc(app.spec):'[deadbeef/48h/0h/0h/2h]xpub'}</div>
+      <div class="ob" data-a="scan">Scan QR ▣</div><div class="ob off">Import via file ⤓</div>
+      <button class="cta${app.spec?'':' dis'}" data-a="${app.spec?'keyadd':''}">Add key</button>`;
+  }else if(s==='scan'){
+    const src=pendSrc(),showing=!!src,dn=src?KEYSRC[src].name:'';
+    h+=`<div class="cam"><div class="ch"><button class="ib w" data-a="back">✕</button><div class="t">Scan QR code</div><span class="ib"></span></div>
+      <div class="vf"><i class="a"></i><i class="b"></i><i class="c2"></i><i class="d"></i>
+      ${showing?`<div class="seen">${qrSvg(specOf(KEYSRC[src]),150)}</div><button class="simscan low" data-a="scanrun">▶ 스캔 시뮬레이션<small>${dn} 화면의 QR을 비추는 중</small></button>`
+      :`<div class="nosig">카메라에 보이는 QR이 없어요.<br><b>시드사이너나 크록스</b>에서 xpub QR을 먼저 띄우세요.<small>(기기 탭으로 가서 Export Xpub / Extended Public Key → QR)</small></div>`}</div>
+      <div class="pct" id="scanPct">${app.scan}%</div><div class="cbtn"><span>▨</span><span>ϟ</span></div></div>`;
+  }else{
+    h+=hd('Recover wallet')+`<div class="empty">이 화면은 복원 단계에서 만들어요.<br>(준비 중)</div>`;
+  }
+  if(app.toast)h+=`<div class="toast">${esc(app.toast)}</div>`;
+  h+='</div>';
+  el.innerHTML=h;aqUpdate();
+  const bind=(id,fn)=>{const i=el.querySelector(id);if(i)i.addEventListener('input',()=>{fn(i.value);const p=i.selectionStart;renderApp();const n=document.querySelector('#scr-app '+id);n.focus();n.setSelectionRange(p,p);});};
+  bind('#appName',v=>app.name=v);bind('#kName',v=>app.kname=v);
+  el.querySelectorAll('[data-a]').forEach(n=>n.addEventListener('click',()=>{
+    setActive('app');
+    const a=n.dataset.a; if(!a)return;
+    if(a==='back')appBack();
+    else if(a==='exit')appTab('home');
+    else if(a.startsWith('tab-'))appTab(a.slice(4));
+    else if(a==='done'){Object.assign(app,{name:'',type:'segwit',sel:{},req:0});appTab('home');}
+    else if(a==='created'){const c=appCfg();app.wallets.push({name:app.name,cfg:`${app.req}/${c.n} Multisig`,req:app.req});app.s='created';app.h=[];renderApp();onState();}
+    else if(a==='t-segwit'||a==='t-taproot'){app.type=a.slice(2);renderApp();}
+    else if(a.startsWith('k-')){const id=a.slice(2);app.sel[id]=!app.sel[id];const m=appCfg().n;if(app.req>m)app.req=m;renderApp();}
+    else if(a==='r+'){app.req=Math.min(appCfg().n,app.req+1);renderApp();}
+    else if(a==='r-'){app.req=Math.max(0,app.req-1);renderApp();}
+    else if(a==='addkey'){app.startLen=app.h.length+1;app.pend=null;appGo('addkey');}
+    else if(a.startsWith('pick-')){app.pend=null;app.spec='';app.kname='Airgap';app.scan=0;appGo('airgapIntro');}
+    else if(a==='scan'){app.scan=0;appGo('scan');}
+    else if(a==='scansig'){app.scan=0;appGo('scansig');}
+    else if(a.startsWith('sk-')){app.signKey=a.slice(3);appGo('signkey');}
+    else if(a==='savefile'||a==='savetext'){
+      const w=curW();BK.saved=true;BK.wname=w.name;BK.req=w.req;
+      if(a==='savefile'){BK.how='Files 앱';BK.file=w.name+'.bsms';app.toast='✓ Files 앱에 저장했어요: '+BK.file;}
+      else{BK.how='메모(복사한 텍스트)';BK.file=w.name+' 디스크립터.txt';app.toast='✓ 복사했어요. 메모 앱 등에 붙여넣어 보관하세요.';}
+      renderApp();onState();
+    }
+    else if(a==='rimport'){
+      app.wallets.push({name:BK.wname||'복원한 지갑',cfg:BK.req+'/2 Multisig',req:BK.req||2,restored:true});
+      app.s='home';app.h=[];renderApp();onState();
+    }
+    else if(a==='sigrun'){
+      const src=sigSrc();if(!src){renderApp();return;}
+      app.scan=0;app.timer=setInterval(()=>{app.scan=Math.min(100,app.scan+10);
+        const p=document.getElementById('scanPct');if(p)p.textContent=app.scan+'%';
+        if(app.scan>=100){clearInterval(app.timer);app.sigs[src]=true;app.scan=0;setTimeout(()=>{backToTx();onState();},250);}},90);
+    }
+    else if(a==='home'){appTab('home');}
+    else if(a==='scanrun'){
+      const src0=pendSrc();if(!src0){renderApp();return;}app.pend=src0;
+      app.scan=0;app.timer=setInterval(()=>{
+        app.scan=Math.min(100,app.scan+8);
+        const p=document.getElementById('scanPct');if(p)p.textContent=app.scan+'%';
+        if(app.scan>=100){clearInterval(app.timer);app.spec=fakeSpec(KEYSRC[app.pend]);setTimeout(appBack,250);}
+      },90);
+    }
+    else if(a==='keyadd'){
+      const src=KEYSRC[app.pend];
+      if(!app.keys.some(k=>k.id===app.pend))app.keys.push({id:app.pend,name:app.kname.trim()||src.name,xfp:src.xfp});
+      while(app.h.length>app.startLen)app.h.pop();
+      app.s=app.h.pop();renderApp();onState();
+    }
+    else appGo(a);
+  }));
+}
+
+/* ===== 상태 ===== */
+const st={ss:{s:'home',i:0,h:[]},kx:{s:'home',i:0,h:[]},app:{s:'home',i:0,h:[]}};
+let active='ss',mode='make';
+
+function scr(d){const v=SCREENS[d][st[d].s];return typeof v==='function'?v():v;}
+function render(d){
+  if(d==='app')return renderApp();
+  const s=scr(d),S=st[d],el=document.getElementById('scr-'+d);
+  const sel=(k)=>S.i===k?' sel':'';
+  let h='<div class="scr">';
+  h+=`<div class="ttl">${d==='kx'&&S.h.length?'<span class="kback">‹ Back</span>':''}${s.back&&d==='ss'?'‹ ':''}${s.title}</div>`;
+  if(s.sub)h+=`<div class="sub">${s.sub}</div>`;
+  if(s.custom)h+=s.custom;
+  if(s.body)h+=`<div class="body"><div class="bi">${s.body.replace(/\n/g,'<br>')}</div></div>`;
+  if(s.items){
+    h+=`<div class="${s.layout==='grid'?'grid':'list'}"${s.cols?` style="grid-template-columns:repeat(${s.cols},1fr)"`:''}>`;
+    s.items.forEach((it,k)=>{
+      h+=`<div class="it${sel(k)}${it.big?' big':''}" data-i="${k}">${it.ic?`<span class="ic">${it.ic}</span>`:''}<span>${it.label}</span></div>`;
+    });
+    h+='</div>';
+  }
+  if(s.foot)h+=`<div class="foot">${s.foot}</div>`;
+  h+='</div>';
+  el.innerHTML=h;
+  aqUpdate();
+  if(s.mount)s.mount();
+  const kb=el.querySelector('.kback');if(kb)kb.addEventListener('click',()=>{setActive(d);back(d);});
+  el.querySelectorAll('.it').forEach(n=>n.addEventListener('click',()=>{
+    if(d==='ss')return;               // 시드사이너는 방향키로만 조작
+    S.i=+n.dataset.i;setActive(d);press(d,'ok');
+  }));
+}
+function go(d,to){const S=st[d];S.h.push([S.s,S.i]);S.s=to;S.i=0;render(d);}
+function back(d){const S=st[d];if(!S.h.length)return;const e=S.h.pop();const [s,i]=Array.isArray(e)?e:[e,0];S.s=s;S.i=i;render(d);}
+function press(d,k){
+  if(d==='app'){ if(k==='back')appBack(); else if(k==='home'){app.s='home';app.h=[];renderApp();} return; }
+  const S=st[d],s=scr(d),items=s.items||[];
+  if(k==='back'||(k==='left'&&!(s.layout==='grid'))){ if(s.back||S.h.length){back(d);return;} }
+  if(k==='home'){S.s='home';S.i=0;S.h=[];render(d);return;}
+  if(k==='ok'){
+    if(!items.length){ if(s.back)back(d); return; }
+    const it=items[S.i]; if(it&&it.fn)it.fn(); else if(it&&it.to)go(d,it.to); return;
+  }
+  if(!items.length)return;
+  const n=items.length;
+  if(s.layout==='grid'){
+    const W=s.cols||2;
+    let r=Math.floor(S.i/W),c=S.i%W;
+    if(k==='left')c=Math.max(0,c-1);
+    if(k==='right')c=Math.min(W-1,c+1);
+    if(k==='up')r=Math.max(0,r-1);
+    if(k==='down')r=Math.min(Math.ceil(n/W)-1,r+1);
+    S.i=Math.min(n-1,r*W+c);
+  }else{
+    if(k==='up')S.i=(S.i-1+n)%n;
+    if(k==='down')S.i=(S.i+1)%n;
+  }
+  render(d);
+}
+
+/* ===== 활성 기기 / 입력 ===== */
+function setActive(d){
+  active=d;
+  document.querySelectorAll('.slot').forEach(s=>s.classList.toggle('active',s.dataset.d===d));
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.d===d));
+  if(narrow())layout();
+}
+document.querySelectorAll('.slot').forEach(s=>s.addEventListener('pointerdown',()=>{ if(!narrow())setActive(s.dataset.d); }));
+document.querySelectorAll('.ss [data-k]').forEach(b=>b.addEventListener('click',e=>{setActive('ss');press('ss',b.dataset.k);}));
+document.addEventListener('keydown',e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey||e.target.tagName==='INPUT')return;
+  const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',Enter:'ok',' ':'ok',Backspace:'back',Escape:'home'};
+  if(e.key==='1'||e.key==='2'||e.key==='3'){setActive(['ss','kx','app'][+e.key-1]);return;}
+  if(e.target.tagName==='INPUT')return;   // 앱 이름 입력 중에는 단축키 끄기
+  const k=map[e.key]; if(!k)return;
+  e.preventDefault(); press(active,k);
+});
+
+/* ===== 반응형 배치 ===== */
+function narrow(){return document.documentElement.clientWidth<=1180;}
+function layout(){
+  const stage=document.getElementById('stage');
+  const w=Math.min(document.querySelector('.wrap').clientWidth-32,1400);
+  const order=['ss','app','kx'];
+  if(narrow()){
+    order.forEach(d=>document.getElementById('slot-'+d).style.display=d===active?'block':'none');
+    fit(active,Math.min(1,w/SIZE[active][0]));
+  }else{
+    const gap=24,total=SIZE.ss[0]+SIZE.app[0]+SIZE.kx[0]+gap*2;
+    const s=Math.min(1,w/total);
+    order.forEach(d=>{document.getElementById('slot-'+d).style.display='block';fit(d,s);});
+  }
+}
+function fit(d,s){
+  const slot=document.getElementById('slot-'+d),sc=slot.querySelector('.scaled');
+  sc.style.transform=`scale(${s})`;
+  slot.style.width=SIZE[d][0]*s+'px';
+  sc.style.position='relative';
+  slot.style.height='auto';
+  sc.style.height=SIZE[d][1]+'px';sc.style.width=SIZE[d][0]+'px';
+  slot.querySelector('.scaled').style.marginBottom=(SIZE[d][1]*s-SIZE[d][1])+'px';
+  sc.style.marginRight=(SIZE[d][0]*s-SIZE[d][0])+'px';
+}
+window.addEventListener('resize',layout);
+document.querySelectorAll('#tabs button').forEach(b=>b.addEventListener('click',()=>setActive(b.dataset.d)));
+
+/* ===== 안내 패널 ===== */
+const DICE='⚠ 연습이라 5번만 굴려요. 실제로 시드를 만들 때는 50번을 굴리세요.';
+const STEPS={
+ make:[
+  ['시드사이너: 주사위 5번으로 시드 만들기','시드사이너에서 Tools → New seed → Dice로 들어가 주사위 5번을 입력해요. 이어서 12단어를 적고, 단어 확인까지 마치면 지문이 나와요.',DICE,()=>SS.loaded],
+  ['크록스: 주사위 5번으로 시드 만들기','크록스에서 New Mnemonic → Via D6로 들어가 주사위 5번을 입력해요. 이어서 12단어를 적고 지갑 종류(Multisig)를 고르면 지문이 나와요.',DICE,()=>KX.loaded],
+  ['시드사이너: xpub QR 띄우기','시드사이너에서 Seeds → 지문 → Export Xpub → Multisig → Native Segwit → 코디네이터는 <b>Nunchuk</b> 선택 → Export Xpub 순서로 들어가 QR을 화면에 띄워요.',null,()=>SS.xpubShown],
+  ['앱(넌척): 시드사이너 키 추가','시드사이너 QR을 띄운 채로 앱에서 Keys → ＋ → <b>Generic Airgap</b> → Continue → Scan QR → 스캔 시뮬레이션 → Add key를 눌러요.',null,()=>app.keys.some(k=>k.id==='ss')],
+  ['크록스: xpub QR 띄우기','크록스에서 Extended Public Key → Show QR로 들어가 QR을 화면에 띄워요.',null,()=>KX.xpubShown],
+  ['앱(넌척): 크록스 키 추가','크록스 QR을 띄운 채로 앱에서 Keys → ＋ → <b>Generic Airgap</b> → Continue → Scan QR → 스캔 시뮬레이션 → Add key를 눌러요.',null,()=>app.keys.some(k=>k.id==='kx')],
+  ['앱(넌척): 2-of-2 지갑 만들기','앱 Home의 ＋ → Custom wallet → 이름 입력 → 키 2개 선택 → Required keys 2 → Review → Create wallet.',null,()=>app.wallets.length>0],
+  ['앱(넌척): 지갑 설정(디스크립터)을 파일로 백업','지갑을 만든 뒤 <b>Back up wallet</b>(또는 지갑 → Export wallet configuration)에서 <b>Export as file</b>이나 <b>Copy descriptor</b>로 지갑 설정을 <b>파일 앱이나 메모장에 저장</b>해요. 이건 기기에 설정을 넣는 게 아니라 <b>복원용 백업 파일</b>이에요.',null,()=>BK.saved,backupNote],
+  ['두 기기: 지갑 설정 가져오기 (선택)','앱에서 지갑 → Export wallet configuration → <b>Export via QR</b>을 띄운 채로, 시드사이너는 Scan → 스캔 시뮬레이션 → Load, 크록스는 Wallet Descriptor → Load from camera → Load를 해요.<br><small style="color:var(--mut)">※ 위 백업과 별개로, 기기에 지갑 설정을 등록하는 단계예요. 앱·펌웨어 버전에 따라 QR 내보내기 지원이 다를 수 있어요. 등록해 두면 기기가 주소와 거스름돈(change)을 직접 확인해 줘요.</small>',null,()=>SS.desc&&KX.desc],
+  ['세 곳의 첫 주소 비교','앱 지갑 카드 → Receive, 시드사이너 Tools → Address Explorer, 크록스 Address에서 첫 번째 주소(#0)를 열어 세 곳이 같은지 비교해요.',null,()=>app.viewed&&SS.viewed&&KX.viewed,cmpHtml],
+  ['시드사이너: 거래 보내고 서명 받기','① 앱(넌척): 지갑 카드 → Send → Create transaction으로 Transaction 화면에 들어가요.<br>② Transaction 화면에서 <b>SeedSigner 줄</b>을 누르고 <b>Export transaction (QR)</b>로 거래 QR을 띄워요.<br>③ 시드사이너: Scan → 스캔 시뮬레이션 → 받는 주소·금액 확인 → <b>Approve PSBT</b>로 서명하면 <b>Signed PSBT QR</b>이 떠요.<br>④ 앱(넌척)으로 돌아와 <b>Import signature (scan QR)</b>를 눌러 서명을 가져와요. (Signatures 1/2)',null,()=>app.sigs.ss,()=>sigHtml2('ss')],
+  ['크록스: 거래 보내고 서명 받기','① 앱(넌척) Transaction 화면에서 <b>Krux 줄</b>을 누르고 <b>Export transaction (QR)</b>로 거래 QR을 띄워요.<br>② 크록스: Sign → Load PSBT from camera → 받는 주소·금액 확인 → <b>Sign</b>으로 서명하면 <b>Signed PSBT QR</b>이 떠요.<br>③ 앱(넌척)으로 돌아와 <b>Import signature (scan QR)</b>로 서명을 가져와요. (Signatures 2/2)<br>④ 2/2가 되면 Broadcast transaction이 나타나요. 연습이라 실제로 전송하지는 않아요.',null,()=>app.sigs.kx,()=>sigHtml2('kx')]
+ ],
+ restore:[
+  ['기기와 앱을 초기화한 상태로 시작','시드사이너와 크록스는 전원을 끄면 시드가 사라져요(스테이트리스). 앱은 새 폰이나 재설치로 빈 상태가 돼요. 아래 버튼(또는 기기 위 ⏻ 버튼)으로 초기화해 보세요.',null,()=>!SS.loaded&&!KX.loaded&&!app.wallets.length&&!app.keys.length,resetHtml],
+  ['시드사이너: 시드 단어 입력 + 지문 확인','시드사이너에서 Seeds → Load a seed → Enter 12 words로 종이에 적어 둔 단어를 입력하고, 지문이 처음 만들 때(A07D432C)와 같은지 확인해요.',null,()=>SS.loaded&&SS.fp===KEYSRC.ss.xfp,()=>paperHtml('ss')],
+  ['크록스: 시드 단어 입력 + 지문 확인','크록스에서 Load Mnemonic → Via Manual → Via Words로 단어를 입력하고, 지문이 처음 만들 때(B760AECD)와 같은지 확인해요. 이어서 Wallet Type은 Multisig를 골라요.',null,()=>KX.loaded&&KX.fp===KEYSRC.kx.xfp,()=>paperHtml('kx')],
+  ['앱(넌척): 백업 파일로 지갑 복원','새 앱에서 ＋ → Recover existing wallet → <b>Import via file</b>로 파일 앱(또는 메모)에 저장해 둔 지갑 설정 파일을 골라요.',null,()=>app.wallets.some(w=>w.restored),restoreFileHtml],
+  ['두 기기: 지갑 설정 가져오기 (선택)','복원한 앱에서 지갑 → Export wallet configuration → <b>Export via QR</b>을 띄운 채로, 시드사이너는 Scan → 스캔 시뮬레이션 → Load, 크록스는 Wallet Descriptor → Load from camera → Load를 해요.',null,()=>SS.desc&&KX.desc],
+  ['세 곳의 첫 주소 비교','앱 지갑 카드 → Receive, 시드사이너 Tools → Address Explorer, 크록스 Address에서 첫 주소(#0)를 열어 처음 만들 때와 같은지 비교해요.',null,()=>allViewedSame(),()=>cmpHtml(true)],
+  ['실패 체험 (선택)','복원이 실패하는 경우도 직접 겪어 보세요.<br>① 시드 단어 하나를 일부러 틀리게 입력 → 체크섬 오류<br>② 단어 순서를 바꿔 입력 → 체크섬 오류 또는 다른 지문<br>③ 한 기기만 복원하고 서명 시도 → 2-of-2는 1개만으로 출금할 수 없어요<br>④ 앱에서 지갑을 다시 만들 때 Required keys를 1로 → 주소가 달라져 다른 지갑이 돼요<br>⑤ 시드를 다른 기기로 바꿔 입력 → 지갑 설정에 내 시드가 없다는 오류',null,null,()=>`<div class="cmp">${[['① ② 틀린 단어/순서',()=>SS.entryErr==='sum'||KX.entryErr==='sum'],['⑤ 다른 시드로 지갑 설정 가져오기 오류',()=>false]].map(([l,f])=>`<div>${f()?'✓':'○'} ${l}</div>`).join('')}</div>`]
+ ]
+};
+function sigHtml2(k){
+  const D=k==='ss'?SS:KX,r=(l,ok)=>`<div>${ok?'✓':'○'} ${l}</div>`,nm=NAME[k];
+  return `<div class="cmp">${r('앱(넌척): '+(k==='ss'?'SeedSigner':'Krux')+' 줄에서 거래 QR 띄움',app.psbtFor[k])}${r(nm+': 거래 확인 후 서명 → Signed PSBT QR',D.signed)}${r('앱(넌척): 서명 가져옴',app.sigs[k])}${k==='kx'?r('서명 2/2 완료 → Broadcast (연습이라 전송 안 함)',app.broadcast):''}</div>`;
+}
+function sigHtml(){
+  const r=(l,ok)=>`<div>${ok?'✓':'○'} ${l}</div>`;
+  return `<div class="cmp">${r('앱: PSBT QR 띄움',app.psbtShown)}${r('시드사이너 서명 → 앱이 가져옴',app.sigs.ss)}${r('크록스 서명 → 앱이 가져옴',app.sigs.kx)}${r('서명 2/2 완료 (연습이라 전송은 안 해요)',app.broadcast)}</div>`;
+}
+function resetHtml(){return `<div style="margin:0 0 10px"><button class="gb pri" onclick="powerCycle('ss')">시드사이너 전원 껐다 켜기</button><button class="gb pri" onclick="powerCycle('kx')">크록스 전원 껐다 켜기</button><button class="gb pri" onclick="resetApp()">앱 재설치(새 폰)</button></div>`;}
+function paperHtml(d){const k=KEYSRC[d];return `<details><summary>📝 종이에 적어 둔 단어 (연습용)</summary><div class="wl">${k.words.map((w,i)=>`${i+1}.${w}`).join(' ')}</div><div style="font-size:12px;color:var(--mut)">직접 입력해 보세요. 빨리 해 보려면 →</div><button class="gb" onclick="autofill('${d}')">${NAME[d]}에 자동 입력</button></details>`;}
+function backupNote(){return `<div class="cmp" style="line-height:1.6;font-size:12.5px"><b style="color:var(--accent);display:inline">왜 필요해요?</b> 멀티시그는 시드 단어만으로는 복원이 안 돼요. “어떤 키 몇 개로 몇 개 서명(2/2)인지” 알려주는 지갑 설정이 있어야 같은 주소를 다시 만들 수 있어요.<br>이 파일에는 공개키(xpub)만 있어서 코인을 움직일 수는 없지만, <b style="color:var(--accent2);display:inline;margin:0">내 모든 주소와 잔액이 드러나요</b>. 안전한 곳에 여러 벌 보관하세요.<div style="margin-top:6px">${BK.saved?`✓ 저장됨: ${esc(BK.file)} (${esc(BK.how)})`:'○ 아직 저장 안 했어요'}</div></div>`;}
+function restoreFileHtml(){return `<div class="cmp" style="line-height:1.6">${BK.saved?`✓ 저장해 둔 파일: <code>${esc(BK.file)}</code> (${esc(BK.how)})`:'○ 저장해 둔 파일이 아직 없어요 (만들기 모드 8단계에서 저장해요)'}${BK.saved?'':`<div style="margin-top:6px"><button class="gb pri" onclick="BK.saved=true;BK.how='Files 앱';BK.wname='연습 지갑';BK.file='연습 지갑.bsms';BK.req=2;onState()">이미 저장해 둔 걸로 치기 (연습)</button></div>`}</div>`;}
+function allViewedSame(){
+  if(!(app.viewed&&SS.viewed&&KX.viewed)||!curW())return false;
+  const o=ADDRS[0];return ADDRS_BY[curW().req][0]===o&&ADDRS_BY[SS.descReq||2][0]===o&&ADDRS_BY[KX.descReq||2][0]===o;
+}
+function cmpHtml(orig){
+  const o=ADDRS[0];
+  const rows=[['앱',app.viewed&&curW()?ADDRS_BY[curW().req][0]:null],['시드사이너',SS.viewed?ADDRS_BY[SS.descReq||2][0]:null],['크록스',KX.viewed?ADDRS_BY[KX.descReq||2][0]:null]];
+  const line=([n,a])=>`<div>${a?(a===o?'✓':'✗'):'○'} ${n}: <code>${a?a.slice(0,12)+'…'+a.slice(-8):'아직 확인 안 했어요'}</code></div>`;
+  const all=rows.every(r=>r[1]),same=all&&rows.every(r=>r[1]===o);
+  return `<div class="cmp">${orig?`<div style="color:var(--mut);font-size:12px">처음 만들 때 적어 둔 첫 주소: <code>${shortA(o)}</code></div>`:''}${rows.map(line).join('')}${same?'<b>세 곳의 주소가 모두 같아요. 멀티시그 지갑이 정확히 '+(orig?'복원됐어요':'만들어졌어요')+'!</b>':(all?'<b style="color:var(--bad)">주소가 달라요! 설정(2-of-2 등)이나 시드가 달라서 다른 지갑이 됐어요.</b>':'')}</div>`;
+}
+let gi=0;
+function onState(){renderGuide();}
+function renderGuide(){
+  const list=STEPS[mode],cur=list[gi];
+  const g=document.getElementById('guide');
+  g.innerHTML=`<h2>${mode==='make'?'만들기':'복원하기'} 안내</h2>
+   <p class="step">${gi+1} / ${list.length} 단계 · ${cur[0]}</p>
+   <div class="dots">${list.map((_,k)=>`<i class="${k<gi?'done':k===gi?'cur':''}"></i>`).join('')}</div>
+   <p class="now">${cur[1]}</p>
+   ${cur[3]&&cur[3]()?'<div class="okb">✓ 이 단계를 마쳤어요! 다음 단계로 넘어가세요.</div>':''}
+   ${cur[4]?cur[4]():''}
+   ${cur[2]?`<div class="dice">${cur[2]}</div>`:''}
+   <div class="nav"><button id="gp">이전</button><button id="gn" class="pri">다음</button></div>
+   <p class="hint">조작: 시드사이너는 방향키(▲▼◀▶)·Enter, 크록스와 앱은 화면 클릭 · 키보드 1/2/3으로 기기 선택, 방향키+Enter, Backspace=뒤로, Esc=홈</p>`;
+  document.getElementById('gp').onclick=()=>{gi=Math.max(0,gi-1);renderGuide();};
+  document.getElementById('gn').onclick=()=>{gi=Math.min(list.length-1,gi+1);renderGuide();};
+}
+document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click',()=>{
+  mode=b.dataset.m;gi=0;
+  document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+  renderGuide();
+}));
+
+/* ===== 시작 ===== */
+['ss','kx','app'].forEach(render);
+setActive('ss');layout();renderGuide();
+new ResizeObserver(()=>layout()).observe(document.querySelector('.wrap'));
+window.addEventListener('load',layout);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
+</script>
+</body>
+</html>
