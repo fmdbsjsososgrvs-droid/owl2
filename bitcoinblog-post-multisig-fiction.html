@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bitcoin X 어벤져스 X 해리포터 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body ul { margin: 0 0 22px; padding-left: 22px; }
+.post-body li { margin-bottom: 8px; }
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-13</div>
+  <h1 class="post-h1">bitcoin X 어벤져스 X 해리포터</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/k0vDAIa49lA?rel=0" title="비트코인 X 헌터헌터 · 제약과 서약" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>멀티시그 시뮬레이터를 만들고 나서 몇 번 굴려보다가 문득 든 생각인데, 멀티시그 이거 어벤져스랑 해리포터에서 이미 다 본 얘기 아닌가.</p>
+
+    <img src="img/multisig-fiction-web.jpg" alt="보석 여섯 개 박힌 황금 장갑과 마법 지팡이를 든 부엉이, 열쇠 세 개 중 두 개가 빛나며 열리는 금고" />
+
+    <p>멀티시그를 한 줄로 말하면 이렇다. 열쇠를 여러 개 만들고, 그중 몇 개가 모여야 금고가 열리게 하는 것. 2-of-3이면 열쇠 세 개 중 두 개만 있으면 된다. 말로 하면 어려운데, 영화로 보면 쉽다. 타노스와 볼드모트가 둘 다 이걸 했다. 그리고 둘 다 망했다.</p>
+
+    <h2>타노스: 6개를 전부 모아야 하는 금고</h2>
+
+    <p>인피니티 건틀렛은 스톤 여섯 개가 다 박혀야 손가락을 튕길 수 있다. 멀티시그로 치면 6-of-6이다. 열쇠 여섯 개가 전부 있어야 열리는 금고.</p>
+
+    <p>재밌는 건 지키는 쪽의 배치다. 스톤은 우주 곳곳에 흩어져 있었다. 각기 다른 행성, 다른 관리자, 다른 금고. 내가 멀티시그 글에서 말한 '서로 다른 공급망을 섞어라'를 우주 규모로 해 놓은 셈이다. 공격자가 하나를 털어도 나머지 다섯은 멀쩡하다.</p>
+
+    <p>그런데 타노스는 결국 다 모았다. 왜일까. 스톤 하나하나를 지키는 게 사실상 한 명, 한 곳이었기 때문이다. 흩어 놓기만 했지, 각 열쇠마다 2중 3중의 장치가 없었다. 한 곳씩 차례로 무너지면 시간 문제다.</p>
+
+    <p>그리고 가장 아픈 장면. 닥터 스트레인지는 동료의 목숨을 두고 타임 스톤을 스스로 넘겨준다. 비트코인 보안에서 말하는 렌치 공격, 협박이다. 열쇠를 쥔 사람이 위협받으면 열쇠는 넘어간다. 멀티시그가 여기서 빛나는 이유가 이거다. 열쇠 하나를 빼앗겨도 그것만으로는 아무것도 못 옮긴다.</p>
+
+    <p>엔드게임에서 히어로들은 반대로 스톤을 되찾으려고 과거로 가서 여섯 개를 다시 다 모아야 했다. 6-of-6의 진짜 단점이 여기 있다. 공격자도 다 모아야 하지만, 주인인 나도 다 모아야 한다. 하나만 없어도 복구가 안 된다.</p>
+
+    <h2>볼드모트: 7조각으로 나눴지만 아무에게도 말하지 않았다</h2>
+
+    <p>볼드모트는 영혼을 일곱 조각으로 나누려 했고, 그 조각을 호크룩스라는 물건에 나눠 숨겼다. 일기장, 반지, 로켓, 잔, 왕관, 뱀. 이 조각이 하나라도 남아 있으면 죽지 않는다. 반대로 해리 일행은 전부 찾아 부숴야 한다. 이것도 결국 '전부'의 게임이다.</p>
+
+    <p>볼드모트가 틀린 건 세 가지다.</p>
+
+    <ul>
+      <li><b>숨긴 곳이 자기 인생과 너무 닮았다.</b> 고아원 시절의 동굴, 어머니 집안의 반지, 호그와트의 비밀 방. 결국 덤블도어가 그의 과거를 따라가면서 장소를 짐작해 낸다. 예측 가능한 보관 장소는 숨긴 게 아니다.</li>
+      <li><b>남의 금고를 믿었다.</b> 잔은 그린고츠 은행, 남이 지키는 금고에 맡겼다. 그리고 털렸다. 거래소에 둔 코인과 똑같다.</li>
+      <li><b>아무에게도 알리지 않았고, 확인하지도 않았다.</b> 볼드모트는 조각이 하나씩 부서지는 동안 그걸 한참 동안 몰랐다. 멀티시그로 치면 와치온리 지갑도 없고, 디스크립터 백업도 없는 상태다. 열쇠를 어디 뒀는지, 어떻게 묶여 있는지 기록이 없으면 지키는 것도 되찾는 것도 못 한다.</li>
+    </ul>
+
+    <h2>그래서, 2-of-3</h2>
+
+    <p>타노스의 건틀렛은 6-of-6, 볼드모트의 영혼은 7조각 전부. 둘 다 '전부'를 요구하는 구조였다. 공격자에게도 어렵지만, 주인에게는 더 가혹하다. 하나만 잃어도 끝이니까.</p>
+
+    <p>현실의 멀티시그는 보통 2-of-3을 쓴다.</p>
+
+    <ul>
+      <li>열쇠 하나를 잃어버려도 나머지 둘로 연다. 엔드게임처럼 과거로 갈 필요가 없다.</li>
+      <li>열쇠 하나를 빼앗겨도 그것만으로는 못 연다. 타임 스톤을 넘겨줘도 끝나지 않는다.</li>
+      <li>세 열쇠는 서로 다른 제조사, 다른 장소에 둔다. 스톤처럼 흩어 놓되, 볼드모트처럼 내 인생이 지도가 되지 않게.</li>
+      <li>디스크립터(어떤 열쇠들이 어떻게 묶였는지 적은 설계도)는 반드시 백업한다. 볼드모트에게 없던 바로 그 기록이다.</li>
+    </ul>
+
+    <h2>결론</h2>
+
+    <p>타노스는 여섯 개를 다 모아야 했고, 볼드모트는 일곱 개를 다 지켜야 했다. 나는 세 개 중 두 개면 된다.</p>
+
+    <p>멀티시그는 어렵게 들리지만 원리는 이게 전부다. 한 번 털려도, 한 번 잃어도 버티는 구조. 다만 절차가 낯설어서 처음엔 긴장된다. 그럴 땐 실제 돈을 넣기 전에 <a href="multisig-sim.html" target="_blank" rel="noopener">멀티시그 시뮬레이터</a>로 몇 번 굴려보자. 왜 멀티시그가 최종 종착지인지는 <a href="bitcoinblog-post-multisig.html">궁극적인 보안은 멀티시그?</a>에, 시뮬레이터를 만든 이야기는 <a href="bitcoinblog-post-multisig-sim.html">멀티시그 시뮬레이터 제작</a>에 적어 뒀다.</p>
+
+    <p>건틀렛도, 호크룩스도 '전부'에 걸었다가 무너졌다. 내 금고는 '전부'가 아니라 '충분히'에 건다.</p>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#멀티시그</span>
+    <span class="post-tag">#어벤져스</span>
+    <span class="post-tag">#해리포터</span>
+    <span class="post-tag">#셀프커스터디</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
