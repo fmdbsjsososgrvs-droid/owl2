@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>그레셤의 법칙 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-13</div>
+  <h1 class="post-h1">그레셤의 법칙</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/6iEXE1ZFkpc?rel=0" title="그레셤의 법칙" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>비트코인은 전자 현금이 되겠다고 했는데 왜 다들 쓰지 않고 쟁여 두기만 할까. 실패의 증거일까, 아니면 오래된 법칙대로 움직이는 걸까.</p>
+
+    <h2>1. 그레셤의 법칙</h2>
+
+    <p>그레셤의 법칙은 한 줄로 "악화가 양화를 쫓아낸다"로 요약된다. 가치가 다른 두 가지 돈이 같은 액면으로 통용되어야 할 때, 사람들은 값어치가 높은 쪽은 쟁여 두고 낮은 쪽만 쓴다는 것이다. 가게에서는 닳고 순도 낮은 동전부터 내밀고, 질 좋은 동전은 서랍에 넣는다. 시장에는 나쁜 돈만 돌게 된다.</p>
+
+    <p>용어를 먼저 정리하면, 액면가는 동전에 새겨 둔 가치이고 실질 가치는 그 동전을 금속으로 녹여 팔았을 때의 값어치다. 둘의 차이가 벌어질수록 사람들은 실질 가치가 높은 쪽을 아낀다.</p>
+
+    <p>법칙에는 이름이 붙은 사람이 있다. 16세기 영국의 금융가 토머스 그레셤(1519년경~1579년)이다. 그런데 그가 이 원리를 정식으로 정리한 것은 아니다. 19세기 중반 경제학자 헨리 매클라우드가 그의 이름을 붙였고, 비슷한 관찰은 기원전 5세기 말 아리스토파네스, 1519년 코페르니쿠스, 중세의 니콜 오렘도 했다(<a href="https://en.wikipedia.org/wiki/Gresham%27s_law" target="_blank" rel="noopener">위키백과, 그레셤의 법칙</a>). 그레셤이 한 일은 엘리자베스 1세에게 훼손된 영국 화폐를 바로잡으라고 권한 것이다(<a href="https://en.wikipedia.org/wiki/Thomas_Gresham" target="_blank" rel="noopener">위키백과, 토머스 그레셤</a>).</p>
+
+    <h2>2. 국가가 돈의 품질을 낮췄을 때</h2>
+
+    <p>정부가 재정이 급하면 금화와 은화의 순도를 낮추곤 했다. 같은 금속으로 동전을 더 많이 찍을 수 있기 때문이다.</p>
+
+    <p>영국 헨리 8세는 프랑스와 스코틀랜드 원정 비용과 방탕한 지출 때문에 돈이 필요했다. 1542년 5월 비밀리에 금화와 은화의 귀금속 함량을 줄이라는 명령을 내렸고, 1544년 낮은 함량의 동전이 유통되기 시작했다. 1545~47년에는 금이 20캐럿, 은은 33%까지 내려갔다. 사람들이 좋은 동전은 감추고 나쁜 동전만 쓰자 질 좋은 동전이 유통에서 사라졌다. 은을 입힌 구리 동전이 닳아 속의 구리가 드러나자 왕에게는 '구릿빛 코'라는 별명이 붙었다. 같은 금속으로 더 많은 동전을 찍어 국가의 몫을 늘리는 방식이다. 이 상태는 엘리자베스 1세 때인 1560년, 그레셤의 조언으로 나쁜 동전을 거둬들이고 정상 순도의 동전을 새로 찍은 뒤에야 정리됐고, 이 재주조로 왕실은 약 5만 파운드를 벌었다(<a href="https://en.wikipedia.org/wiki/Great_Debasement" target="_blank" rel="noopener">위키백과, 대악화</a>).</p>
+
+    <p>조선의 당백전도 비슷하다. 1866년 조정이 경복궁을 다시 짓는 비용을 대려고 만든 이 동전은 액면이 100문이어서 기존 상평통보의 100배로 통용되게 했다. 하지만 시장에서 인정받은 실제 가치는 5~6문 정도였다고 한다. 쌀값은 1866년 12월 한 섬에 약 700문에서 이듬해 4,000문이 넘게 뛰었고, 사람들은 상평통보를 쟁이고 당백전만 썼다. 발행은 1867년 5월에 멈췄고, 1868년 10월에는 당백전을 공식 폐지해 낮은 비율로 환수했다(<a href="https://ko.wikipedia.org/wiki/%EB%8B%B9%EB%B0%B1%EC%A0%84" target="_blank" rel="noopener">위키백과, 당백전</a>). 약 6개월 동안 약 178만 개가 찍혔다.</p>
+
+    <h2>3. 가치를 지킨 돈은 오래 쓰인다</h2>
+
+    <p>순도를 낮춘 돈은 쟁여지지 않고 쓰이다 사라졌고, 순도를 지킨 돈은 오래, 멀리 쓰였다.</p>
+
+    <p>비잔틴 제국의 금화 솔리더스가 예다. 콘스탄티누스 황제가 312년경 다시 대량 유통시킨 이 금화는 무게 약 4.5g에 순도 95.8%(23캐럿) 안팎을 유지했고, 10세기까지 무게와 순도가 거의 변하지 않았다. 약 7세기 동안이다. 11세기에 황제들이 함량을 줄이기 시작하면서 신뢰가 무너졌다. 솔리더스는 유럽 중세에서 은화 12개에 해당하는 계산 단위로 쓰였고, 프랑스어 수(sou), 이탈리아어 솔도, 영어 실링이라는 이름의 뿌리가 됐다(<a href="https://en.wikipedia.org/wiki/Solidus_(coin" target="_blank" rel="noopener">위키백과, 솔리더스</a>)). 가치를 지킨 돈이 멀리까지 쓰인 사례다.</p>
+
+    <h2>4. 비트코인에 적용하면</h2>
+
+    <p>비트코인의 백서는 제목부터 『비트코인: 개인 대 개인 전자 화폐 시스템』이다. 사토시 나카모토라는 가명의 저자가 2008년 10월 31일에 공개했다(<a href="https://bitcoin.org/en/bitcoin-paper" target="_blank" rel="noopener">bitcoin.org</a>). 처음 목표가 결제 수단이었다는 이야기다. 비트코인의 총발행량은 2,100만 개로 정해져 있고, 2026년 중반 기준으로 약 2,000만 개가 이미 발행됐다.</p>
+
+    <p>실제 사용은 다르게 흘렀다. 가장 유명한 사례는 2010년 5월 22일의 피자 거래다. 한 프로그래머가 비트코인 1만 개를 줄 테니 피자 두 판을 보내 달라고 포럼에 글을 올렸고, 캘리포니아의 한 청년이 응했다. 그때 1만 개의 가치는 약 41달러였다(<a href="https://en.wikipedia.org/wiki/Bitcoin_Pizza_Day" target="_blank" rel="noopener">위키백과, 비트코인 피자 데이</a>). 지금은 같은 개수가 훨씬 큰 가치가 됐으니, 이후 많은 사람이 쓰기보다 모아 두는 쪽을 택한 건 그리 이상하지 않다.</p>
+
+    <p>그레셤의 틀을 쓰면 이렇게 읽힌다. 월급은 원화나 달러로 받는다. 이를 생활비로 쓰고, 오래 가치를 지킬 것 같은 돈은 쓰지 않고 모은다. 이 틀에서는 쓰지 않고 모으는 행동이 비트코인의 약점이 아니라, 사람들이 더 좋은 돈이라고 믿는 대상에 대해 보여 온 오래된 습관과 닮았다.</p>
+
+    <h2>5. 정리</h2>
+
+    <p>쓰지 않고 모으는 것은 비트코인의 결함이 아니다. 순도 낮은 동전은 내밀고 좋은 동전은 서랍에 넣던 습관 그대로다. 월급은 원화나 달러로 받아서 쓰고, 오래 값을 지킬 것 같은 돈은 모아 둔다.</p>
+
+    <p>역사에서 정부가 함량을 낮춘 돈은 나쁜 돈이 됐다. 헨리 8세의 동전이 그랬고 당백전이 그랬다. 반대로 순도를 지킨 솔리더스는 7세기 동안 쓰였다. 돈이 값을 지키려면 발행하는 쪽이 마음대로 질을 낮출 수 없어야 한다. 비트코인은 총발행량이 2,100만 개로 정해져 있다. 함량을 몰래 줄이듯 공급을 늘릴 수 없는 돈이다.</p>
+
+    <p>그러니 사람들이 쓰지 않고 모으는 건 당연하다. 비트코인이 답이다.</p>
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/Gresham%27s_law" target="_blank" rel="noopener">위키백과 — Gresham's law</a> (Wikipedia, 2026 열람) — 법칙의 정의, 매클라우드의 명명, 이전 관찰자들</li>
+      <li><a href="https://en.wikipedia.org/wiki/Thomas_Gresham" target="_blank" rel="noopener">위키백과 — Thomas Gresham</a> (Wikipedia, 2026 열람) — 그레셤의 생몰, 엘리자베스 1세에게 화폐 개혁을 권한 사실, 법칙을 직접 정식화하지 않았다는 점</li>
+      <li><a href="https://en.wikipedia.org/wiki/Great_Debasement" target="_blank" rel="noopener">위키백과 — Great Debasement</a> (Wikipedia, 2026 열람) — 1542~1551년 영국 대악화, 은 33%, 좋은 동전 퇴장, 1560년 재주조</li>
+      <li><a href="https://ko.wikipedia.org/wiki/%EB%8B%B9%EB%B0%B1%EC%A0%84" target="_blank" rel="noopener">위키백과 — 당백전</a> (한국어 위키백과, 2026 열람) — 1866년 발행 목적, 액면 100문과 실제 가치 5~6문, 쌀값 급등, 발행 중단과 폐지</li>
+      <li><a href="https://en.wikipedia.org/wiki/Solidus_(coin" target="_blank" rel="noopener">위키백과 — Solidus (coin)</a>) (Wikipedia, 2026 열람) — 콘스탄티누스의 재도입, 4.5g·순도 유지, 11세기 함량 저하, 중세 유럽의 계산 단위</li>
+      <li><a href="https://bitcoin.org/en/bitcoin-paper" target="_blank" rel="noopener">bitcoin.org — Bitcoin: A Peer-to-Peer Electronic Cash System</a> (bitcoin.org) — 백서의 제목과 저자 표기</li>
+      <li><a href="https://en.wikipedia.org/wiki/Bitcoin_Pizza_Day" target="_blank" rel="noopener">위키백과 — Bitcoin Pizza Day</a> (Wikipedia, 2026 열람) — 2010년 5월 22일 비트코인 1만 개로 피자 두 판을 산 거래, 당시 약 41달러</li>
+    </ul>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#그레셤의법칙</span>
+    <span class="post-tag">#악화와양화</span>
+    <span class="post-tag">#화폐의역사</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
