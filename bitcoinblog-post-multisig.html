@@ -126,6 +126,17 @@ body {
   border-radius: 999px;
   padding: 4px 12px;
 }
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32.png">
@@ -150,6 +161,10 @@ body {
 
   <div class="post-date">2026-08-27</div>
   <h1 class="post-h1">궁극적인 보안은 멀티시그?</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/RWXZcGMxmdg?rel=0" title="궁극적인 보안은 멀티시그" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 
   <div class="post-body">
     <p>최종 종착지는 멀티시그라는 결론이 나왔다.</p>
