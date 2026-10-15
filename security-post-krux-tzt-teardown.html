@@ -73,6 +73,17 @@ body {
   line-height: 1.4;
   margin: 0 0 32px;
 }
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .post-body {
   font-size: 15.5px;
   line-height: 1.9;
@@ -156,6 +167,10 @@ body {
 
   <div class="post-date">2026-10-15</div>
   <h1 class="post-h1">Krux TZT 분해기</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/z3DDxKV4RJk?rel=0" title="Krux TZT 분해기" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 
   <div class="post-body">
     <p>X에 렛저(Ledger) 사태로 시끌시끌하다. 콜드카드 사태에 이은 두 번째다. 이번엔 기기 내부에 숨겨진 칩이 있었다.</p>
