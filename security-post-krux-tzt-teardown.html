@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Krux TZT 분해기 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 28px 0 12px;
+  color: var(--accent2);
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-10-15</div>
+  <h1 class="post-h1">Krux TZT 분해기</h1>
+
+  <div class="post-body">
+    <p>X에 렛저(Ledger) 사태로 시끌시끌하다. 콜드카드 사태에 이은 두 번째다. 이번엔 기기 내부에 숨겨진 칩이 있었다.</p>
+
+    <h2>렛저 사태</h2>
+
+    <p>그 칩은 기기 케이스 안에서 화면에 표시되는 데이터를 읽도록 만들어졌고, 초기 설정 때 24단어 복구 문구를 해독해 미리 설정된 eSIM으로 LTE망을 통해 외부로 전송했다. 악성 모듈은 케이스 안쪽, 화면 쿠션층 뒤에 숨겨져 있었다.</p>
+
+    <blockquote>핵심은 보안칩을 뚫은 게 아니라 화면을 엿봤다는 것.</blockquote>
+
+    <h2>"어? 내 기기도?"</h2>
+
+    <p>그래서 당연하게도 드는 생각. "어? 내 기기도?" 최근 구매한 Krux TZT를 의심의 눈초리로 보게 된 것이다.</p>
+
+    <p>물론 가능성은 낮다. Ledger는 산 사람이 코인을 넣을 게 확실한 제품이라 노릴 가치가 있지만, TZT는 콜드월렛으로 만들어진 게 아니라 AI 카메라 교육용 보드로 팔리기 때문에, 판매자 입장에서는 구매자가 지갑으로 쓸지 알 수 없어서 공격 대상으로 삼기에 비효율적이다. 또 펌웨어는 직접 덮어쓰니까 판매자가 심은 소프트웨어 백도어는 의미가 없다.</p>
+
+    <p>하지만 화면이 있는 기기라면 같은 방식(화면 신호 가로채기 + LTE)은 구조적으로 어디든 가능하다. Krux도 니모닉을 화면에 보여주니 말이다.</p>
+
+    <h2>그래서 뜯기로 마음먹다</h2>
+
+    <p>X를 뒤져보니, 이미 뜯으려고 알아본 비트코이너의 댓글이 바로 보인다. 망설임 없이 DM을 보냈고, 그분은 친절하게도 자신이 알아온 정보들을 교류해주었다. 이것이 비트맥시의 인성... 너무 친절해.</p>
+
+    <p>DIY 커뮤니티에서 한 유저가 올린 해부 사진이 있었다. TZT는 알루미늄 케이스에 나사도 없다. 그래서 디스플레이와 케이스 사이의 접착을 떼어내야 한단다. 방식을 알았으니 이제 할 일은 정해졌다.</p>
+
+    <p>다이소에서 뽁뽁이를 사고,</p>
+
+    <img src="img/krux1-web.jpg" alt="다이소 흡착식 후크 4개입 포장, 1,000원" />
+
+    <p>집에 와서 헤어드라이기로 접착제 부분을 무적의 360도로 조져주면서 떼어내면 된다는 거슬~ 알았지롱.</p>
+
+    <img src="img/krux2-web.jpg" alt="케이스에서 분리한 TZT 디스플레이를 흡착 후크로 들어 올린 모습" />
+
+    <h2>이제 확인해보자</h2>
+
+    <img src="img/krux3-web.jpg" alt="분해한 Krux TZT 기판 — Kendryte K210, Winbond 플래시, microSD 슬롯, 버튼 K1~K4" />
+
+    <h3>주요 칩</h3>
+
+    <ul>
+      <li><b>Kendryte K210 (TKA2249001)</b> — 메인 칩. 정상 각인.</li>
+      <li><b>Winbond 25Q128JWPQ</b> — 16MB 플래시 메모리. Krux 펌웨어가 저장되는 곳이고, K210 보드에 흔히 쓰는 부품.</li>
+      <li><b>EA3036C</b> — 전원 관리 칩(PMIC). Sipeed Maix 보드 등 K210 보드에 흔히 쓰인다.</li>
+    </ul>
+
+    <h3>주변 부품</h3>
+
+    <ul>
+      <li>수정 발진자(K210 옆 은색 사각형), 부저(검은 사각형), microSD 슬롯, 버튼 4개(K1~K4), RST 버튼, UART 단자(GND/5V/TXD/RXD), RGB 단자.</li>
+      <li>작은 3~6핀 부품들(K34, Y1, 54FK, 65CP, 7002K 등) — 다이오드, 트랜지스터, MOSFET 같은 기본 부품.</li>
+      <li>USB-C 옆 칩 "343P" — WCH사의 CH343P USB-시리얼 변환 칩. "HDM"처럼 보이는 건 WCH 로고이고, 뒤의 E17은 생산 로트 번호. PC에서 Krux를 플래싱할 때 쓰는 정상 부품이다.</li>
+      <li>26.000MHz 수정 발진자 — K210 표준 클럭 주파수와 일치.</li>
+      <li>카메라 케이블 "RH-40MM-GC2…" — GC2145 카메라.</li>
+      <li>USB-C 바로 아래 6핀 소형 칩 — 위치상 USB 정전기 보호(ESD) 소자로 보인다. USB 포트 옆에 거의 항상 있는 부품이다.</li>
+    </ul>
+
+    <h2>Ledger 임플란트 특징과 비교</h2>
+
+    <ul>
+      <li><b>LTE 모듈: 없음.</b> 셀룰러 모듈은 금속 차폐 덮개가 씌워진 꽤 큰 부품이고 안테나가 필요한데, 보드에 그런 게 없다.</li>
+      <li><b>각인을 긁어낸 칩: 안 보인다.</b> 주요 칩은 모두 각인이 남아 있다.</li>
+      <li><b>덧붙인 선이나 수작업 납땜: 안 보인다.</b> 납땜 상태가 공장 생산품처럼 균일하다.</li>
+      <li><b>화면 뒤:</b> 두 번째 사진에서 LCD 뒷면은 흰색 반사판뿐이고 붙어 있는 건 안 보인다.</li>
+    </ul>
+
+    <h2>결론</h2>
+
+    <blockquote>안전.</blockquote>
+
+    <p>편집증 걸린 비트코이너는 이렇게 해야 꿀잠을 청할 수 있다.</p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#Krux</span>
+    <span class="post-tag">#TZT</span>
+    <span class="post-tag">#Ledger</span>
+    <span class="post-tag">#분해</span>
+    <span class="post-tag">#콜드월렛</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
