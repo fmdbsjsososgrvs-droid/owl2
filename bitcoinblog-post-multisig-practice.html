@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>멀티시그 만들고 되살리기 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.png');mask-image:url('icon/lock.png');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.png');mask-image:url('icon/car.png');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('bitcoin.png');mask-image:url('bitcoin.png');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.png');mask-image:url('icon/folder.png');" role="img" aria-label="PSBT"></span></a></li>
+    <li><a href="vault2.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/key-round.png');mask-image:url('icon/key-round.png');" role="img" aria-label="VAULT"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.png');mask-image:url('icon/gamepad-2.png');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-16</div>
+  <h1 class="post-h1">멀티시그 만들고 되살리기</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/QuEewGkN2LQ?rel=0" title="멀티시그 만들고 되살리기" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>멀티시그는 말로만 들으면 어렵다. 그래서 지난번에 만든 <a href="multisig-sim.html" target="_blank" rel="noopener">멀티시그 시뮬레이터</a>로 처음부터 끝까지 직접 굴려 보는 영상을 만들었다. 시드사이너와 크록스, 와치온리 앱(넌척)으로 2-of-2 지갑을 만들고, 전부 지운 뒤 되살리는 과정이다.</p>
+
+    <blockquote>연습용 시뮬레이터다. 실제 자산을 보관하는 시드 문구는 입력하지 말 것.</blockquote>
+
+    <h2>오늘 할 일</h2>
+    <ul>
+      <li>① 각 기기에서 시드를 만든다.</li>
+      <li>② 코디네이터(와치온리 앱)에 두 키를 등록해 2-of-2 지갑을 완성한다.</li>
+      <li>③ 설계도(디스크립터)를 저장하고, 주소가 맞는지 세 기기에서 확인한다.</li>
+      <li>④ 돈을 실제로 보내 본다.</li>
+    </ul>
+    <p>④까지 하면 제작은 끝이다. 그다음은 복원 연습이다.</p>
+
+    <h2>① 시드 만들기</h2>
+    <p>시드사이너에서 Tools → New seed → Dice로 주사위를 굴린다. 시뮬레이터는 연습이라 5번만 굴리지만, 실제로는 50번을 굴려야 한다. 12단어는 종이에만 적고, 마지막에 나오는 지문(fingerprint)도 따로 적어 둔다. 크록스도 New Mnemonic → Via D6로 똑같이 하고, 지갑 종류는 Multisig를 고른다.</p>
+
+    <h2>② 코디네이터에 등록하기</h2>
+    <p>시드사이너는 Export Xpub → Multisig → Native Segwit, 크록스는 Extended Public Key로 공개키 QR을 띄운다. 넌척 앱의 Keys → ＋ → Generic Airgap으로 두 QR을 차례로 스캔한 뒤, Custom wallet에서 두 키를 고르고 필요한 서명 수를 2로 올리면 2/2 멀티시그 지갑이 완성된다. 공개키라서 보여 줘도 돈은 안전하다.</p>
+
+    <h2>③ 설계도 저장과 주소 확인</h2>
+    <p>가장 중요한 단계다. 멀티시그는 시드 단어만으로는 되살릴 수 없다. 어떤 키 몇 개가 서명하는지 적힌 지갑 설정, 즉 디스크립터가 있어야 같은 주소를 다시 만들 수 있다. 앱에서 이 파일(BSMS)을 저장해 두고, 앱·시드사이너·크록스에서 첫 번째 받는 주소를 띄워 글자 하나까지 같은지 비교한다.</p>
+
+    <h2>④ 돈 보내 보기</h2>
+    <p>앱에서 거래를 만들어 QR로 띄우면, 시드사이너가 받는 주소·금액·잔돈을 보여 준다. 앱과 같은지 눈으로 확인하고 서명하면 1/2. 크록스로도 서명하면 2/2가 되고, 그제야 전송 버튼이 나타난다. 기기 하나만으로는 돈이 움직이지 않는다.</p>
+
+    <h2>복원 연습</h2>
+    <p>시드사이너와 크록스는 전원을 끄면 시드가 사라지고(스테이트리스), 앱도 새 폰처럼 비운다. 종이에 적은 12단어를 다시 넣으면 처음과 같은 지문이 떠야 한다. 단어 하나만 틀려도 지문이 완전히 달라지니, 적어 둔 지문과 꼭 비교한다. 마지막으로 앱에서 Recover existing wallet → Import via file로 백업해 둔 디스크립터를 고르면 지갑이 돌아오고, 첫 주소도 처음과 똑같다.</p>
+
+    <h2>정리</h2>
+    <p>시드 단어는 종이에, 지문은 따로 적고, 디스크립터 파일은 여러 벌 보관하기. 진짜 돈을 넣기 전에 시뮬레이터로 몇 번이고 굴려 보길 권한다.</p>
+
+    <p><a href="multisig-sim.html" target="_blank" rel="noopener">→ 멀티시그 시뮬레이터 열기</a></p>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#멀티시그</span>
+    <span class="post-tag">#시뮬레이터</span>
+    <span class="post-tag">#디스크립터</span>
+    <span class="post-tag">#셀프커스터디</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
