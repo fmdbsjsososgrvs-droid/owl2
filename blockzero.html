@@ -6,7 +6,7 @@
 <title>BLOCK ZERO | OWL BUTLER</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #fdf4e7;
@@ -48,6 +48,7 @@ body {
   padding: 96px 5% 120px;
   text-align: center;
 }
+.bz-hero.has-next { padding-bottom: 56px; }
 .bz-eyebrow {
   font-family: var(--mono);
   font-size: 12px;
@@ -70,7 +71,6 @@ body {
   justify-content: center;
   gap: 14px;
 }
-.bz-actions-sub { margin-top: 14px; }
 .bz-btn {
   display: inline-flex;
   align-items: center;
@@ -112,6 +112,88 @@ body {
   .bz-hero { padding: 64px 5% 80px; }
   .bz-title { font-size: 38px; margin-bottom: 32px; }
   .bz-btn { width: 100%; }
+}
+
+/* 비트코이너 키우기 — 귀여운 카드 */
+.bk-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 5% 100px;
+  text-align: center;
+}
+.bk-card {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 520px;
+  padding: 44px 28px 40px;
+  background: #fff8ec;
+  border: 2.5px dashed var(--accent);
+  border-radius: 32px;
+  box-shadow: 0 8px 0 rgba(224,123,10,.14);
+}
+.bk-chip {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 16px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .2em;
+}
+.bk-emoji {
+  font-size: 44px;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: inline-block;
+  animation: bk-bob 2.4s ease-in-out infinite;
+}
+.bk-title {
+  font-family: 'Jua', 'IBM Plex Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1.25;
+  letter-spacing: .02em;
+  color: var(--accent2);
+  margin: 0 0 6px;
+}
+.bk-sub {
+  font-family: 'Jua', 'IBM Plex Sans KR', sans-serif;
+  font-size: 16px;
+  color: var(--text2);
+  margin: 0 0 26px;
+}
+.bk-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 180px;
+  padding: 14px 34px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  border: 0;
+  box-shadow: 0 5px 0 var(--accent2);
+  font-family: 'Jua', 'IBM Plex Sans KR', sans-serif;
+  font-size: 22px;
+  letter-spacing: .08em;
+  text-decoration: none;
+  transition: transform .12s, box-shadow .12s;
+}
+.bk-play:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--accent2); }
+.bk-play:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--accent2); }
+.bk-play:focus-visible { outline: 3px solid rgba(224,123,10,.35); outline-offset: 3px; }
+@keyframes bk-bob { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-6px) rotate(4deg); } }
+@media (prefers-reduced-motion: reduce) { .bk-emoji { animation: none; } }
+@media (max-width:520px) {
+  .bk-card { padding: 40px 20px 34px; }
+  .bk-title { font-size: 30px; }
+  .bk-play { width: 100%; }
 }
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -166,17 +248,23 @@ body > footer.unified-footer .uf-note{
   </ul>
 </nav>
 
-<main class="bz-hero">
+<main class="bz-hero has-next">
   <div class="bz-eyebrow">// GAME</div>
   <h1 class="bz-title">BLOCK ZERO</h1>
   <div class="bz-actions">
     <a class="bz-btn primary" href="https://block-zero.pages.dev/" target="_blank" rel="noopener noreferrer">PLAY</a>
     <a class="bz-btn secondary" href="evol2.html" target="_blank" rel="noopener noreferrer">무기 진화 표</a>
   </div>
-  <div class="bz-actions bz-actions-sub">
-    <a class="bz-btn secondary" href="btcgame.html" target="_blank" rel="noopener noreferrer">비트코이너 키우기</a>
-  </div>
 </main>
+<section class="bk-wrap">
+  <div class="bk-card">
+    <span class="bk-chip">// GAME</span>
+    <div class="bk-emoji" aria-hidden="true">🦉</div>
+    <h2 class="bk-title">비트코이너 키우기</h2>
+    <p class="bk-sub">비트코인 퀴즈로 몬스터를 물리쳐라!</p>
+    <a class="bk-play" href="btcgame.html" target="_blank" rel="noopener noreferrer">▶ PLAY</a>
+  </div>
+</section>
 <footer class="unified-footer">
   <span class="uf-email">⚡bitsexer@oksu.su</span>
   <span class="uf-note">NOT YOUR KEYS, NOT YOUR BITCOIN.</span>
