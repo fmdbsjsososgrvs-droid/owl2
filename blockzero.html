@@ -195,6 +195,36 @@ body {
   .bk-title { font-size: 30px; }
   .bk-play { width: 100%; }
 }
+
+/* BLOCK ZERO — 블록 프레임 */
+.bz-card {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 520px;
+  padding: 48px 28px 44px;
+  background:
+    linear-gradient(rgba(224,123,10,.07) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(224,123,10,.07) 1px, transparent 1px) 0 0 / 24px 24px,
+    #fffaf1;
+  border: 4px solid var(--text);
+  border-radius: 0;
+  box-shadow: 10px 10px 0 var(--accent);
+}
+.bz-card::before, .bz-card::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border: 3px solid var(--text);
+}
+.bz-card::before { top: -11px; left: -11px; }
+.bz-card::after { bottom: -11px; right: -11px; }
+.bz-card .bz-title { margin-bottom: 34px; }
+@media (max-width:520px) {
+  .bz-card { padding: 40px 18px 36px; box-shadow: 7px 7px 0 var(--accent); }
+}
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32.png">
@@ -249,11 +279,13 @@ body > footer.unified-footer .uf-note{
 </nav>
 
 <main class="bz-hero has-next">
-  <div class="bz-eyebrow">// GAME</div>
-  <h1 class="bz-title">BLOCK ZERO</h1>
-  <div class="bz-actions">
-    <a class="bz-btn primary" href="https://block-zero.pages.dev/" target="_blank" rel="noopener noreferrer">PLAY</a>
-    <a class="bz-btn secondary" href="evol2.html" target="_blank" rel="noopener noreferrer">무기 진화 표</a>
+  <div class="bz-card">
+    <div class="bz-eyebrow">// GAME</div>
+    <h1 class="bz-title">BLOCK ZERO</h1>
+    <div class="bz-actions">
+      <a class="bz-btn primary" href="https://block-zero.pages.dev/" target="_blank" rel="noopener noreferrer">PLAY</a>
+      <a class="bz-btn secondary" href="evol2.html" target="_blank" rel="noopener noreferrer">무기 진화 표</a>
+    </div>
   </div>
 </main>
 <section class="bk-wrap">
