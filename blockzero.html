@@ -6,7 +6,7 @@
 <title>BLOCK ZERO | OWL BUTLER</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #fdf4e7;
@@ -225,6 +225,114 @@ body {
 @media (max-width:520px) {
   .bz-card { padding: 40px 18px 36px; box-shadow: 7px 7px 0 var(--accent); }
 }
+
+/* 솔라리아 랩소디 — 판타지 카드 */
+.sr-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 88px 5% 64px;
+  text-align: center;
+}
+.sr-card {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 520px;
+  padding: 54px 30px 48px;
+  color: #f6e7c1;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,235,170,.9) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 78% 16%, rgba(255,235,170,.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 64% 38%, rgba(255,235,170,.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 30% 64%, rgba(255,235,170,.55) 0 1px, transparent 2px),
+    radial-gradient(circle at 86% 72%, rgba(255,235,170,.7) 0 1.2px, transparent 2px),
+    radial-gradient(ellipse at 50% -10%, rgba(255,196,92,.38), transparent 60%),
+    linear-gradient(180deg, #16213f 0%, #1d2d55 55%, #253a5f 100%);
+  border: 2px solid #d9b15a;
+  border-radius: 18px;
+  outline: 1px solid rgba(217,177,90,.55);
+  outline-offset: -10px;
+  box-shadow: 0 0 0 5px #fdf4e7, 0 0 0 7px rgba(217,177,90,.6), 0 14px 34px rgba(22,33,63,.28);
+  overflow: hidden;
+}
+.sr-card::before, .sr-card::after {
+  content: "✦";
+  position: absolute;
+  top: 14px;
+  font-size: 18px;
+  color: #e9c76f;
+}
+.sr-card::before { left: 18px; }
+.sr-card::after { right: 18px; }
+.sr-chip {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .3em;
+  color: #e9c76f;
+}
+.sr-crest {
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 10px;
+  color: #ffd77a;
+  text-shadow: 0 0 18px rgba(255,200,90,.75);
+  animation: sr-glow 3s ease-in-out infinite;
+}
+.sr-title {
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 1.2;
+  letter-spacing: .08em;
+  margin: 0 0 6px;
+  background: linear-gradient(180deg, #fff3cf 0%, #f2cf74 55%, #c99436 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 14px rgba(255,200,90,.25);
+}
+.sr-sub {
+  font-family: 'Gowun Batang', serif;
+  font-size: 13px;
+  letter-spacing: .38em;
+  color: #c9b48a;
+  margin: 0 0 30px;
+}
+.sr-play {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 220px;
+  padding: 15px 38px;
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: .14em;
+  color: #2a1d08;
+  text-decoration: none;
+  background: linear-gradient(180deg, #ffe7a3 0%, #e8bd5a 52%, #c98f2c 100%);
+  border: 1px solid #fff0c4;
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px #1a2546, 0 0 0 4px #d9b15a, 0 6px 18px rgba(255,190,80,.35);
+  transition: transform .15s, box-shadow .2s, filter .2s;
+}
+.sr-play::before, .sr-play::after { content: "◆"; font-size: 10px; color: #7a5212; }
+.sr-play:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 0 0 3px #1a2546, 0 0 0 4px #ffd77a, 0 8px 26px rgba(255,200,90,.6); }
+.sr-play:active { transform: translateY(1px); }
+.sr-play:focus-visible { outline: 3px solid #ffd77a; outline-offset: 6px; }
+@keyframes sr-glow { 0%,100% { opacity: .75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { .sr-crest { animation: none; } }
+.bz-hero.after-new { padding-top: 0; }
+@media (max-width:520px) {
+  .sr-wrap { padding: 64px 5% 48px; }
+  .sr-card { padding: 46px 20px 40px; }
+  .sr-title { font-size: 34px; }
+  .sr-play { width: 100%; min-width: 0; }
+}
 </style>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32.png">
@@ -278,14 +386,22 @@ body > footer.unified-footer .uf-note{
   </ul>
 </nav>
 
-<main class="bz-hero has-next">
+<section class="sr-wrap">
+  <div class="sr-card">
+    <span class="sr-chip">// NEW GAME</span>
+    <div class="sr-crest" aria-hidden="true">✦</div>
+    <h2 class="sr-title">솔라리아 랩소디</h2>
+    <p class="sr-sub">SOLARIA RHAPSODY</p>
+    <a class="sr-play" href="https://my-little-hash-farm.pages.dev/" target="_blank" rel="noopener noreferrer">모험 시작</a>
+  </div>
+</section>
+<main class="bz-hero has-next after-new">
   <div class="bz-card">
     <div class="bz-eyebrow">// GAME</div>
     <h1 class="bz-title">BLOCK ZERO</h1>
     <div class="bz-actions">
       <a class="bz-btn primary" href="https://block-zero.pages.dev/" target="_blank" rel="noopener noreferrer">PLAY</a>
       <a class="bz-btn secondary" href="evol2.html" target="_blank" rel="noopener noreferrer">무기 진화 표</a>
-      <a class="bz-btn secondary" href="https://my-little-hash-farm.pages.dev/" target="_blank" rel="noopener noreferrer">MY LITTLE HASH FARM</a>
     </div>
   </div>
 </main>
