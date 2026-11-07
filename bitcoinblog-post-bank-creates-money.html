@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>은행은 돈을 빌려주는 게 아니라 만든다 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.svg');mask-image:url('icon/lock.svg');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.svg');mask-image:url('icon/car.svg');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/bitcoin.svg');mask-image:url('icon/bitcoin.svg');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="youtube.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/youtube.svg');mask-image:url('icon/youtube.svg');" role="img" aria-label="YOUTUBE"></span></a></li>
+    <li><a href="toon.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/open-book.svg');mask-image:url('icon/open-book.svg');" role="img" aria-label="MANGA"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.svg');mask-image:url('icon/gamepad-2.svg');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+    <li><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.svg');mask-image:url('icon/folder.svg');" role="img" aria-label="PSBT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-11-07</div>
+  <h1 class="post-h1">은행은 돈을 빌려주는 게 아니라 만든다</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/099lBKjJRMw?rel=0" title="은행은 돈을 빌려주는 게 아니라 만든다" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>은행에서 대출을 받으면 그 돈은 어디서 올까. 다른 사람이 맡겨 둔 예금을 금고에서 꺼내 주는 것일까.</p>
+
+
+    <h2>1. 흔한 그림과 실제 그림</h2>
+
+    <p>많은 사람이 은행을 중개인으로 생각한다. 저축하는 사람이 돈을 맡기고, 은행은 그 돈을 빌릴 사람에게 넘겨주며 이자 차이를 번다는 그림이다.</p>
+
+    <p>영국 중앙은행인 영란은행은 2014년 계간 보고서 「현대 경제의 화폐 창출(Money creation in the modern economy)」에서 이 그림이 실제와 다르다고 설명했다. 보고서에 따르면 오늘날 돈의 대부분은 <a href="https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy" target="_blank" rel="noopener">시중은행이 대출을 내줄 때 만들어진다</a>. 은행이 주택담보대출을 승인하면 지폐 뭉치를 건네는 것이 아니라 빌린 사람의 계좌에 그만큼의 예금을 적어 준다. 그 순간 새 돈이 생긴다. 보고서는 순서를 거꾸로 정리한다. 예금이 들어와서 대출이 나가는 게 아니라, 대출이 예금을 만든다는 것이다.</p>
+
+    <p>같은 보고서는 영국의 넓은 의미의 돈 가운데 97%가 지폐가 아니라 은행 예금이라고 밝힌다. 우리가 돈이라고 부르는 것의 대부분이 은행 장부의 숫자라는 뜻이다.</p>
+
+
+    <h2>2. 메리와 사라의 장부</h2>
+
+    <p>린 알든은 『망가진 돈』 15장에서 이 과정을 블록 장부로 보여 준다. 블록 하나는 1,000달러다. D는 고객 예금, R은 은행이 연준에 맡겨 둔 지급준비금이다.</p>
+
+    <p>처음에 메리와 사라의 예금 블록은 모두 4개, 두 은행의 지급준비금 블록은 모두 3개다. 메리가 사라의 중고차를 1,000달러에 사기로 하고, 은행에서 1,000달러 자동차 대출을 받는다. 은행은 메리의 계좌에 예금 D 하나를 새로 적고, 같은 금액의 대출 채권을 자산에 올린다. 메리의 순자산은 그대로다. 예금이 하나 늘고 빚도 하나 늘었을 뿐이다.</p>
+
+    <p>메리가 사라에게 차값을 보내면 사라의 계좌에 예금이 들어온다. 그 뒤에서 은행끼리는 지급준비금 R 하나를 연준 장부 위에서 옮겨 결제를 마친다. 끝나고 보면 예금은 4개에서 5개가 됐고, 지급준비금은 3개 그대로다. 저자는 이 사례를 은행이 준비금을 줄이지 않고도 예금, 곧 돈을 만들어 내는 가장 분명한 예로 든다.</p>
+
+
+    <h2>3. 준비금은 대출의 족쇄가 아니다</h2>
+
+    <p>예전 교과서는 은행이 준비금의 몇 배까지만 대출할 수 있다고 가르쳤다. 이른바 통화승수다. 영란은행 보고서는 이 설명도 현실과 다르다고 본다. 중앙은행은 보통 필요한 만큼 준비금을 공급하고, 준비금 총량이 대출을 직접 묶지 않는다는 것이다.</p>
+
+    <p>미국은 제도에서도 이 족쇄를 풀었다. 연준은 <a href="https://www.federalreserve.gov/monetarypolicy/reservereq.htm" target="_blank" rel="noopener">2020년 3월 26일부터 지급준비율을 0%로 낮췄다</a>. 그전에는 일정 규모 이상의 결제성 예금에 10%가 적용됐다. 2026년 현재도 0%다.</p>
+
+    <p>그렇다고 은행이 마음대로 돈을 찍는 것은 아니다. 영란은행은 대출이 이익을 내야 한다는 경쟁의 제약, 건전성 규제, 그리고 중앙은행의 금리 정책이 은행의 돈 만들기를 제한한다고 설명한다. 또 대출을 갚으면 그만큼의 돈이 사라진다. 빌리면 생기고, 갚으면 없어지는 돈이다.</p>
+
+
+    <h2>4. 숫자로 보면</h2>
+
+    <p>이렇게 생긴 돈은 오랜 시간 쌓였다. 연준이 세워진 1913년 미국의 넓은 의미의 통화량은 <a href="https://fred.stlouisfed.org/series/M1475AUSM027SNBR" target="_blank" rel="noopener">약 193억 달러</a>(NBER 역사 통계, 연평균)였다. 2026년 8월 미국 <a href="https://fred.stlouisfed.org/series/M2SL" target="_blank" rel="noopener">M2는 약 23조 3,428억 달러</a>다. 정의가 조금 다른 두 통계를 이어 붙인 비교지만, 약 1,200배이고 연 6.5% 안팎으로 늘어난 셈이다.</p>
+
+    <p>그 돈의 대부분은 예금이다. 2026년 9월 23일 기준 미국 상업은행의 <a href="https://fred.stlouisfed.org/series/DPSACBW027SBOG" target="_blank" rel="noopener">예금은 약 19조 6,371억 달러</a>다. 반면 미국 민간 예금기관이 금고에 실제로 쥐고 있던 지폐와 동전은 <a href="https://fred.stlouisfed.org/series/BOGZ1FL703025005A" target="_blank" rel="noopener">2025년 말 약 855억 달러</a>였다. 예금 100달러당 금고 속 현금은 50센트가 채 안 된다. 나머지 지급 수단은 주로 연준 장부에 적힌 준비금이고, 이것도 2026년 9월 말 <a href="https://fred.stlouisfed.org/series/WRESBAL" target="_blank" rel="noopener">약 2조 9,481억 달러</a>로 예금보다 훨씬 작다.</p>
+
+    <p>이는 미국만의 일이 아니다. 사이페딘 아모스는 『피아트 스탠더드』 4장에서 167개국의 1960~2020년 통화량 증가율이 평균 연 29%였다고 쓴다. 초인플레이션 국가들이 끌어올린 단순 평균이다. 저자에 따르면 가장 낮은 축인 스위스도 연 6.5%, 미국은 연 7.4%였다. FRED 자료로 미국 M2를 직접 계산해 보면 1960년 1월부터 2020년 12월까지 연 약 7.1%다.</p>
+
+
+    <h2>5. 대출은 법정화폐의 채굴이다</h2>
+
+    <p>아모스는 『피아트 스탠더드』에서 대출을 법정화폐의 '채굴'이라고 부른다. 100만 달러 주택담보대출을 내줄 때 은행은 누군가 모아 둔 돈을 꺼내지 않고 그 자리에서 새 달러를 만든다. 산 사람은 집을, 판 사람은 대금을, 은행은 이자를 얻는다. 저자는 그 대가를 통화를 가진 모든 사람이 인플레이션으로 나눠 진다고 주장한다.</p>
+
+    <p>비트코인 채굴에는 난이도 조정이 있다. 채굴하는 사람이 늘어도 블록은 약 10분에 하나씩 나오고, 블록당 <a href="https://en.bitcoin.it/wiki/Controlled_supply" target="_blank" rel="noopener">새 코인의 양은 정해진 일정대로 줄어든다</a>. 저자는 법정화폐의 채굴에는 이런 장치가 없다고 지적한다. 빌리려는 사람과 빌려주려는 은행이 있으면 돈은 계속 늘어날 수 있다.</p>
+
+    <p>나는 이 대비가 핵심이라고 본다. 은행의 신용창조는 사기가 아니라 장부 기술이다. 그러나 그 결과, 돈의 양은 경기와 대출 수요와 정책에 따라 늘었다 줄었다 한다. 그리고 긴 시간으로 보면 거의 늘기만 했다.</p>
+
+
+    <h2>6. 정리</h2>
+
+    <p>오늘날 돈의 대부분은 은행이 대출을 승인하는 순간 장부 위에서 태어난다. 메리의 자동차 대출처럼 예금은 늘고 준비금은 그대로다. 미국은 2020년부터 지급준비율이 0%이고, 미국 은행 예금 19조 6천억 달러에 비해 금고 속 현금은 855억 달러 남짓이다.</p>
+
+    <p>이 돈은 누군가 빚을 질 때 생기고, 그 빚이 늘어나는 만큼 함께 불어난다. 내가 저축한 돈의 몫은 남이 새로 진 빚 때문에 얇아질 수 있다. 반면 비트코인은 누구의 빚도 아니고, 발행 일정이 코드로 공개돼 있으며, 총량은 2,100만 개에 조금 못 미치는 수준에서 멈춘다. 대출로 태어나는 돈과 정해진 일정으로만 나오는 돈 가운데, 저축을 맡길 돈은 뒤쪽이라고 나는 생각한다.</p>
+
+    <p>누구의 빚도 아니어서, 남의 대출로 얇아지지 않는 돈이 비트코인이다.</p>
+
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy" target="_blank" rel="noopener">Bank of England — Money creation in the modern economy</a> (McLeay·Radia·Thomas, Quarterly Bulletin 2014 Q1) — 돈의 대부분은 시중은행 대출로 생김, 대출이 예금을 만듦, 넓은 의미의 돈 중 97%가 은행 예금, 통화승수는 현실과 다름, 상환하면 돈이 사라짐, 수익성·규제·통화정책이 제약</li>
+      <li><a href="https://www.federalreserve.gov/monetarypolicy/reservereq.htm" target="_blank" rel="noopener">Federal Reserve Board — Reserve Requirements</a> (Federal Reserve, 2020) — 2020년 3월 26일부터 지급준비율 0%, 이전 결제성 예금 10%</li>
+      <li><a href="https://fred.stlouisfed.org/series/M1475AUSM027SNBR" target="_blank" rel="noopener">FRED — Adjusted Demand Deposits, All Banks, Total Time Deposits, Plus Currency Held by the Public (M1475AUSM027SNBR)</a> (NBER Macrohistory / FRED) — 1913년 월별 19.09~19.64십억 달러, 연평균 약 19.31십억 달러</li>
+      <li><a href="https://fred.stlouisfed.org/series/M2SL" target="_blank" rel="noopener">FRED — M2 Money Stock (M2SL)</a> (Federal Reserve Bank of St. Louis, 2026) — 2026년 8월 23,342.8십억 달러, 1960년 1월 298.2십억, 2020년 12월 19,119.4십억 달러</li>
+      <li><a href="https://fred.stlouisfed.org/series/DPSACBW027SBOG" target="_blank" rel="noopener">FRED — Deposits, All Commercial Banks (DPSACBW027SBOG)</a> (Federal Reserve H.8, 2026) — 2026년 9월 23일 19,637.1십억 달러</li>
+      <li><a href="https://fred.stlouisfed.org/series/BOGZ1FL703025005A" target="_blank" rel="noopener">FRED — Private Depository Institutions; Vault Cash (BOGZ1FL703025005A)</a> (Federal Reserve Z.1, 2026) — 2025년 말 85,544백만 달러</li>
+      <li><a href="https://fred.stlouisfed.org/series/WRESBAL" target="_blank" rel="noopener">FRED — Reserve Balances with Federal Reserve Banks (WRESBAL)</a> (Federal Reserve H.4.1, 2026) — 2026년 9월 30일 주 2,948,090백만 달러</li>
+      <li><a href="https://en.bitcoin.it/wiki/Controlled_supply" target="_blank" rel="noopener">Bitcoin Wiki — Controlled supply</a> (Bitcoin Wiki, 열람 2026) — 블록 보상 반감 일정, 총량 2,100만 개 미만</li>
+    </ul>
+
+    <p>---</p>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#신용창조</span>
+    <span class="post-tag">#은행</span>
+    <span class="post-tag">#통화량</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>

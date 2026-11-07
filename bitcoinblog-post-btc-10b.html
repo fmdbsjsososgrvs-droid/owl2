@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비트코인이 왜? 100억을 감? | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.svg');mask-image:url('icon/lock.svg');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.svg');mask-image:url('icon/car.svg');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/bitcoin.svg');mask-image:url('icon/bitcoin.svg');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="youtube.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/youtube.svg');mask-image:url('icon/youtube.svg');" role="img" aria-label="YOUTUBE"></span></a></li>
+    <li><a href="toon.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/open-book.svg');mask-image:url('icon/open-book.svg');" role="img" aria-label="MANGA"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.svg');mask-image:url('icon/gamepad-2.svg');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+    <li><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.svg');mask-image:url('icon/folder.svg');" role="img" aria-label="PSBT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-15</div>
+  <h1 class="post-h1">비트코인이 왜? 100억을 감?</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/CTNYKR8fna8?rel=0" title="비트코인이 왜? 100억을 감?" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <blockquote>이어지는 글: 초급 04 「악화가 양화를 쫓아낸다」, 119 「좋은 돈이 나쁜 돈을 쫓아낼 때」, 43 「게임 속에서 돈이 저절로 생겨났다」</blockquote>
+    <p>비트코인 하나가 100억 원이 된다는 말을 들으면 대부분 웃는다. 그런데 이 질문은 가격 이야기로 시작하면 답이 안 나온다. 먼저 물어야 할 것은 이것이다. 사람들은 어떤 돈을 고르는가. 시간이 걸릴 뿐, 좋은 돈이 나쁜 돈을 잡아먹는 것은 역사가 여러 번 보여 준 일이다.</p>
+
+
+    <h2>1. 좋은 돈은 나쁜 돈을 잡아먹는다</h2>
+
+    <p>돈에는 단단한 돈과 무른 돈이 있다. 경화(hard money)는 늘리기 어려운 돈이다. 금처럼 더 만들려면 큰 비용이 드는 돈, 그래서 시간이 지나도 값이 잘 녹지 않는 돈이다. 연화(soft money)는 쉽게 늘릴 수 있는 돈이다. 발행하는 쪽이 마음먹으면 얼마든지 찍을 수 있어서, 들고 있으면 값이 조금씩 녹는다.</p>
+
+    <p>그레셤의 법칙은 "악화가 양화를 쫓아낸다"고 말한다. 그런데 이 법칙에는 조건이 있다. 법이 두 돈을 같은 값으로 묶어 둘 때다. 노벨 경제학상을 받은 로버트 먼델은 "같은 값으로 교환될 때 악화가 양화를 쫓아낸다"고 고쳐 말해야 정확하다고 했다(<a href="https://en.wikipedia.org/wiki/Gresham%27s_law" target="_blank" rel="noopener">위키백과, 그레셤의 법칙</a>). 묶어 둔 끈이 풀리면 반대 일이 벌어진다. 파는 사람이 받을 돈을 고를 수 있으면 누구도 녹아내리는 돈을 받으려 하지 않는다. 경제학자 페터 베른홀츠는 이것을 티어스(티에르)의 법칙이라고 불렀다.</p>
+
+    <p>실제로 그랬다. 1923년 11월 독일에서는 1달러가 약 4조 2,105억 마르크였고, 결국 종이 마르크 1조 개가 새 돈 렌텐마르크 1개로 바뀌었다(<a href="https://en.wikipedia.org/wiki/Hyperinflation_in_the_Weimar_Republic" target="_blank" rel="noopener">위키백과, 바이마르 초인플레이션</a>). 짐바브웨에서는 2008년 100조 달러 지폐까지 나온 뒤 시장이 먼저 외화로 넘어갔고, 2009년 1월 정부가 외화 사용을 공식 허용했다(<a href="https://en.wikipedia.org/wiki/Hyperinflation_in_Zimbabwe" target="_blank" rel="noopener">위키백과, 짐바브웨 초인플레이션</a>). 에콰도르는 2000년 아예 미국 달러를 나라 돈으로 삼았다(<a href="https://en.wikipedia.org/wiki/Ecuadorian_sucre" target="_blank" rel="noopener">위키백과, 에콰도르 수크레</a>). 고를 수 있게 되자 사람들은 단단한 돈으로 갔다.</p>
+
+
+    <h2>2. 그럼 무엇이 좋은 돈인가 — 디아블로의 골드와 조던의 반지</h2>
+
+    <p>좋은 돈의 조건을 가장 깔끔하게 보여 준 실험은 뜻밖에도 게임 안에서 일어났다. 2000년에 나온 디아블로 II다.</p>
+
+    <p>게임의 공식 돈은 골드였다. 그런데 블리자드 공식 전략 가이드에 따르면 캐릭터는 <a href="https://classic.hiveworkshop.com/diablo2exp/basics/index.html" target="_blank" rel="noopener">레벨당 1만 골드까지만</a> 지닐 수 있었고, 죽으면 골드의 일부(최대 20%)를 잃었다. 상인이 아이템 하나에 쳐 주는 값에도 <a href="https://classic.hiveworkshop.com/diablo2exp/basics/vendors.shtml" target="_blank" rel="noopener">상한이 있었다</a>. 몬스터를 잡으면 골드는 계속 쏟아졌다. 들고 다니기 어렵고, 잃기 쉽고, 끝없이 생겨나는 돈. 전형적인 무른 돈이었다.</p>
+
+    <p>플레이어들이 대신 고른 것은 '조던의 반지(Stone of Jordan, SoJ)'였다. 모든 스킬 +1, 최대 마나 25% 증가 같은 <a href="https://classic.hiveworkshop.com/diablo2exp/items/normal/urings.shtml" target="_blank" rel="noopener">능력치</a> 덕에 거의 모든 직업이 원했고, 가방 한 칸만 차지했고, 귀했다. 누구도 이 반지를 화폐로 정하지 않았지만, 『망가진 돈』의 저자 린 알든에 따르면 당시 희귀한 검은 SoJ 8개, 활은 5개 정도에 거래됐다. 공식 돈인 골드를 사람들이 고른 반지가 잡아먹은 것이다.</p>
+
+    <p>그 반지도 영원하지는 않았다. 아이템을 복제하는 버그가 퍼지자 SoJ가 쏟아졌고, 블리자드는 서버에서 <a href="https://gamespy-archives.quaddicted.com/sites/www.planetdiablo.com/features/articles/dupeqa/index.html" target="_blank" rel="noopener">복제된 아이템을 지웠다</a>. 플레이어는 자기 반지가 원본인지 확인할 방법도 없었다. 쉽게 늘어나는 순간 반지는 돈의 자격을 잃었고, 시간이 지나며 거래의 기준은 더 귀한 '하이 룬'으로 넘어갔다(<a href="https://maxroll.gg/d2/resources/trade-guide" target="_blank" rel="noopener">Maxroll 거래 안내</a>). 좋은 돈의 조건은 결국 하나로 모인다. 모두가 원하고, 늘리기 어려워야 한다.</p>
+
+
+    <h2>3. 시간이 걸릴 뿐, 비트코인은 달러를 잡아먹는다</h2>
+
+    <p>비트코인은 총량이 약 2,100만 개로 정해져 있고 4년마다 새로 나오는 양이 절반으로 준다(<a href="https://en.bitcoin.it/wiki/Controlled_supply" target="_blank" rel="noopener">비트코인 위키</a>). 같은 코인을 두 번 쓰는 복제는 작업증명과 공개 장부가 막고, 누구나 자기 컴퓨터로 직접 검증할 수 있다. 디아블로의 반지가 서버 운영자에게 기대야 했던 일을, 비트코인은 누구에게도 기대지 않고 해낸다.</p>
+
+    <p>달러는 반대다. 미국 소비자물가지수는 1997년 1월 159.4에서 2026년 8월 334.131로 약 2.1배가 됐다(<a href="https://fred.stlouisfed.org/series/CPIAUCSL" target="_blank" rel="noopener">FRED, CPIAUCSL</a>). 30년 사이에 달러의 구매력은 절반 넘게 녹았다. 달러는 지금 세상에서 가장 강한 돈이지만, 성질로 보면 늘릴 수 있는 무른 돈이다.</p>
+
+    <p>그럼 100억은 어디서 나오는 숫자일까. 어림셈을 해 보자. 세계 자산을 약 1,300조 달러, 비트코인 유통량을 약 2,000만 개로 잡으면, 비트코인이 세계 자산의 약 11%를 차지할 때 개당 약 700만 달러가 된다. 1달러를 1,400원으로 치면 약 100억 원이다. 이것은 내 계산이고 누구의 예언도 아니다. 마이클 세일러는 2024년 7월 2045년 기본 시나리오로 개당 1,300만 달러를 제시했다(<a href="https://coindesk.com/markets/2024/07/26/bitcoin-to-account-for-7-of-global-wealth-be-worth-13m-in-21-years-michael-saylor" target="_blank" rel="noopener">CoinDesk</a>).</p>
+
+    <p>언제 그렇게 될지는 아무도 모른다. 하지만 방향은 정해져 있다고 나는 본다. 디아블로에서 골드가 반지에게, 바이마르에서 마르크가 달러에게 자리를 내준 것처럼, 사람들이 고를 수 있는 한 무른 돈은 단단한 돈에게 자리를 내준다. 시간이 걸릴 뿐이다.</p>
+
+    <p>비트코인이 답이다.</p>
+
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/Gresham%27s_law" target="_blank" rel="noopener">위키백과 — Gresham's law</a> — 먼델의 수정 표현, 베른홀츠의 티에르 법칙 명명</li>
+      <li><a href="https://en.wikipedia.org/wiki/Hyperinflation_in_the_Weimar_Republic" target="_blank" rel="noopener">위키백과 — Hyperinflation in the Weimar Republic</a> / <a href="https://en.wikipedia.org/wiki/Rentenmark" target="_blank" rel="noopener">Rentenmark</a> — 1923년 11월 환율, 1조 마르크 = 1렌텐마르크</li>
+      <li><a href="https://en.wikipedia.org/wiki/Hyperinflation_in_Zimbabwe" target="_blank" rel="noopener">위키백과 — Hyperinflation in Zimbabwe</a> — 100조 달러 지폐, 2009년 1월 외화 허용</li>
+      <li><a href="https://en.wikipedia.org/wiki/Ecuadorian_sucre" target="_blank" rel="noopener">위키백과 — Ecuadorian sucre</a> — 2000년 달러화</li>
+      <li><a href="https://classic.hiveworkshop.com/diablo2exp/basics/index.html" target="_blank" rel="noopener">Blizzard 전략 가이드 보존본 — Basics / Vendors / Unique Rings</a> — 골드 소지 한도·사망 손실·상인 상한, SoJ 능력치</li>
+      <li><a href="https://gamespy-archives.quaddicted.com/sites/www.planetdiablo.com/features/articles/dupeqa/index.html" target="_blank" rel="noopener">PlanetDiablo — Blizzard Duping Q&amp;A</a> (2002) — 복제 아이템 삭제, 원본 확인 불가</li>
+      <li><a href="https://maxroll.gg/d2/resources/trade-guide" target="_blank" rel="noopener">Maxroll — Diablo 2 Trade Guide</a> — 지금은 룬이 주 화폐</li>
+      <li>『망가진 돈(Broken Money)』 2장 (린 알든, 2023) — SoJ 가격표(검 8·활 5 SoJ)</li>
+      <li><a href="https://en.bitcoin.it/wiki/Controlled_supply" target="_blank" rel="noopener">비트코인 위키 — Controlled supply</a> — 총량 약 2,100만 개, 반감기</li>
+      <li><a href="https://fred.stlouisfed.org/series/CPIAUCSL" target="_blank" rel="noopener">FRED — CPIAUCSL</a> — 1997.1 159.4 → 2026.8 334.131</li>
+      <li><a href="https://coindesk.com/markets/2024/07/26/bitcoin-to-account-for-7-of-global-wealth-be-worth-13m-in-21-years-michael-saylor" target="_blank" rel="noopener">CoinDesk 2024.7.26</a> — 세일러 2045년 기본 시나리오 1,300만 달러</li>
+    </ul>
+
+    <p>---</p>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#경화와연화</span>
+    <span class="post-tag">#티어스의법칙</span>
+    <span class="post-tag">#디아블로2</span>
+    <span class="post-tag">#조던의반지</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>

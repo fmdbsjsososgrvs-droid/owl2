@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>새로운 것은 항상 늦게 알아본다 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.svg');mask-image:url('icon/lock.svg');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.svg');mask-image:url('icon/car.svg');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/bitcoin.svg');mask-image:url('icon/bitcoin.svg');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="youtube.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/youtube.svg');mask-image:url('icon/youtube.svg');" role="img" aria-label="YOUTUBE"></span></a></li>
+    <li><a href="toon.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/open-book.svg');mask-image:url('icon/open-book.svg');" role="img" aria-label="MANGA"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.svg');mask-image:url('icon/gamepad-2.svg');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+    <li><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.svg');mask-image:url('icon/folder.svg');" role="img" aria-label="PSBT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-11-05</div>
+  <h1 class="post-h1">새로운 것은 항상 늦게 알아본다</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/IRx9BhmomS0?rel=0" title="새로운 것은 항상 늦게 알아본다" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>지금 당장 이해되지 않는 것은 쓸모없는 것일까. 꼭 그렇지는 않다. 이해하는 데 오래 걸리는 것이 섞여 있다.</p>
+
+    <p>비트코인이 비판받을 때마다 "새로운 건 원래 다 이런 취급을 받는다"는 말이 따라 나온다. 이 말을 역사 기록으로 따져 보려 한다.</p>
+
+
+    <h2>1. 인터넷은 얼마나 걸렸나</h2>
+
+    <p>가장 자주 나오는 비유가 인터넷이다. 팀 버너스리가 월드와이드웹을 CERN에 처음 제안한 것은 1989년 3월이다. 웹이 전 세계 인터넷에 공개된 것은 1991년 8월이고, CERN이 그 기술을 로열티 없이 풀어 쓰게 한 것은 1993년 4월이다. 출처는 <a href="https://en.wikipedia.org/wiki/World_Wide_Web" target="_blank" rel="noopener">위키백과 월드와이드웹 항목</a>이다.</p>
+
+    <p>국제전기통신연합(ITU)은 2018년 말 기준으로 세계 인구의 51.2%, 약 39억 명이 인터넷을 쓰게 되어 처음 절반을 넘겼다고 <a href="https://www.itu.int/en/mediacentre/pages/2018-pr40.aspx" target="_blank" rel="noopener">발표했다</a>. 2025년에는 약 60억 명, 74%로 추정한다(<a href="https://www.itu.int/en/ITU-D/Statistics/Pages/stat/default.aspx" target="_blank" rel="noopener">ITU 통계 페이지</a>). 웹 공개에서 세계 인구 절반이 쓰기까지 약 27년이 걸린 셈이다. 한 세대에 가깝다. 여기서 인터넷 이용자는 최근 3개월 안에 어디에서든 인터넷에 접속한 사람을 뜻하며, 이 정의와 1990년부터의 연도별 추이는 <a href="https://ourworldindata.org/grapher/share-of-individuals-using-the-internet" target="_blank" rel="noopener">아워월드인데이터</a>에서 볼 수 있다. 내 해석으로는 이 숫자가 단순한 보급 속도 이상을 말해 준다. 어떤 기술이 쓸모 있다는 합의가 사회 전체에 퍼지는 데 한 세대가 걸릴 수 있다는 것이다.</p>
+
+    <p>블랙록의 래리 핑크는 2025년 12월 이코노미스트 기고에서 토큰화(자산을 블록체인 위의 토큰으로 발행하는 일)가 1996년의 인터넷과 비슷한 단계에 있다고 <a href="https://www.theblock.co/post/381046/blackrock-larry-fink-rob-goldstein-tokenization" target="_blank" rel="noopener">썼다</a>. 당시 아마존의 도서 매출이 1,600만 달러였다는 것이 근거다. 이 비유는 비트코인이 아니라 토큰화를 두고 한 말이라는 점은 구분해 둔다.</p>
+
+
+    <h2>2. 재료는 있었는데 한참 뒤에 쓰였다</h2>
+
+    <p>기술이 있었다고 바로 쓰이는 것은 아니다. 활판 인쇄가 그렇다. 중국의 필승(畢昇)은 11세기 중반인 1040년경 도자기 활자를 만든 것으로 알려져 있다. 구텐베르크가 유럽에서 금속 활자 인쇄 체계를 완성한 것은 1436년에서 1450년 사이이고, 그의 인쇄기는 1457년부터 유럽 전역으로 빠르게 퍼졌다. 활자 자체를 몰랐던 것이 아니다. <a href="https://en.wikipedia.org/wiki/Movable_type" target="_blank" rel="noopener">위키백과 활자 항목</a>에 따르면 중국에서는 도자기 활자가 먹을 잘 받지 않았고, 수천 개의 한자를 일일이 조판하는 것이 목판 한 장을 새기는 것보다 품이 들었다. 기술의 유무보다 조건이 맞아야 퍼졌다는 뜻이다.</p>
+
+    <p>바퀴도 비슷하다. 메소아메리카에서는 기원전 1500년경부터 바퀴 달린 장난감이 만들어졌지만 수레로는 이어지지 않았다. 수레를 끌 큰 가축이 없었기 때문이다. 반대로 도공의 물레는 기원전 5천 년대 중반 것으로 보이는 유물이 있어 바퀴 달린 탈것(기원전 3500년경)보다 오래됐다. 이 내용은 <a href="https://en.wikipedia.org/wiki/Wheel" target="_blank" rel="noopener">위키백과 바퀴 항목</a>을 참고했다.</p>
+
+    <p>돈의 형태도 바뀌어 왔다. 서아프리카에서는 조개껍데기인 카우리가 오래 화폐로 쓰였다. 위키백과 <a href="https://en.wikipedia.org/wiki/Shell_money" target="_blank" rel="noopener">조개화폐 항목</a>에 따르면 1500년에서 1875년 사이 베냉만 일대로 최소 300억 개가 수입됐고, 이 유입이 인플레이션을 낳아 지역 경제를 해쳤다. 마리옹 존슨의 <a href="https://www.cambridge.org/core/journals/journal-of-african-history/article/cowrie-currencies-of-west-africa-part-i/78A8DBDC82DEA8A43087CA3F00B0BE96" target="_blank" rel="noopener">1970년 논문</a>은 카우리의 수입과 쇠퇴를 다룬다. 지금 보면 낯선 돈이지만 당시에는 일상의 돈이었다. 돈이 바뀌는 일 자체는 처음이 아니라는 정도만 얻어 가면 된다.</p>
+
+    <p>비트코인도 내 이해로는 완전히 새로운 부품이 아니라 해시, 공개키 암호, P2P 네트워크를 한 시스템으로 묶은 결과다. <a href="https://nakamotoinstitute.org/literature/bitcoin/" target="_blank" rel="noopener">사토시의 백서</a>는 거래를 해시 기반의 작업증명 사슬로 이어 붙여 시점을 찍는다고 설명한다. 이 해석은 내 의견이다. 요점은 재료가 이미 있어도 그것을 묶은 결과가 인정받는 데는 별도의 시간이 든다는 것이다. 활자도, 바퀴도, 해시도 마찬가지였다.</p>
+
+
+    <h2>3. 비판하던 사람들도 바뀌었다</h2>
+
+    <p>핑크는 2017년 10월 비트코인을 두고 "자금세탁 수요를 보여 주는 지표"라고 말했고 튤립 투기에 빗댔다(<a href="https://www.dlnews.com/articles/people-culture/blackrock-larry-fink-timeline-crypto-sceptic-to-bitcoin-fan" target="_blank" rel="noopener">DL뉴스 정리</a>). 2023년 7월에는 폭스비즈니스 인터뷰에서 비트코인을 금을 디지털화한 국제 자산이라고 <a href="https://decrypt.co/147409/larry-fink-blackrock-ceo-bitcoin-digitizing-gold-international-asset?amp=1" target="_blank" rel="noopener">불렀다</a>. 2024년 1월 미국 증권거래위원회(SEC)는 블랙록을 포함한 11개 발행사의 현물 비트코인 ETF를 <a href="https://fortune.com/crypto/2024/01/10/sec-bitcoin-etfs-gary-gensler-blackrock-fidelity-hacking/amp/" target="_blank" rel="noopener">승인했다</a>.</p>
+
+    <p>마이클 세일러도 있다. 그는 2013년 12월 "비트코인의 날은 얼마 남지 않았다"며 온라인 도박과 같은 운명을 맞을 것이라고 트윗했다. 2020년 8월 그의 회사는 2억 5천만 달러어치 비트코인을 샀고, 그는 그 트윗을 한동안 잊고 있었다고 말했다(<a href="https://decrypt.co/42388/how-microstrategy-ceo-went-from-bitcoin-basher-to-425m-buy" target="_blank" rel="noopener">디크립트</a>).</p>
+
+    <p>비판하던 사람들이 시간이 지나 직접 사들이거나 상품을 내놓는 쪽으로 돌아섰다.</p>
+
+
+    <h2>4. 정리</h2>
+
+    <p>역사는 이해하지 못한다는 이유만으로 버리지 말라고 가르친다. 웹이 세계 인구의 절반에 닿기까지 27년이 걸렸고, 활자도 바퀴도 해시도 재료가 있어도 인정받는 데는 별도의 시간이 들었다. 핑크와 세일러처럼 비판하던 사람들도 시간이 지나 입장을 바꿨다.</p>
+
+    <p>비트코인은 이미 있던 해시와 공개키 암호, P2P 네트워크를 묶어 만든 돈이다. 발행 규칙이 공개돼 있고 총량이 2,100만 개로 정해져 있다. 카우리는 수입이 늘면서 인플레이션을 낳아 지역 경제를 해쳤지만, 비트코인의 총량은 늘어날 수 없다. 나는 새로 나온 것들 가운데 제값을 인정받을 쪽이 이것이라고 본다.</p>
+
+    <p>새로운 것은 늘 늦게 알아본다. 그렇다면 나는 먼저 알아보는 쪽에 서겠다. 비트코인이 답이다.</p>
+
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/World_Wide_Web" target="_blank" rel="noopener">위키백과 — World Wide Web</a> (Wikipedia, 열람 2026) — 1989년 제안, 1991년 공개, 1993년 4월 로열티 없는 공개 일자 확인.</li>
+      <li><a href="https://www.itu.int/en/mediacentre/pages/2018-pr40.aspx" target="_blank" rel="noopener">ITU — Connecting the world and beyond (보도자료)</a> (국제전기통신연합, 2018) — 2018년 말 세계 인구 51.2%, 39억 명이 인터넷 사용.</li>
+      <li><a href="https://ourworldindata.org/grapher/share-of-individuals-using-the-internet" target="_blank" rel="noopener">Our World in Data — Share of the population using the Internet</a> (Our World in Data, ITU 자료 기반) — 인터넷 이용자의 정의(최근 3개월 내 접속)와 1990~2025년 연도별 자료의 존재 확인(그래프 수치는 직접 읽지 못함).</li>
+      <li><a href="https://www.itu.int/en/ITU-D/Statistics/Pages/stat/default.aspx" target="_blank" rel="noopener">ITU — Statistics</a> (국제전기통신연합) — 2025년 약 60억 명, 74% 사용 추정.</li>
+      <li><a href="https://www.theblock.co/post/381046/blackrock-larry-fink-rob-goldstein-tokenization" target="_blank" rel="noopener">The Block — BlackRock's Fink and Goldstein on tokenization</a> (The Block, 2025) — 이코노미스트 기고(2025.12.2)에서 토큰화를 1996년 인터넷에 비유, 아마존 도서 매출 1,600만 달러.</li>
+      <li><a href="https://en.wikipedia.org/wiki/Movable_type" target="_blank" rel="noopener">위키백과 — Movable type</a> (Wikipedia) — 필승 1040년경, 구텐베르크 1436~1450년, 중국에서 확산이 더뎠던 이유.</li>
+      <li><a href="https://en.wikipedia.org/wiki/Wheel" target="_blank" rel="noopener">위키백과 — Wheel</a> (Wikipedia) — 메소아메리카의 바퀴 장난감, 가축 부재, 물레가 수레보다 오래됨.</li>
+      <li><a href="https://en.wikipedia.org/wiki/Shell_money" target="_blank" rel="noopener">위키백과 — Shell money</a> (Wikipedia) — 1500~1875년 베냉만에 최소 300억 개 카우리 수입, 인플레이션 피해.</li>
+      <li><a href="https://www.cambridge.org/core/journals/journal-of-african-history/article/cowrie-currencies-of-west-africa-part-i/78A8DBDC82DEA8A43087CA3F00B0BE96" target="_blank" rel="noopener">Marion Johnson — The Cowrie Currencies of West Africa, Part I</a> (Journal of African History, 1970) — 카우리의 수입, 통용 지역, 쇠퇴를 다룬 논문(초록 확인).</li>
+      <li><a href="https://nakamotoinstitute.org/literature/bitcoin/" target="_blank" rel="noopener">Satoshi Nakamoto — Bitcoin: A Peer-to-Peer Electronic Cash System</a> (Satoshi Nakamoto Institute 게재, 2008) — 해시 기반 작업증명 사슬로 거래 시점을 찍는 구조.</li>
+      <li><a href="https://www.dlnews.com/articles/people-culture/blackrock-larry-fink-timeline-crypto-sceptic-to-bitcoin-fan" target="_blank" rel="noopener">DL News — Larry Fink: from crypto skeptic to bitcoin fan</a> (DL News, 2023) — 2017년 '자금세탁 지표' 발언, 튤립 비유, 이후 변화 연표.</li>
+      <li><a href="https://decrypt.co/147409/larry-fink-blackrock-ceo-bitcoin-digitizing-gold-international-asset?amp=1" target="_blank" rel="noopener">Decrypt — Larry Fink praises bitcoin for 'digitizing gold'</a> (Decrypt, 2023) — 2023년 7월 폭스비즈니스 인터뷰 발언.</li>
+      <li><a href="https://fortune.com/crypto/2024/01/10/sec-bitcoin-etfs-gary-gensler-blackrock-fidelity-hacking/amp/" target="_blank" rel="noopener">Fortune — SEC approves spot bitcoin ETFs</a> (Fortune, 2024) — 2024년 1월 10일 승인, 블랙록 포함 확인.</li>
+      <li><a href="https://decrypt.co/42388/how-microstrategy-ceo-went-from-bitcoin-basher-to-425m-buy" target="_blank" rel="noopener">Decrypt — How MicroStrategy CEO went from bitcoin basher to $425M buy</a> (Decrypt, 2020) — 세일러의 2013년 12월 트윗과 2020년 태도 변화.</li>
+    </ul>
+
+    <p>---</p>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#역사</span>
+    <span class="post-tag">#인터넷</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>

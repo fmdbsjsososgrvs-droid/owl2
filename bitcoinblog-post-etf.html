@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ETF가 비트코인을 망쳤다는 말 | BITCOIN BLOG | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.svg');mask-image:url('icon/lock.svg');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.svg');mask-image:url('icon/car.svg');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/bitcoin.svg');mask-image:url('icon/bitcoin.svg');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="youtube.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/youtube.svg');mask-image:url('icon/youtube.svg');" role="img" aria-label="YOUTUBE"></span></a></li>
+    <li><a href="toon.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/open-book.svg');mask-image:url('icon/open-book.svg');" role="img" aria-label="MANGA"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.svg');mask-image:url('icon/gamepad-2.svg');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+    <li><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.svg');mask-image:url('icon/folder.svg');" role="img" aria-label="PSBT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="bitcoinblog.html">← BITCOIN 목록으로</a>
+
+  <div class="post-date">2026-10-29</div>
+  <h1 class="post-h1">ETF가 비트코인을 망쳤다는 말</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/oK17AEMG9ww?rel=0" title="ETF가 비트코인을 망쳤다는 말" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>2024년 1월 미국에서 현물 비트코인 ETF가 승인되자 이런 말이 돌았다. 월가가 들어왔으니 비트코인의 탈중앙성은 끝났다는 것이다. 가격도 규칙도 월가가 쥐게 된다는 걱정이다.</p>
+
+    <p>이 걱정은 둘로 나눠야 한다. 가격에 미치는 영향과 규칙을 바꾸는 힘은 전혀 다른 문제다. 앞의 것은 현실이 될 수 있다. 뒤의 것은 구조상 매우 어렵다.</p>
+
+
+    <h2>1. 현물 ETF는 어떻게 생겼나</h2>
+
+    <p>ETF(상장지수펀드)는 주식처럼 거래소에서 사고팔 수 있는 펀드 상품이다. 현물 비트코인 ETF는 운용사가 실제 비트코인을 사서 보관하고, 투자자는 그 지분을 증권계좌로 거래한다.</p>
+
+    <p>미국 SEC는 2024년 1월 10일 이 상품들의 상장과 거래를 승인했다. 계기는 법원 판결이었다. 그레이스케일의 신청을 SEC가 거부한 결정이 법원에서 뒤집히자 다시 심사해야 했고, 게리 겐슬러 당시 위원장은 <a href="https://www.sec.gov/newsroom/speeches-statements/gensler-statement-spot-bitcoin-011023" target="_blank" rel="noopener">성명</a>에서 상품을 승인했을 뿐 비트코인 자체를 승인하거나 보증한 것은 아니라고 선을 그었다. 규제 당국조차 이 승인을 비트코인에 대한 보증으로 보지 않았다는 점이 흥미롭다.</p>
+
+    <p>2026년 4월에는 모건스탠리가 연 0.14% 수수료의 비트코인 ETF를 내놨다. 보도에 따르면 <a href="https://cointelegraph.com/news/morgan-stanley-sets-ultra-low-fee-for-bitcoin-etf" target="_blank" rel="noopener">블랙록 IBIT의 0.25%, 그레이스케일 미니 트러스트의 0.15%</a>보다 낮은 수준이다. <a href="https://www.theblock.co/amp/post/396699/morgan-stanleys-low-cost-spot-bitcoin-etf-launches-to-meet-growing-client-interest-in-crypto" target="_blank" rel="noopener">The Block</a>은 이 은행이 약 1만 6천 명의 자문 인력이라는 판매망을 갖고 있다는 블룸버그 애널리스트의 평가를 전했다. 이런 상품은 일반 투자자가 개인키를 다루지 않고도 비트코인 가격에 노출되는 통로를 넓힌다.</p>
+
+    <p>여기서 구분할 것이 있다. ETF를 사는 사람이 갖는 것은 펀드 지분이지 비트코인 자체가 아니다. 지분은 증권계좌에 있고, 실제 코인은 수탁기관의 지갑에 있다. 편리한 만큼 비트코인을 직접 쥐는 것과는 다른 종류의 보유다.</p>
+
+
+    <h2>2. 가격에는 영향을 줄 수 있다</h2>
+
+    <p>월가의 영향력을 부정할 이유는 없다. 큰 자금이 들어오는 상품이 생겼으니 그 자금의 유입과 유출이 단기 가격을 움직일 수 있다. <a href="https://finance.yahoo.com/markets/crypto/articles/bitcoin-news-bitcoin-etfs-just-151207323.html" target="_blank" rel="noopener">Yahoo Finance</a>는 2026년 4월 기준 블랙록 IBIT 한 상품이 약 80만 6천 개, 전체 공급량의 3.8% 안팎을 보유한다고 전했다. 한 상품이 웬만한 국가보다 많은 비트코인을 들고 있다는 이야기다. 이 정도 규모라면 자금이 들어오고 나가는 흐름이 단기 가격에 영향을 준다고 보는 편이 자연스럽다.</p>
+
+    <p>선물과 옵션 같은 파생상품도 있다. 실물 없이 가격만 거래하는 이 시장을 흔히 '종이 비트코인'이라 부른다. 선물 시장과 현물 시장 중 어디가 가격을 먼저 반영하는지는 학계에서도 연구 주제다. 2025년 CME 비트코인 선물을 다룬 <a href="https://arxiv.org/abs/2506.08718" target="_blank" rel="noopener">arXiv 논문</a>은 선물이 대체로 가격 발견을 이끌지만 변동성이 큰 구간에서는 결과가 엇갈린다고 보고했다. 파생상품이 가격에 영향을 준다는 점은 분명하지만, 누가 얼마나 주도하는지는 시기마다 달라진다.</p>
+
+    <p>여기서 하나 짚을 것이 있다. 현물 ETF를 '종이 비트코인'과 같은 것으로 묶는 것은 정확하지 않다. 코인베이스 CEO 브라이언 암스트롱은 현물 ETF가 기초자산으로 완전히 뒷받침되어야 한다고 <a href="https://bitcoinmagazine.com/news/coinbase-ceo-addresses-paper-bitcoin" target="_blank" rel="noopener">말했다</a>. 현물 ETF의 비트코인은 실제로 어딘가의 지갑에 있다. 다만 그 지갑은 개인이 아니라 수탁기관이 쥐고 있다.</p>
+
+
+    <h2>3. 규칙은 보유량으로 바뀌지 않는다</h2>
+
+    <p>주식과 비교하면 이 구조가 보인다. 주식회사에서는 대주주가 이사회를 장악하고 정관을 바꿀 수 있다. 비트코인에는 이사회가 없다. 총 발행량 2,100만 개 제한과 약 4년마다 반감되는 채굴 보상은 소프트웨어 규칙이고, <a href="https://en.bitcoin.it/wiki/Controlled_supply" target="_blank" rel="noopener">비트코인 위키</a>는 규칙을 어긴 블록을 네트워크가 거부한다고 설명한다. 블록을 검증하는 것은 풀 노드(full node)다. <a href="https://bitcoin.org/en/full-node" target="_blank" rel="noopener">bitcoin.org</a>는 풀 노드를 트랜잭션과 블록을 완전히 검증하는 프로그램이라고 정의한다. 많이 가진 사람이든 적게 가진 사람이든, 검증 규칙은 각자 돌리는 노드 안에 있다.</p>
+
+    <p>용어를 하나 풀어 두자. 소프트포크는 기존 규칙을 더 엄격하게 만드는 변경이라 옛 규칙을 쓰는 노드도 새 블록을 받아들일 수 있다. 하드포크는 기존 규칙과 호환되지 않는 변경이라, 노드가 새 규칙으로 옮겨 가지 않으면 체인이 둘로 갈라질 수 있다. 어느 쪽이든 새 규칙은 사람들이 그 소프트웨어를 실제로 돌려야 효력을 갖는다.</p>
+
+    <p>구단주가 아무리 많은 지분을 가져도 야구 규칙집에 베이스를 하나 더 넣을 수는 없다. 규칙은 리그에 속한 모두가 따르기로 합의해야 바뀐다. 비트코인의 규칙도 그런 식으로 움직인다.</p>
+
+
+    <h2>4. 2017년에 있었던 일</h2>
+
+    <p>규칙이 합의로 바뀐다는 말이 추상적으로 들린다면 2017년의 블록 크기 논쟁을 보면 된다. 당시 쟁점은 한 블록에 담을 수 있는 거래량을 어떻게 늘리느냐였고, 늘리는 방식을 두고 업계와 개발자, 사용자가 갈렸다.</p>
+
+    <p>한쪽에서는 일부 채굴업체와 기업들이 세그윗 도입과 블록 크기 2MB 확대를 묶은 '세그윗2x'(뉴욕 합의)를 밀었다. 한편 사용자 쪽에서는 <a href="https://www.coindesk.com/markets/2017/04/25/uasf-developer-revises-controversial-bitcoin-scaling-proposal/" target="_blank" rel="noopener">BIP 148이라는 사용자 활성화 소프트포크(UASF)</a>가 제안됐다. 채굴 풀이 사실상 거부권을 쥐고 있다는 문제의식에서, 노드 운영자들이 규칙을 직접 집행하겠다는 방식이었다. 2017년 8월 1일 이 제안이 발효될 무렵 채굴 풀들은 BIP 91로 세그윗을 확정지었고, <a href="https://www.coindesk.com/markets/2017/08/01/bitcoin-uasf-proposal-quietly-activates-to-little-effect" target="_blank" rel="noopener">코인데스크</a>에 따르면 UASF 지지자들은 이것이 노드의 압박 덕분이라고 주장한다. 세그윗은 8월 24일 활성화됐다. 블록 크기를 늘리는 2단계 하드포크는 <a href="https://techcrunch.com/2017/11/08/segwit2x-backers-cancel-plans-for-bitcoin-hard-fork/" target="_blank" rel="noopener">2017년 11월 8일 취소</a>됐다. 추진 측은 충분한 공감대를 얻지 못했다고 밝혔다.</p>
+
+    <p>이 사례에서 노드의 압박이 얼마나 결정적이었는지는 해석이 갈린다. 다만 업계 합의안이 있어도 사용자 쪽의 동의 없이는 규칙이 바뀌지 않았다는 점은 확인된다. 규칙을 바꾸는 힘은 지분이 아니라 합의에서 나왔다.</p>
+
+
+    <h2>5. 정리</h2>
+
+    <p>ETF 때문에 비트코인이 망가졌다는 말은 두 가지를 섞고 있다. 가격은 ETF를 포함한 월가 상품의 영향을 받을 수 있다. 그러나 발행 한도와 검증 규칙은 지분이 아니라 합의로만 바뀐다. 2017년에도 업계 합의안이 사용자 쪽의 동의를 얻지 못해 무산됐다.</p>
+
+    <p>내 판단은 이렇다. ETF는 월가의 접수가 아니라 새 입구가 열린 일에 가깝다. 월가가 가격에 발을 들인 것은 사실이지만, 규칙이 놓인 곳은 월가의 장부가 아니라 전 세계에 흩어진 노드다. 총 발행량 2,100만 개 제한과 약 4년마다 반감되는 채굴 보상은 대주주가 이사회에서 고칠 수 있는 정관이 아니라 소프트웨어 규칙이다.</p>
+
+    <p>ETF 지분은 증권계좌에 있고 실제 코인은 수탁기관의 지갑에 있다. 편리하지만 비트코인을 직접 쥐는 것과는 다른 종류의 보유다. 월가가 들어와도 규칙을 쥐지 못하는 돈, 그 규칙을 내 노드와 내 키로 직접 확인할 수 있는 돈이 비트코인이다. 구단주가 베이스를 늘릴 수 없듯, 월가도 비트코인의 규칙은 바꾸지 못한다.</p>
+
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://www.sec.gov/newsroom/speeches-statements/gensler-statement-spot-bitcoin-011023" target="_blank" rel="noopener">SEC — Statement on the Approval of Spot Bitcoin Exchange-Traded Products</a> (미국 SEC, 2024) — 2024년 1월 10일 승인 사실, 법원 판결에 따른 재심사, 비트코인을 승인·보증한 것은 아니라는 입장 확인</li>
+      <li><a href="https://cointelegraph.com/news/morgan-stanley-sets-ultra-low-fee-for-bitcoin-etf" target="_blank" rel="noopener">Cointelegraph — Morgan Stanley sets ultra-low fee for Bitcoin ETF</a> (Cointelegraph, 2026) — 연 0.14% 수수료와 IBIT 0.25%, 그레이스케일 미니 트러스트 0.15%와의 비교 확인</li>
+      <li><a href="https://www.theblock.co/amp/post/396699/morgan-stanleys-low-cost-spot-bitcoin-etf-launches-to-meet-growing-client-interest-in-crypto" target="_blank" rel="noopener">The Block — Morgan Stanley's low-cost spot Bitcoin ETF launches</a> (The Block, 2026) — 2026년 4월 8일 출시, 자문 인력 판매망, 코인베이스·BNY 수탁 확인</li>
+      <li><a href="https://finance.yahoo.com/markets/crypto/articles/bitcoin-news-bitcoin-etfs-just-151207323.html" target="_blank" rel="noopener">Yahoo Finance — Bitcoin news: Bitcoin ETFs just...</a> (Yahoo Finance, 2026) — IBIT 보유량 약 80만 6천 BTC, 공급량의 약 3.8%</li>
+      <li><a href="https://arxiv.org/abs/2506.08718" target="_blank" rel="noopener">arXiv — Price Discovery in Cryptocurrency Markets</a> (Plazuelo Pascual 외, 2025) — CME 비트코인 선물이 대체로 가격 발견을 이끌며 고변동 구간은 혼재라는 결론 확인</li>
+      <li><a href="https://bitcoinmagazine.com/news/coinbase-ceo-addresses-paper-bitcoin" target="_blank" rel="noopener">Bitcoin Magazine — Coinbase CEO addresses paper bitcoin</a> (Bitcoin Magazine) — 현물 ETF는 기초자산으로 전액 뒷받침돼야 한다는 코인베이스 CEO의 발언</li>
+      <li><a href="https://en.bitcoin.it/wiki/Controlled_supply" target="_blank" rel="noopener">Bitcoin Wiki — Controlled supply</a> (Bitcoin Wiki) — 반감기와 2,100만 개 한도, 규칙 위반 블록을 노드가 거부한다는 설명 확인</li>
+      <li><a href="https://bitcoin.org/en/full-node" target="_blank" rel="noopener">bitcoin.org — Running a Full Node</a> (Bitcoin Project) — 풀 노드의 정의(트랜잭션과 블록을 완전히 검증) 확인</li>
+      <li><a href="https://www.coindesk.com/markets/2017/04/25/uasf-developer-revises-controversial-bitcoin-scaling-proposal/" target="_blank" rel="noopener">CoinDesk — UASF Developer Revises Controversial Bitcoin Scaling Proposal</a> (CoinDesk, 2017) — UASF의 동기(채굴 풀의 사실상 거부권 문제)와 BIP 148 소개 확인</li>
+      <li><a href="https://www.coindesk.com/markets/2017/08/01/bitcoin-uasf-proposal-quietly-activates-to-little-effect" target="_blank" rel="noopener">CoinDesk — Bitcoin UASF Proposal Quietly Activates</a> (CoinDesk, 2017) — 2017년 8월 1일 발효, BIP 91로 세그윗 확정, UASF 지지자들의 해석 확인</li>
+      <li><a href="https://techcrunch.com/2017/11/08/segwit2x-backers-cancel-plans-for-bitcoin-hard-fork/" target="_blank" rel="noopener">TechCrunch — SegWit2x backers cancel plans for Bitcoin hard fork</a> (TechCrunch, 2017) — 2017년 11월 8일 취소, 공감대 부족이 사유라는 추진 측 성명 확인</li>
+    </ul>
+
+    <p>---</p>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#비트코인</span>
+    <span class="post-tag">#현물ETF</span>
+    <span class="post-tag">#탈중앙성</span>
+    <span class="post-tag">#월가</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>

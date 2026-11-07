@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>현금이 오늘 발명됐다면 불법이었다 | SECURITY | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body img, .post-body video {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.svg');mask-image:url('icon/lock.svg');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.svg');mask-image:url('icon/car.svg');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/bitcoin.svg');mask-image:url('icon/bitcoin.svg');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="youtube.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/youtube.svg');mask-image:url('icon/youtube.svg');" role="img" aria-label="YOUTUBE"></span></a></li>
+    <li><a href="toon.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/open-book.svg');mask-image:url('icon/open-book.svg');" role="img" aria-label="MANGA"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.svg');mask-image:url('icon/gamepad-2.svg');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+    <li><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.svg');mask-image:url('icon/folder.svg');" role="img" aria-label="PSBT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="security.html">← SECURITY 목록으로</a>
+
+  <div class="post-date">2026-11-05</div>
+  <h1 class="post-h1">현금이 오늘 발명됐다면 불법이었다</h1>
+
+  <div class="post-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/qys6fyWoxCk?rel=0" title="현금이 오늘 발명됐다면 불법이었다" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="post-body">
+    <p>지갑 속 지폐 한 장이 중앙은행에게 왜 불편할까. 지폐는 누가 쓰는지 알려 주지 않고, 은행 예금처럼 이자를 깎을 수도 없다.</p>
+
+
+    <h2>1. 오래돼서 정상처럼 보이는 돈</h2>
+
+    <p>비트코인 분석가 닉 카터는 2020년 1월 코인데스크 칼럼에서, 현금이 오늘 발명됐다면 정책 당국과 은행, 수사기관이 <a href="https://www.coindesk.com/policy/2020/01/15/ahead-of-davos-what-can-cash-teach-us-about-crypto" target="_blank" rel="noopener">디스토피아적이고 위험하다고 내쳤을 것</a>이라고 썼다. 현금은 수백 년 써 온 덕분에 당연해 보일 뿐이라는 뜻이다.</p>
+
+    <p>그 성질을 가장 솔직하게 말한 사람은 중앙은행가였다. 2020년 10월 19일 IMF가 연 <a href="https://www.imf.org/en/News/Seminars/Conferences/2020/10/19/cross-border-payment/" target="_blank" rel="noopener">국경 간 결제 토론</a>에서 국제결제은행(BIS) 사무총장 아구스틴 카르스텐스는 이렇게 설명했다. 지금은 누가 100달러 지폐를 쓰는지 모르지만, CBDC에서는 중앙은행이 사용 규칙을 완전히 정하고, 그것을 강제할 기술도 갖게 된다는 것이다.</p>
+
+
+    <h2>2. 현금은 '0%짜리 공짜 옵션'이다</h2>
+
+    <p>현금이 불편한 이유가 하나 더 있다. 마이너스 금리다. 유럽중앙은행(ECB)은 2014년 6월 주요 중앙은행 가운데 처음으로 예금금리를 0 아래로 내렸고, 2019년 9월 <a href="https://www.ecb.europa.eu/press/key/date/2020/html/ecb.sp200826~77ce66626c.en.html" target="_blank" rel="noopener">-0.5%</a>까지 낮췄다. 0 위로 돌아온 것은 2022년이다.</p>
+
+    <p>더 깊이 내리지 못한 이유를 IMF 연구자 루치르 아가르왈과 시그네 크로그스트루프가 2019년 2월 <a href="https://www.imf.org/en/blogs/articles/2019/02/05/blog-cashing-in-how-to-make-negative-interest-rates-work" target="_blank" rel="noopener">IMF 블로그 글 「Cashing In」</a>에서 설명했다. 현금은 예금과 구매력은 같은데 금리는 0%다. 예금 이자가 마이너스가 되면 사람들은 돈을 찾아 현금으로 들고 있으면 된다. 그래서 현금은 0% 금리를 보장하는 공짜 옵션이자 금리의 바닥이 된다. 글은 현금이 없다면 정책금리를 2%에서 -4%로도 내릴 수 있다고 예를 든다.</p>
+
+    <p>대안도 내놓았다. 본원통화를 전자화폐와 현금으로 나누고, 둘 사이에 교환 비율을 두는 방식이다. 예금에 -3%를 매길 때 현금의 교환 가치도 그만큼 떨어뜨리면 현금으로 피할 이유가 사라진다. 이것은 연구자들의 제안이었지 어느 나라도 시행하지 않았다.</p>
+
+
+    <h2>3. 고액권부터 없애자는 논의</h2>
+
+    <p>하버드대 케네스 로고프는 2016년 책 <a href="https://ideas.repec.org/b/pup/pbooks/10798.html" target="_blank" rel="noopener">『The Curse of Cash』</a>에서 50달러 이상 지폐부터 단계적으로 없애자고 했다. 탈세와 범죄를 줄이고, 마이너스 금리의 길을 열자는 두 가지 이유를 함께 들었다. 같은 해 2월 전 재무장관 래리 서머스는 워싱턴포스트 칼럼에서 <a href="https://www.cnbc.com/2016/02/19/debate-over-the-100-bill-gamblers-and-negative-rates.html" target="_blank" rel="noopener">100달러 지폐 발행을 멈추자</a>고 했는데, 그의 근거는 주로 범죄와 부패였다.</p>
+
+    <p>서머스가 공저한 2019년 <a href="https://www.nber.org/papers/w25416" target="_blank" rel="noopener">NBER 워킹페이퍼 25416</a>은 결이 조금 다르다. 가계 예금 금리에는 바닥이 있어서 마이너스 정책금리가 대출로 잘 전달되지 않는다는 실증 연구다. 그 바닥을 넘는 방법으로 종이돈 과세, 고액권 폐지, 종이돈 폐지 같은 앞선 연구자들의 제안을 정리해 소개한다. 유럽에서는 실제 조치도 있었다. ECB는 2016년 5월 불법 활동에 쓰일 수 있다는 우려로 <a href="https://www.ecb.europa.eu/press/pr/date/2016/html/pr160504.en.html" target="_blank" rel="noopener">500유로권 생산을 영구히 멈추기로</a> 했다. 이미 나온 지폐는 계속 법정통화로 남았다.</p>
+
+
+    <h2>4. 시험대에 오른 디지털 화폐</h2>
+
+    <p>중국은 2020년 10월 선전 뤄후구에서 시민 5만 명에게 200위안씩 <a href="https://www.sz.gov.cn/en_szgov/business/news/content/post_8177658.html" target="_blank" rel="noopener">디지털 위안 '홍바오'</a>를 나눠 줬다. <a href="https://www.cnbc.com/2020/10/12/china-digital-currency-trial-over-1-million-handed-out-in-lottery.html" target="_blank" rel="noopener">정해진 일주일 안에, 지정된 가게에서만</a> 쓸 수 있었고, 은행 계좌로 옮길 수도 없었다. 기한이 있는 돈을 시험한 셈이다. 다만 이것은 시범 사업이었지 디지털 위안 전체의 규칙은 아니다. 인민은행은 2021년 7월 <a href="https://english.www.gov.cn/statecouncil/ministries/202107/16/content_WS60f17e31c6d0df57f98dd1c7.html" target="_blank" rel="noopener">백서</a>에서 '소액은 익명, 거액은 추적'이라는 '관리되는 익명성'을 내세웠다.</p>
+
+    <p>규모는 커졌다. 신화통신이 전한 인민은행 발표로 2025년 11월 말까지 누적 <a href="https://www.news.cn/fortune/20251229/b4769a74c4874897935a9bbd7ee2359f/c.html" target="_blank" rel="noopener">34억 8천만 건, 16조 7천억 위안</a>이 거래됐고 개인 지갑은 2억 3천만 개가 열렸다. 2026년 1월 1일부터는 성격도 바뀌었다. <a href="https://www.chinadaily.com.cn/a/202512/29/WS69521db2a310d6866eb30f9b.html" target="_blank" rel="noopener">차이나데일리</a>에 따르면 디지털 위안은 '디지털 현금'에서 상업은행의 부채인 '디지털 예금'으로 옮겨 가고, 이자를 붙일 수 있게 됐다. 이자가 붙는 돈이라면 이론상 마이너스로도 매길 수 있다는 점은 기억해 둘 만하다고 나는 본다.</p>
+
+
+    <h2>5. 나이지리아, 사람들은 다른 길을 골랐다</h2>
+
+    <p>나이지리아는 2021년 10월 25일 아프리카 첫 CBDC인 eNaira를 출시했다. 2023년 5월 <a href="https://www.imf.org/en/publications/wp/issues/2023/05/16/nigerias-enaira-one-year-after-533487" target="_blank" rel="noopener">IMF 워킹페이퍼</a>는 첫해 채택이 '실망스러울 만큼 낮았다'고 평가했다. <a href="https://nairametrics.com/2023/05/19/imf-scores-enaira-low-on-adoption-in-new-report/" target="_blank" rel="noopener">보도</a>에 따르면 이 논문은 개인 지갑이 활성 은행 계좌의 약 0.8%에 그쳤고, 지갑의 약 98.5%가 매주 쓰이지 않았다고 분석했다.</p>
+
+    <p>그 사이 중앙은행은 현금 쪽을 조였다. 2022년 12월 6일 회람은 <a href="https://www.icirnigeria.org/cbn-reconsiders-policy-on-withdrawals-raises-limits/" target="_blank" rel="noopener">ATM 인출을 하루 2만 나이라</a>로, 창구 인출을 개인 주 10만, 법인 주 50만 나이라로 묶고 eNaira 같은 디지털 수단을 쓰라고 권했다. 반발이 커지자 보름 뒤 개인 주 50만, 법인 주 500만 나이라로 올렸다. 2025년 12월 회람으로 2026년 1월부터는 <a href="https://allafrica.com/stories/202512040118.html" target="_blank" rel="noopener">예금 한도는 없애고 인출 한도는 개인 주 50만 나이라</a>로 정리했다. 그럼에도 저자 린 알든은 『망가진 돈』 집필 시점에 eNaira보다 암호화폐 이용자가 훨씬 많았다고 쓴다. 은행과 거래소 연결이 막혀 있었는데도 사람들은 개인 간 거래로 그쪽을 택했다는 것이다.</p>
+
+
+    <h2>6. 라가르드의 '제한된 통제', 그리고 각국의 갈림길</h2>
+
+    <p>2023년 ECB 총재 크리스틴 라가르드는 젤렌스키 대통령을 사칭한 러시아 코미디언 듀오 '보반과 렉서스'의 장난 영상통화에 속았다. ECB 대변인은 총재가 <a href="https://www.americanbanker.com/articles/feds-jerome-powell-tricked-by-russian-pranksters-posing-as-zelenskiy" target="_blank" rel="noopener">선의로 응한 통화였다</a>고 확인했다. 공개된 영상에서 라가르드는 디지털 유로에 <a href="https://forkast.news/ecb-lagarde-prank-digital-euro-limited-control/" target="_blank" rel="noopener">제한된 수준의 통제</a>가 있을 것이며, 300~400유로 정도의 아주 작은 금액은 통제 없이 둘 수 있을지 검토 중이라고 말했다. 사칭범이 편집해 올린 영상이라는 점은 함께 봐야 한다. 덧붙여 프랑스에서는 이미 개인이 사업자에게 <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F10999?lang=fr" target="_blank" rel="noopener">현금으로 낼 수 있는 돈이 1,000유로</a>로 묶여 있다.</p>
+
+    <p>공정하게 찬성 논리도 적는다. ECB는 디지털 유로가 <a href="https://www.ecb.europa.eu/euro/digital_euro/html/index.en.html" target="_blank" rel="noopener">무료로, 온라인과 오프라인에서</a> 쓰이고, ECB는 결제 데이터로 누가 무엇을 샀는지 알 수 없다고 설명한다. 유로존 20개국 중 13개국이 카드 결제를 해외 카드망에 기대는 현실도 근거로 든다. ECB는 디지털 유로가 쓰는 곳과 시기를 제한하는 <a href="https://www.ecb.europa.eu/euro/digital_euro/how-it-works/html/index.en.html" target="_blank" rel="noopener">프로그래머블 머니가 되지 않을 것</a>이라고도 밝혔다. 국경 간 결제를 싸고 빠르게 하고, 은행 계좌가 없는 사람에게 디지털 결제를 열어 준다는 포용 논리도 있다. 나는 이 장점들이 진짜라고 본다.</p>
+
+    <p>진행 상황은 이렇다. 유럽연합 이사회는 <a href="https://www.consilium.europa.eu/en/policies/digital-euro/timeline/" target="_blank" rel="noopener">2025년 12월 19일</a> 보유 한도를 두는 입장을 정했고, 유럽의회는 <a href="https://www.electronicpaymentsinternational.com/news/european-parliament-clears-path-for-digital-euro-talks/" target="_blank" rel="noopener">2026년 7월 9일</a> 찬성 416표로 3자 협상에 들어갔다. ECB는 법이 2026년에 채택되면 <a href="https://www.ecb.europa.eu/euro/digital_euro/progress/html/index.en.html" target="_blank" rel="noopener">2029년 첫 발행</a>이 가능하다고 본다. 미국은 반대로 갔다. 2025년 1월 23일 <a href="https://www.govinfo.gov/content/pkg/FR-2025-01-31/html/2025-02123.htm" target="_blank" rel="noopener">행정명령 14178</a>은 CBDC가 금융 안정과 개인의 사생활, 국가 주권을 위협한다며 연방 기관의 CBDC 추진을 금지했다. 하원은 2025년 7월 <a href="https://emmer.house.gov/media-center/press-releases/majority-whip-tom-emmer-s-flagship-legislation-the-anti-cbdc-surveillance-state-act-passes-house-of-representatives" target="_blank" rel="noopener">CBDC 금지 법안</a>을 219대 210으로 통과시켰다. 세계적으로는 <a href="https://www.atlanticcouncil.org/cbdctracker/" target="_blank" rel="noopener">146개국</a>이 CBDC를 검토하고, 정식 출시한 곳은 바하마, 자메이카, 나이지리아 세 곳이다(2026년 5월 기준).</p>
+
+
+    <h2>7. 정리</h2>
+
+    <p>현금은 누가 쓰는지 모르고, 0% 아래로 깎을 수 없다. 그 두 성질 때문에 IMF 연구자들은 현금의 가치를 깎는 방안을, 로고프는 고액권 폐지를 논했다. 모두 제안이었고, 저물가 시대의 논의였다. 중국은 기한 있는 돈을 시험했고, 나이지리아는 디지털 화폐를 내놓은 뒤 현금 인출을 묶었다.</p>
+
+    <p>CBDC가 반드시 감시 도구가 된다고 나는 말하지 않는다. ECB처럼 사생활 보호를 약속하는 설계도 있다. 다만 약속은 장부를 쥔 쪽이 바꿀 수 있다. 질문은 기술이 아니라 권한이다. 내 돈의 사용 조건을 누가 정하는가. 돈이 디지털이 되는 흐름은 막기 어렵지만, 그 규칙을 내가 확인할 수 있는 돈인지, 남이 바꿀 수 있는 돈인지는 고를 수 있다.</p>
+
+    <p>남이 규칙을 정하는 돈은 내 돈이어도 내 마음대로 쓸 수 없다.</p>
+
+
+    <h2>참고 자료</h2>
+
+    <ul>
+      <li><a href="https://www.coindesk.com/policy/2020/01/15/ahead-of-davos-what-can-cash-teach-us-about-crypto" target="_blank" rel="noopener">Ahead of Davos, What Can Cash Teach Us About Crypto?</a> (CoinDesk, 닉 카터, 2020년 1월 15일) — 현금이 오늘 발명됐다면 정책 당국·은행·수사기관이 디스토피아적이고 위험하다고 내쳤을 것</li>
+      <li><a href="https://www.imf.org/en/News/Seminars/Conferences/2020/10/19/cross-border-payment/" target="_blank" rel="noopener">IMF — Cross-Border Payments: A Vision for the Future</a> (IMF, 2020년 10월 19일) — 카르스텐스: CBDC는 중앙은행이 사용 규칙을 완전히 통제하고 강제할 기술을 갖는다</li>
+      <li><a href="https://www.ecb.europa.eu/press/key/date/2020/html/ecb.sp200826~77ce66626c.en.html" target="_blank" rel="noopener">ECB — Going negative: the ECB's experience</a> (ECB, 2020) — 2014년 6월 첫 마이너스 예금금리, 2019년 9월 -0.5%</li>
+      <li><a href="https://www.imf.org/en/blogs/articles/2019/02/05/blog-cashing-in-how-to-make-negative-interest-rates-work" target="_blank" rel="noopener">Cashing In: How to Make Negative Interest Rates Work</a> (IMF 블로그, 아가르왈·크로그스트루프, 2019년 2월 5일) — 현금은 0% 공짜 옵션이자 금리 하한, 2%→-4% 예시, 전자화폐·현금 교환 비율 제안, 유로존·스위스·덴마크·스웨덴의 소폭 마이너스</li>
+      <li><a href="https://ideas.repec.org/b/pup/pbooks/10798.html" target="_blank" rel="noopener">The Curse of Cash</a> (Princeton University Press, 케네스 로고프, 2016) — 50달러 이상부터 지폐 단계적 폐지, 범죄·탈세 억제와 마이너스 금리</li>
+      <li><a href="https://www.cnbc.com/2016/02/19/debate-over-the-100-bill-gamblers-and-negative-rates.html" target="_blank" rel="noopener">Debate over the $100 bill: Gamblers and negative rates</a> (CNBC, 2016년 2월 19일) — 서머스의 워싱턴포스트 칼럼 '100달러 지폐를 없앨 때'</li>
+      <li><a href="https://www.nber.org/papers/w25416" target="_blank" rel="noopener">NBER w25416 — Negative Nominal Interest Rates and the Bank Lending Channel</a> (NBER, 에게르트손·율스루드·서머스·월드, 2019년 1월) — 예금 금리 하한과 마이너스 금리 전달 약화</li>
+      <li><a href="https://www.ecb.europa.eu/press/pr/date/2016/html/pr160504.en.html" target="_blank" rel="noopener">ECB ends production and issuance of €500 banknote</a> (ECB, 2016년 5월 4일) — 불법 활동 우려, 2018년 말 무렵 발행 중단, 법정통화 유지</li>
+      <li><a href="https://www.sz.gov.cn/en_szgov/business/news/content/post_8177658.html" target="_blank" rel="noopener">Shenzhen digital RMB red packets</a> (선전시 정부, 2020년 10월 16일) — 5만 명·1천만 위안·1인 200위안, 은행 계좌로 이체 불가</li>
+      <li><a href="https://www.cnbc.com/2020/10/12/china-digital-currency-trial-over-1-million-handed-out-in-lottery.html" target="_blank" rel="noopener">China digital currency trial: over $1 million handed out in lottery</a> (CNBC, 2020년 10월 12일) — 뤄후구 지정 가게에서 10월 12~18일 사용</li>
+      <li><a href="https://english.www.gov.cn/statecouncil/ministries/202107/16/content_WS60f17e31c6d0df57f98dd1c7.html" target="_blank" rel="noopener">PBOC releases white paper on e-CNY</a> (중국 국무원, 2021년 7월 16일) — 「중국 디지털 위안 연구개발 진전」 백서</li>
+      <li><a href="https://www.news.cn/fortune/20251229/b4769a74c4874897935a9bbd7ee2359f/c.html" target="_blank" rel="noopener">数字人民币 新一代框架</a> (신화통신, 2025년 12월 29일) — 2025년 11월 말 누적 34.8억 건·16.7조 위안, 개인 지갑 2.3억 개, 2026년 1월 1일 새 체계</li>
+      <li><a href="https://www.chinadaily.com.cn/a/202512/29/WS69521db2a310d6866eb30f9b.html" target="_blank" rel="noopener">China to usher in digital deposit money era for e-CNY</a> (China Daily, 2025년 12월 29일) — 루레이 부총재: 상업은행 부채, 이자 지급 가능, M0→M1</li>
+      <li><a href="https://www.imf.org/en/publications/wp/issues/2023/05/16/nigerias-enaira-one-year-after-533487" target="_blank" rel="noopener">Nigeria's eNaira, One Year After</a> (IMF 워킹페이퍼 2023/104, 2023년 5월) — 첫해 채택 저조</li>
+      <li><a href="https://nairametrics.com/2023/05/19/imf-scores-enaira-low-on-adoption-in-new-report/" target="_blank" rel="noopener">IMF scores eNaira low on adoption</a> (Nairametrics, 2023년 5월 19일) — 지갑 수가 활성 은행 계좌의 0.8%, 지갑의 98.5%가 매주 미사용</li>
+      <li><a href="https://www.icirnigeria.org/cbn-reconsiders-policy-on-withdrawals-raises-limits/" target="_blank" rel="noopener">CBN reconsiders policy on withdrawals, raises limits</a> (ICIR, 2022년 12월) — 12월 6일 회람: ATM 하루 2만, 창구 주 10만/50만 나이라, eNaira 권장 → 12월 21일 주 50만/500만 나이라</li>
+      <li><a href="https://allafrica.com/stories/202512040118.html" target="_blank" rel="noopener">CBN removes limit on cash deposit, raises weekly withdrawal limit</a> (AllAfrica, 2025년 12월) — 2025년 12월 2일 회람, 2026년 1월 1일부터 예금 한도 폐지, 개인 주 50만 나이라</li>
+      <li><a href="https://www.americanbanker.com/articles/feds-jerome-powell-tricked-by-russian-pranksters-posing-as-zelenskiy" target="_blank" rel="noopener">Fed's Jerome Powell tricked by Russian pranksters posing as Zelenskiy</a> (American Banker/Bloomberg, 2023년 4월 27일) — ECB 대변인: 라가르드가 선의로 통화에 응함</li>
+      <li><a href="https://forkast.news/ecb-lagarde-prank-digital-euro-limited-control/" target="_blank" rel="noopener">ECB's Lagarde says digital euro will have "limited control" in prank call</a> (Forkast, 2023년 4월) — '제한된 통제', 300~400유로 소액 무통제 검토 발언</li>
+      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F10999?lang=fr" target="_blank" rel="noopener">Paiement en espèces</a> (프랑스 정부 service-public) — 개인→사업자 현금 결제 1,000유로 한도</li>
+      <li><a href="https://www.ecb.europa.eu/euro/digital_euro/html/index.en.html" target="_blank" rel="noopener">ECB — Digital euro</a> (ECB) — 무료, 온·오프라인, 결제 데이터로 신원 식별 불가, 20개국 중 13개국이 국제 카드망 의존</li>
+      <li><a href="https://www.ecb.europa.eu/euro/digital_euro/how-it-works/html/index.en.html" target="_blank" rel="noopener">ECB — How would a digital euro work?</a> (ECB) — 디지털 유로는 프로그래머블 머니가 되지 않는다</li>
+      <li><a href="https://www.consilium.europa.eu/en/policies/digital-euro/timeline/" target="_blank" rel="noopener">Council of the EU — Digital euro timeline</a> (EU 이사회) — 2025년 12월 19일 협상 입장, 보유 한도</li>
+      <li><a href="https://www.electronicpaymentsinternational.com/news/european-parliament-clears-path-for-digital-euro-talks/" target="_blank" rel="noopener">European Parliament clears path for digital euro talks</a> (Electronic Payments International, 2026년 7월) — 7월 9일 본회의 416대 169(기권 22), 3자 협상 개시</li>
+      <li><a href="https://www.ecb.europa.eu/euro/digital_euro/progress/html/index.en.html" target="_blank" rel="noopener">ECB — Digital euro progress</a> (ECB) — 2025년 10월 준비 단계 종료, 2026년 법 채택 시 2029년 발행 가능</li>
+      <li><a href="https://www.govinfo.gov/content/pkg/FR-2025-01-31/html/2025-02123.htm" target="_blank" rel="noopener">Executive Order 14178</a> (미 연방관보, 2025년 1월 31일 게재) — CBDC가 금융 안정·사생활·주권 위협, 연방 기관 CBDC 추진 금지</li>
+      <li><a href="https://emmer.house.gov/media-center/press-releases/majority-whip-tom-emmer-s-flagship-legislation-the-anti-cbdc-surveillance-state-act-passes-house-of-representatives" target="_blank" rel="noopener">Anti-CBDC Surveillance State Act passes House</a> (톰 에머 하원의원실, 2025년 7월 17일) — 219대 210 하원 통과</li>
+      <li><a href="https://www.atlanticcouncil.org/cbdctracker/" target="_blank" rel="noopener">Atlantic Council CBDC Tracker</a> (애틀랜틱카운슬, 2026년 5월 갱신) — 146개국 검토, 출시 3개국(바하마·자메이카·나이지리아)</li>
+    </ul>
+
+    <p>---</p>
+
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#CBDC</span>
+    <span class="post-tag">#현금</span>
+    <span class="post-tag">#마이너스금리</span>
+    <span class="post-tag">#디지털유로</span>
+    <span class="post-tag">#프라이버시</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
