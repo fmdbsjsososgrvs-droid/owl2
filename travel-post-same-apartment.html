@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>같은 아파트 주민끼리의 결혼 | Hobby &amp; Travel | OWL BUTLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engagement.css">
+<style>
+:root {
+  --bg: #fdf4e7;
+  --bg2: #faebd4;
+  --border: rgba(224,123,10,.18);
+  --border2: rgba(224,123,10,.32);
+  --accent: #e07b0a;
+  --accent2: #c96c00;
+  --text: #1a1208;
+  --text2: #7a6040;
+  --text3: #a08060;
+  --mono: 'Share Tech Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans KR', -apple-system, sans-serif;
+}
+.site-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:10px 5%;box-shadow:0 1px 12px rgba(224,123,10,.08);}
+.site-nav .nav-logo{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.22em;color:var(--text);text-decoration:none;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:9px;padding:4px 0;border:none;}
+.site-nav .nav-logo img{height:28px;width:28px;object-fit:cover;border-radius:3px;}
+.site-nav .nav-menu{display:flex;align-items:center;list-style:none;gap:3px;margin:0;padding:0;}
+.site-nav .nav-menu li.nav-gap{margin-left:18px;position:relative;}.site-nav .nav-menu li.nav-gap::before{content:"|";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#f0b25a;font-size:15px;line-height:1;font-family:'Share Tech Mono',monospace;}
+.site-nav .nav-menu a{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:400;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text2);padding:.45rem .9rem;border:1px solid transparent;transition:color .18s,border-color .18s,background .18s;}
+.site-nav .nav-menu .nav-icon{display:block;width:16px;height:16px;background-color:#a8500a;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;}
+.site-nav .nav-menu a:hover{color:var(--accent2);border-color:var(--border2);background:rgba(224,123,10,.06);}
+.site-nav .nav-menu a.active{color:#fff;background:var(--accent);border-color:var(--accent);}
+.site-nav .nav-menu a.active .nav-icon{background-color:#fff;}
+@media (max-width:700px){
+  .site-nav{padding:8px 5%;}
+  .site-nav .nav-menu{display:flex !important;flex-wrap:wrap;width:100%;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;gap:0;}
+  .site-nav .nav-menu a{padding:.4rem .65rem;font-size:.72rem;}
+}
+.post-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 6% 100px;
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+.post-back:hover { color: var(--accent2); }
+.post-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.post-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+.post-body {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-body p { margin: 0 0 22px; }
+.post-body h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  padding-top: 4px;
+}
+.post-body blockquote {
+  margin: 28px 0;
+  padding: 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--text2);
+  font-size: 14.5px;
+}
+.post-body ul, .post-body ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0 28px;
+  border: 1px solid var(--border);
+}
+.post-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+  text-decoration-color: var(--border2);
+}
+.post-body a:hover { color: var(--accent); }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+</style>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32.png">
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <img loading="lazy" decoding="async" src="cq_imgs/cq_001.jpg" alt="mark" />OWL BUTLER
+  </a>
+  <ul class="nav-menu">
+    <li><a href="security.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/lock.svg');mask-image:url('icon/lock.svg');" role="img" aria-label="SECURITY"></span></a></li>
+    <li><a href="travel.html" class="active"><span class="nav-icon" style="-webkit-mask-image:url('icon/car.svg');mask-image:url('icon/car.svg');" role="img" aria-label="TRAVEL"></span></a></li>
+    <li><a href="bitcoinblog.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/bitcoin.svg');mask-image:url('icon/bitcoin.svg');" role="img" aria-label="BITCOINBLOG"></span></a></li>
+    <li class="nav-gap"><a href="youtube.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/youtube.svg');mask-image:url('icon/youtube.svg');" role="img" aria-label="YOUTUBE"></span></a></li>
+    <li><a href="toon.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/open-book.svg');mask-image:url('icon/open-book.svg');" role="img" aria-label="MANGA"></span></a></li>
+    <li><a href="blockzero.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/gamepad-2.svg');mask-image:url('icon/gamepad-2.svg');" role="img" aria-label="BLOCK ZERO"></span></a></li>
+    <li><a href="psbt.html"><span class="nav-icon" style="-webkit-mask-image:url('icon/folder.svg');mask-image:url('icon/folder.svg');" role="img" aria-label="PSBT"></span></a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="post-back" href="travel.html">← HOBBY 목록으로</a>
+
+  <div class="post-date">2026-11-11</div>
+  <h1 class="post-h1">같은 아파트 주민끼리의 결혼</h1>
+
+  <div class="post-body">
+    <p>일부 사람들은 부자를 '돈이 많다'는 이유로 악마화시키곤 한다. 이재명의 '재벌, 부자의 악마화'가 그들에게 먹혔지. 다주택자에게 큰 세금을 물리자 환호했다.</p>
+
+    <p>그들은 같은 아파트 주민끼리 선보고 결혼하는 걸 보며 악마들끼리 결혼한다며 욕하지만, 실상은 다르다.</p>
+
+    <h2>개미는 개미끼리</h2>
+
+    <p>부를 축적한 건실한 개미는, 똑같이 건실한 개미와 결혼하고 싶어한다. 놈팽이 베짱이는 싫다.</p>
+
+    <p>물론 건실하지만 운이 없어서 부자가 못 된 사람도 있지. 즉, 일반인 그룹엔 운이 없는 개미와 놈팽이 베짱이가 섞여 있다. 그 일반인 그룹에서 개미를 찾는 건 난이도가 꽤 있다.</p>
+
+    <p>반면, 부자들 중 개미를 찾는 건 쉽다. 어떻게 돈을 벌었는지 알기 쉽거든. 어느 정도의 검증을 깔고 간다.</p>
+
+    <p>그래서 난 같은 아파트 주민끼리 결혼하는 거 욕 안 한다. 당연한 거라고 봄. 개미는 개미끼리 결혼해야지.</p>
+
+    <h2>오늘의 반전</h2>
+
+    <blockquote>이렇게 말하는 나는 일반인이라는 거.</blockquote>
+  </div>
+
+  <div class="post-tags">
+    <span class="post-tag">#결혼</span>
+    <span class="post-tag">#부자</span>
+    <span class="post-tag">#개미와베짱이</span>
+    <span class="post-tag">#같은아파트</span>
+  </div>
+
+  <div class="engagement">
+    <div class="eng-bar">
+      <button type="button" class="like-btn" data-like-btn>
+        <span class="like-icon">♥</span>
+        <span data-like-count>0</span>
+      </button>
+      <span class="view-count">조회 <span data-view-count>0</span></span>
+    </div>
+
+    <div class="comment-section">
+      <div class="comment-heading">댓글 <span data-comment-count>0</span></div>
+      <form class="comment-form" data-comment-form>
+        <input type="text" name="name" maxlength="24" placeholder="닉네임 (선택)" class="comment-name-input" />
+        <textarea name="content" maxlength="500" placeholder="댓글을 남겨보세요" required class="comment-content-input"></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+      <div class="comment-list" data-comment-list></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/engagement.js"></script>
+</body>
+</html>
